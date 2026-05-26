@@ -807,6 +807,102 @@ function initModal() {
 }
 
 /* ════════════════════════════════════════════════════════════
+   CV BUTTON — graceful disable if PDF not present
+   ════════════════════════════════════════════════════════════ */
+function initCvButton() {
+  const btn = document.getElementById('cv-download-btn');
+  if (!btn) return;
+
+  fetch('assets/cv.pdf', { method: 'HEAD' })
+    .then(r => {
+      if (!r.ok) throw new Error('not found');
+    })
+    .catch(() => {
+      btn.classList.add('unavailable');
+      btn.removeAttribute('download');
+      btn.removeAttribute('href');
+      btn.title = 'CV coming soon';
+    });
+}
+
+/* ════════════════════════════════════════════════════════════
+   CONTACT FORM — mailto fallback, no backend required
+   ════════════════════════════════════════════════════════════ */
+function initContactForm() {
+  const form    = document.getElementById('contact-form');
+  const status  = document.getElementById('form-status');
+  if (!form || !status) return;
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name    = form.querySelector('#cf-name');
+    const email   = form.querySelector('#cf-email');
+    const subject = form.querySelector('#cf-subject');
+    const message = form.querySelector('#cf-message');
+    let valid = true;
+
+    [name, email, subject, message].forEach(el => {
+      el.classList.remove('invalid');
+      if (!el.value.trim()) { el.classList.add('invalid'); valid = false; }
+    });
+
+    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email.value && !emailRx.test(email.value)) {
+      email.classList.add('invalid'); valid = false;
+    }
+
+    if (!valid) {
+      status.textContent = '// Please fill in all fields correctly.';
+      status.className   = 'form-note error';
+      SoundEngine.play('modalClose');
+      return;
+    }
+
+    const body = `Name: ${name.value}\nEmail: ${email.value}\n\n${message.value}`;
+    const mailto = `mailto:sm.shadman.hossain@gmail.com`
+      + `?subject=${encodeURIComponent(subject.value)}`
+      + `&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailto;
+
+    SoundEngine.play('success');
+    status.textContent = '// Opening your email client...';
+    status.className   = 'form-note success';
+
+    setTimeout(() => {
+      form.reset();
+      status.textContent = '';
+      status.className   = 'form-note';
+    }, 4000);
+  });
+
+  /* Clear invalid state on input */
+  form.querySelectorAll('input, textarea').forEach(el => {
+    el.addEventListener('input', () => el.classList.remove('invalid'));
+    el.addEventListener('focus', () => SoundEngine.play('tick'));
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   SCROLL TO TOP
+   ════════════════════════════════════════════════════════════ */
+function initScrollToTop() {
+  const btn = document.getElementById('scrollTop');
+  if (!btn) return;
+
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 500);
+  }, { passive: true });
+
+  btn.addEventListener('mouseenter', () => SoundEngine.play('tick'));
+  btn.addEventListener('click', () => {
+    SoundEngine.play('click');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
    GSAP ENHANCEMENTS
    ════════════════════════════════════════════════════════════ */
 function initGSAP() {
@@ -857,4 +953,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModal();
   initGSAP();
   initSoundToggle();
+  initCvButton();
+  initContactForm();
+  initScrollToTop();
 });
