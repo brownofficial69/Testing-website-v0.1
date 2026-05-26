@@ -144,6 +144,152 @@ const PROJECTS = {
 };
 
 /* ════════════════════════════════════════════════════════════
+   SOUND ENGINE  (Web Audio API — no external files)
+   ════════════════════════════════════════════════════════════ */
+const SoundEngine = (() => {
+  let ctx = null;
+  let enabled = true;
+
+  function ac() {
+    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  /* helper: one oscillator + gain with full ADSR envelope */
+  function osc(freq, type, peakGain, attack, decay, startOffset = 0) {
+    const c  = ac();
+    const t  = c.currentTime + startOffset;
+    const g  = c.createGain();
+    const o  = c.createOscillator();
+    o.type      = type;
+    o.frequency.setValueAtTime(freq, t);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(peakGain, t + attack);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + attack + decay);
+    o.connect(g);
+    g.connect(c.destination);
+    o.start(t);
+    o.stop(t + attack + decay + 0.01);
+  }
+
+  /* helper: pitch-swept oscillator (glide from startFreq → endFreq) */
+  function sweep(startFreq, endFreq, type, peakGain, duration, startOffset = 0) {
+    const c = ac();
+    const t = c.currentTime + startOffset;
+    const g = c.createGain();
+    const o = c.createOscillator();
+    o.type = type;
+    o.frequency.setValueAtTime(startFreq, t);
+    o.frequency.exponentialRampToValueAtTime(endFreq, t + duration);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(peakGain, t + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+    o.connect(g);
+    g.connect(c.destination);
+    o.start(t);
+    o.stop(t + duration + 0.01);
+  }
+
+  /* helper: short noise burst filtered to a band (for typing tick) */
+  function noiseBurst(centreFreq, bandwidth, peakGain, duration) {
+    const c      = ac();
+    const t      = c.currentTime;
+    const buf    = c.createBuffer(1, c.sampleRate * duration, c.sampleRate);
+    const data   = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1);
+    const src    = c.createBufferSource();
+    src.buffer   = buf;
+    const bpf    = c.createBiquadFilter();
+    bpf.type     = 'bandpass';
+    bpf.frequency.value = centreFreq;
+    bpf.Q.value  = centreFreq / bandwidth;
+    const g      = c.createGain();
+    g.gain.setValueAtTime(peakGain, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+    src.connect(bpf);
+    bpf.connect(g);
+    g.connect(c.destination);
+    src.start(t);
+    src.stop(t + duration);
+  }
+
+  const sounds = {
+    /* nav / card hover — ultra-soft high tick */
+    tick()      { osc(1900, 'sine', 0.032, 0.004, 0.022); },
+
+    /* interactive click — brief square → sine click */
+    click()     {
+      osc(780, 'square', 0.04, 0.003, 0.02);
+      osc(390, 'sine',   0.05, 0.003, 0.06);
+    },
+
+    /* modal opening — ascending glide chord */
+    modalOpen() {
+      sweep(180, 560,  'sine', 0.07, 0.22);
+      sweep(270, 840,  'sine', 0.04, 0.22, 0.01);   /* harmony fifth above */
+      osc(560, 'sine', 0.06, 0.01, 0.30, 0.18);     /* sustain tone */
+    },
+
+    /* modal closing — short descending tick */
+    modalClose() {
+      sweep(560, 180, 'sine', 0.06, 0.14);
+    },
+
+    /* typing character — tiny filtered noise tick */
+    type()      { noiseBurst(3200, 600, 0.018, 0.018); },
+
+    /* typing delete — slightly lower pitch than type */
+    del()       { noiseBurst(2100, 500, 0.012, 0.016); },
+
+    /* nav section activated — soft pentatonic chime */
+    section()   {
+      osc(523, 'sine', 0.055, 0.018, 0.35);     /* C5 */
+      osc(784, 'sine', 0.030, 0.018, 0.30, 0.06); /* G5 */
+    },
+
+    /* email copied — two-note success riff */
+    success()   {
+      osc(523, 'sine', 0.07, 0.01, 0.10);        /* C5 */
+      osc(659, 'sine', 0.07, 0.01, 0.12, 0.10);  /* E5 */
+      osc(784, 'sine', 0.06, 0.01, 0.18, 0.19);  /* G5 */
+    },
+
+    /* mobile menu open */
+    menuOpen()  { sweep(320, 640, 'sine', 0.055, 0.14); },
+
+    /* mobile menu close */
+    menuClose() { sweep(640, 320, 'sine', 0.045, 0.11); },
+  };
+
+  return {
+    play(name) {
+      if (!enabled || !sounds[name]) return;
+      try { sounds[name](); } catch (_) {}
+    },
+    toggle() {
+      enabled = !enabled;
+      return enabled;
+    },
+    get isEnabled() { return enabled; }
+  };
+})();
+
+function initSoundToggle() {
+  const btn  = document.getElementById('soundToggle');
+  const icon = document.getElementById('soundIcon');
+  if (!btn || !icon) return;
+
+  btn.addEventListener('click', () => {
+    const on = SoundEngine.toggle();
+    icon.className = on ? 'fas fa-volume-up' : 'fas fa-volume-xmark';
+    btn.classList.toggle('muted', !on);
+    /* play tick only when turning ON */
+    if (on) SoundEngine.play('tick');
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
    CANVAS PARTICLE ENGINE
    ════════════════════════════════════════════════════════════ */
 function initCanvas() {
@@ -283,6 +429,7 @@ function initTyping() {
     if (deleting) {
       charIdx--;
       el.textContent = current.slice(0, charIdx);
+      SoundEngine.play('del');
       if (charIdx === 0) {
         deleting = false;
         idx = (idx + 1) % titles.length;
@@ -293,6 +440,7 @@ function initTyping() {
     } else {
       charIdx++;
       el.textContent = current.slice(0, charIdx);
+      SoundEngine.play('type');
       if (charIdx === current.length) {
         deleting = true;
         setTimeout(tick, PAUSE_END);
@@ -349,10 +497,15 @@ function initNavbar() {
   const sections  = Array.from(document.querySelectorAll('section[id]'));
   const navLinks  = document.querySelectorAll('.nav-links .nav-link');
 
+  let lastActiveSection = null;
   function setActive() {
     const mid = window.scrollY + window.innerHeight / 2;
     for (const section of sections) {
       if (mid >= section.offsetTop && mid < section.offsetTop + section.offsetHeight) {
+        if (section.id !== lastActiveSection) {
+          lastActiveSection = section.id;
+          SoundEngine.play('section');
+        }
         navLinks.forEach(l => l.classList.remove('active'));
         const match = document.querySelector(`.nav-links .nav-link[href="#${section.id}"]`);
         if (match) match.classList.add('active');
@@ -363,6 +516,12 @@ function initNavbar() {
 
   window.addEventListener('scroll', setActive, { passive: true });
   setActive();
+
+  /* Nav link hover tick */
+  navLinks.forEach(link => {
+    link.addEventListener('mouseenter', () => SoundEngine.play('tick'));
+    link.addEventListener('click', () => SoundEngine.play('click'));
+  });
 
   /* Mobile menu */
   function openMenu() {
@@ -389,8 +548,11 @@ function initNavbar() {
     });
   }
 
-  hamburger.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
-  mobileClose.addEventListener('click', closeMenu);
+  hamburger.addEventListener('click', () => {
+    if (menuOpen) { SoundEngine.play('menuClose'); closeMenu(); }
+    else          { SoundEngine.play('menuOpen');  openMenu();  }
+  });
+  mobileClose.addEventListener('click', () => { SoundEngine.play('menuClose'); closeMenu(); });
 
   mobileMenu.querySelectorAll('.mobile-nav-link').forEach(link => {
     link.addEventListener('click', closeMenu);
@@ -489,6 +651,7 @@ function copyEmail(btn) {
   if (!text) return;
 
   navigator.clipboard.writeText(text).then(() => {
+    SoundEngine.play('success');
     const icon = btn.querySelector('i');
     icon.className = 'fas fa-check';
     btn.classList.add('copied');
@@ -601,6 +764,7 @@ function initModal() {
 
   function open(id) {
     populate(id);
+    SoundEngine.play('modalOpen');
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
     document.body.classList.add('no-scroll');
@@ -609,6 +773,7 @@ function initModal() {
   }
 
   function close() {
+    SoundEngine.play('modalClose');
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('no-scroll');
@@ -616,6 +781,7 @@ function initModal() {
   }
 
   cards.forEach(card => {
+    card.addEventListener('mouseenter', () => SoundEngine.play('tick'));
     card.addEventListener('click', () => {
       lastFocused = card;
       open(card.dataset.project);
@@ -690,4 +856,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initProfilePhoto();
   initModal();
   initGSAP();
+  initSoundToggle();
 });
