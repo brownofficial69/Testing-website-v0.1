@@ -529,21 +529,12 @@ section {
   100% { top: calc(100% + 2px); }
 }
 
-#shader-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  background: black;
-}
-
 #hero-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 0;
 }
 
 .hero-content {
@@ -1843,7 +1834,6 @@ footer {
     transition-duration: 0.01ms !important;
   }
 
-  #shader-canvas { display: none; }
   #hero-canvas { display: none; }
   #hero::after { display: none; }
 
