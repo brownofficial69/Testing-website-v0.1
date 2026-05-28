@@ -3,11 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Shadman Hossain — Junior SOC Analyst, GRC Analyst & Cyber Threat Intelligence. Cybersecurity portfolio." />
-  <meta name="theme-color" content="#030d1a" />
-  <meta property="og:title" content="Shadman Hossain | Cybersecurity Portfolio" />
-  <meta property="og:description" content="SOC Detection Engineering · GRC Compliance · Threat Intelligence — Coventry University BSc Ethical Hacking & Cyber Security" />
+  <!-- Primary SEO -->
   <title>Shadman Hossain | Cybersecurity Portfolio</title>
+  <meta name="description" content="Shadman Hossain — Junior SOC Analyst, GRC Analyst & Cyber Threat Intelligence analyst. Final-year Ethical Hacking & Cyber Security student at Coventry University." />
+  <meta name="keywords" content="cybersecurity, SOC analyst, GRC, threat intelligence, ethical hacking, detection engineering, SIEM, MITRE ATT&CK, Shadman Hossain" />
+  <meta name="author" content="Shadman Hossain" />
+  <meta name="theme-color" content="#030d1a" />
+  <link rel="canonical" href="https://brownofficial69.github.io/Testing-website-v0.1/" />
+
+  <!-- Open Graph (LinkedIn / Slack / iMessage previews) -->
+  <meta property="og:type"         content="website" />
+  <meta property="og:url"          content="https://brownofficial69.github.io/Testing-website-v0.1/" />
+  <meta property="og:title"        content="Shadman Hossain | Cybersecurity Portfolio" />
+  <meta property="og:description"  content="SOC Detection Engineering · GRC Compliance · Threat Intelligence — Coventry University BSc Ethical Hacking & Cyber Security, First-Class track." />
+  <meta property="og:image"        content="https://brownofficial69.github.io/Testing-website-v0.1/assets/profile.jpg" />
+  <meta property="og:image:width"  content="600" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:locale"       content="en_GB" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Shadman Hossain | Cybersecurity Portfolio" />
+  <meta name="twitter:description" content="SOC Detection Engineering · GRC Compliance · Threat Intelligence" />
+  <meta name="twitter:image"       content="https://brownofficial69.github.io/Testing-website-v0.1/assets/profile.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,11 +62,14 @@
          class="nav-social-link" aria-label="GitHub Profile">
         <i class="fab fa-github"></i>
       </a>
-      <a href="https://www.linkedin.com/in/shadman-hossain/" target="_blank" rel="noopener noreferrer"
-         class="nav-social-link" aria-label="LinkedIn Profile"><!-- UPDATE: replace with your real LinkedIn URL -->
+      <a href="https://www.linkedin.com/in/shadman-hossain1206" target="_blank" rel="noopener noreferrer"
+         class="nav-social-link" aria-label="LinkedIn Profile">
         <i class="fab fa-linkedin-in"></i>
       </a>
     </div>
+    <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound" title="Toggle sound effects">
+      <i class="fas fa-volume-up" id="soundIcon"></i>
+    </button>
     <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -68,7 +92,7 @@
     <a href="https://github.com/shaddiegit" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
       <i class="fab fa-github"></i>
     </a>
-    <a href="https://www.linkedin.com/in/shadman-hossain/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+    <a href="https://www.linkedin.com/in/shadman-hossain1206" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
       <i class="fab fa-linkedin-in"></i>
     </a>
   </div>
@@ -98,13 +122,18 @@
       <a href="#contact" class="btn btn-secondary">
         <i class="fas fa-terminal"></i> Get In Touch
       </a>
+      <!-- DROP your CV PDF at assets/cv.pdf and this button becomes live -->
+      <a href="assets/cv.pdf" class="btn btn-cv" download id="cv-download-btn"
+         aria-label="Download CV">
+        <i class="fas fa-file-arrow-down"></i> Download CV
+      </a>
     </div>
 
     <div class="hero-socials">
       <a href="https://github.com/shaddiegit" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
         <i class="fab fa-github"></i>
       </a>
-      <a href="https://www.linkedin.com/in/shadman-hossain/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+      <a href="https://www.linkedin.com/in/shadman-hossain1206" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
         <i class="fab fa-linkedin-in"></i>
       </a>
       <a href="mailto:sm.shadman.hossain@gmail.com" aria-label="Email">
@@ -120,6 +149,7 @@
 
 <!-- ════════════════════════════════ ABOUT ════════════════════════════════ -->
 <section id="about">
+  <div class="about-bg-photo" aria-hidden="true"></div>
   <div class="section-inner">
     <p class="section-label">// 01. about</p>
     <h2 class="section-title" id="about-heading">About Me</h2>
@@ -622,6 +652,32 @@
       Feel free to reach out through any channel below.
     </p>
 
+    <!-- Contact form — submits via mailto, no backend needed -->
+    <form class="contact-form reveal fade-up" id="contact-form" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cf-name">Name</label>
+          <input type="text" id="cf-name" name="name" placeholder="Your name" autocomplete="name" required />
+        </div>
+        <div class="form-group">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" placeholder="your@email.com" autocomplete="email" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cf-subject">Subject</label>
+        <input type="text" id="cf-subject" name="subject" placeholder="Job opportunity / Collaboration / Hello" required />
+      </div>
+      <div class="form-group">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" rows="5" placeholder="Your message..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+      <p class="form-note" id="form-status" aria-live="polite"></p>
+    </form>
+
     <div class="contact-cards">
       <a href="mailto:sm.shadman.hossain@gmail.com" class="contact-card reveal fade-up">
         <div class="contact-icon-wrap">
@@ -651,14 +707,14 @@
         <i class="fas fa-external-link-alt contact-ext"></i>
       </a>
 
-      <a href="https://www.linkedin.com/in/shadman-hossain/" target="_blank" rel="noopener noreferrer"
-         class="contact-card reveal fade-up" style="transition-delay:0.2s"><!-- UPDATE: replace with your real LinkedIn URL -->
+      <a href="https://www.linkedin.com/in/shadman-hossain1206" target="_blank" rel="noopener noreferrer"
+         class="contact-card reveal fade-up" style="transition-delay:0.2s">
         <div class="contact-icon-wrap">
           <i class="fab fa-linkedin-in"></i>
         </div>
         <div class="contact-detail">
           <span class="contact-type">LinkedIn</span>
-          <span class="contact-value">linkedin.com/in/shadman-hossain</span><!-- UPDATE -->
+          <span class="contact-value">linkedin.com/in/shadman-hossain1206</span>
         </div>
         <i class="fas fa-external-link-alt contact-ext"></i>
       </a>
@@ -734,6 +790,11 @@
     </div>
   </div>
 </div>
+
+<!-- Scroll to top -->
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
 
 <script src="script.js" defer></script>
 </body>
