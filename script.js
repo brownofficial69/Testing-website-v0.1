@@ -1248,6 +1248,94 @@ function initGSAP() {
 }
 
 /* ════════════════════════════════════════════════════════════
+   SECTION TITLE GLITCH ON SCROLL ENTER
+   ════════════════════════════════════════════════════════════ */
+function initSectionTitleGlitch() {
+  const titles = document.querySelectorAll('.section-title');
+  if (!titles.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      el.classList.add('title-glitch');
+      el.addEventListener('animationend', () => el.classList.remove('title-glitch'), { once: true });
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+
+  titles.forEach(t => observer.observe(t));
+}
+
+/* ════════════════════════════════════════════════════════════
+   CLICK RIPPLE
+   ════════════════════════════════════════════════════════════ */
+function initClickRipple() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  document.addEventListener('click', e => {
+    if (e.target.closest('a, button, input, textarea, .project-card, .copy-btn')) return;
+    const el = document.createElement('div');
+    el.className = 'click-ripple';
+    el.style.left = e.clientX + 'px';
+    el.style.top  = e.clientY + 'px';
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove(), { once: true });
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   SIDE SECTION NAVIGATION DOTS
+   ════════════════════════════════════════════════════════════ */
+function initSectionDots() {
+  const SECTIONS = [
+    { id: 'hero',           label: 'Home' },
+    { id: 'about',          label: 'About' },
+    { id: 'skills',         label: 'Skills' },
+    { id: 'projects',       label: 'Projects' },
+    { id: 'education',      label: 'Education' },
+    { id: 'certifications', label: 'Certs' },
+    { id: 'contact',        label: 'Contact' },
+  ];
+
+  const nav = document.createElement('nav');
+  nav.className = 'section-dots';
+  nav.setAttribute('aria-label', 'Section navigation');
+
+  SECTIONS.forEach(({ id, label }) => {
+    const btn = document.createElement('button');
+    btn.className = 'section-dot';
+    btn.setAttribute('aria-label', `Go to ${label}`);
+    btn.setAttribute('title', label);
+    btn.dataset.section = id;
+    btn.addEventListener('click', () => {
+      SoundEngine.play('click');
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    });
+    btn.addEventListener('mouseenter', () => SoundEngine.play('tick'));
+    nav.appendChild(btn);
+  });
+
+  document.body.appendChild(nav);
+
+  function updateDots() {
+    const mid = window.scrollY + window.innerHeight * 0.5;
+    let current = SECTIONS[0].id;
+    SECTIONS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el && mid >= el.offsetTop) current = id;
+    });
+    nav.querySelectorAll('.section-dot').forEach(d => d.classList.remove('active'));
+    const dot = nav.querySelector(`[data-section="${current}"]`);
+    if (dot) dot.classList.add('active');
+  }
+
+  window.addEventListener('scroll', updateDots, { passive: true });
+  updateDots();
+}
+
+/* ════════════════════════════════════════════════════════════
    BOOT SEQUENCE  (once per browser session)
    ════════════════════════════════════════════════════════════ */
 function initBootSequence() {
@@ -1565,6 +1653,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initMatrixBg();
   initCursor();
   initAmbientText();
+  initSectionTitleGlitch();
+  initClickRipple();
+  initSectionDots();
   initScrollProgress();
   initCardTilt();
   initStatCounters();
