@@ -1405,9 +1405,198 @@ function initGSAP() {
 }
 
 /* ════════════════════════════════════════════════════════════
+   CUSTOM CURSOR
+   ════════════════════════════════════════════════════════════ */
+function initCursor() {
+  const dot  = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  if (!dot || !ring) return;
+
+  /* touch devices: hide entirely */
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    dot.style.display  = 'none';
+    ring.style.display = 'none';
+    document.body.style.cursor = '';
+    document.querySelectorAll('a,button,[role="button"],.project-card,.contact-card,input,textarea')
+      .forEach(el => { el.style.cursor = ''; });
+    return;
+  }
+
+  let mx = -100, my = -100;
+  let rx = -100, ry = -100;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+  });
+
+  document.addEventListener('mouseleave', () => document.body.classList.add('cursor-hidden'));
+  document.addEventListener('mouseenter', () => document.body.classList.remove('cursor-hidden'));
+
+  /* Lerp the ring slightly behind */
+  (function lerpRing() {
+    rx += (mx - rx) * 0.14;
+    ry += (my - ry) * 0.14;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(lerpRing);
+  })();
+
+  /* Expand ring on interactive hover */
+  const hoverTargets = 'a, button, .project-card, .contact-card, .skill-tag, input, textarea';
+  document.querySelectorAll(hoverTargets).forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
+  /* Click pulse */
+  document.addEventListener('mousedown', () => { dot.style.transform = 'translate(-50%,-50%) scale(0.6)'; });
+  document.addEventListener('mouseup',   () => { dot.style.transform = 'translate(-50%,-50%) scale(1)'; });
+}
+
+/* ════════════════════════════════════════════════════════════
+   BOOT SEQUENCE
+   ════════════════════════════════════════════════════════════ */
+function initBootSequence() {
+  /* Only show once per session */
+  if (sessionStorage.getItem('booted')) return dismissBoot(0);
+
+  const screen   = document.getElementById('boot-screen');
+  const log      = document.getElementById('boot-log');
+  const bar      = document.getElementById('boot-bar');
+  const skipBtn  = document.getElementById('boot-skip');
+  const bootCanvas = document.getElementById('boot-canvas');
+  if (!screen || !log) return;
+
+  /* Mini matrix on the boot canvas */
+  if (bootCanvas) {
+    const bctx  = bootCanvas.getContext('2d');
+    bootCanvas.width  = window.innerWidth;
+    bootCanvas.height = window.innerHeight;
+    const BFONT = 13;
+    const BCHARS = 'ｦｧｨｩｱｲｳｴｵｶｷｸｹｺｻｼｽABCDEFGHIJKL0123456789!@#%^&*';
+    const bcols  = [];
+    const bcount = Math.floor(bootCanvas.width / BFONT);
+    for (let i = 0; i < bcount; i++) {
+      if (Math.random() > 0.5) continue;
+      bcols.push({ x: i * BFONT, y: Math.random() * -bootCanvas.height,
+                   speed: 0.8 + Math.random() * 1.5, opacity: 0.12 + Math.random() * 0.25,
+                   chars: Array.from({length: 18}, () => BCHARS[Math.floor(Math.random()*BCHARS.length)]) });
+    }
+    (function bframe() {
+      if (!document.getElementById('boot-screen')) return;
+      bctx.clearRect(0, 0, bootCanvas.width, bootCanvas.height);
+      bctx.font = `${BFONT}px 'JetBrains Mono', monospace`;
+      bcols.forEach(c => {
+        c.y += c.speed;
+        if (c.y > bootCanvas.height + 200) c.y = -200;
+        c.chars.forEach((ch, i) => {
+          const cy = c.y + i * BFONT;
+          if (cy < 0 || cy > bootCanvas.height) return;
+          const a = c.opacity * (1 - i / c.chars.length);
+          bctx.fillStyle = `rgba(0,255,136,${a})`;
+          bctx.fillText(ch, c.x, cy);
+        });
+      });
+      requestAnimationFrame(bframe);
+    })();
+  }
+
+  const LINES = [
+    { text: 'Loading security modules',        delay: 0    },
+    { text: 'Establishing encrypted session',  delay: 420  },
+    { text: 'Scanning threat intelligence',    delay: 840  },
+    { text: 'Compiling detection signatures',  delay: 1260 },
+    { text: 'Verifying cryptographic keys',    delay: 1680 },
+    { text: 'Mounting portfolio filesystem',   delay: 2100 },
+    { text: 'Access granted — Welcome back',   delay: 2520 },
+  ];
+
+  let done = false;
+
+  function dismissBoot(delay = 0) {
+    if (done) return;
+    done = true;
+    sessionStorage.setItem('booted', '1');
+    setTimeout(() => {
+      screen.classList.add('fade-out');
+      setTimeout(() => { screen.style.display = 'none'; }, 850);
+    }, delay);
+  }
+
+  skipBtn.addEventListener('click', () => dismissBoot(0));
+
+  LINES.forEach(({ text, delay }, i) => {
+    setTimeout(() => {
+      const line = document.createElement('div');
+      line.className = 'line';
+      line.textContent = text;
+      log.appendChild(line);
+      /* tick each line */
+      SoundEngine.play('type');
+      /* progress bar */
+      bar.style.width = `${((i + 1) / LINES.length) * 100}%`;
+      if (i === LINES.length - 1) {
+        line.classList.add('ok');
+        SoundEngine.play('success');
+        dismissBoot(600);
+      }
+    }, delay);
+  });
+}
+
+function dismissBoot(delay) {
+  const screen = document.getElementById('boot-screen');
+  if (!screen) return;
+  setTimeout(() => {
+    screen.classList.add('fade-out');
+    setTimeout(() => { screen.style.display = 'none'; }, 850);
+  }, delay);
+}
+
+/* ════════════════════════════════════════════════════════════
+   STAT COUNTERS  (About section — animate on scroll in)
+   ════════════════════════════════════════════════════════════ */
+function initStatCounters() {
+  const counters = document.querySelectorAll('.stat-value[data-count]');
+  if (!counters.length) return;
+
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el       = entry.target;
+      const target   = parseFloat(el.dataset.count);
+      const decimals = parseInt(el.dataset.decimals || 0);
+      const suffix   = el.dataset.suffix || '';
+      const duration = 1400;
+      const start    = performance.now();
+
+      function step(now) {
+        const t   = Math.min((now - start) / duration, 1);
+        const val = easeOut(t) * target;
+        el.textContent = val.toFixed(decimals) + suffix;
+        if (t < 1) requestAnimationFrame(step);
+        else el.textContent = target.toFixed(decimals) + suffix;
+      }
+
+      requestAnimationFrame(step);
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+
+  counters.forEach(el => obs.observe(el));
+}
+
+/* ════════════════════════════════════════════════════════════
    BOOT
    ════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  initCursor();
+  initBootSequence();
   initMatrixBg();
   initCanvas();
   initTyping();
@@ -1424,4 +1613,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initScrollToTop();
   initAmbientText();
+  initStatCounters();
 });

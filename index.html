@@ -42,6 +42,23 @@
 </head>
 <body>
 
+<!-- Custom cursor -->
+<div id="cursor-ring" aria-hidden="true"></div>
+<div id="cursor-dot"  aria-hidden="true"></div>
+
+<!-- Boot sequence overlay -->
+<div id="boot-screen" aria-hidden="true">
+  <canvas id="boot-canvas"></canvas>
+  <div class="boot-content">
+    <div class="boot-logo">[SH]</div>
+    <div class="boot-log" id="boot-log"></div>
+    <div class="boot-bar-wrap">
+      <div class="boot-bar" id="boot-bar"></div>
+    </div>
+    <button class="boot-skip" id="boot-skip">SKIP ↵</button>
+  </div>
+</div>
+
 <!-- Full-page matrix background canvas (fixed, z-index 1, below all sections) -->
 <canvas id="matrix-bg" aria-hidden="true"></canvas>
 
@@ -193,11 +210,11 @@
 
         <div class="about-stats">
           <div class="stat-card reveal fade-up">
-            <div class="stat-value">76.67<span class="stat-unit">%</span></div>
+            <div class="stat-value" data-count="76.67" data-decimals="2" data-suffix="%">0%</div>
             <div class="stat-label">Current Average</div>
           </div>
           <div class="stat-card reveal fade-up" style="transition-delay:0.1s">
-            <div class="stat-value">5</div>
+            <div class="stat-value" data-count="5" data-decimals="0">0</div>
             <div class="stat-label">GitHub Projects</div>
           </div>
           <div class="stat-card reveal fade-up" style="transition-delay:0.2s">
