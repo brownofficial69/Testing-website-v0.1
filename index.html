@@ -42,6 +42,19 @@
 </head>
 <body>
 
+<!-- Boot screen — shown once per session -->
+<div id="boot-screen" aria-hidden="true">
+  <canvas id="boot-matrix" aria-hidden="true"></canvas>
+  <div class="boot-content">
+    <div class="boot-logo"><span class="boot-bracket">[</span>SH<span class="boot-bracket">]</span></div>
+    <div class="boot-log" id="boot-log" aria-live="polite"></div>
+    <div class="boot-progress-wrap">
+      <div class="boot-bar" id="boot-bar"></div>
+    </div>
+    <p class="boot-status" id="boot-status">INITIALISING SYSTEM...</p>
+  </div>
+</div>
+
 <!-- Full-page matrix rain canvas — fixed behind all sections -->
 <canvas id="matrix-bg" aria-hidden="true"></canvas>
 
@@ -798,6 +811,10 @@
 <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
   <i class="fas fa-chevron-up"></i>
 </button>
+
+<!-- Custom cursor -->
+<div id="cursor-dot"  aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
 
 <script src="script.js" defer></script>
 </body>

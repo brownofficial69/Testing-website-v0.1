@@ -1248,6 +1248,167 @@ function initGSAP() {
 }
 
 /* ════════════════════════════════════════════════════════════
+   BOOT SEQUENCE  (once per browser session)
+   ════════════════════════════════════════════════════════════ */
+function initBootSequence() {
+  const screen = document.getElementById('boot-screen');
+  if (!screen) return;
+
+  if (sessionStorage.getItem('sh-booted')) {
+    screen.style.display = 'none';
+    return;
+  }
+
+  const logEl  = document.getElementById('boot-log');
+  const barEl  = document.getElementById('boot-bar');
+  const status = document.getElementById('boot-status');
+  document.body.classList.add('no-scroll');
+
+  /* Mini matrix inside boot screen */
+  const bc = document.getElementById('boot-matrix');
+  if (bc) {
+    const bctx = bc.getContext('2d');
+    bc.width  = window.innerWidth;
+    bc.height = window.innerHeight;
+    const BFONT = 12;
+    const BCHARS = 'ｦｧｨｩｪｫｬｭｮｯABCDEF0123456789';
+    const bcols = Array.from({ length: Math.floor(bc.width / BFONT) }, (_, i) => ({
+      x: i * BFONT, y: Math.random() * -bc.height,
+      speed: 0.5 + Math.random() * 1.5,
+      opacity: 0.04 + Math.random() * 0.10,
+    })).filter(() => Math.random() > 0.5);
+
+    (function bframe() {
+      if (!document.getElementById('boot-screen') || screen.style.display === 'none') return;
+      bctx.clearRect(0, 0, bc.width, bc.height);
+      bctx.font = `${BFONT}px 'JetBrains Mono',monospace`;
+      bcols.forEach(col => {
+        col.y += col.speed;
+        if (col.y > bc.height + 160) col.y = -Math.random() * bc.height;
+        bctx.fillStyle = `rgba(0,255,136,${col.opacity})`;
+        bctx.fillText(BCHARS[Math.floor(Math.random() * BCHARS.length)], col.x, col.y);
+      });
+      requestAnimationFrame(bframe);
+    })();
+  }
+
+  const LINES = [
+    { text: '[ OK ]  Loading security modules',           cls: 'boot-ok'   },
+    { text: '[ OK ]  Initialising threat detection engine', cls: 'boot-ok' },
+    { text: '[ OK ]  Connecting to MITRE ATT&CK framework', cls: 'boot-ok' },
+    { text: '[ OK ]  Mounting cryptographic subsystems',  cls: 'boot-ok'   },
+    { text: '[ WARN] cv.pdf not found — download disabled', cls: 'boot-warn'},
+    { text: '[ OK ]  Portfolio matrix initialised',       cls: 'boot-ok'   },
+    { text: '[ OK ]  All systems operational. Welcome.',  cls: 'boot-info'  },
+  ];
+
+  /* Start progress bar */
+  setTimeout(() => { if (barEl) barEl.style.width = '100%'; }, 60);
+
+  /* Print lines with delay */
+  LINES.forEach((line, i) => {
+    setTimeout(() => {
+      if (!logEl) return;
+      const div = document.createElement('div');
+      div.className = `boot-line`;
+      div.innerHTML = `<span class="${line.cls}">${line.text}</span>`;
+      logEl.appendChild(div);
+    }, 280 + i * 310);
+  });
+
+  /* Dismiss */
+  const dismissAt = 280 + LINES.length * 310 + 350;
+  setTimeout(() => {
+    if (status) status.textContent = 'SYSTEM READY';
+    setTimeout(() => {
+      screen.classList.add('fade-out');
+      document.body.classList.remove('no-scroll');
+      setTimeout(() => { screen.style.display = 'none'; }, 750);
+    }, 420);
+  }, dismissAt);
+
+  sessionStorage.setItem('sh-booted', '1');
+}
+
+/* ════════════════════════════════════════════════════════════
+   CUSTOM CURSOR
+   ════════════════════════════════════════════════════════════ */
+function initCursor() {
+  const dot  = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  if (!dot || !ring) return;
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let mx = -100, my = -100;
+  let rx = mx,   ry = my;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    dot.style.left = mx + 'px';
+    dot.style.top  = my + 'px';
+  });
+
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity  = '0';
+    ring.style.opacity = '0';
+  });
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity  = '1';
+    ring.style.opacity = '1';
+  });
+
+  (function lerp() {
+    rx += (mx - rx) * 0.13;
+    ry += (my - ry) * 0.13;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(lerp);
+  })();
+
+  const hoverSel = 'a, button, .project-card, .skill-tag, .contact-card, .cert-card, .stat-card, [role="button"], input, textarea, .copy-btn, .scroll-top';
+  document.querySelectorAll(hoverSel).forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   AMBIENT CODE TOKENS
+   ════════════════════════════════════════════════════════════ */
+function initAmbientText() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const pool = [
+    '0xDEADBEEF','T1059.001','0.0.0.0/0','443/tcp','CVE-2024-1234',
+    'SHA-256','10.0.0.1','AES-256-GCM','MITRE','80/http',
+    'T1071.001','0xff4c','RSA-4096','22/ssh','T1548.003',
+    'NIST CSF 2.0','ISO27001','0x00ff88','T1190','4444/tcp',
+    'bcrypt','JWT','OSINT','T1566','IOC','T1110.001',
+    'GDPR Art.9','STRIDE','T1041','Sigma','Wazuh',
+  ];
+
+  const sections = document.querySelectorAll(
+    '#about, #skills, #projects, #education, #certifications, #contact'
+  );
+
+  sections.forEach(section => {
+    for (let i = 0; i < 20; i++) {
+      const span = document.createElement('span');
+      span.className = 'ambient-token';
+      span.textContent = pool[Math.floor(Math.random() * pool.length)];
+      span.style.left      = Math.random() * 96 + '%';
+      span.style.top       = Math.random() * 96 + '%';
+      span.style.opacity   = (0.028 + Math.random() * 0.062).toFixed(3);
+      span.style.fontSize  = (0.58 + Math.random() * 0.46).toFixed(2) + 'rem';
+      span.style.transform = `rotate(${((Math.random() - 0.5) * 26).toFixed(1)}deg)`;
+      section.appendChild(span);
+    }
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
    FULL-PAGE MATRIX BACKGROUND
    ════════════════════════════════════════════════════════════ */
 function initMatrixBg() {
@@ -1400,7 +1561,10 @@ function initStatCounters() {
    BOOT
    ════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  initBootSequence();
   initMatrixBg();
+  initCursor();
+  initAmbientText();
   initScrollProgress();
   initCardTilt();
   initStatCounters();
