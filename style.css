@@ -164,6 +164,8 @@ section {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 var(--section-x);
+  position: relative;
+  z-index: 1;
 }
 
 .section-label {
@@ -676,7 +678,20 @@ section {
    ════════════════════════════════════════════════════════════ */
 #about {
   position: relative;
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background:
+    radial-gradient(ellipse at 8% 55%, rgba(0,212,255,0.08) 0%, transparent 52%),
+    radial-gradient(ellipse at 92% 15%, rgba(0,212,255,0.04) 0%, transparent 42%),
+    linear-gradient(180deg, var(--bg-primary) 0%, #040f22 100%);
+}
+#about::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    -48deg,
+    transparent, transparent 38px,
+    rgba(0,212,255,0.013) 38px, rgba(0,212,255,0.013) 39px
+  );
+  pointer-events: none; z-index: 0;
 }
 #about .section-inner { position: relative; z-index: 1; }
 
@@ -829,7 +844,17 @@ section {
    SKILLS
    ════════════════════════════════════════════════════════════ */
 #skills {
-  background: var(--bg-primary);
+  background:
+    radial-gradient(ellipse at 50% -5%, rgba(0,255,136,0.09) 0%, transparent 52%),
+    radial-gradient(ellipse at 5% 95%, rgba(0,255,136,0.04) 0%, transparent 40%),
+    linear-gradient(180deg, #040f22 0%, var(--bg-primary) 100%);
+}
+#skills::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(0,255,136,0.09) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none; z-index: 0;
 }
 
 .skills-rows {
@@ -923,7 +948,19 @@ section {
    PROJECTS
    ════════════════════════════════════════════════════════════ */
 #projects {
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background:
+    radial-gradient(ellipse at 82% 55%, rgba(124,58,237,0.10) 0%, transparent 54%),
+    radial-gradient(ellipse at 12% 28%, rgba(0,212,255,0.05) 0%, transparent 44%),
+    linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 60%, var(--bg-primary) 100%);
+}
+#projects::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  pointer-events: none; z-index: 0;
 }
 
 .projects-grid {
@@ -1100,7 +1137,20 @@ section {
    EDUCATION
    ════════════════════════════════════════════════════════════ */
 #education {
-  background: var(--bg-primary);
+  background:
+    radial-gradient(ellipse at 2% 60%, rgba(124,58,237,0.10) 0%, transparent 52%),
+    radial-gradient(ellipse at 98% 25%, rgba(167,139,250,0.04) 0%, transparent 45%),
+    var(--bg-primary);
+}
+#education::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent, transparent 56px,
+    rgba(124,58,237,0.028) 56px, rgba(124,58,237,0.028) 57px
+  );
+  pointer-events: none; z-index: 0;
 }
 
 .timeline {
@@ -1229,7 +1279,16 @@ section {
    CERTIFICATIONS
    ════════════════════════════════════════════════════════════ */
 #certifications {
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  background:
+    radial-gradient(ellipse at 50% 22%, rgba(0,212,255,0.11) 0%, transparent 58%),
+    radial-gradient(ellipse at 18% 80%, rgba(245,158,11,0.04) 0%, transparent 40%),
+    linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+#certifications::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(0,212,255,0.07) 0%, transparent 35%);
+  pointer-events: none; z-index: 0;
 }
 
 .certs-row {
@@ -1452,7 +1511,18 @@ section {
 }
 
 #contact {
-  background: var(--bg-primary);
+  background:
+    radial-gradient(ellipse at 28% 68%, rgba(245,158,11,0.07) 0%, transparent 48%),
+    radial-gradient(ellipse at 78% 22%, rgba(0,255,136,0.05) 0%, transparent 42%),
+    var(--bg-primary);
+}
+#contact::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg,   transparent, transparent 22px, rgba(245,158,11,0.018) 22px, rgba(245,158,11,0.018) 23px),
+    repeating-linear-gradient(90deg,  transparent, transparent 22px, rgba(245,158,11,0.018) 22px, rgba(245,158,11,0.018) 23px);
+  pointer-events: none; z-index: 0;
 }
 
 .contact-inner { max-width: 700px; }
@@ -1786,6 +1856,35 @@ footer {
   flex-wrap: wrap;
   gap: 0.75rem;
   padding-top: 0.5rem;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+   ════════════════════════════════════════════════════════════ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan), var(--accent-purple), var(--accent-amber));
+  width: 0%;
+  z-index: calc(var(--z-nav) + 5);
+  pointer-events: none;
+  transition: width 80ms linear;
+}
+
+/* ════════════════════════════════════════════════════════════
+   PROJECT CARDS — 3-D TILT
+   ════════════════════════════════════════════════════════════ */
+.projects-grid {
+  perspective: 1400px;
+}
+.project-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: border-color var(--transition-med),
+              box-shadow var(--transition-med),
+              transform 0.12s ease,
+              background var(--transition-med);
 }
 
 /* ════════════════════════════════════════════════════════════

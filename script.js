@@ -1248,9 +1248,76 @@ function initGSAP() {
 }
 
 /* ════════════════════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+   ════════════════════════════════════════════════════════════ */
+function initScrollProgress() {
+  const bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  document.body.prepend(bar);
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    if (total > 0) bar.style.width = (window.scrollY / total * 100) + '%';
+  }, { passive: true });
+}
+
+/* ════════════════════════════════════════════════════════════
+   PROJECT CARD — 3D TILT ON MOUSEMOVE
+   ════════════════════════════════════════════════════════════ */
+function initCardTilt() {
+  const MAX = 7;
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r  = card.getBoundingClientRect();
+      const dx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
+      const dy = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+      card.style.transform = `translateY(-5px) rotateX(${-dy * MAX}deg) rotateY(${dx * MAX}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   STAT COUNT-UP ANIMATION
+   ════════════════════════════════════════════════════════════ */
+function initStatCounters() {
+  const vals = document.querySelectorAll('.stat-value');
+  if (!vals.length) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el   = entry.target;
+      const node = el.childNodes[0];
+      if (!node) return;
+      const raw  = node.textContent.trim();
+      const num  = parseFloat(raw);
+      if (isNaN(num)) return;
+      const dec  = raw.includes('.') ? 2 : 0;
+      const dur  = 1400;
+      const t0   = performance.now();
+      (function step(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        node.textContent = (e * num).toFixed(dec);
+        if (p < 1) requestAnimationFrame(step);
+        else node.textContent = raw;
+      })(t0);
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+
+  vals.forEach(el => observer.observe(el));
+}
+
+/* ════════════════════════════════════════════════════════════
    BOOT
    ════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  initScrollProgress();
+  initCardTilt();
+  initStatCounters();
   initCanvas();
   initTyping();
   initGlitch();
