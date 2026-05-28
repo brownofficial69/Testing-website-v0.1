@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Primary SEO -->
+  <title>Shadman Hossain | Cybersecurity Portfolio</title>
+  <meta name="description" content="Shadman Hossain — Junior SOC Analyst, GRC Analyst & Cyber Threat Intelligence analyst. Final-year Ethical Hacking & Cyber Security student at Coventry University." />
+  <meta name="keywords" content="cybersecurity, SOC analyst, GRC, threat intelligence, ethical hacking, detection engineering, SIEM, MITRE ATT&CK, Shadman Hossain" />
+  <meta name="author" content="Shadman Hossain" />
+  <meta name="theme-color" content="#030d1a" />
+  <link rel="canonical" href="https://brownofficial69.github.io/Testing-website-v0.1/" />
+
+  <!-- Open Graph (LinkedIn / Slack / iMessage previews) -->
+  <meta property="og:type"         content="website" />
+  <meta property="og:url"          content="https://brownofficial69.github.io/Testing-website-v0.1/" />
+  <meta property="og:title"        content="Shadman Hossain | Cybersecurity Portfolio" />
+  <meta property="og:description"  content="SOC Detection Engineering · GRC Compliance · Threat Intelligence — Coventry University BSc Ethical Hacking & Cyber Security, First-Class track." />
+  <meta property="og:image"        content="https://brownofficial69.github.io/Testing-website-v0.1/assets/profile.jpg" />
+  <meta property="og:image:width"  content="600" />
+  <meta property="og:image:height" content="800" />
+  <meta property="og:locale"       content="en_GB" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Shadman Hossain | Cybersecurity Portfolio" />
+  <meta name="twitter:description" content="SOC Detection Engineering · GRC Compliance · Threat Intelligence" />
+  <meta name="twitter:image"       content="https://brownofficial69.github.io/Testing-website-v0.1/assets/profile.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Boot screen — shown once per session -->
+<div id="boot-screen" aria-hidden="true">
+  <canvas id="boot-matrix" aria-hidden="true"></canvas>
+  <div class="boot-content">
+    <div class="boot-logo"><span class="boot-bracket">[</span>SH<span class="boot-bracket">]</span></div>
+    <div class="boot-log" id="boot-log" aria-live="polite"></div>
+    <div class="boot-progress-wrap">
+      <div class="boot-bar" id="boot-bar"></div>
+    </div>
+    <p class="boot-status" id="boot-status">INITIALISING SYSTEM...</p>
+  </div>
+</div>
+
+<!-- Full-page matrix rain canvas — fixed behind all sections -->
+<canvas id="matrix-bg" aria-hidden="true"></canvas>
+
+<!-- ════════════════════════════════ NAVBAR ════════════════════════════════ -->
+<nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+  <a href="#hero" class="nav-logo" aria-label="Go to top">
+    <span class="bracket">[</span>SH<span class="bracket">]</span>
+  </a>
+
+  <ul class="nav-links" role="list">
+    <li><a href="#about"     class="nav-link" data-index="01">About</a></li>
+    <li><a href="#skills"    class="nav-link" data-index="02">Skills</a></li>
+    <li><a href="#projects"  class="nav-link" data-index="03">Projects</a></li>
+    <li><a href="#education" class="nav-link" data-index="04">Education</a></li>
+    <li><a href="#contact"   class="nav-link" data-index="05">Contact</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <div class="nav-socials">
+      <a href="https://github.com/shaddiegit" target="_blank" rel="noopener noreferrer"
+         class="nav-social-link" aria-label="GitHub Profile">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/shadman-hossain1206" target="_blank" rel="noopener noreferrer"
+         class="nav-social-link" aria-label="LinkedIn Profile">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
+    <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound" title="Toggle sound effects">
+      <i class="fas fa-volume-up" id="soundIcon"></i>
+    </button>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile full-screen overlay menu -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <button class="mobile-close" id="mobile-close" aria-label="Close menu">
+    <i class="fas fa-times"></i>
+  </button>
+  <nav class="mobile-nav">
+    <a href="#about"     class="mobile-nav-link" data-index="01">About</a>
+    <a href="#skills"    class="mobile-nav-link" data-index="02">Skills</a>
+    <a href="#projects"  class="mobile-nav-link" data-index="03">Projects</a>
+    <a href="#education" class="mobile-nav-link" data-index="04">Education</a>
+    <a href="#contact"   class="mobile-nav-link" data-index="05">Contact</a>
+  </nav>
+  <div class="mobile-socials">
+    <a href="https://github.com/shaddiegit" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/shadman-hossain1206" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+  </div>
+</div>
+
+<!-- ════════════════════════════════ HERO ════════════════════════════════ -->
+<section id="hero" aria-label="Introduction">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+  <div class="hero-content">
+    <p class="hero-greeting">// hello, world</p>
+    <h1 class="hero-name" data-text="Shadman Hossain">Shadman Hossain</h1>
+
+    <div class="hero-titles" aria-live="polite">
+      <span id="typing-target"></span><span class="cursor" aria-hidden="true"></span>
+    </div>
+
+    <p class="hero-description">
+      Cybersecurity student at Coventry University specialising in SOC detection engineering,
+      GRC compliance &amp; threat intelligence. Building defences that hold.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">
+        <i class="fas fa-folder-open"></i> View Projects
+      </a>
+      <a href="#contact" class="btn btn-secondary">
+        <i class="fas fa-terminal"></i> Get In Touch
+      </a>
+      <!-- DROP your CV PDF at assets/cv.pdf and this button becomes live -->
+      <a href="assets/cv.pdf" class="btn btn-cv" download id="cv-download-btn"
+         aria-label="Download CV">
+        <i class="fas fa-file-arrow-down"></i> Download CV
+      </a>
+    </div>
+
+    <div class="hero-socials">
+      <a href="https://github.com/shaddiegit" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/shadman-hossain1206" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+      <a href="mailto:sm.shadman.hossain@gmail.com" aria-label="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator" aria-hidden="true">
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ ABOUT ════════════════════════════════ -->
+<section id="about">
+  <div class="about-bg-photo" aria-hidden="true"></div>
+  <div class="section-inner">
+    <p class="section-label">// 01. about</p>
+    <h2 class="section-title" id="about-heading">About Me</h2>
+
+    <div class="about-grid">
+
+      <div class="about-photo-side">
+        <div class="about-photo-wrapper">
+          <div class="about-monogram" id="profile-monogram">SH</div>
+          <img src="assets/profile.jpg"
+               alt="Shadman Hossain"
+               class="about-photo"
+               id="profile-img" />
+        </div>
+        <div class="about-location">
+          <i class="fas fa-location-dot"></i>
+          <span>Coventry, UK</span>
+        </div>
+      </div>
+
+      <div class="about-text">
+        <p>
+          I'm a final-year <span class="text-green">BSc Ethical Hacking &amp; Cyber Security</span>
+          student at Coventry University, on track for a First-Class Honours degree with a
+          <span class="text-cyan">76.67% average</span>. My current research project scored 87%.
+        </p>
+        <p>
+          My work spans <span class="text-green">blue team detection engineering</span> — writing
+          Wazuh-compatible Sigma rules and simulating intrusion campaigns — to
+          <span class="text-cyan">GRC compliance</span>, delivering full NIST CSF 2.0 assessments
+          for regulated sectors. I also build <span class="text-green">AI-augmented security tools</span>
+          in Python and Go, including a Claude API-powered threat intelligence correlation engine.
+        </p>
+        <p>
+          I'm preparing for the <span class="text-cyan">ISC2 CC certification</span> (June 2026)
+          and actively seeking junior SOC analyst or GRC analyst roles in the UK.
+        </p>
+
+        <div class="about-stats">
+          <div class="stat-card reveal fade-up">
+            <div class="stat-value" data-count="76.67" data-decimals="2" data-suffix="%">0%</div>
+            <div class="stat-label">Current Average</div>
+          </div>
+          <div class="stat-card reveal fade-up" style="transition-delay:0.1s">
+            <div class="stat-value" data-count="5" data-decimals="0">0</div>
+            <div class="stat-label">GitHub Projects</div>
+          </div>
+          <div class="stat-card reveal fade-up" style="transition-delay:0.2s">
+            <div class="stat-value">ISC2<span class="stat-unit"> CC</span></div>
+            <div class="stat-label">Exam June 2026</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ SKILLS ════════════════════════════════ -->
+<section id="skills">
+  <div class="section-inner">
+    <p class="section-label">// 02. skills</p>
+    <h2 class="section-title">Technical Skills</h2>
+
+    <div class="skills-rows">
+
+      <div class="skill-row reveal fade-up" data-color="green">
+        <div class="skill-row-header">
+          <i class="fas fa-shield-halved"></i>
+          <span>SOC &amp; Detection</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">SIEM</span>
+          <span class="skill-tag">Wazuh</span>
+          <span class="skill-tag">ELK Stack</span>
+          <span class="skill-tag">Splunk</span>
+          <span class="skill-tag">Sigma Rules</span>
+          <span class="skill-tag">MITRE ATT&amp;CK</span>
+          <span class="skill-tag">Log Analysis</span>
+          <span class="skill-tag">Incident Triage</span>
+        </div>
+      </div>
+
+      <div class="skill-row reveal fade-up" data-color="cyan" style="transition-delay:0.05s">
+        <div class="skill-row-header">
+          <i class="fas fa-bug"></i>
+          <span>Offensive / Pen-test</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Kali Linux</span>
+          <span class="skill-tag">Nmap</span>
+          <span class="skill-tag">Burp Suite</span>
+          <span class="skill-tag">Metasploit</span>
+          <span class="skill-tag">Wireshark</span>
+          <span class="skill-tag">OSINT</span>
+          <span class="skill-tag">Vuln Assessment</span>
+        </div>
+      </div>
+
+      <div class="skill-row reveal fade-up" data-color="purple" style="transition-delay:0.1s">
+        <div class="skill-row-header">
+          <i class="fas fa-file-contract"></i>
+          <span>GRC &amp; Compliance</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">NIST CSF 2.0</span>
+          <span class="skill-tag">ISO 27001</span>
+          <span class="skill-tag">UK GDPR</span>
+          <span class="skill-tag">Threat Modelling</span>
+          <span class="skill-tag">Risk Assessment</span>
+          <span class="skill-tag">Supplier Due Diligence</span>
+          <span class="skill-tag">Audit Management</span>
+        </div>
+      </div>
+
+      <div class="skill-row reveal fade-up" data-color="green" style="transition-delay:0.15s">
+        <div class="skill-row-header">
+          <i class="fas fa-code"></i>
+          <span>Programming &amp; Automation</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Go</span>
+          <span class="skill-tag">Bash</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">Playwright</span>
+          <span class="skill-tag">pytest</span>
+          <span class="skill-tag">Web Scraping</span>
+        </div>
+      </div>
+
+      <div class="skill-row reveal fade-up" data-color="cyan" style="transition-delay:0.2s">
+        <div class="skill-row-header">
+          <i class="fas fa-cloud"></i>
+          <span>Cloud &amp; Infrastructure</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">AWS S3</span>
+          <span class="skill-tag">AWS IAM</span>
+          <span class="skill-tag">AWS EC2</span>
+          <span class="skill-tag">Linux Admin</span>
+          <span class="skill-tag">Windows AD</span>
+        </div>
+      </div>
+
+      <div class="skill-row reveal fade-up" data-color="purple" style="transition-delay:0.25s">
+        <div class="skill-row-header">
+          <i class="fas fa-network-wired"></i>
+          <span>Frameworks</span>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">MITRE ATT&amp;CK</span>
+          <span class="skill-tag">OWASP Top 10</span>
+          <span class="skill-tag">Cyber Kill Chain</span>
+          <span class="skill-tag">NIST RMF</span>
+          <span class="skill-tag">STRIDE</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ PROJECTS ════════════════════════════════ -->
+<section id="projects">
+  <div class="section-inner">
+    <p class="section-label">// 03. projects</p>
+    <h2 class="section-title">Projects</h2>
+    <p class="section-subtitle">
+      Click any card to explore the full details and open the project on GitHub.
+    </p>
+
+    <div class="projects-grid">
+
+      <!-- 1. ThreatWeave -->
+      <article class="project-card reveal fade-up"
+               data-project="threatweave"
+               role="button" tabindex="0"
+               aria-label="ThreatWeave — AI Threat Intelligence Engine. Click to view details.">
+        <div class="card-scan-line" aria-hidden="true"></div>
+        <div class="project-header">
+          <div class="project-icon green-icon"><i class="fas fa-brain"></i></div>
+          <div class="project-badges-top">
+            <span class="project-year">2026</span>
+            <span class="project-badge badge-ai">AI-Powered</span>
+          </div>
+        </div>
+        <h3 class="project-title">ThreatWeave</h3>
+        <p class="project-category">Threat Intelligence / CTI</p>
+        <p class="project-description">
+          AI-powered IOC correlation engine written in Go. Clusters indicators by ASN, temporal
+          proximity, and MITRE tactics — generates analyst-grade threat narratives via Claude AI.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">Go</span>
+          <span class="tech-pill">Claude AI</span>
+          <span class="tech-pill">MITRE ATT&amp;CK</span>
+          <span class="tech-pill">CTI</span>
+        </div>
+        <div class="project-footer">
+          <div class="mitre-mini">
+            <span class="mitre-mini-tag">T1071</span>
+            <span class="mitre-mini-tag">T1041</span>
+          </div>
+          <span class="view-hint">Details <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </article>
+
+      <!-- 2. SecureView -->
+      <article class="project-card reveal fade-up"
+               data-project="secureview"
+               role="button" tabindex="0"
+               aria-label="SecureView — AI-Powered SOC Dashboard. Click to view details."
+               style="transition-delay:0.05s">
+        <div class="card-scan-line" aria-hidden="true"></div>
+        <div class="project-header">
+          <div class="project-icon cyan-icon"><i class="fas fa-desktop"></i></div>
+          <div class="project-badges-top">
+            <span class="project-year">2026</span>
+            <span class="project-badge badge-webapp">Web App</span>
+          </div>
+        </div>
+        <h3 class="project-title">SecureView</h3>
+        <p class="project-category">SOC Dashboard / Blue Team</p>
+        <p class="project-description">
+          Full-stack SOC analyst dashboard with a live alert queue, AI-powered triage using Claude API,
+          automated incident report generation, and 17 unit tests.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">TypeScript</span>
+          <span class="tech-pill">React</span>
+          <span class="tech-pill">Claude AI</span>
+          <span class="tech-pill">Vite</span>
+        </div>
+        <div class="project-footer">
+          <div class="mitre-mini">
+            <span class="mitre-mini-tag">T1059</span>
+            <span class="mitre-mini-tag">T1055</span>
+          </div>
+          <span class="view-hint">Details <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </article>
+
+      <!-- 3. SOC Detection Lab -->
+      <article class="project-card reveal fade-up"
+               data-project="soc-lab"
+               role="button" tabindex="0"
+               aria-label="SOC Detection Lab — Detection Engineering. Click to view details."
+               style="transition-delay:0.1s">
+        <div class="card-scan-line" aria-hidden="true"></div>
+        <div class="project-header">
+          <div class="project-icon green-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="project-badges-top">
+            <span class="project-year">2026</span>
+          </div>
+        </div>
+        <h3 class="project-title">SOC Detection Lab</h3>
+        <p class="project-category">Blue Team / Detection Engineering</p>
+        <p class="project-description">
+          Simulated 4-stage intrusion campaign with Sigma-compatible YAML detection rules deployable
+          in Wazuh — validated with a full pytest suite covering true and false positives.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Sigma YAML</span>
+          <span class="tech-pill">Wazuh</span>
+          <span class="tech-pill">pytest</span>
+        </div>
+        <div class="project-footer">
+          <div class="mitre-mini">
+            <span class="mitre-mini-tag">T1110.001</span>
+            <span class="mitre-mini-tag">T1548.003</span>
+            <span class="mitre-mini-tag">T1041</span>
+          </div>
+          <span class="view-hint">Details <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </article>
+
+      <!-- 4. IOC Hunter -->
+      <article class="project-card reveal fade-up"
+               data-project="ioc-hunter"
+               role="button" tabindex="0"
+               aria-label="IOC Hunter — Threat Intelligence Aggregator. Click to view details."
+               style="transition-delay:0.15s">
+        <div class="card-scan-line" aria-hidden="true"></div>
+        <div class="project-header">
+          <div class="project-icon cyan-icon"><i class="fas fa-magnifying-glass"></i></div>
+          <div class="project-badges-top">
+            <span class="project-year">2026</span>
+          </div>
+        </div>
+        <h3 class="project-title">IOC Hunter</h3>
+        <p class="project-category">Threat Intelligence / CLI Tool</p>
+        <p class="project-description">
+          Multi-source IOC lookup CLI concurrently querying ThreatFox, URLhaus, AbuseIPDB, and
+          VirusTotal — with 19 security tests and CI/SOAR-compatible output.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">ThreatFox</span>
+          <span class="tech-pill">AbuseIPDB</span>
+          <span class="tech-pill">VirusTotal</span>
+        </div>
+        <div class="project-footer">
+          <div class="mitre-mini">
+            <span class="mitre-mini-tag">T1566</span>
+            <span class="mitre-mini-tag">T1190</span>
+          </div>
+          <span class="view-hint">Details <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </article>
+
+      <!-- 5. NIST CSF 2.0 Gap Assessment -->
+      <article class="project-card reveal fade-up"
+               data-project="nist-csf"
+               role="button" tabindex="0"
+               aria-label="NIST CSF 2.0 Gap Assessment — GRC project. Click to view details."
+               style="transition-delay:0.2s">
+        <div class="card-scan-line" aria-hidden="true"></div>
+        <div class="project-header">
+          <div class="project-icon purple-icon"><i class="fas fa-clipboard-check"></i></div>
+          <div class="project-badges-top">
+            <span class="project-year">2026</span>
+            <span class="project-badge badge-grc">GRC</span>
+          </div>
+        </div>
+        <h3 class="project-title">NIST CSF 2.0 Gap Assessment</h3>
+        <p class="project-category">GRC / Compliance</p>
+        <p class="project-description">
+          Professional gap assessment for a fictional NHS supplier across all 6 CSF 2.0 functions —
+          maturity scoring, 12-month remediation roadmap, and UK GDPR supplier questionnaire.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">NIST CSF 2.0</span>
+          <span class="tech-pill">UK GDPR</span>
+          <span class="tech-pill">ISO 27001</span>
+          <span class="tech-pill">Risk Assessment</span>
+        </div>
+        <div class="project-footer">
+          <div class="mitre-mini"></div>
+          <span class="view-hint">Details <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </article>
+
+      <!-- 6. AWS Healthcare AI Triage — Case Study -->
+      <article class="project-card case-study-card reveal fade-up"
+               data-project="aws-arch"
+               role="button" tabindex="0"
+               aria-label="AWS Healthcare AI Triage Architecture — Case Study. Click to view details."
+               style="transition-delay:0.25s">
+        <div class="card-scan-line" aria-hidden="true"></div>
+        <div class="project-header">
+          <div class="project-icon amber-icon"><i class="fab fa-aws"></i></div>
+          <div class="project-badges-top">
+            <span class="project-year">2022</span>
+            <span class="project-badge badge-case">Case Study</span>
+          </div>
+        </div>
+        <h3 class="project-title">AWS Healthcare AI Triage</h3>
+        <p class="project-category">Cloud Security / Architecture Review</p>
+        <p class="project-description">
+          Led team threat-modelling of an AWS-hosted AI healthcare triage system — GDPR Art.9 violations
+          discovered drove strategic project cancellation, preventing regulatory exposure.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">AWS</span>
+          <span class="tech-pill">STRIDE</span>
+          <span class="tech-pill">GDPR Art.9</span>
+          <span class="tech-pill">Architecture</span>
+        </div>
+        <div class="project-footer">
+          <div class="mitre-mini"></div>
+          <span class="view-hint">Details <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ EDUCATION ════════════════════════════════ -->
+<section id="education">
+  <div class="section-inner">
+    <p class="section-label">// 04. education</p>
+    <h2 class="section-title">Education</h2>
+
+    <div class="timeline" id="education-timeline">
+
+      <div class="timeline-item reveal fade-left">
+        <div class="timeline-dot dot-green"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <span class="timeline-date">Sep 2023 – Jul 2026</span>
+            <span class="timeline-status">In Progress</span>
+          </div>
+          <h3 class="timeline-degree">BSc (Hons) Ethical Hacking &amp; Cyber Security</h3>
+          <p class="timeline-institution">
+            <i class="fas fa-graduation-cap"></i> Coventry University
+          </p>
+          <p class="timeline-grade">
+            Expected First-Class Honours &nbsp;·&nbsp; Current Average: <span class="text-green">76.67%</span>
+          </p>
+          <div class="timeline-modules">
+            <span class="module-tag">Digital Security Risk &amp; Audit — 73%</span>
+            <span class="module-tag">Security Operations — 67%</span>
+            <span class="module-tag">Info Security Management — 70%</span>
+            <span class="module-tag">Applied Cryptography — 75%</span>
+            <span class="module-tag">Advanced Penetration Testing — 71%</span>
+            <span class="module-tag">Research Project — 87%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal fade-left" style="transition-delay:0.2s">
+        <div class="timeline-dot dot-purple"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <span class="timeline-date">Sep 2020 – Jul 2022</span>
+            <span class="timeline-status complete">Completed</span>
+          </div>
+          <h3 class="timeline-degree">BTEC Level 3 National Diploma in IT</h3>
+          <p class="timeline-institution">
+            <i class="fas fa-graduation-cap"></i> Birmingham Metropolitan College
+          </p>
+          <p class="timeline-grade">
+            <span class="text-cyan">Double Distinction Merit</span>
+          </p>
+          <div class="timeline-modules">
+            <span class="module-tag">IT Project Management — Distinction</span>
+            <span class="module-tag">Programming — Distinction</span>
+            <span class="module-tag">Mobile Apps — Distinction</span>
+            <span class="module-tag">Cyber Security &amp; Incident Management</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ CERTIFICATIONS ════════════════════════════════ -->
+<section id="certifications">
+  <div class="section-inner">
+    <p class="section-label">// 05. certifications</p>
+    <h2 class="section-title">Certifications</h2>
+
+    <div class="certs-row">
+      <div class="cert-card reveal scale-in">
+        <div class="cert-badge-wrap">
+          <div class="cert-badge">
+            <i class="fas fa-shield-halved"></i>
+          </div>
+        </div>
+        <div class="cert-info">
+          <p class="cert-issuer">ISC2</p>
+          <h3 class="cert-name">Certified in Cybersecurity (CC)</h3>
+          <p class="cert-desc">
+            Vendor-neutral security certification covering risk management, network security,
+            security operations, and access controls.
+          </p>
+          <div class="cert-status">
+            <span class="status-dot"></span>
+            Exam Scheduled — 11 June 2026
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-card cert-placeholder reveal scale-in" style="transition-delay:0.15s">
+        <div class="cert-badge-wrap">
+          <div class="cert-badge cert-badge-dim">
+            <i class="fas fa-plus"></i>
+          </div>
+        </div>
+        <div class="cert-info">
+          <p class="cert-issuer">Future</p>
+          <h3 class="cert-name">More Certifications Coming</h3>
+          <p class="cert-desc">
+            Continuing professional development in SOC operations, threat hunting, and GRC disciplines.
+          </p>
+          <div class="cert-status cert-status-dim">
+            <span class="status-dot status-dot-dim"></span>
+            Planned — Post-Graduation 2026
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════ CONTACT ════════════════════════════════ -->
+<section id="contact">
+  <div class="section-inner contact-inner">
+    <p class="section-label">// 06. contact</p>
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="contact-intro">
+      Open to <span class="text-green">Junior SOC Analyst</span>,
+      <span class="text-cyan">GRC Analyst</span>, and
+      <span class="text-green">Cyber Threat Intelligence</span> roles in the UK.
+      Feel free to reach out through any channel below.
+    </p>
+
+    <!-- Contact form — submits via mailto, no backend needed -->
+    <form class="contact-form reveal fade-up" id="contact-form" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cf-name">Name</label>
+          <input type="text" id="cf-name" name="name" placeholder="Your name" autocomplete="name" required />
+        </div>
+        <div class="form-group">
+          <label for="cf-email">Email</label>
+          <input type="email" id="cf-email" name="email" placeholder="your@email.com" autocomplete="email" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cf-subject">Subject</label>
+        <input type="text" id="cf-subject" name="subject" placeholder="Job opportunity / Collaboration / Hello" required />
+      </div>
+      <div class="form-group">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" rows="5" placeholder="Your message..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+      <p class="form-note" id="form-status" aria-live="polite"></p>
+    </form>
+
+    <div class="contact-cards">
+      <a href="mailto:sm.shadman.hossain@gmail.com" class="contact-card reveal fade-up">
+        <div class="contact-icon-wrap">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-type">Email</span>
+          <span class="contact-value">sm.shadman.hossain@gmail.com</span>
+        </div>
+        <button class="copy-btn"
+                data-copy="sm.shadman.hossain@gmail.com"
+                aria-label="Copy email to clipboard"
+                onclick="event.preventDefault(); event.stopPropagation(); copyEmail(this);">
+          <i class="fas fa-copy"></i>
+        </button>
+      </a>
+
+      <a href="https://github.com/shaddiegit" target="_blank" rel="noopener noreferrer"
+         class="contact-card reveal fade-up" style="transition-delay:0.1s">
+        <div class="contact-icon-wrap">
+          <i class="fab fa-github"></i>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-type">GitHub</span>
+          <span class="contact-value">github.com/shaddiegit</span>
+        </div>
+        <i class="fas fa-external-link-alt contact-ext"></i>
+      </a>
+
+      <a href="https://www.linkedin.com/in/shadman-hossain1206" target="_blank" rel="noopener noreferrer"
+         class="contact-card reveal fade-up" style="transition-delay:0.2s">
+        <div class="contact-icon-wrap">
+          <i class="fab fa-linkedin-in"></i>
+        </div>
+        <div class="contact-detail">
+          <span class="contact-type">LinkedIn</span>
+          <span class="contact-value">linkedin.com/in/shadman-hossain1206</span>
+        </div>
+        <i class="fas fa-external-link-alt contact-ext"></i>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════ FOOTER ════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <p class="footer-name">
+      <span class="bracket">[</span>SH<span class="bracket">]</span>
+      <span class="text-green">Shadman Hossain</span>
+    </p>
+    <p class="footer-tagline">
+      <span class="text-muted">// Junior SOC Analyst · GRC Analyst · Cyber Threat Intelligence</span>
+    </p>
+    <p class="footer-copy">
+      Coventry, UK &nbsp;·&nbsp; &copy; 2026 &nbsp;·&nbsp;
+      <span class="text-muted">Built with HTML · CSS · JavaScript · GitHub Pages</span>
+    </p>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════ PROJECT MODAL ════════════════════════════════ -->
+<div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+    <button class="modal-close" id="modal-close" aria-label="Close project details">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <div class="modal-header">
+      <div class="modal-icon-wrap" id="modal-icon-wrap">
+        <i class="fas fa-folder" id="modal-icon"></i>
+      </div>
+      <div class="modal-header-text">
+        <p class="modal-category-label" id="modal-category-label"></p>
+        <h2 class="modal-title" id="modal-title"></h2>
+      </div>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="modal-section">
+        <h3 class="modal-section-heading">Overview</h3>
+        <p class="modal-description" id="modal-description"></p>
+      </div>
+
+      <div class="modal-section" id="modal-highlights-wrap">
+        <h3 class="modal-section-heading">Key Highlights</h3>
+        <ul class="modal-highlights" id="modal-highlights"></ul>
+      </div>
+
+      <div class="modal-section" id="modal-tech-wrap">
+        <h3 class="modal-section-heading">Technologies</h3>
+        <div class="tech-pills" id="modal-tech-pills"></div>
+      </div>
+
+      <div class="modal-section" id="modal-mitre-wrap">
+        <h3 class="modal-section-heading">MITRE ATT&amp;CK Techniques</h3>
+        <div class="modal-mitre-grid" id="modal-mitre-grid"></div>
+      </div>
+
+      <div class="modal-note" id="modal-note" style="display:none">
+        <i class="fas fa-circle-info"></i>
+        <span id="modal-note-text"></span>
+      </div>
+
+      <div class="modal-actions" id="modal-actions"></div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Scroll to top -->
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<!-- Custom cursor -->
+<div id="cursor-dot"  aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+
+<script src="script.js" defer></script>
+</body>
+</html>
