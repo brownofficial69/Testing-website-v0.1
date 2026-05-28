@@ -1405,25 +1405,188 @@ function initGSAP() {
 }
 
 /* ════════════════════════════════════════════════════════════
+   SECTION TITLE GLITCH ON SCROLL ENTER
+   ════════════════════════════════════════════════════════════ */
+function initSectionTitleGlitch() {
+  const titles = document.querySelectorAll('.section-title');
+  if (!titles.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      el.classList.add('title-glitch');
+      el.addEventListener('animationend', () => el.classList.remove('title-glitch'), { once: true });
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+
+  titles.forEach(t => observer.observe(t));
+}
+
+/* ════════════════════════════════════════════════════════════
+   CLICK RIPPLE
+   ════════════════════════════════════════════════════════════ */
+function initClickRipple() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  document.addEventListener('click', e => {
+    if (e.target.closest('a, button, input, textarea, .project-card, .copy-btn')) return;
+    const el = document.createElement('div');
+    el.className = 'click-ripple';
+    el.style.left = e.clientX + 'px';
+    el.style.top  = e.clientY + 'px';
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove(), { once: true });
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   SIDE SECTION NAVIGATION DOTS
+   ════════════════════════════════════════════════════════════ */
+function initSectionDots() {
+  const SECTIONS = [
+    { id: 'hero',           label: 'Home' },
+    { id: 'about',          label: 'About' },
+    { id: 'skills',         label: 'Skills' },
+    { id: 'projects',       label: 'Projects' },
+    { id: 'education',      label: 'Education' },
+    { id: 'certifications', label: 'Certs' },
+    { id: 'contact',        label: 'Contact' },
+  ];
+
+  const nav = document.createElement('nav');
+  nav.className = 'section-dots';
+  nav.setAttribute('aria-label', 'Section navigation');
+
+  SECTIONS.forEach(({ id, label }) => {
+    const btn = document.createElement('button');
+    btn.className = 'section-dot';
+    btn.setAttribute('aria-label', `Go to ${label}`);
+    btn.setAttribute('title', label);
+    btn.dataset.section = id;
+    btn.addEventListener('click', () => {
+      SoundEngine.play('click');
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    });
+    btn.addEventListener('mouseenter', () => SoundEngine.play('tick'));
+    nav.appendChild(btn);
+  });
+
+  document.body.appendChild(nav);
+
+  function updateDots() {
+    const mid = window.scrollY + window.innerHeight * 0.5;
+    let current = SECTIONS[0].id;
+    SECTIONS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el && mid >= el.offsetTop) current = id;
+    });
+    nav.querySelectorAll('.section-dot').forEach(d => d.classList.remove('active'));
+    const dot = nav.querySelector(`[data-section="${current}"]`);
+    if (dot) dot.classList.add('active');
+  }
+
+  window.addEventListener('scroll', updateDots, { passive: true });
+  updateDots();
+}
+
+/* ════════════════════════════════════════════════════════════
+   BOOT SEQUENCE  (once per browser session)
+   ════════════════════════════════════════════════════════════ */
+function initBootSequence() {
+  const screen = document.getElementById('boot-screen');
+  if (!screen) return;
+
+  if (sessionStorage.getItem('sh-booted')) {
+    screen.style.display = 'none';
+    return;
+  }
+
+  const logEl  = document.getElementById('boot-log');
+  const barEl  = document.getElementById('boot-bar');
+  const status = document.getElementById('boot-status');
+  document.body.classList.add('no-scroll');
+
+  /* Mini matrix inside boot screen */
+  const bc = document.getElementById('boot-matrix');
+  if (bc) {
+    const bctx = bc.getContext('2d');
+    bc.width  = window.innerWidth;
+    bc.height = window.innerHeight;
+    const BFONT = 12;
+    const BCHARS = 'ｦｧｨｩｪｫｬｭｮｯABCDEF0123456789';
+    const bcols = Array.from({ length: Math.floor(bc.width / BFONT) }, (_, i) => ({
+      x: i * BFONT, y: Math.random() * -bc.height,
+      speed: 0.5 + Math.random() * 1.5,
+      opacity: 0.04 + Math.random() * 0.10,
+    })).filter(() => Math.random() > 0.5);
+
+    (function bframe() {
+      if (!document.getElementById('boot-screen') || screen.style.display === 'none') return;
+      bctx.clearRect(0, 0, bc.width, bc.height);
+      bctx.font = `${BFONT}px 'JetBrains Mono',monospace`;
+      bcols.forEach(col => {
+        col.y += col.speed;
+        if (col.y > bc.height + 160) col.y = -Math.random() * bc.height;
+        bctx.fillStyle = `rgba(0,255,136,${col.opacity})`;
+        bctx.fillText(BCHARS[Math.floor(Math.random() * BCHARS.length)], col.x, col.y);
+      });
+      requestAnimationFrame(bframe);
+    })();
+  }
+
+  const LINES = [
+    { text: '[ OK ]  Loading security modules',           cls: 'boot-ok'   },
+    { text: '[ OK ]  Initialising threat detection engine', cls: 'boot-ok' },
+    { text: '[ OK ]  Connecting to MITRE ATT&CK framework', cls: 'boot-ok' },
+    { text: '[ OK ]  Mounting cryptographic subsystems',  cls: 'boot-ok'   },
+    { text: '[ WARN] cv.pdf not found — download disabled', cls: 'boot-warn'},
+    { text: '[ OK ]  Portfolio matrix initialised',       cls: 'boot-ok'   },
+    { text: '[ OK ]  All systems operational. Welcome.',  cls: 'boot-info'  },
+  ];
+
+  /* Start progress bar */
+  setTimeout(() => { if (barEl) barEl.style.width = '100%'; }, 60);
+
+  /* Print lines with delay */
+  LINES.forEach((line, i) => {
+    setTimeout(() => {
+      if (!logEl) return;
+      const div = document.createElement('div');
+      div.className = `boot-line`;
+      div.innerHTML = `<span class="${line.cls}">${line.text}</span>`;
+      logEl.appendChild(div);
+    }, 280 + i * 310);
+  });
+
+  /* Dismiss */
+  const dismissAt = 280 + LINES.length * 310 + 350;
+  setTimeout(() => {
+    if (status) status.textContent = 'SYSTEM READY';
+    setTimeout(() => {
+      screen.classList.add('fade-out');
+      document.body.classList.remove('no-scroll');
+      setTimeout(() => { screen.style.display = 'none'; }, 750);
+    }, 420);
+  }, dismissAt);
+
+  sessionStorage.setItem('sh-booted', '1');
+}
+
+/* ════════════════════════════════════════════════════════════
    CUSTOM CURSOR
    ════════════════════════════════════════════════════════════ */
 function initCursor() {
   const dot  = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
   if (!dot || !ring) return;
-
-  /* touch devices: hide entirely */
-  if (window.matchMedia('(pointer: coarse)').matches) {
-    dot.style.display  = 'none';
-    ring.style.display = 'none';
-    document.body.style.cursor = '';
-    document.querySelectorAll('a,button,[role="button"],.project-card,.contact-card,input,textarea')
-      .forEach(el => { el.style.cursor = ''; });
-    return;
-  }
+  if (window.matchMedia('(pointer: coarse)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   let mx = -100, my = -100;
-  let rx = -100, ry = -100;
+  let rx = mx,   ry = my;
 
   document.addEventListener('mousemove', e => {
     mx = e.clientX;
@@ -1432,172 +1595,227 @@ function initCursor() {
     dot.style.top  = my + 'px';
   });
 
-  document.addEventListener('mouseleave', () => document.body.classList.add('cursor-hidden'));
-  document.addEventListener('mouseenter', () => document.body.classList.remove('cursor-hidden'));
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity  = '0';
+    ring.style.opacity = '0';
+  });
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity  = '1';
+    ring.style.opacity = '1';
+  });
 
-  /* Lerp the ring slightly behind */
-  (function lerpRing() {
-    rx += (mx - rx) * 0.14;
-    ry += (my - ry) * 0.14;
+  (function lerp() {
+    rx += (mx - rx) * 0.13;
+    ry += (my - ry) * 0.13;
     ring.style.left = rx + 'px';
     ring.style.top  = ry + 'px';
-    requestAnimationFrame(lerpRing);
+    requestAnimationFrame(lerp);
   })();
 
-  /* Expand ring on interactive hover */
-  const hoverTargets = 'a, button, .project-card, .contact-card, .skill-tag, input, textarea';
-  document.querySelectorAll(hoverTargets).forEach(el => {
+  const hoverSel = 'a, button, .project-card, .skill-tag, .contact-card, .cert-card, .stat-card, [role="button"], input, textarea, .copy-btn, .scroll-top';
+  document.querySelectorAll(hoverSel).forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
   });
-
-  /* Click pulse */
-  document.addEventListener('mousedown', () => { dot.style.transform = 'translate(-50%,-50%) scale(0.6)'; });
-  document.addEventListener('mouseup',   () => { dot.style.transform = 'translate(-50%,-50%) scale(1)'; });
 }
 
 /* ════════════════════════════════════════════════════════════
-   BOOT SEQUENCE
+   AMBIENT CODE TOKENS
    ════════════════════════════════════════════════════════════ */
-function initBootSequence() {
-  /* Only show once per session */
-  if (sessionStorage.getItem('booted')) return dismissBoot(0);
+function initAmbientText() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const screen   = document.getElementById('boot-screen');
-  const log      = document.getElementById('boot-log');
-  const bar      = document.getElementById('boot-bar');
-  const skipBtn  = document.getElementById('boot-skip');
-  const bootCanvas = document.getElementById('boot-canvas');
-  if (!screen || !log) return;
-
-  /* Mini matrix on the boot canvas */
-  if (bootCanvas) {
-    const bctx  = bootCanvas.getContext('2d');
-    bootCanvas.width  = window.innerWidth;
-    bootCanvas.height = window.innerHeight;
-    const BFONT = 13;
-    const BCHARS = 'ｦｧｨｩｱｲｳｴｵｶｷｸｹｺｻｼｽABCDEFGHIJKL0123456789!@#%^&*';
-    const bcols  = [];
-    const bcount = Math.floor(bootCanvas.width / BFONT);
-    for (let i = 0; i < bcount; i++) {
-      if (Math.random() > 0.5) continue;
-      bcols.push({ x: i * BFONT, y: Math.random() * -bootCanvas.height,
-                   speed: 0.8 + Math.random() * 1.5, opacity: 0.12 + Math.random() * 0.25,
-                   chars: Array.from({length: 18}, () => BCHARS[Math.floor(Math.random()*BCHARS.length)]) });
-    }
-    (function bframe() {
-      if (!document.getElementById('boot-screen')) return;
-      bctx.clearRect(0, 0, bootCanvas.width, bootCanvas.height);
-      bctx.font = `${BFONT}px 'JetBrains Mono', monospace`;
-      bcols.forEach(c => {
-        c.y += c.speed;
-        if (c.y > bootCanvas.height + 200) c.y = -200;
-        c.chars.forEach((ch, i) => {
-          const cy = c.y + i * BFONT;
-          if (cy < 0 || cy > bootCanvas.height) return;
-          const a = c.opacity * (1 - i / c.chars.length);
-          bctx.fillStyle = `rgba(0,255,136,${a})`;
-          bctx.fillText(ch, c.x, cy);
-        });
-      });
-      requestAnimationFrame(bframe);
-    })();
-  }
-
-  const LINES = [
-    { text: 'Loading security modules',        delay: 0    },
-    { text: 'Establishing encrypted session',  delay: 420  },
-    { text: 'Scanning threat intelligence',    delay: 840  },
-    { text: 'Compiling detection signatures',  delay: 1260 },
-    { text: 'Verifying cryptographic keys',    delay: 1680 },
-    { text: 'Mounting portfolio filesystem',   delay: 2100 },
-    { text: 'Access granted — Welcome back',   delay: 2520 },
+  const pool = [
+    '0xDEADBEEF','T1059.001','0.0.0.0/0','443/tcp','CVE-2024-1234',
+    'SHA-256','10.0.0.1','AES-256-GCM','MITRE','80/http',
+    'T1071.001','0xff4c','RSA-4096','22/ssh','T1548.003',
+    'NIST CSF 2.0','ISO27001','0x00ff88','T1190','4444/tcp',
+    'bcrypt','JWT','OSINT','T1566','IOC','T1110.001',
+    'GDPR Art.9','STRIDE','T1041','Sigma','Wazuh',
   ];
 
-  let done = false;
+  const sections = document.querySelectorAll(
+    '#about, #skills, #projects, #education, #certifications, #contact'
+  );
 
-  function dismissBoot(delay = 0) {
-    if (done) return;
-    done = true;
-    sessionStorage.setItem('booted', '1');
-    setTimeout(() => {
-      screen.classList.add('fade-out');
-      setTimeout(() => { screen.style.display = 'none'; }, 850);
-    }, delay);
-  }
-
-  skipBtn.addEventListener('click', () => dismissBoot(0));
-
-  LINES.forEach(({ text, delay }, i) => {
-    setTimeout(() => {
-      const line = document.createElement('div');
-      line.className = 'line';
-      line.textContent = text;
-      log.appendChild(line);
-      /* tick each line */
-      SoundEngine.play('type');
-      /* progress bar */
-      bar.style.width = `${((i + 1) / LINES.length) * 100}%`;
-      if (i === LINES.length - 1) {
-        line.classList.add('ok');
-        SoundEngine.play('success');
-        dismissBoot(600);
-      }
-    }, delay);
+  sections.forEach(section => {
+    for (let i = 0; i < 20; i++) {
+      const span = document.createElement('span');
+      span.className = 'ambient-token';
+      span.textContent = pool[Math.floor(Math.random() * pool.length)];
+      span.style.left      = Math.random() * 96 + '%';
+      span.style.top       = Math.random() * 96 + '%';
+      span.style.opacity   = (0.028 + Math.random() * 0.062).toFixed(3);
+      span.style.fontSize  = (0.58 + Math.random() * 0.46).toFixed(2) + 'rem';
+      span.style.transform = `rotate(${((Math.random() - 0.5) * 26).toFixed(1)}deg)`;
+      section.appendChild(span);
+    }
   });
 }
 
-function dismissBoot(delay) {
-  const screen = document.getElementById('boot-screen');
-  if (!screen) return;
-  setTimeout(() => {
-    screen.classList.add('fade-out');
-    setTimeout(() => { screen.style.display = 'none'; }, 850);
-  }, delay);
+/* ════════════════════════════════════════════════════════════
+   FULL-PAGE MATRIX BACKGROUND
+   ════════════════════════════════════════════════════════════ */
+function initMatrixBg() {
+  const canvas = document.getElementById('matrix-bg');
+  if (!canvas) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = canvas.getContext('2d');
+  const CHARS =
+    'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ' +
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEF!@#$%&*<>[]{}/\\|';
+  const FONT = 13;
+  let cols = [];
+
+  function randChar() {
+    return CHARS[Math.floor(Math.random() * CHARS.length)];
+  }
+
+  function initCols() {
+    cols = [];
+    const count = Math.floor(canvas.width / FONT);
+    for (let i = 0; i < count; i++) {
+      if (Math.random() > 0.48) continue;
+      const len = 8 + Math.floor(Math.random() * 20);
+      cols.push({
+        x:       i * FONT,
+        y:       Math.random() * -canvas.height,
+        speed:   0.35 + Math.random() * 1.1,
+        chars:   Array.from({ length: len + 4 }, randChar),
+        len,
+        opacity: 0.035 + Math.random() * 0.09,
+        acc:     0,
+      });
+    }
+  }
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initCols();
+  }
+
+  let lastTs = 0;
+  function frame(ts) {
+    const dt = Math.min(ts - lastTs, 50);
+    lastTs = ts;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = `${FONT}px 'JetBrains Mono', monospace`;
+
+    cols.forEach(col => {
+      col.y   += col.speed;
+      col.acc += dt;
+      if (col.acc > 90 + Math.random() * 110) {
+        col.acc = 0;
+        col.chars[Math.floor(Math.random() * col.chars.length)] = randChar();
+      }
+      if (col.y > canvas.height + col.len * FONT) {
+        col.y       = -(col.len * FONT + Math.random() * canvas.height * 0.6);
+        col.speed   = 0.35 + Math.random() * 1.1;
+        col.opacity = 0.035 + Math.random() * 0.09;
+        col.len     = 8 + Math.floor(Math.random() * 20);
+      }
+      for (let i = 0; i < col.len; i++) {
+        const cy = col.y + i * FONT;
+        if (cy < -FONT || cy > canvas.height) continue;
+        const isHead = i === col.len - 1;
+        const fade   = isHead ? 1 : (1 - i / col.len) * 0.85;
+        const bright = isHead ? Math.min(col.opacity * 4, 0.85) : col.opacity * fade;
+        ctx.fillStyle = isHead
+          ? `rgba(180,255,220,${bright})`
+          : `rgba(0,255,136,${bright})`;
+        ctx.fillText(col.chars[i % col.chars.length], col.x, cy);
+      }
+    });
+
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(frame);
 }
 
 /* ════════════════════════════════════════════════════════════
-   STAT COUNTERS  (About section — animate on scroll in)
+   SCROLL PROGRESS BAR
+   ════════════════════════════════════════════════════════════ */
+function initScrollProgress() {
+  const bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  document.body.prepend(bar);
+  window.addEventListener('scroll', () => {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    if (total > 0) bar.style.width = (window.scrollY / total * 100) + '%';
+  }, { passive: true });
+}
+
+/* ════════════════════════════════════════════════════════════
+   PROJECT CARD — 3D TILT ON MOUSEMOVE
+   ════════════════════════════════════════════════════════════ */
+function initCardTilt() {
+  const MAX = 7;
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r  = card.getBoundingClientRect();
+      const dx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
+      const dy = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+      card.style.transform = `translateY(-5px) rotateX(${-dy * MAX}deg) rotateY(${dx * MAX}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   STAT COUNT-UP ANIMATION
    ════════════════════════════════════════════════════════════ */
 function initStatCounters() {
-  const counters = document.querySelectorAll('.stat-value[data-count]');
-  if (!counters.length) return;
+  const vals = document.querySelectorAll('.stat-value');
+  if (!vals.length) return;
 
-  const easeOut = t => 1 - Math.pow(1 - t, 3);
-
-  const obs = new IntersectionObserver(entries => {
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      const el       = entry.target;
-      const target   = parseFloat(el.dataset.count);
-      const decimals = parseInt(el.dataset.decimals || 0);
-      const suffix   = el.dataset.suffix || '';
-      const duration = 1400;
-      const start    = performance.now();
-
-      function step(now) {
-        const t   = Math.min((now - start) / duration, 1);
-        const val = easeOut(t) * target;
-        el.textContent = val.toFixed(decimals) + suffix;
-        if (t < 1) requestAnimationFrame(step);
-        else el.textContent = target.toFixed(decimals) + suffix;
-      }
-
-      requestAnimationFrame(step);
-      obs.unobserve(el);
+      const el   = entry.target;
+      const node = el.childNodes[0];
+      if (!node) return;
+      const raw  = node.textContent.trim();
+      const num  = parseFloat(raw);
+      if (isNaN(num)) return;
+      const dec  = raw.includes('.') ? 2 : 0;
+      const dur  = 1400;
+      const t0   = performance.now();
+      (function step(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        node.textContent = (e * num).toFixed(dec);
+        if (p < 1) requestAnimationFrame(step);
+        else node.textContent = raw;
+      })(t0);
+      observer.unobserve(el);
     });
   }, { threshold: 0.6 });
 
-  counters.forEach(el => obs.observe(el));
+  vals.forEach(el => observer.observe(el));
 }
 
 /* ════════════════════════════════════════════════════════════
    BOOT
    ════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  initCursor();
   initBootSequence();
   initMatrixBg();
+  initCursor();
+  initAmbientText();
+  initSectionTitleGlitch();
+  initClickRipple();
+  initSectionDots();
+  initScrollProgress();
+  initCardTilt();
+  initStatCounters();
   initCanvas();
   initTyping();
   initGlitch();
