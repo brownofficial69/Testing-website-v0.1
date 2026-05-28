@@ -168,9 +168,18 @@ button { cursor: pointer; border: none; background: none; color: inherit; font: 
 /* ════════════════════════════════════════════════════════════
    SECTION SHARED STYLES
    ════════════════════════════════════════════════════════════ */
+/* Full-page matrix canvas — sits behind all sections */
+#matrix-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
 section {
   padding: var(--section-y) 0;
   position: relative;
+  z-index: 2;
 }
 
 .section-inner {
@@ -518,9 +527,7 @@ section {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: radial-gradient(ellipse at 20% 60%, rgba(0,255,136,0.025) 0%, transparent 55%),
-              radial-gradient(ellipse at 80% 20%, rgba(0,212,255,0.025) 0%, transparent 55%),
-              var(--bg-primary);
+  background: transparent;
 }
 
 /* Scan line sweeping the hero */
@@ -689,13 +696,10 @@ section {
    ════════════════════════════════════════════════════════════ */
 #about {
   position: relative;
-  background-color: var(--bg-primary);
+  background-color: rgba(3, 13, 26, 0.72);
   background-image:
-    radial-gradient(circle, rgba(0,255,136,0.07) 1px, transparent 1px),
-    radial-gradient(ellipse 70% 60% at 0% 100%, rgba(0,255,136,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 100% 0%, rgba(0,212,255,0.05) 0%, transparent 60%),
-    linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-  background-size: 30px 30px, auto, auto, auto;
+    radial-gradient(ellipse 70% 60% at 0% 100%, rgba(0,255,136,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 0%, rgba(0,212,255,0.05) 0%, transparent 60%);
 }
 #about .section-inner { position: relative; z-index: 1; }
 
@@ -848,13 +852,11 @@ section {
    SKILLS
    ════════════════════════════════════════════════════════════ */
 #skills {
-  background-color: var(--bg-primary);
+  background-color: rgba(3, 13, 26, 0.75);
   background-image:
-    radial-gradient(circle, rgba(0,255,136,0.09) 1px, transparent 1px),
-    radial-gradient(ellipse 55% 50% at 0% 100%, rgba(0,255,136,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 55% at 100% 0%, rgba(0,212,255,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 50% at 0% 100%, rgba(0,255,136,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 55% at 100% 0%, rgba(0,212,255,0.06) 0%, transparent 60%),
     radial-gradient(ellipse 35% 35% at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 70%);
-  background-size: 26px 26px, auto, auto, auto;
 }
 
 .skills-rows {
@@ -948,9 +950,8 @@ section {
    PROJECTS
    ════════════════════════════════════════════════════════════ */
 #projects {
-  background-color: var(--bg-secondary);
+  background-color: rgba(7, 20, 40, 0.75);
   background-image:
-    repeating-linear-gradient(135deg, rgba(0,255,136,0.022) 0px, rgba(0,255,136,0.022) 1px, transparent 0px, transparent 28px),
     radial-gradient(ellipse 65% 55% at 100% 50%, rgba(124,58,237,0.08) 0%, transparent 65%),
     radial-gradient(ellipse 50% 60% at 0% 50%, rgba(0,255,136,0.06) 0%, transparent 60%),
     radial-gradient(ellipse 40% 40% at 50% 100%, rgba(0,212,255,0.05) 0%, transparent 60%);
@@ -1130,10 +1131,8 @@ section {
    EDUCATION
    ════════════════════════════════════════════════════════════ */
 #education {
-  background-color: var(--bg-primary);
+  background-color: rgba(3, 13, 26, 0.72);
   background-image:
-    repeating-linear-gradient(180deg, transparent 0px, transparent 55px, rgba(0,255,136,0.03) 55px, rgba(0,255,136,0.03) 56px),
-    repeating-linear-gradient(90deg, transparent 0px, transparent 55px, rgba(0,255,136,0.015) 55px, rgba(0,255,136,0.015) 56px),
     radial-gradient(ellipse 70% 40% at 50% 0%, rgba(0,212,255,0.06) 0%, transparent 70%),
     radial-gradient(ellipse 50% 50% at 50% 100%, rgba(0,255,136,0.05) 0%, transparent 65%);
 }
@@ -1264,13 +1263,11 @@ section {
    CERTIFICATIONS
    ════════════════════════════════════════════════════════════ */
 #certifications {
-  background-color: var(--bg-secondary);
+  background-color: rgba(7, 20, 40, 0.74);
   background-image:
-    radial-gradient(circle, rgba(0,255,136,0.08) 1px, transparent 1px),
-    radial-gradient(ellipse 55% 70% at 50% 50%, rgba(0,255,136,0.07) 0%, transparent 65%),
-    radial-gradient(ellipse 35% 40% at 10% 90%, rgba(124,58,237,0.07) 0%, transparent 55%),
-    radial-gradient(ellipse 35% 40% at 90% 10%, rgba(0,212,255,0.06) 0%, transparent 55%);
-  background-size: 22px 22px, auto, auto, auto;
+    radial-gradient(ellipse 55% 70% at 50% 50%, rgba(0,255,136,0.06) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 40% at 10% 90%, rgba(124,58,237,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 35% 40% at 90% 10%, rgba(0,212,255,0.05) 0%, transparent 55%);
 }
 
 .certs-row {
@@ -1493,14 +1490,11 @@ section {
 }
 
 #contact {
-  background-color: var(--bg-primary);
+  background-color: rgba(3, 13, 26, 0.72);
   background-image:
-    linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px),
     radial-gradient(ellipse 65% 45% at 50% 100%, rgba(0,212,255,0.07) 0%, transparent 65%),
     radial-gradient(ellipse 40% 50% at 90% 10%, rgba(0,255,136,0.06) 0%, transparent 60%),
     radial-gradient(ellipse 30% 40% at 10% 80%, rgba(124,58,237,0.05) 0%, transparent 55%);
-  background-size: 44px 44px, 44px 44px, auto, auto, auto;
 }
 
 .contact-inner { max-width: 700px; }
@@ -1608,10 +1602,12 @@ section {
    FOOTER
    ════════════════════════════════════════════════════════════ */
 footer {
-  background: var(--bg-secondary);
+  background: rgba(7, 20, 40, 0.80);
   border-top: 1px solid var(--border-subtle);
   padding: 2.5rem var(--section-x);
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 .footer-inner {

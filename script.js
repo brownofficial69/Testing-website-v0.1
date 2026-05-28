@@ -290,6 +290,97 @@ function initSoundToggle() {
 }
 
 /* ════════════════════════════════════════════════════════════
+   FULL-PAGE MATRIX BACKGROUND CANVAS
+   Fixed behind all sections — the primary matrix rain effect
+   ════════════════════════════════════════════════════════════ */
+function initMatrixBg() {
+  const canvas = document.getElementById('matrix-bg');
+  if (!canvas) return;
+
+  const ctx     = canvas.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) return;
+
+  const FONT   = 14;
+  const CHARS  =
+    'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ' +
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*<>[]{}|\\/:;' +
+    '01001101010011010001100101';
+  let cols = [];
+
+  function randChar() {
+    return CHARS[Math.floor(Math.random() * CHARS.length)];
+  }
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initCols();
+  }
+
+  function initCols() {
+    cols = [];
+    const count = Math.floor(canvas.width / FONT);
+    for (let i = 0; i < count; i++) {
+      if (Math.random() > 0.52) continue;
+      const len = 10 + Math.floor(Math.random() * 26);
+      cols.push({
+        x:          i * FONT,
+        y:          Math.random() * -canvas.height,
+        speed:      0.65 + Math.random() * 1.9,
+        chars:      Array.from({ length: len + 4 }, randChar),
+        len,
+        opacity:    0.20 + Math.random() * 0.38,
+        mutateAcc:  0,
+        mutateEvery:45 + Math.random() * 120,
+      });
+    }
+  }
+
+  let lastTs = 0;
+  function frame(ts) {
+    const dt = Math.min(ts - lastTs, 50);
+    lastTs = ts;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = `${FONT}px 'JetBrains Mono', monospace`;
+
+    cols.forEach(col => {
+      col.y        += col.speed;
+      col.mutateAcc += dt;
+      if (col.mutateAcc > col.mutateEvery) {
+        col.mutateAcc = 0;
+        col.chars[Math.floor(Math.random() * col.chars.length)] = randChar();
+      }
+      if (col.y > canvas.height + col.len * FONT) {
+        col.y      = -(col.len * FONT + Math.random() * canvas.height * 0.4);
+        col.speed  = 0.65 + Math.random() * 1.9;
+        col.opacity= 0.20 + Math.random() * 0.38;
+        col.len    = 10 + Math.floor(Math.random() * 26);
+      }
+
+      for (let i = 0; i < col.len; i++) {
+        const cy = col.y + i * FONT;
+        if (cy < -FONT || cy > canvas.height) continue;
+        const isHead = i === col.len - 1;
+        const fade   = isHead ? 1 : (1 - i / col.len) * 0.88;
+        const a      = isHead ? Math.min(col.opacity * 3.8, 1) : col.opacity * fade;
+        ctx.fillStyle = isHead
+          ? `rgba(200,255,220,${a})`
+          : `rgba(0,255,136,${a})`;
+        ctx.fillText(col.chars[i % col.chars.length], col.x, cy);
+      }
+    });
+
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  requestAnimationFrame(frame);
+  window.addEventListener('resize', resize);
+}
+
+/* ════════════════════════════════════════════════════════════
    CANVAS — MULTI-LAYER MATRIX ANIMATION ENGINE
    Layers (back→front):
      1. Hex grid          — pulsing hexagonal lattice
@@ -314,7 +405,6 @@ function initCanvas() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
     initHexGrid();
-    initMatrixColumns();
   }
 
   /* ════ LAYER 1 — HEX GRID ════ */
@@ -688,7 +778,6 @@ function initCanvas() {
 
     if (!reduced) {
       updateHexGrid(ts);   drawHexGrid();
-      updateMatrix(dt);    drawMatrix();
                            drawRadar();
       updateStreams(dt);   drawStreams();
     }
@@ -1319,6 +1408,7 @@ function initGSAP() {
    BOOT
    ════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  initMatrixBg();
   initCanvas();
   initTyping();
   initGlitch();
