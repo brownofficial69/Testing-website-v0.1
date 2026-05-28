@@ -1248,6 +1248,91 @@ function initGSAP() {
 }
 
 /* ════════════════════════════════════════════════════════════
+   FULL-PAGE MATRIX BACKGROUND
+   ════════════════════════════════════════════════════════════ */
+function initMatrixBg() {
+  const canvas = document.getElementById('matrix-bg');
+  if (!canvas) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = canvas.getContext('2d');
+  const CHARS =
+    'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ' +
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEF!@#$%&*<>[]{}/\\|';
+  const FONT = 13;
+  let cols = [];
+
+  function randChar() {
+    return CHARS[Math.floor(Math.random() * CHARS.length)];
+  }
+
+  function initCols() {
+    cols = [];
+    const count = Math.floor(canvas.width / FONT);
+    for (let i = 0; i < count; i++) {
+      if (Math.random() > 0.48) continue;
+      const len = 8 + Math.floor(Math.random() * 20);
+      cols.push({
+        x:       i * FONT,
+        y:       Math.random() * -canvas.height,
+        speed:   0.35 + Math.random() * 1.1,
+        chars:   Array.from({ length: len + 4 }, randChar),
+        len,
+        opacity: 0.035 + Math.random() * 0.09,
+        acc:     0,
+      });
+    }
+  }
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initCols();
+  }
+
+  let lastTs = 0;
+  function frame(ts) {
+    const dt = Math.min(ts - lastTs, 50);
+    lastTs = ts;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = `${FONT}px 'JetBrains Mono', monospace`;
+
+    cols.forEach(col => {
+      col.y   += col.speed;
+      col.acc += dt;
+      if (col.acc > 90 + Math.random() * 110) {
+        col.acc = 0;
+        col.chars[Math.floor(Math.random() * col.chars.length)] = randChar();
+      }
+      if (col.y > canvas.height + col.len * FONT) {
+        col.y       = -(col.len * FONT + Math.random() * canvas.height * 0.6);
+        col.speed   = 0.35 + Math.random() * 1.1;
+        col.opacity = 0.035 + Math.random() * 0.09;
+        col.len     = 8 + Math.floor(Math.random() * 20);
+      }
+      for (let i = 0; i < col.len; i++) {
+        const cy = col.y + i * FONT;
+        if (cy < -FONT || cy > canvas.height) continue;
+        const isHead = i === col.len - 1;
+        const fade   = isHead ? 1 : (1 - i / col.len) * 0.85;
+        const bright = isHead ? Math.min(col.opacity * 4, 0.85) : col.opacity * fade;
+        ctx.fillStyle = isHead
+          ? `rgba(180,255,220,${bright})`
+          : `rgba(0,255,136,${bright})`;
+        ctx.fillText(col.chars[i % col.chars.length], col.x, cy);
+      }
+    });
+
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(frame);
+}
+
+/* ════════════════════════════════════════════════════════════
    SCROLL PROGRESS BAR
    ════════════════════════════════════════════════════════════ */
 function initScrollProgress() {
@@ -1315,6 +1400,7 @@ function initStatCounters() {
    BOOT
    ════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  initMatrixBg();
   initScrollProgress();
   initCardTilt();
   initStatCounters();
