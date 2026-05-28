@@ -290,62 +290,288 @@ function initSoundToggle() {
 }
 
 /* ════════════════════════════════════════════════════════════
-   CANVAS PARTICLE ENGINE
+   CANVAS — MULTI-LAYER MATRIX ANIMATION ENGINE
+   Layers (back→front):
+     1. Hex grid          — pulsing hexagonal lattice
+     2. Matrix rain       — falling katakana / latin / binary
+     3. Radar sweep       — rotating arc (top-right)
+     4. Data streams      — scrolling hex packets
+     5. Particle network  — mouse-reactive nodes + connections
+     6. Scan line         — bouncing horizontal glow
+     7. Corner brackets   — animated terminal corners
+     8. Glitch            — occasional slice displacement
    ════════════════════════════════════════════════════════════ */
 function initCanvas() {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
 
-  const ctx = canvas.getContext('2d');
-  let animId;
+  const ctx  = canvas.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mouse = { x: null, y: null };
-  const PARTICLE_COUNT = window.innerWidth < 768 ? 50 : 90;
-  const CONNECTION_DIST = 130;
-  let particles = [];
 
+  /* ── resize ── */
   function resize() {
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
+    initHexGrid();
+    initMatrixColumns();
   }
+
+  /* ════ LAYER 1 — HEX GRID ════ */
+  const HEX_R = 36;
+  let hexCells = [];
+
+  function initHexGrid() {
+    hexCells = [];
+    const hx = HEX_R * Math.sqrt(3);
+    const hy = HEX_R * 1.5;
+    for (let row = 0; row * hy < canvas.height + HEX_R * 2; row++) {
+      for (let col = 0; col * hx < canvas.width + hx; col++) {
+        hexCells.push({
+          x:         col * hx + (row % 2 ? hx / 2 : 0),
+          y:         row * hy,
+          pulse:     0,
+          nextPulse: Math.random() * 10000,
+        });
+      }
+    }
+  }
+
+  function hexPath(cx, cy, r) {
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a  = (Math.PI / 3) * i - Math.PI / 6;
+      const px = cx + r * Math.cos(a);
+      const py = cy + r * Math.sin(a);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+  }
+
+  function updateHexGrid(ts) {
+    hexCells.forEach(c => {
+      if (ts > c.nextPulse) {
+        c.pulse     = 1;
+        c.nextPulse = ts + 4000 + Math.random() * 14000;
+      }
+      if (c.pulse > 0) c.pulse = Math.max(0, c.pulse - 0.018);
+    });
+  }
+
+  function drawHexGrid() {
+    hexCells.forEach(c => {
+      const a = 0.028 + c.pulse * 0.14;
+      hexPath(c.x, c.y, HEX_R - 1);
+      ctx.strokeStyle = `rgba(0,255,136,${a})`;
+      ctx.lineWidth   = 0.6;
+      ctx.stroke();
+      if (c.pulse > 0.25) {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(0,255,136,${c.pulse * 0.7})`;
+        ctx.fill();
+      }
+    });
+  }
+
+  /* ════ LAYER 2 — MATRIX RAIN ════ */
+  const MATRIX_CHARS =
+    'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ' +
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+    '0123456789ABCDEF' +
+    '!@#$%&*<>[]{}/\\|' +
+    '01001101010110001';
+  const FONT_SIZE = 13;
+  let matrixCols  = [];
+
+  function randChar() {
+    return MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
+  }
+
+  function initMatrixColumns() {
+    matrixCols = [];
+    const count = Math.floor(canvas.width / FONT_SIZE);
+    for (let i = 0; i < count; i++) {
+      if (Math.random() > 0.62) continue;
+      const len = 10 + Math.floor(Math.random() * 22);
+      matrixCols.push({
+        x:           i * FONT_SIZE,
+        y:           Math.random() * -canvas.height,
+        speed:       0.5 + Math.random() * 1.6,
+        chars:       Array.from({ length: len + 5 }, randChar),
+        len,
+        opacity:     0.07 + Math.random() * 0.20,
+        mutateEvery: 60 + Math.random() * 120,
+        mutateAcc:   0,
+      });
+    }
+  }
+
+  function updateMatrix(dt) {
+    matrixCols.forEach(col => {
+      col.y         += col.speed;
+      col.mutateAcc += dt;
+      if (col.mutateAcc > col.mutateEvery) {
+        col.mutateAcc = 0;
+        col.chars[Math.floor(Math.random() * col.chars.length)] = randChar();
+      }
+      if (col.y > canvas.height + col.len * FONT_SIZE) {
+        col.y       = -(col.len * FONT_SIZE + Math.random() * canvas.height * 0.5);
+        col.speed   = 0.5 + Math.random() * 1.6;
+        col.opacity = 0.07 + Math.random() * 0.20;
+        col.len     = 10 + Math.floor(Math.random() * 22);
+      }
+    });
+  }
+
+  function drawMatrix() {
+    ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
+    matrixCols.forEach(col => {
+      for (let i = 0; i < col.len; i++) {
+        const cy = col.y + i * FONT_SIZE;
+        if (cy < -FONT_SIZE || cy > canvas.height) continue;
+        const isHead  = i === col.len - 1;
+        const fade    = isHead ? 1 : (1 - i / col.len) * 0.9;
+        const bright  = isHead ? Math.min(col.opacity * 4, 1) : col.opacity * fade;
+        ctx.fillStyle = isHead
+          ? `rgba(180,255,220,${bright})`
+          : `rgba(0,255,136,${bright})`;
+        ctx.fillText(col.chars[i % col.chars.length], col.x, cy);
+      }
+    });
+  }
+
+  /* ════ LAYER 3 — RADAR SWEEP ════ */
+  let radarAngle = 0;
+
+  function drawRadar() {
+    const cx = canvas.width  * 0.84;
+    const cy = canvas.height * 0.18;
+    const R  = Math.min(canvas.width, canvas.height) * 0.17;
+
+    /* rings */
+    [1, 0.66, 0.33].forEach((r, i) => {
+      ctx.beginPath();
+      ctx.arc(cx, cy, R * r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(0,255,136,${i === 0 ? 0.10 : 0.05})`;
+      ctx.lineWidth   = 0.7;
+      ctx.stroke();
+    });
+
+    /* cross-hairs */
+    ctx.strokeStyle = 'rgba(0,255,136,0.05)';
+    ctx.lineWidth   = 0.7;
+    [[cx - R, cy, cx + R, cy], [cx, cy - R, cx, cy + R]].forEach(([x1, y1, x2, y2]) => {
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    });
+
+    /* sweep fan */
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(radarAngle);
+    const fan = ctx.createLinearGradient(0, 0, R, 0);
+    fan.addColorStop(0,   'rgba(0,255,136,0.22)');
+    fan.addColorStop(0.6, 'rgba(0,255,136,0.06)');
+    fan.addColorStop(1,   'rgba(0,255,136,0)');
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.arc(0, 0, R, -Math.PI / 5, 0);
+    ctx.closePath();
+    ctx.fillStyle = fan;
+    ctx.fill();
+    /* sweep arm */
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(R, 0);
+    ctx.strokeStyle = 'rgba(0,255,136,0.55)';
+    ctx.lineWidth   = 1;
+    ctx.stroke();
+    ctx.restore();
+
+    radarAngle += 0.007;
+  }
+
+  /* ════ LAYER 4 — DATA STREAMS ════ */
+  let   dataStreams = [];
+  let   streamAcc   = 0;
+  const HEX_CHARS   = '0123456789ABCDEF';
+
+  function hexToken(len) {
+    return Array.from({ length: len }, () => HEX_CHARS[Math.floor(Math.random() * 16)]).join('');
+  }
+
+  function spawnStream() {
+    const segments = 5 + Math.floor(Math.random() * 6);
+    const text     = Array.from({ length: segments }, () =>
+      `${hexToken(2)}:${hexToken(4)}`
+    ).join('  ');
+    dataStreams.push({
+      x:       -ctx.measureText(text).width - 20,
+      y:       Math.random() * canvas.height,
+      speed:   1.2 + Math.random() * 2.2,
+      text,
+      alpha:   0.06 + Math.random() * 0.10,
+      color:   Math.random() < 0.7 ? '0,212,255' : '0,255,136',
+    });
+  }
+
+  function updateStreams(dt) {
+    streamAcc += dt;
+    if (streamAcc > 700 + Math.random() * 900) {
+      streamAcc = 0;
+      if (dataStreams.length < 10) spawnStream();
+    }
+    dataStreams = dataStreams.filter(s => s.x < canvas.width + 400);
+    dataStreams.forEach(s => { s.x += s.speed; });
+  }
+
+  function drawStreams() {
+    ctx.font = '9px JetBrains Mono, monospace';
+    dataStreams.forEach(s => {
+      ctx.fillStyle = `rgba(${s.color},${s.alpha})`;
+      ctx.fillText(s.text, s.x, s.y);
+    });
+  }
+
+  /* ════ LAYER 5 — PARTICLE NETWORK ════ */
+  const P_COUNT  = window.innerWidth < 768 ? 45 : 80;
+  const CONN_D   = 145;
+  let   particles = [];
 
   class Particle {
     constructor() { this.reset(true); }
-
     reset(initial = false) {
       this.x  = Math.random() * canvas.width;
       this.y  = initial ? Math.random() * canvas.height : (Math.random() > 0.5 ? -5 : canvas.height + 5);
-      this.vx = (Math.random() - 0.5) * 0.35;
-      this.vy = (Math.random() - 0.5) * 0.35;
-      this.r  = Math.random() * 1.5 + 0.4;
-      this.a  = Math.random() * 0.5 + 0.1;
+      this.vx = (Math.random() - 0.5) * 0.38;
+      this.vy = (Math.random() - 0.5) * 0.38;
+      this.r  = Math.random() * 1.8 + 0.5;
+      this.a  = Math.random() * 0.55 + 0.15;
       const rng = Math.random();
-      this.color = rng < 0.65 ? '0,255,136' : rng < 0.88 ? '0,212,255' : '124,58,237';
+      this.color = rng < 0.62 ? '0,255,136' : rng < 0.86 ? '0,212,255' : '124,58,237';
     }
-
     update() {
       this.x += this.vx;
       this.y += this.vy;
-
       if (mouse.x !== null) {
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 90) {
-          const force = (90 - dist) / 90;
-          this.vx += (dx / dist) * force * 0.4;
-          this.vy += (dy / dist) * force * 0.4;
-          const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-          if (speed > 2.2) { this.vx /= speed * 0.7; this.vy /= speed * 0.7; }
+        const dx = this.x - mouse.x, dy = this.y - mouse.y;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < 100) {
+          const f = (100 - d) / 100;
+          this.vx += (dx / d) * f * 0.45;
+          this.vy += (dy / d) * f * 0.45;
+          const sp = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+          if (sp > 2.4) { this.vx /= sp * 0.72; this.vy /= sp * 0.72; }
         }
       }
-
       if (this.x < -10 || this.x > canvas.width + 10 ||
-          this.y < -10 || this.y > canvas.height + 10) {
-        this.reset();
-      }
+          this.y < -10 || this.y > canvas.height + 10) this.reset();
     }
-
     draw() {
+      /* glow halo */
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color},${this.a * 0.10})`;
+      ctx.fill();
+      /* core dot */
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${this.color},${this.a})`;
@@ -354,32 +580,19 @@ function initCanvas() {
   }
 
   function buildParticles() {
-    particles = [];
-    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
-  }
-
-  function drawGrid() {
-    ctx.strokeStyle = 'rgba(0,255,136,0.025)';
-    ctx.lineWidth = 1;
-    const step = 65;
-    for (let x = 0; x < canvas.width; x += step) {
-      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
-    }
-    for (let y = 0; y < canvas.height; y += step) {
-      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-    }
+    particles = Array.from({ length: P_COUNT }, () => new Particle());
   }
 
   function drawConnections() {
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
-        const dx   = particles[i].x - particles[j].x;
-        const dy   = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < CONNECTION_DIST) {
-          const alpha = (1 - dist / CONNECTION_DIST) * 0.18;
-          ctx.strokeStyle = `rgba(0,255,136,${alpha})`;
-          ctx.lineWidth = 0.6;
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < CONN_D) {
+          const a = (1 - d / CONN_D) * 0.22;
+          ctx.strokeStyle = `rgba(0,255,136,${a})`;
+          ctx.lineWidth   = 0.65;
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
@@ -389,17 +602,113 @@ function initCanvas() {
     }
   }
 
-  function frame() {
+  /* ════ LAYER 6 — SCAN LINE ════ */
+  let scanY = 0, scanDir = 1;
+
+  function drawScanLine() {
+    const g = ctx.createLinearGradient(0, scanY - 3, 0, scanY + 3);
+    g.addColorStop(0,   'rgba(0,255,136,0)');
+    g.addColorStop(0.5, 'rgba(0,255,136,0.13)');
+    g.addColorStop(1,   'rgba(0,255,136,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, scanY - 3, canvas.width, 6);
+    scanY += scanDir * 1.1;
+    if (scanY > canvas.height || scanY < 0) scanDir *= -1;
+  }
+
+  /* ════ LAYER 7 — CORNER BRACKETS ════ */
+  let bracketT = 0;
+
+  function drawBrackets() {
+    bracketT += 0.018;
+    const a   = 0.12 + Math.sin(bracketT) * 0.07;
+    const sz  = 28, pad = 18;
+    ctx.strokeStyle = `rgba(0,255,136,${a})`;
+    ctx.lineWidth   = 1.5;
+    [
+      [pad,                    pad,                     1,  1],
+      [canvas.width  - pad,    pad,                    -1,  1],
+      [pad,                    canvas.height - pad,     1, -1],
+      [canvas.width  - pad,    canvas.height - pad,    -1, -1],
+    ].forEach(([x, y, sx, sy]) => {
+      ctx.beginPath();
+      ctx.moveTo(x, y + sy * sz);
+      ctx.lineTo(x, y);
+      ctx.lineTo(x + sx * sz, y);
+      ctx.stroke();
+    });
+
+    /* small blinking cursor bottom-left */
+    if (Math.sin(bracketT * 3) > 0) {
+      ctx.font      = '11px JetBrains Mono, monospace';
+      ctx.fillStyle = `rgba(0,255,136,${a * 1.4})`;
+      ctx.fillText('█', pad + 2, canvas.height - pad - 2);
+    }
+  }
+
+  /* ════ LAYER 8 — GLITCH ════ */
+  let glitchAcc    = 0;
+  let glitchFrames = 0;
+
+  function maybeGlitch(dt) {
+    glitchAcc += dt;
+    if (glitchFrames === 0 && glitchAcc > 5000 + Math.random() * 9000) {
+      glitchAcc    = 0;
+      glitchFrames = 4 + Math.floor(Math.random() * 6);
+    }
+    if (glitchFrames > 0) {
+      const slices = 2 + Math.floor(Math.random() * 3);
+      for (let i = 0; i < slices; i++) {
+        const sy = Math.floor(Math.random() * canvas.height);
+        const sh = 2 + Math.floor(Math.random() * 7);
+        const dx = (Math.random() - 0.5) * 28;
+        try {
+          const data = ctx.getImageData(0, sy, canvas.width, sh);
+          ctx.putImageData(data, dx, sy);
+        } catch (_) {}
+      }
+      /* occasional horizontal color flash */
+      if (Math.random() < 0.35) {
+        const gy = Math.random() * canvas.height;
+        ctx.fillStyle = `rgba(0,255,136,${Math.random() * 0.13})`;
+        ctx.fillRect(0, gy, canvas.width, 1 + Math.random() * 3);
+      }
+      glitchFrames--;
+    }
+  }
+
+  /* ════ MAIN LOOP ════ */
+  let lastTs = 0;
+
+  function frame(ts) {
+    const dt = Math.min(ts - lastTs, 50);
+    lastTs   = ts;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawGrid();
+
+    if (!reduced) {
+      updateHexGrid(ts);   drawHexGrid();
+      updateMatrix(dt);    drawMatrix();
+                           drawRadar();
+      updateStreams(dt);   drawStreams();
+    }
+
+    particles.forEach(p => p.update());
     drawConnections();
-    particles.forEach(p => { p.update(); p.draw(); });
-    animId = requestAnimationFrame(frame);
+    particles.forEach(p => p.draw());
+
+    if (!reduced) {
+      drawScanLine();
+      drawBrackets();
+      maybeGlitch(dt);
+    }
+
+    requestAnimationFrame(frame);
   }
 
   resize();
   buildParticles();
-  frame();
+  requestAnimationFrame(frame);
 
   window.addEventListener('resize', () => { resize(); buildParticles(); });
   canvas.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
