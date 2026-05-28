@@ -626,6 +626,10 @@ section {
   opacity: 0;
   animation: fadeInDown 0.7s 1.2s forwards;
 }
+.hero-cta .btn {
+  min-width: 160px;
+  justify-content: center;
+}
 
 .hero-socials {
   display: flex;
@@ -1347,6 +1351,7 @@ section {
   gap: 1.1rem;
   margin-bottom: 3rem;
   padding: 2rem;
+  max-width: 700px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
