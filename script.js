@@ -331,7 +331,7 @@ function initCanvas() {
           x:         col * hx + (row % 2 ? hx / 2 : 0),
           y:         row * hy,
           pulse:     0,
-          nextPulse: Math.random() * 10000,
+          nextPulse: Math.random() * 3000,
         });
       }
     }
@@ -352,7 +352,7 @@ function initCanvas() {
     hexCells.forEach(c => {
       if (ts > c.nextPulse) {
         c.pulse     = 1;
-        c.nextPulse = ts + 4000 + Math.random() * 14000;
+        c.nextPulse = ts + 1200 + Math.random() * 6000;
       }
       if (c.pulse > 0) c.pulse = Math.max(0, c.pulse - 0.018);
     });
@@ -360,7 +360,7 @@ function initCanvas() {
 
   function drawHexGrid() {
     hexCells.forEach(c => {
-      const a = 0.028 + c.pulse * 0.14;
+      const a = 0.05 + c.pulse * 0.26;
       hexPath(c.x, c.y, HEX_R - 1);
       ctx.strokeStyle = `rgba(0,255,136,${a})`;
       ctx.lineWidth   = 0.6;
@@ -392,15 +392,15 @@ function initCanvas() {
     matrixCols = [];
     const count = Math.floor(canvas.width / FONT_SIZE);
     for (let i = 0; i < count; i++) {
-      if (Math.random() > 0.62) continue;
-      const len = 10 + Math.floor(Math.random() * 22);
+      if (Math.random() > 0.38) continue;
+      const len = 10 + Math.floor(Math.random() * 28);
       matrixCols.push({
         x:           i * FONT_SIZE,
         y:           Math.random() * -canvas.height,
-        speed:       0.5 + Math.random() * 1.6,
+        speed:       0.6 + Math.random() * 2.0,
         chars:       Array.from({ length: len + 5 }, randChar),
         len,
-        opacity:     0.07 + Math.random() * 0.20,
+        opacity:     0.15 + Math.random() * 0.32,
         mutateEvery: 60 + Math.random() * 120,
         mutateAcc:   0,
       });
@@ -417,8 +417,8 @@ function initCanvas() {
       }
       if (col.y > canvas.height + col.len * FONT_SIZE) {
         col.y       = -(col.len * FONT_SIZE + Math.random() * canvas.height * 0.5);
-        col.speed   = 0.5 + Math.random() * 1.6;
-        col.opacity = 0.07 + Math.random() * 0.20;
+        col.speed   = 0.6 + Math.random() * 2.0;
+        col.opacity = 0.15 + Math.random() * 0.32;
         col.len     = 10 + Math.floor(Math.random() * 22);
       }
     });
@@ -447,7 +447,7 @@ function initCanvas() {
   function drawRadar() {
     const cx = canvas.width  * 0.84;
     const cy = canvas.height * 0.18;
-    const R  = Math.min(canvas.width, canvas.height) * 0.17;
+    const R  = Math.min(canvas.width, canvas.height) * 0.22;
 
     /* rings */
     [1, 0.66, 0.33].forEach((r, i) => {
@@ -508,7 +508,7 @@ function initCanvas() {
       y:       Math.random() * canvas.height,
       speed:   1.2 + Math.random() * 2.2,
       text,
-      alpha:   0.06 + Math.random() * 0.10,
+      alpha:   0.10 + Math.random() * 0.18,
       color:   Math.random() < 0.7 ? '0,212,255' : '0,255,136',
     });
   }
@@ -1212,6 +1212,74 @@ function initScrollToTop() {
 }
 
 /* ════════════════════════════════════════════════════════════
+   AMBIENT TEXT DECORATORS
+   Sprinkles low-opacity terminal text into section backgrounds
+   ════════════════════════════════════════════════════════════ */
+function initAmbientText() {
+  const defs = [
+    {
+      id: 'about',
+      tokens: ['WHOIS', '0x1F4', 'nmap -sV', 'traceroute', 'SHA-256', 'ARP', '192.168.1.1',
+               'TTL:64', 'ICMP', 'RST ACK', '0xDEAD', 'ping -c4', 'OSINT', 'recon'],
+    },
+    {
+      id: 'skills',
+      tokens: ['SIGMA', '#!/bin/bash', '443/tcp', '22/tcp', 'CVE-2024', 'MITRE', 'ATT&CK',
+               '0xFF0A', 'sudo !!', 'chmod 700', 'grep -r', 'netstat', 'ps aux', 'tcpdump',
+               'wireshark', 'burp', 'nessus', 'CVSS:3.1', '/dev/null', 'enum4linux'],
+    },
+    {
+      id: 'projects',
+      tokens: ['git push', 'go build', 'npm run', 'docker run', 'BUILD OK', 'PASS ✓',
+               'v2.4.1', '0xDEAD', 'IOC:', 'T1059', 'T1190', 'HASH:', 'func main()',
+               'interface{}', 'goroutine', 'async/await', 'jest --pass', 'pytest -v'],
+    },
+    {
+      id: 'education',
+      tokens: ['76.67%', 'First Class', 'BSc', '2023–2026', 'Coventry', 'BTEC D*D*D*',
+               'cybersec', 'thesis', '87%', 'module', 'lecture', 'lab', 'research', 'ethics'],
+    },
+    {
+      id: 'certifications',
+      tokens: ['ISC2', 'CC', '11.06.2026', 'CISSP', 'IAM', 'risk', 'policy', 'governance',
+               'CIA triad', 'zero-trust', 'SOC2', 'ISO 27001', 'NIST', 'GDPR'],
+    },
+    {
+      id: 'experience',
+      tokens: ['team lead', 'agile', 'sprint', 'KPI', 'SLA', 'threat model', 'GDPR art.9',
+               'cancelled', 'AWS', 'IAM', 'VPC', 'EC2', 'S3', 'compliance'],
+    },
+    {
+      id: 'contact',
+      tokens: ['> ping', 'SSH', 'OPEN', 'CONNECT', 'mailto:', '250 OK', 'HELO',
+               '200 OK', 'TLS 1.3', 'cert valid', 'PGP', 'ed25519', 'GPG', 'SMTPS'],
+    },
+  ];
+
+  const RNG = () => Math.random();
+
+  defs.forEach(({ id, tokens }) => {
+    const section = document.getElementById(id);
+    if (!section) return;
+
+    const count = Math.min(tokens.length, 20);
+    const shuffled = [...tokens].sort(() => RNG() - 0.5);
+
+    for (let i = 0; i < count; i++) {
+      const el   = document.createElement('span');
+      el.className    = 'ambient-token';
+      el.textContent  = shuffled[i % shuffled.length];
+      el.style.top    = `${4 + RNG() * 88}%`;
+      el.style.left   = `${2 + RNG() * 93}%`;
+      el.style.opacity= `${0.035 + RNG() * 0.055}`;
+      el.style.fontSize= `${9 + RNG() * 6}px`;
+      el.style.transform = `rotate(${(RNG() - 0.5) * 8}deg)`;
+      section.appendChild(el);
+    }
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
    GSAP ENHANCEMENTS
    ════════════════════════════════════════════════════════════ */
 function initGSAP() {
@@ -1265,4 +1333,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initCvButton();
   initContactForm();
   initScrollToTop();
+  initAmbientText();
 });
