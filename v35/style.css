@@ -1,0 +1,82 @@
+/* v35: Blueprint Technical Drawing */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a1628;--line:#1e3a5f;--text:#a8c8f0;--text-bright:#d0e8ff;--text-dim:#4a6a90;
+  --accent:#4fc3f7;--green:#4caf50;--red:#ef5350;
+  --font:'Source Code Pro',monospace;--serif:'Special Elite',serif;
+}
+html{font-size:14px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);font-family:var(--font);color:var(--text);min-height:100vh;overflow-x:auto}
+
+/* Blueprint base */
+.blueprint{
+  position:relative;min-height:100vh;padding:48px;
+  background:var(--bg);
+  background-image:
+    linear-gradient(rgba(30,58,95,0.4) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(30,58,95,0.4) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+
+/* Corner marks */
+.corner{position:absolute;width:24px;height:24px;border-color:var(--accent);border-style:solid}
+.c-tl{top:20px;left:20px;border-width:2px 0 0 2px}
+.c-tr{top:20px;right:20px;border-width:2px 2px 0 0}
+.c-bl{bottom:20px;left:20px;border-width:0 0 2px 2px}
+.c-br{bottom:20px;right:20px;border-width:0 2px 2px 0}
+
+/* Title block */
+.title-block{border:2px solid var(--accent);margin-bottom:24px}
+.tb-border{padding:2px;background:rgba(79,195,247,0.03)}
+.tb-inner{padding:12px 16px}
+.tb-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--line)}
+.tb-row:last-child{border-bottom:none}
+.tb-main{border-bottom:2px solid var(--accent)!important}
+.tb-project{font-size:10px;letter-spacing:3px;color:var(--accent)}
+.tb-rev{font-size:9px;color:var(--text-dim)}
+.tb-large{font-family:var(--serif);font-size:24px;letter-spacing:2px;color:var(--text-bright)}
+.tb-small{font-size:10px;color:var(--text-dim);letter-spacing:1px}
+
+/* Content grid */
+.bp-content{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.bp-section{}
+.section-label{font-size:10px;letter-spacing:2px;color:var(--accent);margin-bottom:6px;text-transform:uppercase}
+.bp-box{border:1px solid var(--line);padding:16px;background:rgba(30,58,95,0.1)}
+
+/* Overview grid */
+.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ov-block{border:1px solid var(--line);padding:10px}
+.ov-label{font-size:9px;color:var(--text-dim);letter-spacing:2px;margin-bottom:4px}
+.ov-val{font-size:13px;color:var(--text-bright);font-weight:600}
+.blink-bp{color:var(--green);animation:blink 2s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* Spec table */
+.spec-table{width:100%;border-collapse:collapse;font-size:11px}
+.spec-table th{font-size:9px;letter-spacing:1px;color:var(--accent);border-bottom:2px solid var(--accent);padding:6px 8px;text-align:left}
+.spec-table td{padding:6px 8px;border-bottom:1px solid var(--line)}
+.spec-table tr:hover td{background:rgba(79,195,247,0.05)}
+.st-active{color:var(--green)}.st-done{color:var(--text-dim)}
+
+/* Component diagram */
+.component-diagram{display:flex;flex-direction:column;gap:12px}
+.comp-row{display:flex;align-items:center;gap:12px}
+.comp-block{border:1px solid var(--line);padding:10px;flex:1}
+.comp-arrow{color:var(--accent);font-size:18px}
+.cb-label{font-size:9px;color:var(--accent);letter-spacing:1px;margin-bottom:4px}
+.cb-items{font-size:11px;color:var(--text-bright)}
+.comp-lang{border-color:#6366f1}.comp-frame{border-color:#22c55e}.comp-tool{border-color:#22d3ee}.comp-grc{border-color:#f59e0b}
+
+/* Cert circles */
+.cert-circles{display:flex;gap:20px;justify-content:space-around;flex-wrap:wrap}
+.cc-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.cc-circle{width:60px;height:60px;border-radius:50%;border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text-bright);background:rgba(79,195,247,0.05);transition:all 0.3s}
+.cc-circle:hover{background:rgba(79,195,247,0.15);border-width:3px;transform:scale(1.1)}
+.cc-item span{font-size:9px;color:var(--text-dim)}
+
+/* Contact */
+.bp-contact{display:flex;flex-direction:column;gap:8px}
+.ci-item{display:flex;gap:16px;font-size:12px}
+.ci-label{color:var(--accent);min-width:80px}
+
+@media(max-width:700px){.bp-content{grid-template-columns:1fr}.comp-row{flex-direction:column}.comp-arrow{transform:rotate(90deg)}}

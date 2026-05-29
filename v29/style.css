@@ -1,0 +1,29 @@
+/* v29: Solar System */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;overflow:hidden;height:100vh;font-family:'Space Grotesk',sans-serif;color:#e8e8f0}
+#space{position:fixed;inset:0;z-index:0}
+.ui{position:fixed;inset:0;z-index:1;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between}
+.top-bar{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;pointer-events:auto}
+.tb-logo{font-size:18px;font-weight:700;letter-spacing:1px;color:#fff}
+.tb-sub{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,0.3)}
+.info-card{
+  position:absolute;right:28px;top:50%;transform:translateY(-50%);
+  width:260px;
+  background:rgba(10,10,20,0.9);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:16px;padding:20px;
+  backdrop-filter:blur(16px);
+  display:flex;gap:16px;align-items:flex-start;
+  opacity:0;transition:opacity 0.4s;pointer-events:auto;
+}
+.info-card.show{opacity:1}
+.ic-planet{width:48px;height:48px;border-radius:50%;flex-shrink:0}
+.ic-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.ic-body h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.ic-body p{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:10px}
+.ic-tags{display:flex;gap:6px;flex-wrap:wrap}
+.ic-tags span{font-family:'JetBrains Mono',monospace;font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.5)}
+.bottom-links{display:flex;justify-content:center;gap:24px;padding:20px;pointer-events:auto}
+.bottom-links a{font-size:13px;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s}
+.bottom-links a:hover{color:#fff}
+@media(max-width:640px){.info-card{right:auto;left:50%;transform:translate(-50%,0);top:auto;bottom:80px;width:calc(100% - 48px)}}
