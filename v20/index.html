@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>shadman@portfolio:~$ </title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Terminal window -->
+  <div class="terminal">
+    <!-- Title bar -->
+    <div class="terminal-bar">
+      <div class="bar-dots">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-yellow"></span>
+        <span class="dot dot-green"></span>
+      </div>
+      <div class="bar-title">shadman@portfolio — bash — 120×40</div>
+      <div class="bar-actions"></div>
+    </div>
+
+    <!-- Terminal body -->
+    <div class="terminal-body" id="terminal-body">
+      <div id="output"></div>
+      <div class="input-line">
+        <span class="prompt">shadman@portfolio:~$</span>
+        <input type="text" id="input" autofocus autocomplete="off" spellcheck="false"/>
+        <span class="cursor-block"></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
