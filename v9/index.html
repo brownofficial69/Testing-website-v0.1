@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>ShadmanOS 95</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='50' height='50' fill='%23ff0000'/><rect x='50' width='50' height='50' fill='%2300ff00'/><rect y='50' width='50' height='50' fill='%230000ff'/><rect x='50' y='50' width='50' height='50' fill='%23ffff00'/></svg>"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- BOOT SCREEN -->
+<div id="boot-screen">
+  <div class="boot-inner">
+    <div class="win-logo">
+      <div class="wl-q red"></div><div class="wl-q green"></div>
+      <div class="wl-q blue"></div><div class="wl-q yellow"></div>
+    </div>
+    <p class="boot-product">ShadmanOS 95</p>
+    <p class="boot-sub">Cybersecurity Portfolio Edition</p>
+    <div class="boot-bar-wrap"><div class="boot-bar" id="boot-bar"></div></div>
+    <p class="boot-copy">Copyright © 2026 Shadman Hossain. All rights reserved.</p>
+  </div>
+</div>
+
+<!-- DESKTOP -->
+<div id="desktop">
+
+  <!-- Desktop icons -->
+  <div id="desktop-icons">
+    <div class="desk-icon" data-win="about"    tabindex="0" role="button" aria-label="Open About Me">
+      <div class="di-icon">👤</div><span>About Me</span>
+    </div>
+    <div class="desk-icon" data-win="projects" tabindex="0" role="button" aria-label="Open Projects">
+      <div class="di-icon">💼</div><span>My Projects</span>
+    </div>
+    <div class="desk-icon" data-win="skills"   tabindex="0" role="button" aria-label="Open Skills">
+      <div class="di-icon">🔧</div><span>Skills.ini</span>
+    </div>
+    <div class="desk-icon" data-win="education" tabindex="0" role="button" aria-label="Open Education">
+      <div class="di-icon">📚</div><span>Education.txt</span>
+    </div>
+    <div class="desk-icon" data-win="certs"    tabindex="0" role="button" aria-label="Open Certifications">
+      <div class="di-icon">🏆</div><span>Certifications</span>
+    </div>
+    <div class="desk-icon" data-win="contact"  tabindex="0" role="button" aria-label="Open Contact">
+      <div class="di-icon">📧</div><span>Contact.eml</span>
+    </div>
+    <div class="desk-icon" data-win="sysinfo"  tabindex="0" role="button" aria-label="Open System Info">
+      <div class="di-icon">🖥️</div><span>My Computer</span>
+    </div>
+    <div class="desk-icon" data-win="recycle"  tabindex="0" role="button" aria-label="Open Recycle Bin">
+      <div class="di-icon">🗑️</div><span>Recycle Bin</span>
+    </div>
+  </div>
+
+  <!-- Windows container -->
+  <div id="windows-layer"></div>
+
+  <!-- Context menu -->
+  <div id="ctx-menu" class="ctx-menu" style="display:none">
+    <div class="ctx-item" data-win="about">Open About Me</div>
+    <div class="ctx-item" data-win="projects">Open Projects</div>
+    <div class="ctx-sep"></div>
+    <div class="ctx-item" id="ctx-arrange">Arrange Icons</div>
+    <div class="ctx-item" id="ctx-refresh">Refresh</div>
+    <div class="ctx-sep"></div>
+    <div class="ctx-item" id="ctx-props">Desktop Properties</div>
+  </div>
+
+</div>
+
+<!-- TASKBAR -->
+<div id="taskbar">
+  <button id="start-btn" aria-label="Start menu" aria-haspopup="true" aria-expanded="false">
+    <span class="start-logo">
+      <div class="sl-q r"></div><div class="sl-q g"></div>
+      <div class="sl-q b"></div><div class="sl-q y"></div>
+    </span>
+    <span class="start-text">Start</span>
+  </button>
+
+  <div class="taskbar-sep"></div>
+
+  <!-- Open windows list (populated by JS) -->
+  <div id="taskbar-windows"></div>
+
+  <!-- System tray -->
+  <div class="systray">
+    <div class="systray-icons">
+      <span title="Network Connected">🔗</span>
+      <span title="Portfolio v9.0">⚙️</span>
+    </div>
+    <div class="systray-sep"></div>
+    <div id="tray-clock" class="tray-clock">12:00 PM</div>
+  </div>
+</div>
+
+<!-- START MENU -->
+<div id="start-menu" style="display:none" role="menu">
+  <div class="sm-banner">
+    <span class="sm-banner-name">Shadman Hossain</span>
+    <span class="sm-banner-sub">Cyber Security Analyst</span>
+  </div>
+  <div class="sm-items">
+    <div class="sm-item" data-win="about"   role="menuitem"><span class="smi-icon">👤</span><div><b>About Me</b><small>Profile &amp; Bio</small></div></div>
+    <div class="sm-item" data-win="projects" role="menuitem"><span class="smi-icon">💼</span><div><b>My Projects</b><small>6 security projects</small></div></div>
+    <div class="sm-item" data-win="skills"  role="menuitem"><span class="smi-icon">🔧</span><div><b>Skills.ini</b><small>Technical capabilities</small></div></div>
+    <div class="sm-item" data-win="education" role="menuitem"><span class="smi-icon">📚</span><div><b>Education</b><small>Coventry University</small></div></div>
+    <div class="sm-item" data-win="certs"   role="menuitem"><span class="smi-icon">🏆</span><div><b>Certifications</b><small>ISC2 CC — Jun 2026</small></div></div>
+    <div class="sm-item" data-win="contact" role="menuitem"><span class="smi-icon">📧</span><div><b>Contact.eml</b><small>Send a message</small></div></div>
+    <div class="sm-sep"></div>
+    <div class="sm-item" data-win="sysinfo" role="menuitem"><span class="smi-icon">🖥️</span><div><b>My Computer</b><small>System information</small></div></div>
+    <a class="sm-item" href="../assets/cv.pdf" download id="cv-sm" role="menuitem"><span class="smi-icon">📄</span><div><b>Download CV</b><small>shadman_cv.pdf</small></div></a>
+    <div class="sm-sep"></div>
+    <div class="sm-item" id="sm-shutdown" role="menuitem"><span class="smi-icon">🔴</span><div><b>Shut Down…</b><small>Exit portfolio</small></div></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
