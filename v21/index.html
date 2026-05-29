@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Shadman Hossain | Fluid Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Morphing blobs background -->
+  <div class="blob-scene" aria-hidden="true">
+    <svg class="blob-svg" viewBox="0 0 900 900" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="goo"><feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo"/>
+        </filter>
+        <radialGradient id="g1" cx="50%" cy="50%"><stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></radialGradient>
+        <radialGradient id="g2" cx="50%" cy="50%"><stop offset="0%" stop-color="#ec4899"/><stop offset="100%" stop-color="#f43f5e" stop-opacity="0"/></radialGradient>
+        <radialGradient id="g3" cx="50%" cy="50%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></radialGradient>
+      </defs>
+      <g filter="url(#goo)">
+        <circle class="b1" cx="450" cy="200" r="180" fill="url(#g1)" opacity="0.6"/>
+        <circle class="b2" cx="250" cy="600" r="150" fill="url(#g2)" opacity="0.5"/>
+        <circle class="b3" cx="650" cy="550" r="160" fill="url(#g3)" opacity="0.4"/>
+        <circle class="b4" cx="700" cy="200" r="120" fill="url(#g1)" opacity="0.4"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <span class="nav-logo">SH</span>
+    <div class="nav-links">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-pill">Available for opportunities</div>
+    <h1>Cybersecurity<br/><span class="fluid-text">Analyst</span><br/>&amp; Builder</h1>
+    <p class="hero-sub">Final-year student at Coventry University building AI-powered security tools, detection engineering pipelines, and threat intelligence platforms.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-fluid">View Work</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-scroll"><span>scroll</span><div class="scroll-line"></div></div>
+  </section>
+
+  <!-- Stats strip -->
+  <div class="stats-strip">
+    <div class="stat-item"><span class="stat-n">6</span><span>Projects</span></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><span class="stat-n">25+</span><span>Skills</span></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><span class="stat-n">4</span><span>Certifications</span></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><span class="stat-n">3+</span><span>Years</span></div>
+  </div>
+
+  <!-- Projects -->
+  <section class="projects" id="projects">
+    <div class="section-label">Selected Work</div>
+    <h2>Projects</h2>
+    <div class="project-grid">
+      <div class="pcard pcard-wide" style="--c1:#6366f1;--c2:#8b5cf6">
+        <div class="pcard-inner">
+          <span class="pcard-num">01</span>
+          <h3>ThreatWeave</h3>
+          <p>AI-powered threat intelligence correlation engine aggregating IOCs from multiple threat feeds using Go and Claude API.</p>
+          <div class="pcard-tags"><span>Go</span><span>Claude API</span><span>Redis</span></div>
+        </div>
+        <div class="pcard-blob"></div>
+      </div>
+      <div class="pcard" style="--c1:#ec4899;--c2:#f43f5e">
+        <div class="pcard-inner">
+          <span class="pcard-num">02</span>
+          <h3>SecureView</h3>
+          <p>Real-time SOC monitoring dashboard with AI-assisted triage.</p>
+          <div class="pcard-tags"><span>React</span><span>TypeScript</span></div>
+        </div>
+        <div class="pcard-blob"></div>
+      </div>
+      <div class="pcard" style="--c1:#22d3ee;--c2:#0ea5e9">
+        <div class="pcard-inner">
+          <span class="pcard-num">03</span>
+          <h3>SOC Lab</h3>
+          <p>Detection engineering with Sigma and MITRE ATT&CK.</p>
+          <div class="pcard-tags"><span>Python</span><span>Sigma</span></div>
+        </div>
+        <div class="pcard-blob"></div>
+      </div>
+      <div class="pcard" style="--c1:#34d399;--c2:#10b981">
+        <div class="pcard-inner">
+          <span class="pcard-num">04</span>
+          <h3>IOC Hunter</h3>
+          <p>CLI IOC aggregator and enrichment tool.</p>
+          <div class="pcard-tags"><span>Python</span><span>APIs</span></div>
+        </div>
+        <div class="pcard-blob"></div>
+      </div>
+      <div class="pcard" style="--c1:#fbbf24;--c2:#f59e0b">
+        <div class="pcard-inner">
+          <span class="pcard-num">05</span>
+          <h3>NIST CSF 2.0</h3>
+          <p>GRC gap analysis and remediation roadmap tool.</p>
+          <div class="pcard-tags"><span>GRC</span><span>NIST</span></div>
+        </div>
+        <div class="pcard-blob"></div>
+      </div>
+      <div class="pcard pcard-wide" style="--c1:#f97316;--c2:#ef4444">
+        <div class="pcard-inner">
+          <span class="pcard-num">06</span>
+          <h3>AWS Healthcare AI Triage</h3>
+          <p>Healthcare threat modelling case study using STRIDE methodology, GDPR compliance analysis, and AWS security architecture review.</p>
+          <div class="pcard-tags"><span>AWS</span><span>STRIDE</span><span>GDPR</span></div>
+        </div>
+        <div class="pcard-blob"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="skills" id="skills">
+    <div class="section-label">Expertise</div>
+    <h2>Skills</h2>
+    <div class="skills-flow">
+      <div class="skill-group">
+        <h4>Offensive Security</h4>
+        <div class="pills"><span>Pentest</span><span>OWASP</span><span>Burp Suite</span><span>Nmap</span><span>Metasploit</span></div>
+      </div>
+      <div class="skill-group">
+        <h4>Detection &amp; Response</h4>
+        <div class="pills"><span>Sigma</span><span>YARA</span><span>Splunk</span><span>MITRE ATT&amp;CK</span><span>IR</span></div>
+      </div>
+      <div class="skill-group">
+        <h4>Development</h4>
+        <div class="pills"><span>Python</span><span>Go</span><span>TypeScript</span><span>React</span><span>FastAPI</span><span>Docker</span></div>
+      </div>
+      <div class="skill-group">
+        <h4>GRC &amp; Cloud</h4>
+        <div class="pills"><span>NIST CSF</span><span>ISO 27001</span><span>AWS</span><span>Risk Assessment</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certs -->
+  <section class="certs">
+    <div class="cert-row">
+      <div class="cert-blob">CCNA</div>
+      <div class="cert-blob">OSCP</div>
+      <div class="cert-blob">CISM</div>
+      <div class="cert-blob">Sec+</div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="section-label">Let's Connect</div>
+    <h2>Get in Touch</h2>
+    <div class="contact-row">
+      <a href="mailto:brownofficial69@gmail.com" class="contact-card">
+        <span class="cc-icon">✉</span>
+        <span>brownofficial69@gmail.com</span>
+      </a>
+      <a href="https://github.com/brownofficial69" target="_blank" class="contact-card">
+        <span class="cc-icon">⌥</span>
+        <span>github.com/brownofficial69</span>
+      </a>
+      <a href="https://linkedin.com/in/shadman-hossain-5ab649223" target="_blank" class="contact-card">
+        <span class="cc-icon">↗</span>
+        <span>LinkedIn Profile</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 Shadman Hossain · v21 Fluid Morphing</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

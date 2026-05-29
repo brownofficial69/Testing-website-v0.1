@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Shadman Hossain — Issue No. 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Magazine masthead -->
+  <header class="masthead">
+    <div class="mast-top">
+      <span class="mast-date">Issue No. 2026 · Vol. III</span>
+      <span class="mast-logo">CIPHER</span>
+      <span class="mast-price">Coventry, UK</span>
+    </div>
+    <div class="mast-divider"></div>
+    <div class="mast-tagline">The cybersecurity portfolio of Shadman Hossain</div>
+  </header>
+
+  <!-- Full-bleed cover -->
+  <section class="cover">
+    <div class="cover-grid">
+      <div class="cover-main">
+        <p class="cover-kicker">EXCLUSIVE PROFILE</p>
+        <h1 class="cover-title">Defending<br/><em>Digital</em><br/>Infrastructure</h1>
+        <div class="cover-rule"></div>
+        <p class="cover-deck">How a Coventry University student is building AI-powered threat intelligence tools that rival enterprise-grade security platforms</p>
+        <a href="#features" class="cover-cta">Continue Reading ↓</a>
+      </div>
+      <div class="cover-side">
+        <div class="cover-quote">
+          <span class="quote-mark">"</span>
+          <p>The next generation of security analysts aren't just defenders — they're builders.</p>
+        </div>
+        <div class="cover-toc">
+          <p class="toc-header">IN THIS ISSUE</p>
+          <div class="toc-item"><span>01</span><span>Featured Projects</span></div>
+          <div class="toc-item"><span>02</span><span>Technical Skills</span></div>
+          <div class="toc-item"><span>03</span><span>Certifications</span></div>
+          <div class="toc-item"><span>04</span><span>Get in Touch</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature articles -->
+  <section class="features" id="features">
+    <div class="features-header">
+      <div class="feat-label">SECTION 01</div>
+      <h2>SELECTED PROJECTS</h2>
+    </div>
+
+    <!-- Lead article -->
+    <article class="article article-lead">
+      <div class="art-meta">FLAGSHIP PROJECT · Go + AI</div>
+      <h3 class="art-title">ThreatWeave: The Platform That Thinks Like a Threat Analyst</h3>
+      <p class="art-body">An AI-powered threat intelligence correlation engine that aggregates indicators of compromise from multiple threat feeds and applies Claude's reasoning to surface actionable intelligence. Built in Go for performance, backed by Redis for real-time IOC deduplication, and powered by the Claude API for natural language threat analysis that rivals commercial platforms costing thousands per month.</p>
+      <div class="art-tags"><span>Go</span><span>Claude API</span><span>Redis</span><span>IOC Analysis</span></div>
+    </article>
+
+    <!-- 2-col articles -->
+    <div class="article-row">
+      <article class="article">
+        <div class="art-meta">SOC TOOLING · React</div>
+        <h3 class="art-title">SecureView: Bringing AI Into the SOC</h3>
+        <p class="art-body">A real-time security operations dashboard that integrates Claude API for automated alert triage, dramatically reducing analyst fatigue and mean time to respond. Built with TypeScript and React, with a Vite-powered dev experience.</p>
+        <div class="art-tags"><span>React</span><span>TypeScript</span><span>Claude API</span></div>
+      </article>
+      <article class="article">
+        <div class="art-meta">DETECTION ENG · Python</div>
+        <h3 class="art-title">SOC Detection Lab: Sigma at Scale</h3>
+        <p class="art-body">A comprehensive detection engineering lab producing Sigma rules mapped directly to MITRE ATT&CK framework tactics. Achieves 94% framework coverage — a metric most enterprise teams spend years building toward.</p>
+        <div class="art-tags"><span>Python</span><span>Sigma</span><span>MITRE ATT&CK</span></div>
+      </article>
+    </div>
+
+    <!-- 3-col smaller articles -->
+    <div class="article-row-3">
+      <article class="article article-sm">
+        <div class="art-meta">CLI TOOL</div>
+        <h3 class="art-title">IOC Hunter</h3>
+        <p class="art-body">CLI aggregator for enriching indicators of compromise across VirusTotal, ThreatFox, and custom feeds.</p>
+        <div class="art-tags"><span>Python</span><span>APIs</span></div>
+      </article>
+      <article class="article article-sm">
+        <div class="art-meta">GRC</div>
+        <h3 class="art-title">NIST CSF 2.0</h3>
+        <p class="art-body">Automated gap analysis tool that maps controls to NIST CSF 2.0 and generates a remediation roadmap.</p>
+        <div class="art-tags"><span>GRC</span><span>NIST</span></div>
+      </article>
+      <article class="article article-sm">
+        <div class="art-meta">CASE STUDY</div>
+        <h3 class="art-title">AWS Healthcare</h3>
+        <p class="art-body">Threat model for a healthcare AI system using STRIDE, GDPR compliance analysis, and AWS architecture review.</p>
+        <div class="art-tags"><span>STRIDE</span><span>GDPR</span><span>AWS</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Skills section -->
+  <section class="skills-section">
+    <div class="skills-divider"><span>SECTION 02</span><div class="div-line"></div><span>TECHNICAL SKILLS</span></div>
+    <div class="skills-layout">
+      <div class="skills-col">
+        <h4>Offensive Security</h4>
+        <p>Penetration Testing · OWASP Top 10 · Burp Suite · Nmap · Metasploit · Web Application Security</p>
+      </div>
+      <div class="skills-col">
+        <h4>Detection &amp; Response</h4>
+        <p>Sigma Rules · YARA · Splunk · MITRE ATT&amp;CK · Incident Response · Threat Hunting</p>
+      </div>
+      <div class="skills-col">
+        <h4>Development</h4>
+        <p>Python · Go · TypeScript · React · FastAPI · Docker · Redis · PostgreSQL</p>
+      </div>
+      <div class="skills-col">
+        <h4>GRC &amp; Cloud</h4>
+        <p>NIST CSF 2.0 · ISO 27001 · AWS · Risk Assessment · GDPR · Compliance Frameworks</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section class="certs-section">
+    <div class="certs-divider"><span>SECTION 03</span><div class="div-line"></div><span>CERTIFICATIONS</span></div>
+    <div class="certs-layout">
+      <div class="cert-feature">
+        <span class="cert-abbr">OSCP</span>
+        <div>
+          <h4>Offensive Security Certified Professional</h4>
+          <p>Offensive Security · Advanced penetration testing certification requiring 24-hour practical exam</p>
+        </div>
+      </div>
+      <div class="cert-list-minor">
+        <div class="cert-minor"><span>CCNA</span><span>Cisco Certified Network Associate</span></div>
+        <div class="cert-minor"><span>CISM</span><span>Certified Information Security Manager · ISACA</span></div>
+        <div class="cert-minor"><span>SEC+</span><span>CompTIA Security+</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact-section">
+    <div class="contact-inner">
+      <p class="contact-kicker">SECTION 04 — CONTACT</p>
+      <h2>Write to the Editor</h2>
+      <div class="contact-cols">
+        <a href="mailto:brownofficial69@gmail.com">brownofficial69@gmail.com</a>
+        <a href="https://github.com/brownofficial69" target="_blank">github.com/brownofficial69</a>
+        <a href="https://linkedin.com/in/shadman-hossain-5ab649223" target="_blank">linkedin.com/in/shadman-hossain-5ab649223</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-left">© 2026 Shadman Hossain</div>
+    <div class="footer-mid">CIPHER · Issue No. 2026</div>
+    <div class="footer-right">v23 Editorial Magazine</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
