@@ -781,6 +781,7 @@ function buildPanelContent(type) {
         <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Digital Security Risk — 73%</span>
         <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Applied Cryptography — 75%</span>
         <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Advanced Pen Testing — 71%</span>
+        <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Project Delivery — 76%</span>
         <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Research Project — 87%</span>
         <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Info Security Management — 70%</span>
         <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Security Operations — 67%</span>
@@ -808,7 +809,7 @@ function buildPanelContent(type) {
       <div class="ep-tags" style="margin-top:1rem">
         <span class="ep-tag">Digital Security Risk — 73%</span><span class="ep-tag">Security Operations — 67%</span>
         <span class="ep-tag">Info Security Management — 70%</span><span class="ep-tag">Applied Cryptography — 75%</span>
-        <span class="ep-tag">Advanced Pen Testing — 71%</span><span class="ep-tag">Research Project — 87%</span>
+        <span class="ep-tag">Advanced Pen Testing — 71%</span><span class="ep-tag">Project Delivery — 76%</span><span class="ep-tag">Research Project — 87%</span>
       </div>`,
       [{k:'Average',v:'76.67%'},{k:'Graduation',v:'Jul 2026'},{k:'Class',v:'First'}]);
 
