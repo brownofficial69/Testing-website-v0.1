@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Shadman Hossain | Security Analytics Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="tb-logo">SH</span>
+      <span class="tb-title">SECURITY ANALYTICS DASHBOARD</span>
+    </div>
+    <div class="topbar-right">
+      <span class="tb-status"><i class="fas fa-circle"></i> LIVE</span>
+      <span class="tb-time" id="clock"></span>
+    </div>
+  </div>
+
+  <!-- Dashboard grid -->
+  <div class="dashboard">
+    <!-- Profile panel -->
+    <div class="panel profile-panel">
+      <div class="panel-header">OPERATOR PROFILE</div>
+      <div class="profile-content">
+        <div class="profile-avatar">SH</div>
+        <div class="profile-info">
+          <h2>Shadman Hossain</h2>
+          <p>Cybersecurity Analyst</p>
+          <p class="profile-sub">Coventry University · Final Year</p>
+        </div>
+      </div>
+      <div class="profile-tags">
+        <span>Threat Intel</span>
+        <span>Detection</span>
+        <span>GRC</span>
+        <span>Python</span>
+        <span>Go</span>
+      </div>
+    </div>
+
+    <!-- Skill radar chart (canvas) -->
+    <div class="panel radar-panel">
+      <div class="panel-header">SKILL RADAR</div>
+      <canvas id="radar-chart" width="400" height="400"></canvas>
+    </div>
+
+    <!-- Projects table -->
+    <div class="panel projects-panel">
+      <div class="panel-header">PROJECT REGISTRY</div>
+      <table class="data-table">
+        <thead>
+          <tr><th>ID</th><th>Project</th><th>Stack</th><th>Status</th><th>Score</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">001</td><td>ThreatWeave</td><td>Go, Claude API</td><td><span class="badge live">LIVE</span></td><td><div class="mini-bar"><div style="width:92%"></div></div></td></tr>
+          <tr><td class="mono">002</td><td>SecureView</td><td>React, TS, Vite</td><td><span class="badge live">LIVE</span></td><td><div class="mini-bar"><div style="width:88%"></div></div></td></tr>
+          <tr><td class="mono">003</td><td>SOC Detection Lab</td><td>Python, Sigma</td><td><span class="badge live">LIVE</span></td><td><div class="mini-bar"><div style="width:95%"></div></div></td></tr>
+          <tr><td class="mono">004</td><td>IOC Hunter</td><td>Python, APIs</td><td><span class="badge live">LIVE</span></td><td><div class="mini-bar"><div style="width:90%"></div></div></td></tr>
+          <tr><td class="mono">005</td><td>NIST CSF 2.0</td><td>GRC, SVG</td><td><span class="badge done">DONE</span></td><td><div class="mini-bar"><div style="width:85%"></div></div></td></tr>
+          <tr><td class="mono">006</td><td>AWS Healthcare</td><td>STRIDE, GDPR</td><td><span class="badge study">STUDY</span></td><td><div class="mini-bar"><div style="width:78%"></div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Activity feed -->
+    <div class="panel feed-panel">
+      <div class="panel-header">ACTIVITY FEED</div>
+      <div class="feed" id="feed"></div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="panel cert-panel">
+      <div class="panel-header">CREDENTIALS</div>
+      <div class="cert-grid">
+        <div class="cert-tile"><div class="cert-badge">CCNA</div><span>Cisco</span></div>
+        <div class="cert-tile"><div class="cert-badge">OSCP</div><span>OffSec</span></div>
+        <div class="cert-tile"><div class="cert-badge">CISM</div><span>ISACA</span></div>
+        <div class="cert-tile"><div class="cert-badge">Sec+</div><span>CompTIA</span></div>
+      </div>
+    </div>
+
+    <!-- Skill bar chart (canvas) -->
+    <div class="panel chart-panel">
+      <div class="panel-header">SKILL DISTRIBUTION</div>
+      <canvas id="bar-chart" width="500" height="280"></canvas>
+    </div>
+
+    <!-- Contact -->
+    <div class="panel contact-panel">
+      <div class="panel-header">SECURE CHANNEL</div>
+      <div class="contact-links">
+        <a href="mailto:brownofficial69@gmail.com"><i class="fas fa-envelope"></i> brownofficial69@gmail.com</a>
+        <a href="https://github.com/brownofficial69" target="_blank"><i class="fab fa-github"></i> github.com/brownofficial69</a>
+        <a href="https://linkedin.com/in/shadman-hossain-5ab649223" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn Profile</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

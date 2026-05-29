@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>CyberCity | Shadman Hossain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Animated city canvas -->
+  <canvas id="city-canvas"></canvas>
+
+  <!-- Floating UI -->
+  <div class="ui-layer">
+    <!-- Top HUD -->
+    <div class="hud-top">
+      <div class="hud-left">
+        <span class="hud-logo">CYBERCITY</span>
+        <span class="hud-version">v19.0</span>
+      </div>
+      <div class="hud-center">
+        <span class="hud-name">SHADMAN HOSSAIN</span>
+        <span class="hud-role">CYBERSECURITY ARCHITECT</span>
+      </div>
+      <div class="hud-right">
+        <span class="hud-clock" id="clock"></span>
+        <span class="hud-ping">PING: <span id="ping">12</span>ms</span>
+      </div>
+    </div>
+
+    <!-- Building info cards (positioned by JS) -->
+    <div class="building-cards">
+      <div class="bcard" id="bcard-1" data-project="threatweave">
+        <div class="bcard-header">
+          <span class="bcard-icon">🏢</span>
+          <span class="bcard-name">ThreatWeave Tower</span>
+        </div>
+        <p>Go + Claude API — Threat intel correlation engine</p>
+        <div class="bcard-bar"><div style="width:92%"></div></div>
+      </div>
+
+      <div class="bcard" id="bcard-2" data-project="secureview">
+        <div class="bcard-header">
+          <span class="bcard-icon">🏗️</span>
+          <span class="bcard-name">SecureView Center</span>
+        </div>
+        <p>React + TypeScript — SOC monitoring dashboard</p>
+        <div class="bcard-bar"><div style="width:88%"></div></div>
+      </div>
+
+      <div class="bcard" id="bcard-3" data-project="soclab">
+        <div class="bcard-header">
+          <span class="bcard-icon">🏭</span>
+          <span class="bcard-name">Detection Factory</span>
+        </div>
+        <p>Python + Sigma — Detection engineering lab</p>
+        <div class="bcard-bar"><div style="width:95%"></div></div>
+      </div>
+
+      <div class="bcard" id="bcard-4" data-project="iochunter">
+        <div class="bcard-header">
+          <span class="bcard-icon">🔬</span>
+          <span class="bcard-name">IOC Research Lab</span>
+        </div>
+        <p>Python + APIs — IOC aggregation and enrichment</p>
+        <div class="bcard-bar"><div style="width:90%"></div></div>
+      </div>
+
+      <div class="bcard" id="bcard-5" data-project="nist">
+        <div class="bcard-header">
+          <span class="bcard-icon">🏛️</span>
+          <span class="bcard-name">GRC Headquarters</span>
+        </div>
+        <p>NIST CSF 2.0 — Risk & compliance assessment</p>
+        <div class="bcard-bar"><div style="width:85%"></div></div>
+      </div>
+
+      <div class="bcard" id="bcard-6" data-project="aws">
+        <div class="bcard-header">
+          <span class="bcard-icon">☁️</span>
+          <span class="bcard-name">Cloud Fortress</span>
+        </div>
+        <p>AWS + STRIDE — Healthcare threat modelling</p>
+        <div class="bcard-bar"><div style="width:78%"></div></div>
+      </div>
+    </div>
+
+    <!-- Bottom panel -->
+    <div class="bottom-panel">
+      <div class="bp-stats">
+        <div class="bp-stat"><span class="bp-val">6</span><span class="bp-label">Buildings</span></div>
+        <div class="bp-stat"><span class="bp-val">25+</span><span class="bp-label">Tech Skills</span></div>
+        <div class="bp-stat"><span class="bp-val">4</span><span class="bp-label">Credentials</span></div>
+      </div>
+      <div class="bp-links">
+        <a href="https://github.com/brownofficial69" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/shadman-hossain-5ab649223" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:brownofficial69@gmail.com"><i class="fas fa-envelope"></i></a>
+      </div>
+      <div class="bp-hint">Click buildings to explore · Scroll to zoom</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
