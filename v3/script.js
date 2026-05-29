@@ -179,45 +179,60 @@ function resize() {
 }
 
 /* ══════════════════════════════════════════════════
-   PRE-BUILD STAR FIELD
+   PRE-BUILD STAR FIELD  (with Milky Way band)
 ══════════════════════════════════════════════════ */
 function buildStars() {
   stars = [];
-  const W = window.innerWidth, H = window.innerHeight;
-  const WORLD = 6000; /* world-space extent of star field */
+  const WORLD = 6000;
 
-  /* Star colour temperatures → RGB */
   const palettes = [
-    { r:200,g:215,b:255, w:6  }, /* blue-white O/B */
-    { r:220,g:235,b:255, w:10 }, /* A class */
-    { r:255,g:255,b:250, w:20 }, /* F/G white */
-    { r:255,g:245,b:220, w:30 }, /* G yellow-white */
-    { r:255,g:228,b:180, w:25 }, /* K orange-white */
-    { r:255,g:205,b:140, w:9  }, /* M orange */
+    { r:200,g:215,b:255, w:6  },
+    { r:220,g:235,b:255, w:10 },
+    { r:255,g:255,b:250, w:20 },
+    { r:255,g:245,b:220, w:30 },
+    { r:255,g:228,b:180, w:25 },
+    { r:255,g:205,b:140, w:9  },
   ];
   const totalW = palettes.reduce((s,p)=>s+p.w, 0);
-
   function randPalette() {
     let r = Math.random() * totalW;
     for (const p of palettes) { if ((r -= p.w) <= 0) return p; }
     return palettes[palettes.length - 1];
   }
 
-  for (let i = 0; i < 3200; i++) {
+  /* Milky Way band: diagonal stripe y ≈ x * 0.25, width ~700 world units */
+  function milkyWayDensity(wx, wy) {
+    const bandY = wx * 0.25;
+    const dist  = Math.abs(wy - bandY);
+    if (dist > 700) return 1;
+    return 1 + (1 - dist / 700) * 3.5; /* up to 4.5× denser in centre */
+  }
+
+  const TARGET = 4200;
+  let placed = 0;
+  while (placed < TARGET) {
+    const wx = (Math.random() - 0.5) * WORLD;
+    const wy = (Math.random() - 0.5) * WORLD * 0.65;
+    /* Accept/reject based on Milky Way density */
+    if (Math.random() * 4.5 > milkyWayDensity(wx, wy) && placed > 800) continue;
+
     const p = randPalette();
+    const inBand = milkyWayDensity(wx, wy) > 2;
     const rnd = Math.random();
-    const sz  = rnd < 0.7 ? 0.4 + Math.random() * 0.5
-              : rnd < 0.9 ? 0.8 + Math.random() * 0.8
-              :              1.4 + Math.random() * 1.8;
+    const sz  = inBand
+      ? 0.3 + Math.random() * 0.55
+      : rnd < 0.7 ? 0.4 + Math.random() * 0.5
+      : rnd < 0.9 ? 0.8 + Math.random() * 0.9
+      :              1.5 + Math.random() * 2.0;
+
     stars.push({
-      wx: (Math.random() - 0.5) * WORLD,
-      wy: (Math.random() - 0.5) * WORLD * (H/W),
-      r:  sz,
+      wx, wy, r: sz,
       col: `${p.r},${p.g},${p.b}`,
-      a:   0.25 + Math.random() * 0.75,
+      a:   inBand ? 0.18 + Math.random() * 0.45 : 0.3 + Math.random() * 0.7,
       tw:  Math.random() * Math.PI * 2,
-      ts:  0.008 + Math.random() * 0.025,
+      ts:  0.006 + Math.random() * 0.022,
     });
+    placed++;
   }
 }
 
@@ -493,19 +508,45 @@ function drawSolarSystem(ts, W, H) {
 
   /* Central star */
   const starR = 18 * cam.zoom;
-  const starGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, starR * 4);
-  starGlow.addColorStop(0,   `rgba(255,255,240,1)`);
-  starGlow.addColorStop(0.1, `rgba(${sr},${sg},${sb},0.9)`);
-  starGlow.addColorStop(0.4, `rgba(${sr},${sg},${sb},0.25)`);
+  const t = frameTs * 0.001;
+
+  /* Outer corona glow */
+  const starGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, starR * 6);
+  starGlow.addColorStop(0,   `rgba(255,255,240,0.9)`);
+  starGlow.addColorStop(0.08,`rgba(${sr},${sg},${sb},0.7)`);
+  starGlow.addColorStop(0.35,`rgba(${sr},${sg},${sb},0.18)`);
   starGlow.addColorStop(1,   'transparent');
   ctx.fillStyle = starGlow;
-  ctx.fillRect(cx - starR*4, cy - starR*4, starR*8, starR*8);
+  ctx.fillRect(cx - starR*6, cy - starR*6, starR*12, starR*12);
+
+  /* Corona rays */
+  const RAYS = 8;
+  for (let i = 0; i < RAYS; i++) {
+    const angle  = (i / RAYS) * Math.PI * 2 + t * 0.12;
+    const rayLen = starR * (2.8 + Math.sin(t * 1.3 + i * 0.9) * 0.6);
+    const grad   = ctx.createLinearGradient(
+      cx + Math.cos(angle) * starR,
+      cy + Math.sin(angle) * starR,
+      cx + Math.cos(angle) * rayLen,
+      cy + Math.sin(angle) * rayLen
+    );
+    grad.addColorStop(0, `rgba(${sr},${sg},${sb},0.55)`);
+    grad.addColorStop(1, 'transparent');
+    ctx.strokeStyle = grad;
+    ctx.lineWidth   = starR * 0.18;
+    ctx.lineCap     = 'round';
+    ctx.beginPath();
+    ctx.moveTo(cx + Math.cos(angle) * starR * 0.9, cy + Math.sin(angle) * starR * 0.9);
+    ctx.lineTo(cx + Math.cos(angle) * rayLen,       cy + Math.sin(angle) * rayLen);
+    ctx.stroke();
+  }
 
   /* Star core */
-  const starCore = ctx.createRadialGradient(cx, cy, 0, cx, cy, starR);
-  starCore.addColorStop(0, 'rgba(255,255,255,1)');
-  starCore.addColorStop(0.3, `rgba(${sr},${sg},${sb},0.9)`);
-  starCore.addColorStop(1, `rgba(${sr},${sg},${sb},0)`);
+  const starCore = ctx.createRadialGradient(cx - starR*0.15, cy - starR*0.15, 0, cx, cy, starR);
+  starCore.addColorStop(0,   'rgba(255,255,255,1)');
+  starCore.addColorStop(0.25,`rgba(255,255,220,1)`);
+  starCore.addColorStop(0.6, `rgba(${sr},${sg},${sb},0.9)`);
+  starCore.addColorStop(1,   `rgba(${sr},${sg},${sb},0)`);
   ctx.fillStyle = starCore;
   ctx.beginPath();
   ctx.arc(cx, cy, starR, 0, Math.PI*2);
@@ -605,6 +646,35 @@ function getPlanetAtScreen(sx, sy) {
   return null;
 }
 
+/* ══════════════════════════════════════════════════
+   SHOOTING STARS
+══════════════════════════════════════════════════ */
+function initShootingStars() {
+  function spawn() {
+    const el = document.createElement('div');
+    el.className = 'shooting-star';
+    const angle = 25 + (Math.random() - 0.5) * 20;
+    el.style.left      = (5 + Math.random() * 75) + 'vw';
+    el.style.top       = (5 + Math.random() * 35) + 'vh';
+    el.style.setProperty('--sa', angle + 'deg');
+    el.style.transform = `rotate(${angle}deg)`;
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove(), { once: true });
+    setTimeout(spawn, 2800 + Math.random() * 7500);
+  }
+  setTimeout(spawn, 3000);
+}
+
+/* ══════════════════════════════════════════════════
+   WARP FLASH
+══════════════════════════════════════════════════ */
+function triggerWarpFlash() {
+  const f = document.getElementById('warp-flash');
+  if (!f) return;
+  f.classList.add('on');
+  setTimeout(() => f.classList.remove('on'), 220);
+}
+
 function initInteractions() {
   const tooltip = document.createElement('div');
   tooltip.id = 'planet-tooltip';
@@ -633,6 +703,39 @@ function initInteractions() {
       enterGalaxy(galaxy);
     }
   });
+
+  /* Scroll-wheel zoom (zoom toward cursor position) */
+  canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    if (currentGalaxy) return; /* don't zoom inside solar system */
+    const factor  = e.deltaY > 0 ? 0.88 : 1.14;
+    const newZoom = Math.max(0.12, Math.min(5, cam.tz * factor));
+    const rect = canvas.getBoundingClientRect();
+    const sx = (e.clientX - rect.left) * (canvas.width / dpr / rect.width);
+    const sy = (e.clientY - rect.top)  * (canvas.height / dpr / rect.height);
+    const wBefore = screenToWorld(sx, sy);
+    cam.tz = newZoom;
+    /* Keep the world point under cursor fixed */
+    const wAfter = screenToWorld(sx, sy);
+    cam.tx += wBefore.x - wAfter.x;
+    cam.ty += wBefore.y - wAfter.y;
+  }, { passive: false });
+
+  /* Touch pinch-zoom */
+  let lastPinchDist = null;
+  canvas.addEventListener('touchmove', e => {
+    if (e.touches.length !== 2) { lastPinchDist = null; return; }
+    e.preventDefault();
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if (lastPinchDist !== null) {
+      const factor = dist / lastPinchDist;
+      cam.tz = Math.max(0.12, Math.min(5, cam.tz * factor));
+    }
+    lastPinchDist = dist;
+  }, { passive: false });
+  canvas.addEventListener('touchend', () => { lastPinchDist = null; });
 
   /* Hover */
   canvas.addEventListener('mousemove', e => {
@@ -677,6 +780,9 @@ function enterGalaxy(galaxy) {
   cam.tx = galaxy.wx;
   cam.ty = galaxy.wy;
   cam.tz = 3.8;
+
+  /* Warp flash at the moment of arrival */
+  setTimeout(triggerWarpFlash, 1100);
 
   /* Show SS overlay after camera arrives */
   setTimeout(() => {
@@ -1050,6 +1156,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTyping();
   initCursor();
   initInteractions();
+  initShootingStars();
 
   /* Back button */
   document.getElementById('ss-back').addEventListener('click', leaveGalaxy);
