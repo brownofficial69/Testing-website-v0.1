@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shadman Hossain | Space Portfolio</title>
+  <meta name="description" content="Shadman Hossain — Cybersecurity Portfolio. Explore the universe." />
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ══ BOOT SCREEN ══ -->
+<div id="boot-screen">
+  <canvas id="boot-canvas"></canvas>
+  <div class="boot-inner">
+    <p class="boot-logo">[ SH ]</p>
+    <div id="boot-log"></div>
+    <div class="boot-bar-wrap"><div class="boot-bar" id="boot-bar"></div></div>
+    <p class="boot-status" id="boot-status">LOADING STAR CHARTS...</p>
+  </div>
+</div>
+
+<!-- ══ CURSOR ══ -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ══ LAYER 1: SPACE BACKGROUND ══ -->
+<canvas id="space-bg"></canvas>
+
+<!-- ══ LAYER 2: SPACE MAP ══ -->
+<div id="space-map">
+  <!-- Central hero text -->
+  <div id="space-hero">
+    <p class="hero-cmd">// portfolio.exe</p>
+    <h1 id="hero-name">Shadman Hossain</h1>
+    <div class="hero-role">
+      <span class="hero-prompt">$&gt;&nbsp;</span>
+      <span id="typing-target"></span><span class="cursor"></span>
+    </div>
+    <p class="hero-hint">[ select a galaxy to explore ]</p>
+  </div>
+
+  <!-- Galaxy nodes — positioned by CSS, rendered by JS -->
+  <div class="galaxy-node" id="gnode-about"   data-galaxy="about">
+    <canvas class="gcanvas" width="60" height="60"></canvas>
+    <span class="glabel">About</span>
+    <span class="gping"></span>
+  </div>
+  <div class="galaxy-node" id="gnode-skills"  data-galaxy="skills">
+    <canvas class="gcanvas" width="60" height="60"></canvas>
+    <span class="glabel">Skills</span>
+    <span class="gping"></span>
+  </div>
+  <div class="galaxy-node" id="gnode-projects" data-galaxy="projects">
+    <canvas class="gcanvas" width="60" height="60"></canvas>
+    <span class="glabel">Projects</span>
+    <span class="gping"></span>
+  </div>
+  <div class="galaxy-node" id="gnode-education" data-galaxy="education">
+    <canvas class="gcanvas" width="60" height="60"></canvas>
+    <span class="glabel">Education</span>
+    <span class="gping"></span>
+  </div>
+  <div class="galaxy-node" id="gnode-certifications" data-galaxy="certifications">
+    <canvas class="gcanvas" width="60" height="60"></canvas>
+    <span class="glabel">Certs</span>
+    <span class="gping"></span>
+  </div>
+  <div class="galaxy-node" id="gnode-contact" data-galaxy="contact">
+    <canvas class="gcanvas" width="60" height="60"></canvas>
+    <span class="glabel">Contact</span>
+    <span class="gping"></span>
+  </div>
+
+  <!-- Decorative constellation lines -->
+  <svg id="constellation-svg" aria-hidden="true"></svg>
+</div>
+
+<!-- ══ LAYER 3: SOLAR SYSTEM (shown when galaxy clicked) ══ -->
+<div id="solar-system" class="ss-hidden">
+  <canvas id="orbit-canvas"></canvas>
+
+  <!-- Central star -->
+  <div id="ss-star">
+    <div id="ss-star-body"></div>
+    <span id="ss-star-label"></span>
+  </div>
+
+  <!-- Planets injected here by JS -->
+  <div id="ss-planets"></div>
+
+  <!-- Back button -->
+  <button id="ss-back" aria-label="Back to galaxy map">
+    <span class="px-arrow">◀</span> GALAXY MAP
+  </button>
+
+  <!-- Galaxy name header -->
+  <div id="ss-header">
+    <p id="ss-galaxy-name"></p>
+    <p class="ss-hint">[ click an orbit to view ]</p>
+  </div>
+</div>
+
+<!-- ══ LAYER 4: CONTENT PANEL ══ -->
+<div id="content-panel">
+  <button id="panel-close" aria-label="Close panel">✕</button>
+  <div id="panel-body"></div>
+</div>
+
+<!-- ══ PROJECT DETAIL MODAL ══ -->
+<div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+    <div class="modal-header">
+      <div class="modal-icon-wrap" id="modal-icon-wrap"><i id="modal-icon" class="fas fa-folder"></i></div>
+      <div>
+        <p class="modal-cat" id="modal-category-label"></p>
+        <h2 class="modal-title" id="modal-title"></h2>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-sec"><h3 class="modal-sh">Overview</h3><p id="modal-description"></p></div>
+      <div class="modal-sec" id="modal-highlights-wrap"><h3 class="modal-sh">Key Highlights</h3><ul id="modal-highlights"></ul></div>
+      <div class="modal-sec" id="modal-tech-wrap"><h3 class="modal-sh">Technologies</h3><div class="tech-pills" id="modal-tech-pills"></div></div>
+      <div class="modal-sec" id="modal-mitre-wrap"><h3 class="modal-sh">MITRE ATT&amp;CK</h3><div id="modal-mitre-grid"></div></div>
+      <div class="modal-note" id="modal-note" style="display:none"><i class="fas fa-circle-info"></i><span id="modal-note-text"></span></div>
+      <div class="modal-actions" id="modal-actions"></div>
+    </div>
+  </div>
+</div>
+
+<script src="script.js" defer></script>
+</body>
+</html>
