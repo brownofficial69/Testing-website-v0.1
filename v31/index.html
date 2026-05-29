@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>CYBER WIRE // SHADMAN HOSSAIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Header ticker bar -->
+  <div class="ticker-bar">
+    <span class="ticker-label">LIVE</span>
+    <div class="ticker-track">
+      <div class="ticker-content" id="ticker"></div>
+    </div>
+  </div>
+
+  <!-- Main layout -->
+  <div class="wire-layout">
+    <!-- Left: Identity + Stats -->
+    <aside class="wire-aside">
+      <div class="wire-logo">CYBER WIRE</div>
+      <div class="wire-edition">Vol. 2026 · Issue 001</div>
+      <div class="profile-card">
+        <div class="pc-initials">SH</div>
+        <div class="pc-name">Shadman Hossain</div>
+        <div class="pc-title">Cybersecurity Analyst</div>
+        <div class="pc-org">Coventry University</div>
+      </div>
+      <div class="stat-block">
+        <div class="sb-row"><span>Projects</span><span class="sb-val">06</span></div>
+        <div class="sb-row"><span>Skills</span><span class="sb-val">25+</span></div>
+        <div class="sb-row"><span>Certs</span><span class="sb-val">04</span></div>
+        <div class="sb-row"><span>Experience</span><span class="sb-val">3yr</span></div>
+      </div>
+      <div class="contact-block">
+        <a href="mailto:brownofficial69@gmail.com">✉ Email</a>
+        <a href="https://github.com/brownofficial69" target="_blank">⌥ GitHub</a>
+        <a href="https://linkedin.com/in/shadman-hossain-5ab649223" target="_blank">↗ LinkedIn</a>
+      </div>
+    </aside>
+
+    <!-- Center: Wire stories -->
+    <main class="wire-main">
+      <div class="story story-lead">
+        <div class="story-cat">LEAD STORY</div>
+        <h2>AI-Powered Threat Intelligence Platform Achieves Enterprise-Grade Coverage</h2>
+        <p class="story-deck">ThreatWeave, built in Go with Claude API integration, aggregates and correlates threat indicators across multiple intelligence feeds — rivaling commercial solutions at a fraction of the cost.</p>
+        <div class="story-meta">
+          <span>Go · Claude API · Redis</span>
+          <span>STATUS: ACTIVE</span>
+        </div>
+      </div>
+
+      <div class="wire-divider">◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆</div>
+
+      <div class="story-grid">
+        <div class="story">
+          <div class="story-cat">SOC TOOLING</div>
+          <h3>SecureView Dashboard Integrates Claude AI for Automated Alert Triage</h3>
+          <p>React and TypeScript frontend delivers real-time threat visibility with AI-powered incident classification.</p>
+          <div class="story-meta"><span>React · TS · Claude API</span></div>
+        </div>
+        <div class="story">
+          <div class="story-cat">DETECTION ENG</div>
+          <h3>SOC Lab Achieves 94% ATT&CK Coverage with Sigma Rule Library</h3>
+          <p>Comprehensive detection engineering pipeline using Sigma YAML rules mapped to MITRE ATT&CK framework tactics.</p>
+          <div class="story-meta"><span>Python · Sigma · MITRE</span></div>
+        </div>
+      </div>
+
+      <div class="wire-divider">◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆</div>
+
+      <div class="brief-grid">
+        <div class="brief"><span class="brief-label">BRIEF</span><b>IOC Hunter</b> — CLI tool aggregates indicators from VirusTotal &amp; ThreatFox</div>
+        <div class="brief"><span class="brief-label">BRIEF</span><b>NIST CSF 2.0</b> — Automated compliance gap analysis and remediation roadmap</div>
+        <div class="brief"><span class="brief-label">BRIEF</span><b>AWS Healthcare</b> — STRIDE threat model + GDPR compliance case study</div>
+      </div>
+    </main>
+
+    <!-- Right: Credentials feed -->
+    <aside class="wire-right">
+      <div class="feed-header">CREDENTIALS FEED</div>
+      <div class="feed-item cert">
+        <span class="fi-tag">CERT</span>
+        <b>CCNA</b>
+        <span>Cisco Certified Network Associate</span>
+      </div>
+      <div class="feed-item cert">
+        <span class="fi-tag">CERT</span>
+        <b>OSCP</b>
+        <span>Offensive Security Certified Professional</span>
+      </div>
+      <div class="feed-item cert">
+        <span class="fi-tag">CERT</span>
+        <b>CISM</b>
+        <span>Cert. Info. Security Manager · ISACA</span>
+      </div>
+      <div class="feed-item cert">
+        <span class="fi-tag">CERT</span>
+        <b>Security+</b>
+        <span>CompTIA Security+</span>
+      </div>
+      <div class="feed-header" style="margin-top:20px">SKILLS FEED</div>
+      <div id="skills-feed"></div>
+    </aside>
+  </div>
+
+  <div class="wire-footer">
+    © 2026 CYBER WIRE — SHADMAN HOSSAIN — COVENTRY UNIVERSITY — v31 NEWS WIRE
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

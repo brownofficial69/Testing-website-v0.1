@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>CRT-7 TERMINAL // SHADMAN HOSSAIN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="crt">
+    <div class="scanlines"></div>
+    <div class="phosphor-noise"></div>
+    <div class="screen">
+      <div class="boot" id="boot-screen">
+        <div id="boot-text"></div>
+        <div class="cursor" id="boot-cursor">█</div>
+      </div>
+      <div class="terminal hidden" id="terminal-screen">
+        <div class="term-header">
+          <div class="header-ascii" id="ascii-title"></div>
+          <div class="term-line">══════════════════════════════════════════════════════════════</div>
+          <div class="term-line green">OPERATOR : SHADMAN HOSSAIN   //   CLASSIFICATION : UNCLASSIFIED</div>
+          <div class="term-line green">UNIT     : COVENTRY UNIVERSITY  //  DIVISION : ETH. HACKING &amp; CYBERSECURITY</div>
+          <div class="term-line">══════════════════════════════════════════════════════════════</div>
+        </div>
+
+        <!-- Sections rendered by JS -->
+        <div id="sections"></div>
+
+        <div class="blink-line">
+          <span class="prompt">C:\PORTFOLIO&gt; </span>
+          <span id="type-out"></span>
+          <span class="cursor">█</span>
+        </div>
+      </div>
+    </div>
+    <div class="monitor-base"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

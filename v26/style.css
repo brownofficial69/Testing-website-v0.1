@@ -1,0 +1,64 @@
+/* v26: CRT Phosphor Terminal */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#33ff33;--green-dim:#1a8c1a;--green-bg:#001a00;--scanline:rgba(0,0,0,0.15)}
+html,body{background:#111;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;font-family:'Share Tech Mono',monospace;overflow-x:hidden}
+
+.crt{width:100%;max-width:900px;position:relative;margin:0 auto}
+
+.screen{
+  background:var(--green-bg);
+  padding:40px 48px;min-height:100vh;
+  color:var(--green);
+  text-shadow:0 0 8px var(--green),0 0 2px var(--green);
+  position:relative;overflow:hidden;
+  border:3px solid #222;
+  border-radius:8px 8px 0 0;
+}
+
+/* Scanlines */
+.scanlines{
+  position:fixed;inset:0;z-index:10;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,var(--scanline) 2px,var(--scanline) 4px);
+  animation:flicker 0.15s infinite;
+}
+@keyframes flicker{0%{opacity:1}92%{opacity:1}93%{opacity:0.85}94%{opacity:1}96%{opacity:0.9}100%{opacity:1}}
+
+/* Phosphor noise vignette */
+.phosphor-noise{
+  position:fixed;inset:0;z-index:9;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,0.7) 100%);
+}
+
+/* Boot */
+.boot{font-size:16px;line-height:1.6}
+#boot-text .line{display:block;margin-bottom:2px}
+.cursor{display:inline-block;animation:blink 0.8s step-end infinite;font-family:'VT323',monospace;font-size:20px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.hidden{display:none!important}
+
+/* Terminal */
+.terminal{font-size:15px;line-height:1.7}
+.term-header{margin-bottom:24px}
+.header-ascii{font-family:'VT323',monospace;font-size:22px;line-height:1.2;margin-bottom:16px;color:var(--green)}
+.term-line{color:var(--green-dim);font-size:14px;margin-bottom:2px}
+.term-line.green{color:var(--green)}
+
+/* Sections */
+.section{margin:20px 0}
+.section-title{color:var(--green);font-size:18px;margin-bottom:8px;border-bottom:1px solid var(--green-dim);padding-bottom:4px}
+.project-row{display:grid;grid-template-columns:80px 1fr 120px;gap:16px;padding:6px 0;border-bottom:1px solid #001500;font-size:14px}
+.proj-id{color:var(--green-dim)}.proj-stack{color:var(--green-dim);text-align:right}
+.skill-row{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0}
+.skill-tag{border:1px solid var(--green-dim);padding:2px 10px;font-size:13px;color:var(--green-dim)}
+.cert-row{display:flex;gap:24px;flex-wrap:wrap}
+.cert-item{font-size:16px;color:var(--green);padding:4px 16px;border:1px solid var(--green)}
+.contact-row{margin:4px 0;font-size:14px}
+.contact-row span{color:var(--green-dim)}
+
+.blink-line{margin-top:24px;font-size:15px}
+.prompt{color:var(--green)}
+#type-out{color:var(--green)}
+
+.monitor-base{height:32px;background:linear-gradient(180deg,#1a1a1a,#111);border-radius:0 0 8px 8px;border:3px solid #222;border-top:none}
+
+@media(max-width:640px){.screen{padding:20px 16px}.project-row{grid-template-columns:1fr}}

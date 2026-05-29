@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SHADMAN.EXE // 8-BIT PORTFOLIO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="gb-shell">
+    <!-- Game Boy body -->
+    <div class="gb-body">
+      <div class="gb-top-bar">
+        <span class="gb-dot"></span><span class="gb-dot"></span><span class="gb-dot"></span>
+        <span class="gb-title">PORTFOLIO.EXE</span>
+      </div>
+      <div class="gb-screen-bezel">
+        <div class="gb-screen" id="gb-screen">
+          <div id="scene-intro" class="scene active">
+            <div class="title-screen">
+              <div class="ts-logo">CYBER<br/>QUEST</div>
+              <div class="ts-sub">SHADMAN HOSSAIN</div>
+              <div class="ts-year">© 2026</div>
+              <div class="ts-prompt blink-text">PRESS START</div>
+            </div>
+          </div>
+          <div id="scene-game" class="scene">
+            <div class="game-hud">
+              <span>HP: <span class="hud-val">████████</span></span>
+              <span>LVL:<span class="hud-val" id="level-val">3</span></span>
+              <span>XP: <span class="hud-val">9999</span></span>
+            </div>
+            <div class="game-world" id="game-world"></div>
+          </div>
+        </div>
+      </div>
+      <div class="gb-controls">
+        <div class="gb-dpad">
+          <button class="dp-up" id="dp-up">▲</button>
+          <button class="dp-left" id="dp-left">◀</button>
+          <button class="dp-right" id="dp-right">▶</button>
+          <button class="dp-down" id="dp-down">▼</button>
+        </div>
+        <div class="gb-buttons">
+          <button class="gb-btn btn-b" id="btn-b">B</button>
+          <button class="gb-btn btn-a" id="btn-a">A</button>
+        </div>
+      </div>
+      <div class="gb-start">
+        <button class="gb-ssbtn" id="btn-select">SELECT</button>
+        <button class="gb-ssbtn" id="btn-start">START</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info panel outside GB -->
+  <div class="info-panel">
+    <div class="ip-head">PLAYER DATA</div>
+    <div class="ip-row"><span>NAME</span><span>SHADMAN HOSSAIN</span></div>
+    <div class="ip-row"><span>CLASS</span><span>CYBER ANALYST</span></div>
+    <div class="ip-row"><span>GUILD</span><span>COVENTRY UNIV.</span></div>
+    <div class="ip-divider"></div>
+    <div class="ip-head">INVENTORY</div>
+    <div class="ip-row"><span>⚔ OSCP</span><span>+50 ATK</span></div>
+    <div class="ip-row"><span>🛡 CCNA</span><span>+40 DEF</span></div>
+    <div class="ip-row"><span>📜 CISM</span><span>+35 INT</span></div>
+    <div class="ip-row"><span>✨ SEC+</span><span>+30 MAG</span></div>
+    <div class="ip-divider"></div>
+    <div class="ip-head">CONTACT</div>
+    <a class="ip-link" href="mailto:brownofficial69@gmail.com">✉ EMAIL</a>
+    <a class="ip-link" href="https://github.com/brownofficial69" target="_blank">⌥ GITHUB</a>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

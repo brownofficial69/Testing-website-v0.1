@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Shadman Hossain — Career Metro Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="map-shell">
+    <!-- Header -->
+    <div class="map-header">
+      <span class="map-logo">⊕ CAREER METRO</span>
+      <span class="map-subtitle">Shadman Hossain · Cybersecurity · 2020–2026</span>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="leg-item"><span class="leg-dot" style="background:#e53935"></span>Security Line</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#1e88e5"></span>Development Line</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#43a047"></span>GRC Line</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#fb8c00"></span>Certifications Line</div>
+      <div class="leg-item"><span class="leg-dot" style="background:#8e24aa"></span>Projects Line</div>
+    </div>
+
+    <!-- SVG Map -->
+    <div class="map-canvas">
+      <svg id="metro-svg" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid lines (faint) -->
+        <defs>
+          <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+            <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect width="1000" height="600" fill="url(#grid)"/>
+
+        <!-- Security Line (Red) - horizontal -->
+        <path d="M 80 150 L 200 150 L 280 200 L 420 200 L 500 150 L 650 150 L 730 200 L 900 200"
+              stroke="#e53935" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+        <!-- Dev Line (Blue) - angled -->
+        <path d="M 80 300 L 200 300 L 280 250 L 420 250 L 500 300 L 650 300 L 730 250 L 900 250"
+              stroke="#1e88e5" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+        <!-- GRC Line (Green) - horizontal -->
+        <path d="M 200 400 L 350 400 L 430 350 L 580 350 L 660 400 L 820 400"
+              stroke="#43a047" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+        <!-- Cert Line (Orange) - diagonal -->
+        <path d="M 150 480 L 300 480 L 420 420 L 560 420 L 680 480 L 850 480"
+              stroke="#fb8c00" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+        <!-- Projects Line (Purple) - connecting -->
+        <path d="M 280 200 L 280 250 M 420 200 L 420 250 M 500 150 L 500 300 M 650 150 L 650 300 M 730 200 L 730 250"
+              stroke="#8e24aa" stroke-width="4" fill="none" stroke-dasharray="8,4"/>
+
+        <!-- STATIONS -->
+
+        <!-- 2020 Hub -->
+        <circle cx="150" cy="150" r="12" fill="#e53935" stroke="#fff" stroke-width="3"/>
+        <circle cx="150" cy="300" r="12" fill="#1e88e5" stroke="#fff" stroke-width="3"/>
+        <text x="150" y="130" fill="white" font-size="12" font-family="Inter" text-anchor="middle" font-weight="600">2020</text>
+        <text x="80" y="155" fill="#a0a0b8" font-size="10" font-family="Inter">Started Security</text>
+        <text x="80" y="305" fill="#a0a0b8" font-size="10" font-family="Inter">First Python Tools</text>
+
+        <!-- CCNA Station -->
+        <circle cx="280" cy="200" r="14" fill="#fb8c00" stroke="#fff" stroke-width="3"/>
+        <rect cx="270" cy="480" width="28" height="14" rx="7" fill="#fb8c00" stroke="#fff" stroke-width="2"/>
+        <circle cx="280" cy="487" r="7" fill="#fb8c00" stroke="#fff" stroke-width="2"/>
+        <text x="280" y="510" fill="white" font-size="11" font-family="JetBrains Mono" text-anchor="middle">CCNA</text>
+        <text x="280" y="185" fill="#fb8c00" font-size="11" font-family="Inter" text-anchor="middle" font-weight="700">CCNA</text>
+
+        <!-- IOC Hunter Station -->
+        <circle cx="420" cy="200" r="12" fill="#8e24aa" stroke="#fff" stroke-width="3"/>
+        <circle cx="420" cy="250" r="12" fill="#8e24aa" stroke="#fff" stroke-width="3"/>
+        <text x="420" y="183" fill="#ce93d8" font-size="10" font-family="Inter" text-anchor="middle">IOC Hunter</text>
+        <text x="420" y="273" fill="#ce93d8" font-size="10" font-family="Inter" text-anchor="middle">SOC Lab</text>
+
+        <!-- OSCP Station (major) -->
+        <circle cx="500" cy="150" r="16" fill="#fb8c00" stroke="#fff" stroke-width="4"/>
+        <text x="500" y="130" fill="#fb8c00" font-size="13" font-family="Inter" text-anchor="middle" font-weight="800">OSCP</text>
+        <text x="500" y="118" fill="#a0a0b8" font-size="10" font-family="Inter" text-anchor="middle">2024</text>
+
+        <!-- ThreatWeave + SecureView Station -->
+        <circle cx="650" cy="150" r="14" fill="#8e24aa" stroke="#fff" stroke-width="3"/>
+        <circle cx="650" cy="300" r="14" fill="#8e24aa" stroke="#fff" stroke-width="3"/>
+        <text x="650" y="133" fill="#ce93d8" font-size="10" font-family="Inter" text-anchor="middle">ThreatWeave</text>
+        <text x="650" y="320" fill="#ce93d8" font-size="10" font-family="Inter" text-anchor="middle">SecureView</text>
+
+        <!-- NIST GRC Station -->
+        <circle cx="580" cy="350" r="12" fill="#43a047" stroke="#fff" stroke-width="3"/>
+        <text x="580" y="373" fill="#81c784" font-size="10" font-family="Inter" text-anchor="middle">NIST CSF</text>
+
+        <!-- CISM Station -->
+        <circle cx="680" cy="480" r="12" fill="#fb8c00" stroke="#fff" stroke-width="3"/>
+        <text x="680" y="500" fill="#fb8c00" font-size="11" font-family="Inter" text-anchor="middle" font-weight="700">CISM</text>
+
+        <!-- AWS Station -->
+        <circle cx="730" cy="200" r="12" fill="#1e88e5" stroke="#fff" stroke-width="3"/>
+        <circle cx="730" cy="250" r="12" fill="#1e88e5" stroke="#fff" stroke-width="3"/>
+        <text x="760" y="205" fill="#90caf9" font-size="10" font-family="Inter">AWS Health</text>
+        <text x="760" y="255" fill="#90caf9" font-size="10" font-family="Inter">React/TS</text>
+
+        <!-- 2026 Terminal (major hub) -->
+        <circle cx="880" cy="200" r="18" fill="#fff" stroke="#1e88e5" stroke-width="4"/>
+        <circle cx="880" cy="200" r="10" fill="#1e88e5"/>
+        <text x="880" y="185" fill="white" font-size="13" font-family="Inter" text-anchor="middle" font-weight="800">2026</text>
+        <text x="920" y="205" fill="#a0a0b8" font-size="10" font-family="Inter">Graduation</text>
+
+        <!-- Security+ -->
+        <circle cx="850" cy="480" r="12" fill="#fb8c00" stroke="#fff" stroke-width="3"/>
+        <text x="850" y="500" fill="#fb8c00" font-size="11" font-family="Inter" text-anchor="middle" font-weight="700">Sec+</text>
+
+        <!-- Year markers -->
+        <text x="80" y="580" fill="#3a3a55" font-size="12" font-family="JetBrains Mono">2020</text>
+        <text x="265" y="580" fill="#3a3a55" font-size="12" font-family="JetBrains Mono">2021</text>
+        <text x="415" y="580" fill="#3a3a55" font-size="12" font-family="JetBrains Mono">2022</text>
+        <text x="490" y="580" fill="#3a3a55" font-size="12" font-family="JetBrains Mono">2023</text>
+        <text x="640" y="580" fill="#3a3a55" font-size="12" font-family="JetBrains Mono">2024</text>
+        <text x="725" y="580" fill="#3a3a55" font-size="12" font-family="JetBrains Mono">2025</text>
+        <text x="865" y="580" fill="#3a3a55" font-size="12" font-family="JetBrains Mono">2026</text>
+      </svg>
+    </div>
+
+    <!-- Contact -->
+    <div class="map-footer">
+      <a href="mailto:brownofficial69@gmail.com">✉ brownofficial69@gmail.com</a>
+      <a href="https://github.com/brownofficial69" target="_blank">⌥ github.com/brownofficial69</a>
+      <a href="https://linkedin.com/in/shadman-hossain-5ab649223" target="_blank">↗ LinkedIn</a>
+      <span class="map-ver">v28 Metro Map</span>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

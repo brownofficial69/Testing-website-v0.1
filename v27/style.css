@@ -1,0 +1,89 @@
+/* v27: Periodic Table of Skills */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d0d14;--text:#f0f0f8;--text-2:#8888aa;--text-3:#3a3a55;
+  --card:#14141e;--border:rgba(255,255,255,0.07);
+  --font:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+}
+html{font-size:14px;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:auto}
+.page{padding:32px 24px 100px;max-width:1400px;margin:0 auto}
+
+/* Header */
+.pt-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:32px;flex-wrap:wrap;gap:16px}
+.pt-title h1{font-size:clamp(20px,3vw,32px);font-weight:800;letter-spacing:-0.5px}
+.pt-title h1 span{color:#6366f1}
+.pt-title p{font-size:13px;color:var(--text-2);margin-top:4px}
+.pt-legend{display:flex;gap:12px;flex-wrap:wrap}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2)}
+.leg::before{content:'';width:10px;height:10px;border-radius:2px;background:var(--c)}
+
+/* Table grid */
+.table-wrap{overflow-x:auto;padding-bottom:16px}
+.periodic-table{
+  display:grid;
+  grid-template-columns:repeat(18,1fr);
+  grid-template-rows:repeat(7,auto);
+  gap:4px;
+  min-width:900px;
+}
+
+/* Element cell */
+.el{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-top:3px solid var(--el-color,#444);
+  border-radius:6px;
+  padding:8px 6px 6px;
+  cursor:pointer;
+  transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
+  position:relative;
+  min-height:80px;
+  display:flex;flex-direction:column;
+  user-select:none;
+}
+.el:hover{
+  background:color-mix(in srgb,var(--el-color,#444) 12%,var(--card));
+  border-color:var(--el-color,#444);
+  transform:scale(1.08);
+  z-index:10;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+}
+.el.active{border-color:var(--el-color,#444);background:color-mix(in srgb,var(--el-color) 18%,var(--card));box-shadow:0 0 12px var(--el-color)}
+.el-num{font-family:var(--mono);font-size:9px;color:var(--text-3);line-height:1}
+.el-symbol{font-size:22px;font-weight:800;line-height:1;color:var(--el-color,#fff);margin:2px 0}
+.el-name{font-size:8px;color:var(--text-2);line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.el-mass{font-size:8px;color:var(--text-3);margin-top:auto;font-family:var(--mono)}
+
+/* Gap cells */
+.el-gap{visibility:hidden}
+
+/* Info box */
+.info-box{
+  position:fixed;bottom:80px;right:24px;
+  width:240px;
+  background:rgba(14,14,22,0.95);
+  border:1px solid var(--border);
+  border-radius:12px;padding:20px;
+  backdrop-filter:blur(20px);
+  transition:opacity 0.3s;
+  pointer-events:none;
+  opacity:0;
+}
+.info-box.show{opacity:1}
+.ib-num{font-family:var(--mono);font-size:11px;color:var(--text-3)}
+.ib-symbol{font-size:48px;font-weight:800;line-height:1;margin:4px 0}
+.ib-name{font-size:16px;font-weight:700;margin-bottom:4px}
+.ib-cat{font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.ib-desc{font-size:12px;color:var(--text-2);line-height:1.6}
+
+/* Contact strip */
+.contact-strip{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(14,14,22,0.95);border-top:1px solid var(--border);
+  display:flex;justify-content:center;align-items:center;gap:16px;
+  padding:12px;font-size:12px;color:var(--text-3);
+  font-family:var(--mono);backdrop-filter:blur(12px);
+}
+
+@media(max-width:640px){.info-box{width:calc(100% - 48px);right:24px;bottom:60px}}
