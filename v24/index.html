@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Shadman Hossain | Constellation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+
+  <div class="ui">
+    <!-- Header -->
+    <nav class="nav">
+      <span class="nav-logo">✦ SH</span>
+      <div class="nav-links">
+        <a href="#" data-section="about">ABOUT</a>
+        <a href="#" data-section="projects">PROJECTS</a>
+        <a href="#" data-section="skills">SKILLS</a>
+        <a href="#" data-section="contact">CONTACT</a>
+      </div>
+    </nav>
+
+    <!-- Floating panel (changes based on active constellation) -->
+    <div class="info-panel" id="info-panel">
+      <div class="panel-default" id="panel-default">
+        <p class="panel-hint">✦ Move cursor over the constellation to explore</p>
+        <div class="panel-hero">
+          <h1>Shadman<br/>Hossain</h1>
+          <p>Cybersecurity Analyst<br/>Coventry University · 2026</p>
+          <div class="panel-stats">
+            <div><span>6</span><small>Projects</small></div>
+            <div><span>25+</span><small>Skills</small></div>
+            <div><span>4</span><small>Certs</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-content" id="panel-content" style="display:none">
+        <div class="pc-badge" id="pc-badge"></div>
+        <h2 id="pc-title"></h2>
+        <p id="pc-desc"></p>
+        <div class="pc-tags" id="pc-tags"></div>
+      </div>
+    </div>
+
+    <!-- Bottom constellation selector -->
+    <div class="constellation-bar">
+      <button class="cbar-btn active" data-const="projects">PROJECTS</button>
+      <button class="cbar-btn" data-const="skills">SKILLS</button>
+      <button class="cbar-btn" data-const="certs">CERTIFICATIONS</button>
+      <button class="cbar-btn" data-const="contact">CONTACT</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
