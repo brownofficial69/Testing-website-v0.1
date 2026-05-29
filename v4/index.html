@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>shadman@portfolio:~$</title>
+  <meta name="description" content="Shadman Hossain — Cybersecurity Terminal Portfolio" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬛</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- CRT overlays -->
+<div id="crt-scanlines" aria-hidden="true"></div>
+<div id="crt-vignette"  aria-hidden="true"></div>
+
+<!-- Status bar -->
+<div id="status-bar">
+  <span class="sb-left">
+    <span class="sb-dot green"></span>
+    shadman@portfolio:~
+  </span>
+  <span class="sb-center">CYBERSECURITY TERMINAL v4.0</span>
+  <span class="sb-right">
+    <span id="sb-time">--:--:--</span>
+    <span class="sb-sep">│</span>
+    <span class="sb-conn">SSH CONNECTED</span>
+    <span class="sb-dot green"></span>
+  </span>
+</div>
+
+<!-- Main layout -->
+<div id="term-layout">
+
+  <!-- Terminal output area -->
+  <div id="term-wrap">
+    <div id="term-output" role="log" aria-live="polite" aria-label="Terminal output"></div>
+    <!-- Input line -->
+    <div id="term-input-line">
+      <span class="prompt" id="prompt-text">shadman@portfolio:~$&nbsp;</span>
+      <span id="term-display"></span><span id="term-cursor">█</span>
+      <input id="term-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Terminal input" />
+    </div>
+  </div>
+
+  <!-- Quick-commands sidebar -->
+  <aside id="cmd-sidebar">
+    <p class="sidebar-title">// quick access</p>
+    <div class="sidebar-section">
+      <p class="sidebar-cat">identity</p>
+      <button class="cmd-btn" data-cmd="whoami">whoami</button>
+      <button class="cmd-btn" data-cmd="about">about</button>
+      <button class="cmd-btn" data-cmd="whois shadman">whois shadman</button>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-cat">explore</p>
+      <button class="cmd-btn" data-cmd="ls">ls</button>
+      <button class="cmd-btn" data-cmd="ls projects/">ls projects/</button>
+      <button class="cmd-btn" data-cmd="cat skills.md">cat skills.md</button>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-cat">recon</p>
+      <button class="cmd-btn" data-cmd="nmap --scan skills">nmap --scan</button>
+      <button class="cmd-btn" data-cmd="traceroute career">traceroute career</button>
+      <button class="cmd-btn" data-cmd="ps aux">ps aux</button>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-cat">contact</p>
+      <button class="cmd-btn" data-cmd="ssh github">ssh github</button>
+      <button class="cmd-btn" data-cmd="ssh linkedin">ssh linkedin</button>
+      <button class="cmd-btn" data-cmd="mail shadman">mail shadman</button>
+    </div>
+    <div class="sidebar-section">
+      <p class="sidebar-cat">system</p>
+      <button class="cmd-btn" data-cmd="help">help</button>
+      <button class="cmd-btn" data-cmd="clear">clear</button>
+      <button class="cmd-btn" data-cmd="history">history</button>
+    </div>
+    <div class="sidebar-footer">
+      <p>↑↓ history &nbsp;TAB autocomplete</p>
+      <p>type <span class="hl">help</span> for commands</p>
+    </div>
+  </aside>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
