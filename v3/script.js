@@ -176,9 +176,11 @@ function initSpaceBackground() {
     bgCtx.fillStyle = '#020817';
     bgCtx.fillRect(0, 0, bgW, bgH);
 
-    /* Nebulae */
+    /* Nebulae (with mouse parallax offset) */
     nebulae.forEach(n => {
-      const grad = bgCtx.createRadialGradient(n.x, n.y, 0, n.x, n.y, Math.max(n.rx, n.ry));
+      const nx = n.x + (n.ox || 0);
+      const ny = n.y + (n.oy || 0);
+      const grad = bgCtx.createRadialGradient(nx, ny, 0, nx, ny, Math.max(n.rx, n.ry));
       grad.addColorStop(0,   `rgba(${n.col.join(',')},${n.a})`);
       grad.addColorStop(0.5, `rgba(${n.col.join(',')},${n.a * 0.5})`);
       grad.addColorStop(1,   'rgba(0,0,0,0)');
@@ -186,7 +188,7 @@ function initSpaceBackground() {
       bgCtx.scale(1, n.ry / n.rx);
       bgCtx.fillStyle = grad;
       bgCtx.beginPath();
-      bgCtx.arc(n.x, n.y * (n.rx / n.ry), n.rx, 0, Math.PI * 2);
+      bgCtx.arc(nx, ny * (n.rx / n.ry), n.rx, 0, Math.PI * 2);
       bgCtx.fill();
       bgCtx.restore();
     });
@@ -333,6 +335,90 @@ function initTyping() {
 }
 
 /* ══════════════════════════════════════════════════
+   WARP SPEED ANIMATION
+══════════════════════════════════════════════════ */
+function triggerWarp(callback) {
+  const overlay = document.getElementById('warp-overlay');
+  overlay.innerHTML = '';
+
+  /* Create warp line rays */
+  const COUNT = 80;
+  for (let i = 0; i < COUNT; i++) {
+    const line = document.createElement('div');
+    line.className = 'warp-line';
+    const angle = (i / COUNT) * 360;
+    line.style.setProperty('--a', angle + 'deg');
+    line.style.transform = `rotate(${angle}deg)`;
+    line.style.animationDelay = (Math.random() * 0.08) + 's';
+    line.style.opacity = (0.4 + Math.random() * 0.6).toFixed(2);
+    overlay.appendChild(line);
+  }
+
+  /* Flash div for the "jump" flash */
+  let flash = document.getElementById('warp-flash');
+  if (!flash) {
+    flash = document.createElement('div');
+    flash.id = 'warp-flash';
+    document.body.appendChild(flash);
+  }
+
+  overlay.classList.add('active');
+  SoundEngine.play('zoom');
+
+  /* Flash at 60% through */
+  setTimeout(() => { flash.classList.add('on'); }, 420);
+  setTimeout(() => { flash.classList.remove('on'); }, 580);
+
+  setTimeout(() => {
+    overlay.classList.remove('active');
+    overlay.innerHTML = '';
+    callback();
+  }, 680);
+}
+
+/* ══════════════════════════════════════════════════
+   SHOOTING STARS
+══════════════════════════════════════════════════ */
+function initShootingStars() {
+  function spawn() {
+    const star = document.createElement('div');
+    star.className = 'shooting-star';
+    const x = 5 + Math.random() * 70;
+    const y = 5 + Math.random() * 40;
+    const angle = 30 + (Math.random() - 0.5) * 20;
+    star.style.left = x + 'vw';
+    star.style.top  = y + 'vh';
+    star.style.setProperty('--sa', angle + 'deg');
+    star.style.transform = `rotate(${angle}deg)`;
+    document.body.appendChild(star);
+    star.addEventListener('animationend', () => star.remove(), { once: true });
+    setTimeout(spawn, 2500 + Math.random() * 6000);
+  }
+  setTimeout(spawn, 1500);
+}
+
+/* ══════════════════════════════════════════════════
+   MOUSE PARALLAX — nebulae drift slightly
+══════════════════════════════════════════════════ */
+function initMouseParallax() {
+  let mx = 0, my = 0;
+  document.addEventListener('mousemove', e => {
+    mx = (e.clientX / window.innerWidth  - 0.5) * 2;
+    my = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+  (function shift() {
+    nebulae.forEach((n, i) => {
+      const depth = (i % 3 + 1) * 0.5;
+      n.ox = n.ox || 0;
+      n.oy = n.oy || 0;
+      n.ox += (mx * depth - n.ox) * 0.04;
+      n.oy += (my * depth - n.oy) * 0.04;
+    });
+    requestAnimationFrame(shift);
+  })();
+}
+
+/* ══════════════════════════════════════════════════
    SOLAR SYSTEM
 ══════════════════════════════════════════════════ */
 let currentSystem = null;
@@ -340,30 +426,30 @@ let planetAngles  = {};
 let orbitRafId    = null;
 
 function openSolarSystem(galaxyId) {
-  SoundEngine.play('zoom');
   const sys = SOLAR_SYSTEMS[galaxyId];
   const gal = GALAXIES.find(g => g.id === galaxyId);
   if (!sys || !gal) return;
 
-  /* Zoom out the space map */
+  /* Fade space map */
   const map = document.getElementById('space-map');
   map.classList.add('zooming');
 
-  setTimeout(() => {
+  /* Trigger hyperspace warp first */
+  triggerWarp(() => {
     currentSystem = { ...sys, galaxyId };
     const ss = document.getElementById('solar-system');
 
-    /* Set star */
+    /* Configure star */
     const starBody  = document.getElementById('ss-star-body');
     const starLabel = document.getElementById('ss-star-label');
     const galName   = document.getElementById('ss-galaxy-name');
     starBody.style.background = sys.starColor;
     starBody.style.color      = sys.starColor;
-    starLabel.textContent = sys.starLabel;
-    starLabel.style.color = sys.starColor;
-    galName.textContent   = gal.label.toUpperCase();
+    starLabel.textContent     = sys.starLabel;
+    starLabel.style.color     = sys.starColor;
+    galName.textContent       = gal.label.toUpperCase();
 
-    /* Build planet nodes */
+    /* Build planet nodes with staggered entry */
     const container = document.getElementById('ss-planets');
     container.innerHTML = '';
     planetAngles = {};
@@ -374,25 +460,25 @@ function openSolarSystem(galaxyId) {
       div.className = 'planet-node';
       div.id = `planet-${p.id}`;
       div.style.color = p.color;
-      div.innerHTML = `<div class="planet-body" style="width:${p.sz}px;height:${p.sz}px;color:${p.color}"></div><span class="planet-label">${p.label}</span>`;
+      div.style.animationDelay = (i * 0.08) + 's';
+      div.innerHTML = `
+        <div class="planet-body" style="width:${p.sz}px;height:${p.sz}px;color:${p.color};box-shadow:0 0 ${p.sz}px ${p.color},0 0 ${p.sz*2}px ${p.color}40"></div>
+        <span class="planet-label">${p.label}</span>`;
       div.addEventListener('click', () => onPlanetClick(p));
       div.addEventListener('mouseenter', () => SoundEngine.play('orbit'));
       container.appendChild(div);
     });
 
-    /* Draw orbit rings */
-    drawOrbitRings(sys.planets);
-
+    drawOrbitRings(sys.planets, sys.starColor);
     ss.classList.remove('ss-hidden');
     SoundEngine.play('land');
 
-    /* Start orbit animation */
     if (orbitRafId) cancelAnimationFrame(orbitRafId);
     animatePlanets();
-  }, 650);
+  });
 }
 
-function drawOrbitRings(planets) {
+function drawOrbitRings(planets, starColor) {
   const oc = document.getElementById('orbit-canvas');
   if (!oc) return;
   const ctx = oc.getContext('2d');
@@ -401,14 +487,26 @@ function drawOrbitRings(planets) {
   ctx.imageSmoothingEnabled = false;
   const cx = oc.width / 2, cy = oc.height / 2;
 
-  planets.forEach(p => {
+  planets.forEach((p, i) => {
+    /* Faint colored orbit ring */
     ctx.beginPath();
     ctx.ellipse(cx, cy, p.orbitR, p.orbitRY, 0, 0, Math.PI * 2);
-    ctx.strokeStyle = `rgba(255,255,255,0.07)`;
+    ctx.strokeStyle = starColor
+      ? starColor + '18'
+      : 'rgba(255,255,255,0.06)';
     ctx.lineWidth = 1;
-    ctx.setLineDash([3, 6]);
+    ctx.setLineDash([4, 8]);
     ctx.stroke();
+
+    /* Label at top of each orbit */
+    const labelX = cx;
+    const labelY = cy - p.orbitRY - 8;
+    ctx.font = '7px "JetBrains Mono"';
+    ctx.fillStyle = 'rgba(255,255,255,0.18)';
+    ctx.textAlign = 'center';
+    ctx.fillText(`orbit ${String(i+1).padStart(2,'0')}`, labelX, labelY);
   });
+  ctx.setLineDash([]);
 }
 
 function animatePlanets() {
@@ -469,149 +567,142 @@ function closePanel() {
   panel.classList.remove('open');
 }
 
+function ep(num, accent, eyebrow, title, body, stats) {
+  const statsHtml = stats ? `<div class="ep-stats">${stats.map(s =>
+    `<div class="ep-stat"><div class="ep-stat-key">${s.k}</div><div class="ep-stat-val">${s.v}</div></div>`
+  ).join('')}</div>` : '';
+  return `<div class="ep-wrap">
+    <p class="ep-eyebrow">// ${eyebrow}</p>
+    <div class="ep-row">
+      <div class="ep-num">${num}</div>
+      <div>
+        <div class="ep-title">${title}</div>
+        <div class="ep-accent" style="color:${accent};background:${accent}"></div>
+      </div>
+    </div>
+    <div class="ep-body">${body}</div>
+    ${statsHtml}
+  </div>`;
+}
+
 function buildPanelContent(type) {
   switch(type) {
-    case 'bio': return `
-      <p class="panel-label">// about</p>
-      <h2 class="panel-title">Shadman Hossain</h2>
-      <div class="terminal-win">
-        <div class="t-bar"><span class="t-d r"></span><span class="t-d y"></span><span class="t-d g"></span><span class="t-title-bar">shadman@portfolio:~</span></div>
-        <p class="t-line"><span class="t-prompt">&gt;</span> Final-year <span class="t-hl">BSc Ethical Hacking &amp; Cyber Security</span> at Coventry University.</p>
-        <p class="t-line"><span class="t-prompt">&gt;</span> On track for First-Class Honours. Current average: <span class="t-hl">76.67%</span>. Research project: 87%.</p>
-        <p class="t-line"><span class="t-prompt">&gt;</span> Blue team detection engineering, GRC compliance, and AI-augmented security tools in Python and Go.</p>
-        <p class="t-line"><span class="t-prompt">&gt;</span> Preparing for <span class="t-hl">ISC2 CC</span> (June 2026). Seeking junior SOC / GRC roles in the UK.</p>
+
+    case 'bio': return ep('01','#22d3ee','about','Shadman Hossain',`
+      <div class="ep-terminal">
+        <p><span class="t-prompt">&gt;</span> Final-year <span class="t-hl">BSc Ethical Hacking &amp; Cyber Security</span> at Coventry University.</p>
+        <p><span class="t-prompt">&gt;</span> On track for First-Class Honours with a <span class="t-hl">76.67% average</span>. Research project scored 87%.</p>
+        <p><span class="t-prompt">&gt;</span> Blue team detection engineering, GRC compliance, and AI-augmented security tools in Python and Go.</p>
+        <p><span class="t-prompt">&gt;</span> Preparing for <span class="t-hl">ISC2 CC</span> (June 2026). Seeking junior SOC / GRC roles in the UK.</p>
       </div>
-      <div class="panel-section">
-        <p class="panel-sh">Location</p>
-        <p class="panel-text"><i class="fas fa-location-dot" style="color:#22d3ee;margin-right:0.4rem"></i>Coventry, UK</p>
-      </div>`;
+      <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--muted)"><i class="fas fa-location-dot" style="color:#22d3ee;margin-right:0.4rem"></i>Coventry, UK</p>`,
+      [{k:'Location',v:'Coventry, UK'},{k:'Degree',v:'BSc Hons'},{k:'Status',v:'Final Year'}]);
 
-    case 'stats': return `
-      <p class="panel-label">// statistics</p>
-      <h2 class="panel-title">Academic &amp; Project Stats</h2>
-      <div class="stats-row">
-        <div class="stat-box"><div class="stat-val">76.67<span style="font-size:0.5em">%</span></div><div class="stat-key">Current Avg</div></div>
-        <div class="stat-box"><div class="stat-val">87<span style="font-size:0.5em">%</span></div><div class="stat-key">Research</div></div>
-        <div class="stat-box"><div class="stat-val">5</div><div class="stat-key">GH Projects</div></div>
+    case 'stats': return ep('02','#22d3ee','statistics','Academic Stats',`
+      Key modules and grades from Coventry University's BSc Ethical Hacking &amp; Cyber Security programme.
+      <div class="ep-tags" style="margin-top:1rem">
+        <span class="ep-tag">Digital Security Risk — 73%</span>
+        <span class="ep-tag">Applied Cryptography — 75%</span>
+        <span class="ep-tag">Advanced Pen Testing — 71%</span>
+        <span class="ep-tag">Research Project — 87%</span>
+        <span class="ep-tag">Info Security Management — 70%</span>
+        <span class="ep-tag">Security Operations — 67%</span>
+      </div>`,
+      [{k:'Current Average',v:'76.67%'},{k:'Research Project',v:'87%'},{k:'GitHub Projects',v:'5'}]);
+
+    case 'photo': return ep('03','#22d3ee','profile','Profile',`
+      <div style="display:flex;justify-content:center;margin:0.5rem 0 1.25rem">
+        <img src="../assets/profile.jpg" alt="Shadman Hossain"
+          onerror="this.style.display='none'"
+          style="width:180px;height:180px;object-fit:cover;image-rendering:pixelated;border:1px solid rgba(34,211,238,0.25)" />
       </div>
-      <div class="panel-section">
-        <p class="panel-sh">Key Modules</p>
-        <div class="edu-tags" style="display:flex;flex-wrap:wrap;gap:0.4rem">
-          <span style="font-family:var(--font-mono);font-size:0.7rem;padding:0.2rem 0.5rem;background:rgba(34,211,238,0.07);border:1px solid rgba(34,211,238,0.22);color:var(--cyan)">Digital Security Risk — 73%</span>
-          <span style="font-family:var(--font-mono);font-size:0.7rem;padding:0.2rem 0.5rem;background:rgba(34,211,238,0.07);border:1px solid rgba(34,211,238,0.22);color:var(--cyan)">Applied Cryptography — 75%</span>
-          <span style="font-family:var(--font-mono);font-size:0.7rem;padding:0.2rem 0.5rem;background:rgba(34,211,238,0.07);border:1px solid rgba(34,211,238,0.22);color:var(--cyan)">Advanced Pen Testing — 71%</span>
-          <span style="font-family:var(--font-mono);font-size:0.7rem;padding:0.2rem 0.5rem;background:rgba(34,211,238,0.07);border:1px solid rgba(34,211,238,0.22);color:var(--cyan)">Research Project — 87%</span>
-        </div>
-      </div>`;
+      Coventry, UK · BSc Ethical Hacking &amp; Cyber Security · Final-Year`,
+      [{k:'University',v:'Coventry'},{k:'Year',v:'2026'},{k:'Class',v:'First'}]);
 
-    case 'photo': return `
-      <p class="panel-label">// profile</p>
-      <h2 class="panel-title">Shadman Hossain</h2>
-      <div style="display:flex;justify-content:center;margin:1rem 0">
-        <img src="../assets/profile.jpg" alt="Shadman Hossain" onerror="this.style.display='none'" style="width:160px;height:160px;object-fit:cover;image-rendering:pixelated;border:2px solid rgba(34,211,238,0.3);display:block" />
-      </div>
-      <p class="panel-text" style="text-align:center">Coventry, UK · BSc Ethical Hacking &amp; Cyber Security</p>`;
+    case 'skill-soc':   return buildSkillEp('01','#4ade80','SOC &amp; Detection',['SIEM','Wazuh','ELK Stack','Splunk','Sigma Rules','MITRE ATT&CK','Log Analysis','Incident Triage'],'Core defensive monitoring and threat detection capabilities.');
+    case 'skill-off':   return buildSkillEp('02','#86efac','Offensive / Pen-test',['Kali Linux','Nmap','Burp Suite','Metasploit','Wireshark','OSINT','Vuln Assessment'],'Ethical hacking and penetration testing toolchain.');
+    case 'skill-grc':   return buildSkillEp('03','#a7f3d0','GRC &amp; Compliance',['NIST CSF 2.0','ISO 27001','UK GDPR','Threat Modelling','Risk Assessment','Supplier Due Diligence','Audit Management'],'Governance, risk, and compliance frameworks.');
+    case 'skill-prog':  return buildSkillEp('04','#34d399','Programming',['Python','Go','Bash','TypeScript','Playwright','pytest','Web Scraping'],'Languages and automation tooling used across projects.');
+    case 'skill-cloud': return buildSkillEp('05','#6ee7b7','Cloud &amp; Infra',['AWS S3','AWS IAM','AWS EC2','Linux Admin','Windows AD'],'Cloud platforms and infrastructure administration.');
+    case 'skill-fw':    return buildSkillEp('06','#10b981','Frameworks',['MITRE ATT&CK','OWASP Top 10','Cyber Kill Chain','NIST RMF','STRIDE'],'Industry security frameworks and methodologies.');
 
-    case 'skill-soc': return buildSkillPanel('SOC &amp; Detection','#4ade80',['SIEM','Wazuh','ELK Stack','Splunk','Sigma Rules','MITRE ATT&CK','Log Analysis','Incident Triage']);
-    case 'skill-off': return buildSkillPanel('Offensive / Pen-test','#86efac',['Kali Linux','Nmap','Burp Suite','Metasploit','Wireshark','OSINT','Vuln Assessment']);
-    case 'skill-grc': return buildSkillPanel('GRC &amp; Compliance','#a7f3d0',['NIST CSF 2.0','ISO 27001','UK GDPR','Threat Modelling','Risk Assessment','Supplier Due Diligence','Audit Management']);
-    case 'skill-prog':return buildSkillPanel('Programming &amp; Automation','#34d399',['Python','Go','Bash','TypeScript','Playwright','pytest','Web Scraping']);
-    case 'skill-cloud':return buildSkillPanel('Cloud &amp; Infrastructure','#6ee7b7',['AWS S3','AWS IAM','AWS EC2','Linux Admin','Windows AD']);
-    case 'skill-fw':  return buildSkillPanel('Frameworks','#10b981',['MITRE ATT&CK','OWASP Top 10','Cyber Kill Chain','NIST RMF','STRIDE']);
+    case 'edu-coventry': return ep('01','#60a5fa','education','BSc Ethical Hacking &amp; Cyber Security',`
+      <strong style="color:#60a5fa">Coventry University</strong> · Sep 2023 – Jul 2026<br>Expected First-Class Honours
+      <div class="ep-tags" style="margin-top:1rem">
+        <span class="ep-tag">Digital Security Risk — 73%</span><span class="ep-tag">Security Operations — 67%</span>
+        <span class="ep-tag">Info Security Management — 70%</span><span class="ep-tag">Applied Cryptography — 75%</span>
+        <span class="ep-tag">Advanced Pen Testing — 71%</span><span class="ep-tag">Research Project — 87%</span>
+      </div>`,
+      [{k:'Current Average',v:'76.67%'},{k:'Graduation',v:'Jul 2026'},{k:'Track',v:'First Class'}]);
 
-    case 'edu-coventry': return `
-      <p class="panel-label">// education</p>
-      <h2 class="panel-title">Coventry University</h2>
-      <div class="edu-card">
-        <div class="edu-year">Sep 2023 – Jul 2026</div>
-        <div class="edu-deg">BSc (Hons) Ethical Hacking &amp; Cyber Security</div>
-        <div class="edu-inst"><i class="fas fa-graduation-cap"></i> Coventry University</div>
-        <div class="edu-grade">Expected First-Class · Average: <span style="color:#60a5fa">76.67%</span></div>
-        <div class="edu-tags">
-          <span>Digital Security Risk — 73%</span><span>Security Operations — 67%</span>
-          <span>Info Security Management — 70%</span><span>Applied Cryptography — 75%</span>
-          <span>Advanced Pen Testing — 71%</span><span>Research Project — 87%</span>
-        </div>
-      </div>`;
+    case 'edu-bmet': return ep('02','#93c5fd','education','BTEC Level 3 National Diploma in IT',`
+      <strong style="color:#93c5fd">Birmingham Metropolitan College</strong> · Sep 2020 – Jul 2022
+      <div class="ep-tags" style="margin-top:1rem">
+        <span class="ep-tag">IT Project Management — Distinction</span>
+        <span class="ep-tag">Programming — Distinction</span>
+        <span class="ep-tag">Mobile Apps — Distinction</span>
+        <span class="ep-tag">Cyber Security &amp; Incident Management</span>
+      </div>`,
+      [{k:'Grade',v:'DDM'},{k:'Graduated',v:'2022'},{k:'College',v:'BMet'}]);
 
-    case 'edu-bmet': return `
-      <p class="panel-label">// education</p>
-      <h2 class="panel-title">Birmingham Metropolitan College</h2>
-      <div class="edu-card">
-        <div class="edu-year">Sep 2020 – Jul 2022</div>
-        <div class="edu-deg">BTEC Level 3 National Diploma in IT</div>
-        <div class="edu-inst"><i class="fas fa-graduation-cap"></i> Birmingham Metropolitan College</div>
-        <div class="edu-grade"><span style="color:#93c5fd">Double Distinction Merit</span></div>
-        <div class="edu-tags">
-          <span>IT Project Management — Distinction</span><span>Programming — Distinction</span>
-          <span>Mobile Apps — Distinction</span><span>Cyber Security &amp; Incident Management</span>
-        </div>
-      </div>`;
-
-    case 'cert-isc2': return `
-      <p class="panel-label">// certifications</p>
-      <h2 class="panel-title">ISC2 — Certified in Cybersecurity</h2>
-      <div class="cert-card">
-        <i class="fas fa-shield-halved cert-icon"></i>
-        <div>
-          <p class="cert-issuer">ISC2</p>
-          <p class="cert-name">Certified in Cybersecurity (CC)</p>
-          <p class="cert-desc">Vendor-neutral security certification covering risk management, network security, operations, and access controls.</p>
-          <div class="cert-countdown">
-            <span class="cd-lbl">Exam in</span>
-            <div class="cd-units">
-              <div class="cd-unit"><span class="cd-v" id="cd-days">--</span><span class="cd-k">days</span></div>
-              <span class="cd-sep">:</span>
-              <div class="cd-unit"><span class="cd-v" id="cd-hrs">--</span><span class="cd-k">hrs</span></div>
-              <span class="cd-sep">:</span>
-              <div class="cd-unit"><span class="cd-v" id="cd-min">--</span><span class="cd-k">min</span></div>
-            </div>
+    case 'cert-isc2': return `<div class="ep-wrap">
+      <p class="ep-eyebrow">// certifications</p>
+      <div class="ep-row"><div class="ep-num">01</div><div>
+        <div class="ep-title">ISC2 Certified in Cybersecurity</div>
+        <div class="ep-accent" style="background:#fbbf24"></div>
+      </div></div>
+      <div class="ep-body">Vendor-neutral security certification covering risk management, network security, operations, and access controls. Exam scheduled 11 June 2026.</div>
+      <div style="margin-bottom:1.5rem">
+        <div class="cert-countdown">
+          <span class="cd-lbl">Exam in</span>
+          <div class="cd-units">
+            <div class="cd-unit"><span class="cd-v" id="cd-days">--</span><span class="cd-k">days</span></div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit"><span class="cd-v" id="cd-hrs">--</span><span class="cd-k">hrs</span></div>
+            <span class="cd-sep">:</span>
+            <div class="cd-unit"><span class="cd-v" id="cd-min">--</span><span class="cd-k">min</span></div>
           </div>
-          <div class="cert-status"><span class="sdot"></span>Exam Scheduled — 11 June 2026</div>
         </div>
-      </div>`;
+        <div class="cert-status" style="margin-top:0.75rem"><span class="sdot"></span>Exam Scheduled — 11 June 2026</div>
+      </div>
+      <div class="ep-stats">
+        <div class="ep-stat"><div class="ep-stat-key">Issuer</div><div class="ep-stat-val">ISC2</div></div>
+        <div class="ep-stat"><div class="ep-stat-key">Exam Date</div><div class="ep-stat-val">11 Jun 2026</div></div>
+        <div class="ep-stat"><div class="ep-stat-key">Status</div><div class="ep-stat-val">Upcoming</div></div>
+      </div></div>`;
 
-    case 'cert-future': return `
-      <p class="panel-label">// certifications</p>
-      <h2 class="panel-title">Future Certifications</h2>
-      <div class="cert-card" style="border-color:rgba(255,255,255,0.06)">
-        <i class="fas fa-plus cert-icon" style="color:var(--muted);text-shadow:none"></i>
-        <div>
-          <p class="cert-issuer" style="color:var(--muted)">Future</p>
-          <p class="cert-name">More Certifications Coming</p>
-          <p class="cert-desc">Continuing professional development in SOC operations, threat hunting, and GRC disciplines post-graduation.</p>
-          <div class="cert-status" style="color:var(--muted);background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.06)"><span class="sdot" style="background:var(--muted);animation:none"></span>Planned — Post-Graduation 2026</div>
-        </div>
-      </div>`;
+    case 'cert-future': return ep('02','rgba(255,255,255,0.2)','certifications','More Coming Soon',
+      'Continuing professional development in SOC operations, threat hunting, and GRC disciplines post-graduation 2026.',
+      [{k:'Timeline',v:'Post 2026'},{k:'Focus',v:'SOC / GRC'},{k:'Status',v:'Planned'}]);
 
-    case 'contact-email': return `
-      <p class="panel-label">// contact</p>
-      <h2 class="panel-title">Email</h2>
-      <a href="mailto:sm.shadman.hossain@gmail.com" class="contact-method" style="display:flex">
+    case 'contact-email': return ep('01','#f472b6','contact','Email',`
+      <a href="mailto:sm.shadman.hossain@gmail.com" class="contact-method" style="display:flex;margin-top:0.5rem">
         <i class="fas fa-envelope cm-icon"></i>
         <div class="cm-detail"><span class="cm-type">Email</span><span class="cm-val">sm.shadman.hossain@gmail.com</span></div>
-      </a>`;
+      </a>`,
+      [{k:'Response',v:'< 24h'},{k:'Type',v:'Email'},{k:'Preferred',v:'Yes'}]);
 
-    case 'contact-github': return `
-      <p class="panel-label">// contact</p>
-      <h2 class="panel-title">GitHub</h2>
-      <a href="https://github.com/shaddiegit" target="_blank" rel="noopener" class="contact-method" style="display:flex">
+    case 'contact-github': return ep('02','#f472b6','contact','GitHub',`
+      <a href="https://github.com/shaddiegit" target="_blank" rel="noopener" class="contact-method" style="display:flex;margin-top:0.5rem">
         <i class="fab fa-github cm-icon"></i>
         <div class="cm-detail"><span class="cm-type">GitHub</span><span class="cm-val">github.com/shaddiegit</span></div>
-      </a>`;
+      </a>`,
+      [{k:'Projects',v:'5+'},{k:'Platform',v:'GitHub'},{k:'Focus',v:'Security'}]);
 
-    case 'contact-linkedin': return `
-      <p class="panel-label">// contact</p>
-      <h2 class="panel-title">LinkedIn</h2>
-      <a href="https://www.linkedin.com/in/shadman-hossain1206" target="_blank" rel="noopener" class="contact-method" style="display:flex">
+    case 'contact-linkedin': return ep('03','#f472b6','contact','LinkedIn',`
+      <a href="https://www.linkedin.com/in/shadman-hossain1206" target="_blank" rel="noopener" class="contact-method" style="display:flex;margin-top:0.5rem">
         <i class="fab fa-linkedin-in cm-icon"></i>
         <div class="cm-detail"><span class="cm-type">LinkedIn</span><span class="cm-val">linkedin.com/in/shadman-hossain1206</span></div>
-      </a>`;
+      </a>`,
+      [{k:'Network',v:'LinkedIn'},{k:'Location',v:'UK'},{k:'Open To',v:'Roles'}]);
 
-    case 'contact-form': return `
-      <p class="panel-label">// contact</p>
-      <h2 class="panel-title">Send a Message</h2>
-      <p style="font-size:0.88rem;color:rgba(226,232,240,0.7);margin-bottom:0.5rem">Open to SOC Analyst, GRC Analyst, and CTI roles in the UK.</p>
+    case 'contact-form': return `<div class="ep-wrap">
+      <p class="ep-eyebrow">// contact</p>
+      <div class="ep-row"><div class="ep-num">04</div><div>
+        <div class="ep-title">Send a Message</div>
+        <div class="ep-accent" style="background:#f472b6"></div>
+      </div></div>
+      <p class="ep-body">Open to <strong style="color:#f472b6">Junior SOC Analyst</strong>, <strong style="color:#e879f9">GRC Analyst</strong>, and <strong style="color:#f472b6">Cyber Threat Intelligence</strong> roles in the UK.</p>
       <form class="mini-form" id="panel-contact-form" novalidate>
         <div><label>Name</label><input type="text" id="pf-name" placeholder="Your name" required /></div>
         <div><label>Email</label><input type="email" id="pf-email" placeholder="your@email.com" required /></div>
@@ -619,10 +710,19 @@ function buildPanelContent(type) {
         <div><label>Message</label><textarea id="pf-msg" rows="4" placeholder="Your message..." required></textarea></div>
         <button type="submit"><i class="fas fa-paper-plane"></i>&nbsp; TRANSMIT</button>
         <p class="form-status-text" id="pf-status"></p>
-      </form>`;
+      </form></div>`;
 
-    default: return `<p class="panel-label">// ${type}</p><p class="panel-text">Content loading...</p>`;
+    default: return `<div class="ep-wrap"><p class="ep-eyebrow">// ${type}</p></div>`;
   }
+}
+
+function buildSkillEp(num, color, title, tags, desc) {
+  const tagsHtml = tags.map(t =>
+    `<span class="ep-tag" style="border-color:${color}33;color:${color}">${t}</span>`
+  ).join('');
+  return ep(num, color, 'skills', title,
+    `${desc}<div class="ep-tags" style="margin-top:1rem">${tagsHtml}</div>`,
+    [{k:'Category',v:num+' / 06'},{k:'Skills',v:tags.length.toString()},{k:'Field',v:'Security'}]);
 }
 
 function buildSkillPanel(title, color, tags) {
@@ -820,5 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCursor();
   initTyping();
   initGalaxyInteractions();
+  initShootingStars();
+  initMouseParallax();
   window.addEventListener('resize', drawConstellationLines);
 });
