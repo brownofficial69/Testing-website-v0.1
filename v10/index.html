@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Holographic Command Center | Shadman Hossain</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='none' stroke='%2300ffff' stroke-width='2'/><circle cx='50' cy='50' r='25' fill='none' stroke='%2300ffff' stroke-width='1.5' opacity='0.6'/></svg>"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Hologram canvas -->
+  <canvas id="hologram-canvas"></canvas>
+
+  <!-- Scan lines effect -->
+  <div class="scan-lines"></div>
+
+  <!-- HUD overlay -->
+  <div class="hud-overlay">
+    <!-- Top bar -->
+    <div class="hud-top">
+      <div class="hud-section left">
+        <div class="hud-label">SH-SECURITY</div>
+        <div class="hud-status online">●  ONLINE</div>
+      </div>
+      <div class="hud-title">HOLOGRAPHIC COMMAND CENTER</div>
+      <div class="hud-section right">
+        <div class="hud-time" id="time"></div>
+        <div class="hud-signal">▓▓▓▓▓</div>
+      </div>
+    </div>
+
+    <!-- Center content -->
+    <div class="hud-center">
+      <!-- Project orbs info -->
+      <div class="orb-info">
+        <h1 class="glow-text">Shadman Hossain</h1>
+        <p class="subtitle">Cybersecurity Analyst | Threat Intelligence | GRC</p>
+      </div>
+
+      <!-- 3D sphere will be rendered here -->
+      <div id="holo-container"></div>
+
+      <!-- Project details panel -->
+      <div class="project-panel">
+        <div class="panel-header">
+          <span class="panel-title" id="project-name">THREATWEAVE</span>
+          <span class="panel-status">ACTIVE</span>
+        </div>
+        <div class="panel-content" id="project-details">
+          <p>Go + Claude AI API | Threat Intelligence Correlation Engine</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="hud-bottom">
+      <div class="radar">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(0,255,255,0.1)"/>
+          <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(0,255,255,0.1)"/>
+          <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(0,255,255,0.1)"/>
+          <line x1="50" y1="5" x2="50" y2="95" stroke="rgba(0,255,255,0.2)"/>
+          <line x1="5" y1="50" x2="95" y2="50" stroke="rgba(0,255,255,0.2)"/>
+          <circle id="radar-dot" cx="50" cy="30" r="3" fill="#00ff00"/>
+        </svg>
+      </div>
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-label">Projects:</span>
+          <span class="stat-value" id="project-count">6</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Skills:</span>
+          <span class="stat-value" id="skill-count">25+</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Certs:</span>
+          <span class="stat-value" id="cert-count">4</span>
+        </div>
+      </div>
+      <div class="controls">
+        <span class="control-hint">Click orbs to rotate | Scroll to zoom</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio toggle -->
+  <button class="audio-toggle" id="audio-toggle" aria-label="Toggle ambient sound">
+    <i class="fa-solid fa-volume-high"></i>
+  </button>
+
+  <!-- About modal -->
+  <div class="modal" id="about-modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2>About</h2>
+      <p>Final-year Ethical Hacking & Cybersecurity student at Coventry University. Passionate about threat intelligence, detection engineering, and secure system design.</p>
+      <div class="modal-links">
+        <a href="https://github.com/brownofficial69" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/shadman-hossain-5ab649223" target="_blank">LinkedIn</a>
+        <a href="mailto:brownofficial69@gmail.com">Email</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
