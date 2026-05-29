@@ -1,0 +1,465 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #00d4ff;
+  --secondary: #ff006e;
+  --success: #00ff41;
+  --warning: #ffd000;
+  --dark: #0a0e27;
+  --darker: #050711;
+  --grid: rgba(0, 212, 255, 0.1);
+  --glow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  background: linear-gradient(135deg, var(--darker), var(--dark));
+  color: var(--primary);
+  overflow: hidden;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Arcade Container */
+.arcade-container {
+  display: flex;
+  height: 100vh;
+  gap: 2px;
+  padding: 10px;
+  background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.05));
+  background-image:
+    repeating-linear-gradient(0deg, rgba(0, 212, 255, 0.03) 0px, transparent 1px, transparent 2px, rgba(0, 212, 255, 0.03) 3px),
+    repeating-linear-gradient(90deg, rgba(0, 212, 255, 0.03) 0px, transparent 1px, transparent 2px, rgba(0, 212, 255, 0.03) 3px);
+}
+
+/* Panels */
+.arcade-left,
+.arcade-right {
+  width: 240px;
+  background: rgba(5, 7, 17, 0.8);
+  border: 2px solid var(--primary);
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1), var(--glow);
+  overflow-y: auto;
+}
+
+.arcade-screen {
+  flex: 1;
+  background: rgba(5, 7, 17, 0.95);
+  border: 3px solid var(--primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 0 30px rgba(0, 212, 255, 0.2), var(--glow);
+  overflow: hidden;
+}
+
+.screen-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.screen {
+  display: none;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  animation: fadeIn 0.5s ease;
+}
+
+.screen.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scoreboard */
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.score-display {
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid var(--primary);
+  padding: 12px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.score-display .label {
+  font-size: 10px;
+  color: rgba(0, 212, 255, 0.6);
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.score-display .value {
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: var(--glow);
+  color: var(--success);
+}
+
+/* Progress */
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progress-label {
+  font-size: 10px;
+  color: rgba(0, 212, 255, 0.6);
+  letter-spacing: 1px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--success));
+  width: 0%;
+  transition: width 0.5s ease;
+  box-shadow: var(--glow);
+}
+
+/* Boxes */
+.achievements-box,
+.leaderboard,
+.stats-box {
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.box-title {
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: var(--primary);
+  text-shadow: var(--glow);
+  margin-bottom: 5px;
+}
+
+/* Achievements */
+.achievements {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.achievement {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 0, 110, 0.1);
+  border: 1px solid var(--secondary);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.achievement:hover {
+  background: rgba(255, 0, 110, 0.3);
+  box-shadow: 0 0 15px rgba(255, 0, 110, 0.5);
+}
+
+.achievement.locked {
+  opacity: 0.3;
+  filter: grayscale(1);
+}
+
+/* Leaderboard */
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.leaderboard-entry {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px;
+  background: rgba(0, 212, 255, 0.1);
+  border-radius: 3px;
+  border-left: 2px solid var(--primary);
+}
+
+.leaderboard-rank {
+  font-weight: bold;
+  color: var(--success);
+  min-width: 20px;
+}
+
+.leaderboard-name {
+  flex: 1;
+  color: var(--primary);
+}
+
+.leaderboard-score {
+  color: var(--warning);
+  font-weight: bold;
+}
+
+/* Stats */
+.stat {
+  display: flex;
+  gap: 8px;
+  font-size: 11px;
+  color: rgba(0, 212, 255, 0.8);
+  padding: 6px;
+  border-left: 2px solid var(--primary);
+}
+
+/* Screens */
+.arcade-title {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: var(--success);
+  text-shadow: 0 0 20px var(--success);
+  letter-spacing: 2px;
+}
+
+.arcade-subtitle {
+  font-size: 14px;
+  color: var(--primary);
+  margin-bottom: 20px;
+  text-shadow: var(--glow);
+}
+
+.screen-divider {
+  width: 200px;
+  height: 2px;
+  background: var(--primary);
+  margin: 15px 0;
+  box-shadow: var(--glow);
+}
+
+.arcade-text {
+  font-size: 14px;
+  color: var(--primary);
+  margin: 10px 0;
+}
+
+.arcade-text.small {
+  font-size: 12px;
+  color: rgba(0, 212, 255, 0.7);
+}
+
+.arcade-btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border: 2px solid var(--primary);
+  color: var(--dark);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.arcade-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px var(--glow);
+}
+
+.arcade-btn:active {
+  transform: scale(0.95);
+}
+
+/* Challenge screen */
+.challenge-title {
+  font-size: 24px;
+  color: var(--warning);
+  text-shadow: 0 0 15px var(--warning);
+  margin-bottom: 20px;
+}
+
+.challenge-content {
+  font-size: 14px;
+  color: var(--primary);
+  margin-bottom: 30px;
+  max-width: 400px;
+  line-height: 1.8;
+}
+
+.challenge-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.option-btn {
+  padding: 12px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.option-btn:hover {
+  background: rgba(0, 212, 255, 0.3);
+}
+
+.option-btn.correct {
+  background: rgba(0, 255, 65, 0.3);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.option-btn.wrong {
+  background: rgba(255, 0, 110, 0.3);
+  border-color: var(--secondary);
+  color: var(--secondary);
+  pointer-events: none;
+}
+
+/* Success screen */
+.success-title {
+  font-size: 32px;
+  color: var(--success);
+  text-shadow: 0 0 20px var(--success);
+  margin-bottom: 30px;
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.success-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.points {
+  font-size: 48px;
+  color: var(--success);
+  font-weight: bold;
+  text-shadow: 0 0 30px var(--success);
+}
+
+#success-message {
+  font-size: 14px;
+  color: var(--primary);
+}
+
+/* Game over screen */
+.gameover-title {
+  font-size: 32px;
+  color: var(--secondary);
+  text-shadow: 0 0 20px var(--secondary);
+  margin-bottom: 30px;
+}
+
+.gameover-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  font-size: 16px;
+}
+
+.gameover-content p {
+  color: var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .arcade-container {
+    flex-direction: column;
+  }
+
+  .arcade-left,
+  .arcade-right {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Scrollbar */
+.arcade-left::-webkit-scrollbar,
+.arcade-right::-webkit-scrollbar {
+  width: 6px;
+}
+
+.arcade-left::-webkit-scrollbar-track,
+.arcade-right::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.arcade-left::-webkit-scrollbar-thumb,
+.arcade-right::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+/* Canvas for particles */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}

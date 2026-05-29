@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Neural Network Portfolio | Shadman Hossain</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='8' fill='%23ff6b9d'/><circle cx='30' cy='30' r='6' fill='%23c06c84' opacity='0.7'/><circle cx='70' cy='30' r='6' fill='%23c06c84' opacity='0.7'/><circle cx='30' cy='70' r='6' fill='%236c5b7b' opacity='0.7'/><circle cx='70' cy='70' r='6' fill='%23355c7d' opacity='0.7'/></svg>"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <!-- Neural network canvas -->
+  <canvas id="network-canvas"></canvas>
+
+  <!-- Overlay UI -->
+  <div class="overlay">
+    <!-- Header -->
+    <div class="header">
+      <h1>Neural Network Portfolio</h1>
+      <p>Shadman Hossain | Cybersecurity Analyst</p>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item">
+        <span class="node-core"></span> Core Skills
+      </div>
+      <div class="legend-item">
+        <span class="node-project"></span> Projects
+      </div>
+      <div class="legend-item">
+        <span class="node-cert"></span> Certifications
+      </div>
+    </div>
+
+    <!-- Node info panel -->
+    <div class="info-panel">
+      <h3 id="node-title">Hover over nodes</h3>
+      <p id="node-desc"></p>
+      <div id="node-connections"></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button id="reset-btn">Reset View</button>
+      <button id="animate-btn">Auto-Animate</button>
+      <label>
+        <input type="checkbox" id="dark-mode" checked/>
+        Dark Mode
+      </label>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>Interactive neural network showing skill connections and project relationships</p>
+      <a href="https://github.com/brownofficial69" target="_blank">GitHub</a> •
+      <a href="mailto:brownofficial69@gmail.com">Contact</a>
+    </div>
+  </div>
+
+  <!-- Particle effect canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
