@@ -1,0 +1,380 @@
+/* ═══════════════════════
+   SYSTEM FONTS & RESET
+═══════════════════════ */
+:root{
+  --win-bg:#c0c0c0;
+  --win-dark:#808080;
+  --win-darker:#404040;
+  --win-light:#ffffff;
+  --win-title:#000080;
+  --win-title-in:#808080;
+  --desktop:#008080;
+  --taskbar:#c0c0c0;
+  --font:'Tahoma','MS Sans Serif','Arial',sans-serif;
+  --font-sz:11px;
+  --raise:2px solid;
+  --raise-col:#ffffff #808080 #808080 #ffffff;
+  --sink-col:#808080 #ffffff #ffffff #808080;
+  --outer:#000000 #dfdfdf #dfdfdf #000000;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;user-select:none}
+body{
+  background:var(--desktop);
+  font-family:var(--font);
+  font-size:var(--font-sz);
+  color:#000;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ═══════════════════════
+   BOOT SCREEN
+═══════════════════════ */
+#boot-screen{
+  position:fixed;inset:0;z-index:9999;
+  background:#000;display:flex;align-items:center;justify-content:center;
+  transition:opacity .5s ease;
+}
+#boot-screen.fade{opacity:0;pointer-events:none}
+.boot-inner{text-align:center;color:#fff}
+.win-logo{display:grid;grid-template-columns:1fr 1fr;gap:2px;width:60px;height:60px;margin:0 auto 1rem}
+.wl-q{width:28px;height:28px}
+.wl-q.red{background:#f00}.wl-q.green{background:#0f0}.wl-q.blue{background:#00f}.wl-q.yellow{background:#ff0}
+.boot-product{font-size:1.5rem;font-weight:bold;margin-bottom:.25rem;letter-spacing:.05em}
+.boot-sub{font-size:.8rem;color:#aaa;margin-bottom:1.5rem}
+.boot-bar-wrap{width:200px;height:16px;border:1px solid #555;background:#000;margin:0 auto 1.5rem;overflow:hidden}
+.boot-bar{height:100%;width:0%;background:linear-gradient(90deg,#00f,#088);transition:width .1s linear}
+.boot-copy{font-size:.7rem;color:#666}
+
+/* ═══════════════════════
+   DESKTOP
+═══════════════════════ */
+#desktop{
+  flex:1;position:relative;overflow:hidden;
+  background:var(--desktop);
+  /* optional: tile pattern */
+  background-image:none;
+}
+
+/* ═══════════════════════
+   DESKTOP ICONS
+═══════════════════════ */
+#desktop-icons{
+  position:absolute;top:8px;left:8px;
+  display:flex;flex-direction:column;gap:4px;z-index:1;
+}
+.desk-icon{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  width:72px;padding:4px;cursor:default;
+  color:#fff;text-align:center;
+}
+.desk-icon:focus,.desk-icon.selected{
+  background:rgba(0,0,128,.5);outline:1px dotted #fff;
+}
+.di-icon{font-size:28px;line-height:1;display:block;margin-bottom:2px;filter:drop-shadow(1px 1px 0 rgba(0,0,0,.5))}
+.desk-icon span{font-size:11px;line-height:1.25;word-break:break-word;text-shadow:1px 1px 0 #000}
+
+/* ═══════════════════════
+   WINDOWS LAYER
+═══════════════════════ */
+#windows-layer{position:absolute;inset:0;z-index:10}
+
+/* ═══════════════════════
+   WINDOW CHROME
+═══════════════════════ */
+.os-window{
+  position:absolute;
+  background:var(--win-bg);
+  border:var(--raise) var(--outer);
+  border-width:2px;
+  box-shadow:none;
+  display:flex;flex-direction:column;
+  min-width:200px;min-height:120px;
+  resize:both;overflow:hidden;
+}
+.os-window:focus-within{outline:none}
+
+/* Title bar */
+.win-title{
+  display:flex;align-items:center;gap:4px;
+  padding:2px 2px 2px 4px;
+  background:linear-gradient(to right,var(--win-title),#1084d0);
+  color:#fff;cursor:move;user-select:none;flex-shrink:0;
+  font-weight:bold;font-size:11px;
+}
+.win-title.inactive{background:var(--win-title-in)}
+.wt-icon{font-size:14px;flex-shrink:0}
+.wt-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wt-btns{display:flex;gap:2px;flex-shrink:0}
+
+/* Title bar buttons */
+.wb{
+  width:16px;height:14px;
+  background:var(--win-bg);
+  border:2px solid;
+  border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:bold;cursor:default;
+  line-height:1;
+}
+.wb:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark)}
+
+/* Menu bar */
+.win-menubar{
+  display:flex;gap:0;border-bottom:1px solid var(--win-dark);
+  flex-shrink:0;background:var(--win-bg);
+}
+.wmb-item{padding:2px 6px;font-size:11px;cursor:default}
+.wmb-item:hover{background:var(--win-title);color:#fff}
+
+/* Window body */
+.win-body{
+  flex:1;overflow:auto;background:var(--win-bg);
+  font-size:11px;
+  scrollbar-width:thin;scrollbar-color:var(--win-dark) var(--win-bg);
+}
+.win-body::-webkit-scrollbar{width:16px}
+.win-body::-webkit-scrollbar-track{background:var(--win-bg);border-left:1px solid var(--win-dark)}
+.win-body::-webkit-scrollbar-thumb{background:var(--win-bg);border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light)}
+
+/* Status bar */
+.win-status{
+  display:flex;gap:2px;padding:2px;
+  border-top:1px solid var(--win-dark);flex-shrink:0;
+}
+.ws-item{
+  flex:1;border:1px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
+  padding:1px 4px;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ═══════════════════════
+   WIN95 CONTROLS
+═══════════════════════ */
+.win-btn{
+  padding:3px 12px;font-family:var(--font);font-size:11px;background:var(--win-bg);
+  border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+  cursor:default;display:inline-block;
+}
+.win-btn:active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark)}
+.win-input{
+  border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
+  padding:2px 4px;font-family:var(--font);font-size:11px;background:#fff;width:100%;
+}
+.win-input:focus{outline:none}
+.win-textarea{
+  border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);
+  padding:2px 4px;font-family:var(--font);font-size:11px;background:#fff;width:100%;resize:none;
+}
+.win-textarea:focus{outline:none}
+
+/* ═══════════════════════
+   WINDOW CONTENT STYLES
+═══════════════════════ */
+
+/* ABOUT */
+.about-win{padding:8px;display:flex;flex-direction:column;gap:8px}
+.aw-top{display:flex;gap:12px;align-items:flex-start}
+.aw-photo{width:80px;height:80px;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);overflow:hidden;flex-shrink:0;background:#c0c0c0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:bold}
+.aw-photo img{width:100%;height:100%;object-fit:cover;display:none}
+.aw-photo img.loaded{display:block}
+.aw-info table{border-collapse:collapse;width:100%}
+.aw-info td{padding:1px 4px;font-size:11px;vertical-align:top}
+.aw-info td:first-child{color:#000080;font-weight:bold;white-space:nowrap;width:80px}
+.aw-bio{background:#fff;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:6px;font-size:11px;line-height:1.6;color:#000}
+.aw-bio b{color:#000080}
+.aw-stats{display:flex;gap:4px}
+.aws-box{flex:1;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:4px;text-align:center;background:#fff}
+.aws-num{font-size:1.2rem;font-weight:bold;color:#000080}
+.aws-lbl{font-size:9px;color:#444}
+
+/* PROJECTS */
+.proj-explorer{display:flex;flex:1;overflow:hidden}
+.pe-sidebar{width:160px;flex-shrink:0;border-right:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);overflow-y:auto;background:#fff;padding:4px}
+.pe-item{display:flex;align-items:center;gap:6px;padding:3px 4px;cursor:default;font-size:11px}
+.pe-item:hover{background:#000080;color:#fff}
+.pe-item.active{background:#000080;color:#fff}
+.pe-icon{font-size:16px;flex-shrink:0}
+.pe-detail{flex:1;padding:8px;overflow-y:auto;background:var(--win-bg);font-size:11px}
+.ped-title{font-weight:bold;font-size:13px;margin-bottom:4px;color:#000080}
+.ped-cat{color:#444;margin-bottom:6px}
+.ped-desc{background:#fff;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:5px;margin-bottom:6px;line-height:1.6}
+.ped-section{margin-bottom:6px}
+.ped-section h4{font-size:10px;letter-spacing:.08em;color:#000080;margin-bottom:3px;border-bottom:1px solid var(--win-dark)}
+.ped-tags{display:flex;flex-wrap:wrap;gap:3px}
+.ped-tag{background:#000080;color:#fff;padding:1px 5px;font-size:10px}
+.ped-mitre{color:#800000;font-size:10px}
+.ped-note{background:#ffffc0;border:1px solid #808000;padding:4px;font-size:10px;margin-bottom:6px;color:#444}
+.ped-btn{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;font-size:11px}
+
+/* SKILLS */
+.skills-win{padding:6px;display:flex;flex-direction:column;gap:6px}
+.sk-tabs{display:flex;gap:0;border-bottom:2px solid var(--win-dark)}
+.sk-tab{padding:4px 10px;border:2px solid;border-color:var(--win-light) var(--win-dark) transparent var(--win-light);cursor:default;font-size:11px;background:var(--win-bg);margin-bottom:-2px}
+.sk-tab.active{background:var(--win-bg);border-bottom:2px solid var(--win-bg);font-weight:bold;z-index:1}
+.sk-panel{display:none;background:#fff;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:6px;flex:1}
+.sk-panel.active{display:block}
+.sk-item{padding:2px 0;font-size:11px;display:flex;align-items:center;gap:4px}
+.sk-item::before{content:'◆';color:#000080;font-size:8px}
+
+/* EDUCATION */
+.edu-notepad{background:#fff;padding:6px;font-family:'Courier New',monospace;font-size:11px;line-height:1.8;color:#000;white-space:pre-wrap}
+.edu-notepad .en-h{color:#000080;font-weight:bold}
+.edu-notepad .en-hl{color:#800000}
+
+/* CERTS */
+.certs-win{padding:8px;display:flex;flex-direction:column;gap:8px}
+.cert-item{border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:8px;background:#fff;display:flex;gap:10px;align-items:flex-start}
+.ci-badge{font-size:2rem;flex-shrink:0;width:48px;text-align:center}
+.ci-issuer{color:#000080;font-weight:bold;font-size:10px;letter-spacing:.08em}
+.ci-name{font-weight:bold;font-size:12px;margin:.2rem 0}
+.ci-desc{font-size:10px;color:#444;line-height:1.5;margin-bottom:.4rem}
+.ci-status{font-size:10px;display:flex;align-items:center;gap:4px}
+.ci-dot{width:8px;height:8px;border-radius:0;background:#ff8800;display:inline-block;animation:blink 1.2s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.ci-dot.dim{background:#808080;animation:none}
+
+/* CONTACT */
+.contact-win{padding:8px;display:flex;flex-direction:column;gap:6px;font-size:11px}
+.cw-field{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.cw-label{width:60px;text-align:right;flex-shrink:0}
+.cw-links{display:flex;flex-direction:column;gap:4px;margin-bottom:8px}
+.cw-link{display:flex;align-items:center;gap:6px;padding:3px 6px;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);background:#fff;cursor:pointer;text-decoration:none;color:#000}
+.cw-link:hover{background:#000080;color:#fff}
+.cw-link-icon{font-size:14px}
+.form-note-win{font-size:10px;min-height:14px}
+.form-note-win.success{color:#008000;font-weight:bold}
+.form-note-win.error{color:#800000;font-weight:bold}
+
+/* SYSINFO */
+.sysinfo-win{padding:8px;display:flex;flex-direction:column;gap:6px}
+.si-logo{display:flex;gap:12px;align-items:center;border-bottom:2px solid var(--win-dark);padding-bottom:8px;margin-bottom:4px}
+.si-win-logo{display:grid;grid-template-columns:1fr 1fr;gap:2px;width:32px;height:32px}
+.siwl-q{width:14px;height:14px}
+.siwl-q.r{background:#f00}.siwl-q.g{background:#0f0}.siwl-q.b{background:#00f}.siwl-q.y{background:#ff0}
+.si-name{font-size:1rem;font-weight:bold}
+.si-version{font-size:10px;color:#444}
+.si-table{border-collapse:collapse;width:100%;font-size:11px}
+.si-table td{padding:3px 6px;border-bottom:1px solid rgba(0,0,0,.08)}
+.si-table td:first-child{color:#000080;font-weight:bold;width:140px}
+.si-bar-row td:first-child{vertical-align:top;padding-top:5px}
+.si-bar-wrap{height:14px;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);overflow:hidden;background:#fff}
+.si-bar{height:100%;background:#000080;display:flex;align-items:center;justify-content:flex-end;padding-right:2px;font-size:9px;color:#fff}
+
+/* RECYCLE BIN */
+.recycle-win{padding:8px;text-align:center;font-size:11px;color:#444}
+.rb-empty{font-size:3rem;margin:1rem 0}
+
+/* SYSINFO welcome */
+.welcome-win{padding:16px;text-align:center;font-size:11px}
+.welcome-icon{font-size:3rem;margin-bottom:8px}
+.welcome-title{font-size:1.1rem;font-weight:bold;color:#000080;margin-bottom:6px}
+.welcome-body{text-align:left;background:#fff;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);padding:8px;margin:8px 0;line-height:1.7}
+.welcome-btns{display:flex;justify-content:center;gap:6px;margin-top:8px}
+
+/* ═══════════════════════
+   TASKBAR
+═══════════════════════ */
+#taskbar{
+  height:30px;flex-shrink:0;
+  background:var(--taskbar);
+  border-top:2px solid var(--win-light);
+  display:flex;align-items:center;gap:2px;padding:2px;
+  z-index:500;
+}
+#start-btn{
+  display:flex;align-items:center;gap:4px;
+  padding:2px 8px 2px 4px;
+  font-family:var(--font);font-size:11px;font-weight:bold;
+  background:var(--win-bg);cursor:default;
+  border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+  height:22px;
+}
+#start-btn:active,.start-pressed{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark) !important}
+.start-logo{display:grid;grid-template-columns:1fr 1fr;gap:1px;width:16px;height:16px;flex-shrink:0}
+.sl-q{width:7px;height:7px}
+.sl-q.r{background:#f00}.sl-q.g{background:#0f0}.sl-q.b{background:#00f}.sl-q.y{background:#ff0}
+.start-text{font-family:var(--font)}
+
+.taskbar-sep{width:2px;background:var(--win-dark);height:18px;margin:0 2px;box-shadow:1px 0 0 var(--win-light)}
+
+#taskbar-windows{flex:1;display:flex;gap:2px;overflow:hidden}
+.tb-win{
+  display:flex;align-items:center;gap:4px;
+  padding:2px 6px;height:22px;max-width:140px;overflow:hidden;
+  font-size:11px;cursor:default;font-family:var(--font);
+  border:2px solid;
+}
+.tb-win.inactive{border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);background:var(--win-bg)}
+.tb-win.active{border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark);background:#bbb}
+.tb-win-icon{font-size:13px;flex-shrink:0}
+.tb-win-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px}
+
+.systray{display:flex;align-items:center;gap:2px;border-left:2px solid var(--win-dark);padding-left:4px;margin-left:2px;height:24px}
+.systray-icons{display:flex;gap:2px;font-size:12px;padding:0 3px}
+.systray-sep{width:2px;background:var(--win-dark);height:14px}
+.tray-clock{font-size:11px;padding:2px 6px;white-space:nowrap;border:2px solid;border-color:var(--win-dark) var(--win-light) var(--win-light) var(--win-dark)}
+
+/* ═══════════════════════
+   START MENU
+═══════════════════════ */
+#start-menu{
+  position:fixed;left:2px;bottom:30px;z-index:600;
+  width:260px;
+  background:var(--win-bg);
+  border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+  box-shadow:2px 2px 0 #000;
+  display:flex;
+}
+.sm-banner{
+  width:24px;background:linear-gradient(to top,#000080,#1084d0);
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  flex-shrink:0;
+}
+.sm-banner-name{font-size:.9rem;font-weight:bold;color:#fff;letter-spacing:.05em}
+.sm-banner-sub{font-size:.6rem;color:rgba(255,255,255,.6);margin-top:2px}
+.sm-items{flex:1;padding:4px 0;display:flex;flex-direction:column}
+.sm-item{display:flex;align-items:center;gap:8px;padding:5px 8px;cursor:default;text-decoration:none;color:#000}
+.sm-item:hover{background:#000080;color:#fff}
+.smi-icon{font-size:20px;width:28px;text-align:center;flex-shrink:0}
+.sm-item b{font-size:11px;display:block;line-height:1.2}
+.sm-item small{font-size:10px;color:inherit;opacity:.7}
+.sm-item:hover small{opacity:.9}
+.sm-sep{height:1px;background:var(--win-dark);margin:4px 0;box-shadow:0 1px 0 var(--win-light)}
+
+/* ═══════════════════════
+   CONTEXT MENU
+═══════════════════════ */
+.ctx-menu{
+  position:fixed;z-index:600;
+  background:var(--win-bg);
+  border:2px solid;border-color:var(--win-light) var(--win-dark) var(--win-dark) var(--win-light);
+  box-shadow:2px 2px 0 #000;
+  padding:2px 0;min-width:140px;
+}
+.ctx-item{padding:4px 16px;font-size:11px;cursor:default}
+.ctx-item:hover{background:#000080;color:#fff}
+.ctx-sep{height:1px;background:var(--win-dark);margin:3px 0;box-shadow:0 1px 0 var(--win-light)}
+
+/* ═══════════════════════
+   SHUTDOWN SCREEN
+═══════════════════════ */
+#shutdown-screen{
+  position:fixed;inset:0;z-index:9999;
+  background:#000;display:none;align-items:center;justify-content:center;
+  flex-direction:column;gap:1rem;color:#fff;font-family:var(--font);
+}
+#shutdown-screen.show{display:flex}
+.sd-icon{font-size:3rem}
+.sd-text{font-size:1.2rem;font-weight:bold}
+.sd-sub{font-size:.85rem;color:#aaa}
+
+/* ═══════════════════════
+   RESPONSIVE
+═══════════════════════ */
+@media(max-width:600px){
+  #desktop-icons{display:none}
+  .os-window{min-width:95vw !important;left:2vw !important}
+  #taskbar-windows .tb-win-label{display:none}
+}
