@@ -9,8 +9,8 @@ const ELEMENTS = [
   {n:4,sym:'SV',name:'SecureView',cat:'Project',col:2,row:2,color:'#6366f1',desc:'Real-time SOC dashboard with AI triage. React + TypeScript.'},
   {n:5,sym:'Sd',name:'SOC Lab',cat:'Project',col:13,row:2,color:'#6366f1',desc:'Detection engineering with Sigma rules. MITRE ATT&CK mapped.'},
   {n:6,sym:'IH',name:'IOC Hunter',cat:'Project',col:14,row:2,color:'#6366f1',desc:'CLI IOC aggregator. Python + VirusTotal + ThreatFox.'},
-  {n:7,sym:'Ns',name:'NIST CSF',cat:'Project',col:15,row:2,color:'#6366f1',desc:'GRC gap analysis tool. NIST CSF 2.0 compliance automation.'},
-  {n:8,sym:'AW',name:'AWS Health',cat:'Project',col:16,row:2,color:'#6366f1',desc:'Healthcare threat modelling. STRIDE + GDPR + AWS.'},
+  {n:7,sym:'Ns',name:'NIST CSF',cat:'Project',col:15,row:2,color:'#6366f1',desc:'Weighted 15-criterion vendor-risk model informed by NIST SP 800-161, refined through UAT with non-technical users.'},
+  {n:8,sym:'AW',name:'ADAM / EVE / Mizan',cat:'Project',col:16,row:2,color:'#6366f1',desc:'AI-agent authorization prototype separating proposals, adversarial critique and independent policy mediation. 21/21 Phase-8 and 7/7 concept tests passing.'},
 
   // Row 3 — Languages
   {n:9, sym:'Py',name:'Python',   cat:'Language',col:1, row:3,color:'#ec4899',desc:'Primary language for security tools, automation, and scripting.'},
@@ -35,7 +35,7 @@ const ELEMENTS = [
   {n:24,sym:'Σσ',name:'Sigma',    cat:'Framework',col:2,row:5,color:'#a78bfa',desc:'Generic signature format for SIEM detection rule development.'},
   {n:25,sym:'Ya',name:'YARA',     cat:'Framework',col:3,row:5,color:'#a78bfa',desc:'Pattern matching language for malware identification.'},
   {n:26,sym:'Nf',name:'FastAPI',  cat:'Framework',col:4,row:5,color:'#a78bfa',desc:'High-performance Python web framework for security APIs.'},
-  {n:27,sym:'St',name:'STRIDE',   cat:'Framework',col:13,row:5,color:'#a78bfa',desc:'Threat modelling methodology used in AWS healthcare case study.'},
+  {n:27,sym:'Sp',name:'SP 800-161',cat:'Framework',col:13,row:5,color:'#a78bfa',desc:'NIST supply chain risk guidance behind the dissertation vendor-risk model.'},
   {n:28,sym:'Ow',name:'OWASP',    cat:'Framework',col:14,row:5,color:'#a78bfa',desc:'Open Web Application Security Project top 10 vulnerabilities.'},
 
   // Row 6 — Skills / GRC

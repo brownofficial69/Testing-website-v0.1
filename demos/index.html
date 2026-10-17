@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Project Demos | Shadman Hossain</title>
+<link rel="stylesheet" href="demo.css"/>
+<style>.card a.go{display:inline-block;margin-top:12px;font-weight:600}.hero{padding:36px 0 8px}.hero h2{font-size:34px;letter-spacing:-1px;text-transform:none;color:var(--text);margin-bottom:8px}.hero p{max-width:680px;color:var(--dim)}.proj{display:flex;flex-direction:column}.proj .tags{margin-top:auto;padding-top:10px}</style>
+</head>
+<body>
+<div class="top"><h1>Project <span>Demos</span></h1><nav><a href="../versions.html">All portfolio versions</a></nav></div>
+<div class="notice"><b>Interactive demos with sample data.</b> Each one runs entirely in your browser and makes no network requests. They illustrate how each project works; they are not the production tools or their source code.</div>
+<main>
+<div class="hero"><h2>Try the projects</h2><p>Six hands-on demos based on projects from Shadman Hossain's CV. Paste your own indicators, triage alerts, test detection rules, probe an agent-authorization pipeline and score a vendor.</p></div>
+<div class="grid3" style="margin-top:20px">
+<div class="card proj"><h3>ThreatWeave</h3><p class="muted">Concurrent threat-intelligence aggregation. Pull four sample feeds in parallel and correlate IOCs by ASN and MITRE ATT&amp;CK overlap into dossiers.</p><a class="go" href="threatweave.html">Open demo →</a><div class="tags"><span class="tag">Go</span><span class="tag">Claude API</span><span class="tag">5/5 concurrency tests</span></div></div>
+<div class="card proj"><h3>SecureView</h3><p class="muted">SOC triage dashboard. Prioritised alert queue with remediation guidance and status handling.</p><a class="go" href="secureview.html">Open demo →</a><div class="tags"><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">17/17 unit tests</span></div></div>
+<div class="card proj"><h3>SOC Detection Lab</h3><p class="muted">Run Sigma-style rules, including multi-stage time-window correlation, over a sample event log and tune the thresholds.</p><a class="go" href="soc-lab.html">Open demo →</a><div class="tags"><span class="tag">Python</span><span class="tag">Sigma</span><span class="tag">MITRE ATT&amp;CK</span></div></div>
+<div class="card proj"><h3>IOC Hunter</h3><p class="muted">Paste messy indicators. Refang, classify, validate, flag injection attempts and export safe CSV or JSON.</p><a class="go" href="ioc-hunter.html">Open demo →</a><div class="tags"><span class="tag">Python</span><span class="tag">19/19 security tests</span></div></div>
+<div class="card proj"><h3>ADAM / EVE / Mizan</h3><p class="muted">AI-agent authorization prototype. A proposer, an adversarial critic and an independent policy mediator decide what an agent may do. Includes a tamper-evident memory ledger.</p><a class="go" href="adam-eve-mizan.html">Open demo →</a><div class="tags"><span class="tag">AI agents</span><span class="tag">21/21 + 7/7 tests</span></div></div>
+<div class="card proj"><h3>Supply Chain Risk Framework</h3><p class="muted">Weighted 15-criterion vendor-risk scoring inspired by NIST SP 800-161. Adjust a vendor profile and see the rating move.</p><a class="go" href="supply-chain-risk.html">Open demo →</a><div class="tags"><span class="tag">VBA</span><span class="tag">NIST SP 800-161</span></div></div>
+</div>
+</main>
+<footer>© 2026 Shadman Hossain · Demos use fictional sample data and reserved documentation addresses</footer>
+</body>
+</html>

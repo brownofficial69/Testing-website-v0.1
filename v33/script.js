@@ -1,7 +1,7 @@
 /* v33: 8-Bit Game Boy Portfolio */
 const SCREENS = {
   projects:[
-    'THREATWEAVE    GO·AI','SECUREVIEW     REACT','SOC LAB    SIGMA','IOC HUNTER   PYTHON','NIST CSF       GRC','AWS HEALTH  STRIDE'
+    'THREATWEAVE    GO·AI','SECUREVIEW     REACT','SOC LAB    SIGMA','IOC HUNTER   PYTHON','NIST CSF       GRC','ADAM EVE    AI SAFETY'
   ],
   skills:[
     'THREAT INTEL  LV99','DETECTION ENG LV90','PYTHON        LV88','GO            LV85','GRC           LV85','AWS           LV80'

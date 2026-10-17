@@ -46,7 +46,7 @@ const CHALLENGES = [
     options: ['Software testing', 'Cyber risk management', 'Network design', 'Database optimization'],
     correct: 1,
     points: 100,
-    unlocksProject: 'NIST CSF 2.0'
+    unlocksProject: 'Supply Chain Risk Framework'
   },
   {
     title: 'Web Security',
@@ -62,7 +62,7 @@ const CHALLENGES = [
     options: ['Remediation', 'Containment', 'Detection', 'Eradication'],
     correct: 2,
     points: 100,
-    unlocksProject: 'AWS Healthcare'
+    unlocksProject: 'ADAM / EVE / Mizan'
   }
 ];
 

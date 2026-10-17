@@ -12,8 +12,8 @@ const CONSTELLATIONS = {
       {label:'SecureView',type:'project',color:'#06b6d4',badge:'React · TS',desc:'Real-time SOC dashboard with AI-assisted alert triage and incident analysis.'},
       {label:'SOC Lab',type:'project',color:'#f43f5e',badge:'Python · Sigma',desc:'Detection engineering with Sigma rules mapped to MITRE ATT&CK framework.'},
       {label:'IOC Hunter',type:'project',color:'#10b981',badge:'Python · APIs',desc:'CLI tool for aggregating and enriching indicators of compromise.'},
-      {label:'NIST CSF',type:'project',color:'#f59e0b',badge:'GRC · NIST',desc:'Gap analysis and automated remediation roadmap for NIST CSF 2.0.'},
-      {label:'AWS Health',type:'project',color:'#f97316',badge:'STRIDE · GDPR',desc:'Healthcare threat modelling case study with GDPR compliance analysis.'},
+      {label:'NIST CSF',type:'project',color:'#f59e0b',badge:'GRC · NIST',desc:'Weighted 15-criterion vendor-risk model informed by NIST SP 800-161, refined through UAT with non-technical users.'},
+      {label:'ADAM / EVE / Mizan',type:'project',color:'#f97316',badge:'AI Agents · Evals',desc:'AI-agent authorization prototype separating proposals, adversarial critique and independent policy mediation. 21/21 Phase-8 and 7/7 concept tests passing.'},
     ],
     links:[[0,1],[0,2],[1,3],[2,4],[3,5],[4,0],[1,5],[2,3]]
   },

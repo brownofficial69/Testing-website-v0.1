@@ -30,13 +30,13 @@ const PROJECTS = [
   },
   {
     id: 5,
-    name: 'NIST CSF 2.0',
+    name: 'Supply Chain Risk Framework',
     description: 'Markdown + SVG | GRC Assessment',
     color: '#ff0088'
   },
   {
     id: 6,
-    name: 'AWS Healthcare',
+    name: 'ADAM / EVE / Mizan',
     description: 'Case Study | Threat Modelling',
     color: '#00ff88'
   }

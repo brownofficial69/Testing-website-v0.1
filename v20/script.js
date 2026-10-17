@@ -54,8 +54,8 @@ const COMMANDS = {
     '<div class="project-block"><span class="proj-name">02  SecureView</span>\n<span class="proj-tech">    TypeScript · React · Vite · Claude API</span>\n<span class="proj-desc">    Real-time SOC monitoring dashboard</span></div>',
     '<div class="project-block"><span class="proj-name">03  SOC Detection Lab</span>\n<span class="proj-tech">    Python · Sigma YAML · MITRE ATT&CK</span>\n<span class="proj-desc">    Detection engineering with Sigma rules</span></div>',
     '<div class="project-block"><span class="proj-name">04  IOC Hunter</span>\n<span class="proj-tech">    Python · VirusTotal · ThreatFox</span>\n<span class="proj-desc">    CLI IOC aggregator and enrichment tool</span></div>',
-    '<div class="project-block"><span class="proj-name">05  NIST CSF 2.0 Assessment</span>\n<span class="proj-tech">    GRC · NIST CSF · SVG</span>\n<span class="proj-desc">    Gap analysis and remediation roadmap</span></div>',
-    '<div class="project-block"><span class="proj-name">06  AWS Healthcare AI Triage</span>\n<span class="proj-tech">    AWS · STRIDE · GDPR</span>\n<span class="proj-desc">    Healthcare threat modelling case study</span></div>',
+    '<div class="project-block"><span class="proj-name">05  Supply Chain Risk Framework</span>\n<span class="proj-tech">    GRC · NIST CSF · SVG</span>\n<span class="proj-desc">    Weighted 15-criterion vendor-risk model informed by NIST SP 800-161, refined through UAT with non-technical users.</span></div>',
+    '<div class="project-block"><span class="proj-name">06  ADAM / EVE / Mizan</span>\n<span class="proj-tech">    AI Agents · Evals</span>\n<span class="proj-desc">    Healthcare threat modelling case study</span></div>',
     ''
   ],
 
@@ -132,7 +132,7 @@ const COMMANDS = {
     '<span class="c-blue">     ████████████</span>    <span class="c-cyan">Host:</span>    Coventry University',
     '<span class="c-blue">     ▀███████████</span>    <span class="c-cyan">Kernel:</span>  EthicalHacking-5.x',
     '<span class="c-blue">      ▀█████████▀</span>    <span class="c-cyan">Shell:</span>   portfolio-bash 2.0',
-    '<span class="c-blue">       ▀▀▀▀▀▀▀▀▀</span>    <span class="c-cyan">Uptime:</span>  3+ years',
+    '<span class="c-blue">       ▀▀▀▀▀▀▀▀▀</span>    <span class="c-cyan">Uptime:</span>  FDM consultant',
     '                     <span class="c-cyan">Pkgs:</span>    25+ skills',
     '                     <span class="c-cyan">CPU:</span>     Threat Intel Engine',
     '                     <span class="c-cyan">Memory:</span>  6 projects loaded',

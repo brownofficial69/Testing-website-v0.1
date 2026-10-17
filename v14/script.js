@@ -15,7 +15,7 @@ const PROJECTS = [
   'SOC Detection',
   'IOC Hunter',
   'NIST CSF',
-  'AWS Healthcare'
+  'ADAM / EVE / Mizan'
 ];
 
 const SKILLS = [

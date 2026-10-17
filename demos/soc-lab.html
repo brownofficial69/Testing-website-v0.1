@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SOC Detection Lab Demo | Shadman Hossain</title><link rel="stylesheet" href="demo.css"/>
+<style>.hit td{background:#2a1a1e}.hit2 td{background:#2a2414}.hit3 td{background:#14222a}.rule{border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:12px}.rule label{font-size:12px;color:var(--dim);display:inline-flex;align-items:center;gap:6px;margin-right:12px}.rule input[type=number]{width:70px;padding:4px 6px}.scroll{max-height:460px;overflow:auto}</style></head>
+<body>
+<div class="top"><h1>SOC Detection <span>Lab</span> demo</h1><nav><a href="index.html">All demos</a><a href="../versions.html">Portfolio</a></nav></div>
+<div class="notice"><b>Sample log, runs in your browser.</b> The real lab is Python with Sigma rules. Here the same ideas (single-event matches, multi-stage detections, time-window correlation) are implemented in JavaScript over a fictional event log. Rules are Sigma-style, not a full Sigma engine.</div>
+<main>
+<div class="grid2">
+<div class="card"><h2>Rules</h2>
+<div class="rule"><b>R1 Encoded PowerShell</b> <span class="tag">T1059.001</span><pre id="y1"></pre><label><input type="checkbox" id="e1" checked/> enabled</label></div>
+<div class="rule"><b>R2 Brute force then success</b> <span class="tag">T1110</span> <span class="tag">multi-stage</span><pre id="y2"></pre>
+<label><input type="checkbox" id="e2" checked/> enabled</label><label>failures ≥ <input type="number" id="n2" value="5" min="1"/></label><label>within <input type="number" id="w2" value="60" min="5"/> s</label><label>success within <input type="number" id="s2" value="120" min="5"/> s</label></div>
+<div class="rule"><b>R3 Office spawns shell, then outbound</b> <span class="tag">T1204 → T1071</span> <span class="tag">correlation</span><pre id="y3"></pre>
+<label><input type="checkbox" id="e3" checked/> enabled</label><label>window <input type="number" id="w3" value="30" min="1"/> s</label></div>
+<div class="rule"><b>R4 Local admin added</b> <span class="tag">T1136</span><pre id="y4"></pre><label><input type="checkbox" id="e4" checked/> enabled</label></div>
+<div class="row"><button id="run">Run detections</button><span class="muted" id="sum"></span></div></div>
+<div class="card"><h2>Findings</h2><div id="find" class="muted">Run the rules to see findings.</div></div>
+</div>
+<div class="card" style="margin-top:20px"><h2>Event log (30 events)</h2><div class="scroll"><table><thead><tr><th>#</th><th>Time</th><th>Host</th><th>Event</th><th>Detail</th><th>Rules</th></tr></thead><tbody id="log"></tbody></table></div></div>
+</main>
+<footer>© 2026 Shadman Hossain · demo · fictional data</footer>
+<script>
+const $=id=>document.getElementById(id);const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const E=[];let id=0;const add=(t,host,type,d)=>E.push({id:++id,t,host,type,...d});
+for(let i=0;i<6;i++)add(i*8,'VPN-GW','logon_fail',{src:'203.0.113.50',user:'admin'});
+add(52,'VPN-GW','logon_ok',{src:'203.0.113.50',user:'admin'});
+add(70,'WS-014','logon_ok',{src:'10.0.0.14',user:'asmith'});
+add(95,'WS-014','proc',{parent:'WINWORD.EXE',image:'cmd.exe',cmd:'cmd.exe /c whoami'});
+add(104,'WS-014','net',{dst:'198.51.100.23:443',proc:'cmd.exe'});
+add(130,'WS-021','proc',{parent:'explorer.exe',image:'powershell.exe',cmd:'powershell.exe -nop -enc SQBFAFgAIAAoAE4AZQB3AC0ATwBiAGoAZQBjAHQAKQ=='});
+add(150,'WS-021','proc',{parent:'explorer.exe',image:'notepad.exe',cmd:'notepad.exe notes.txt'});
+add(180,'SRV-03','proc',{parent:'cmd.exe',image:'net.exe',cmd:'net localgroup administrators svc_backup /add'});
+for(let i=0;i<3;i++)add(200+i*10,'FILE-01','logon_fail',{src:'10.0.0.77',user:'bob'});
+add(240,'FILE-01','logon_ok',{src:'10.0.0.77',user:'bob'});
+add(260,'WS-030','proc',{parent:'EXCEL.EXE',image:'powershell.exe',cmd:'powershell.exe -c Get-Date'});
+add(380,'WS-030','net',{dst:'192.0.2.200:80',proc:'powershell.exe'});
+add(300,'WS-040','proc',{parent:'chrome.exe',image:'chrome.exe',cmd:'chrome.exe --type=renderer'});
+add(310,'WS-040','net',{dst:'192.0.2.10:443',proc:'chrome.exe'});
+add(330,'WS-041','proc',{parent:'OUTLOOK.EXE',image:'cmd.exe',cmd:'cmd.exe /c dir'});
+add(500,'WS-041','net',{dst:'192.0.2.11:443',proc:'cmd.exe'});
+add(520,'DC-01','logon_ok',{src:'10.0.0.5',user:'svc_sql'});
+add(540,'WS-050','proc',{parent:'services.exe',image:'svchost.exe',cmd:'svchost.exe -k netsvcs'});
+add(560,'WS-051','proc',{parent:'explorer.exe',image:'calc.exe',cmd:'calc.exe'});
+add(580,'WS-052','proc',{parent:'explorer.exe',image:'powershell.exe',cmd:'powershell.exe -File backup.ps1'});
+add(600,'WS-053','logon_ok',{src:'10.0.0.53',user:'cjones'});
+E.sort((a,b)=>a.t-b.t);E.forEach((e,i)=>e.id=i+1);
+$('y1').textContent=`title: Encoded PowerShell
+logsource: {category: process_creation}
+detection:
+  sel: {Image|endswith: powershell.exe, CommandLine|contains: ' -enc'}
+  condition: sel`;
+$('y2').textContent=`title: Brute force then success
+detection:
+  fail: {EventType: logon_fail}
+  ok:   {EventType: logon_ok}
+  condition: fail | count(src) >= N within W
+             followed by ok (same src) within S`;
+$('y3').textContent=`title: Office app spawns shell then outbound
+detection:
+  stage1: {ParentImage|endswith: [WINWORD.EXE,EXCEL.EXE,OUTLOOK.EXE],
+           Image|endswith: [cmd.exe,powershell.exe]}
+  stage2: {EventType: network_connection, same host}
+  condition: stage1 followed by stage2 within W`;
+$('y4').textContent=`title: Local admin added
+detection:
+  sel: {CommandLine|contains|all: ['localgroup administrators','/add']}
+  condition: sel`;
+const detail=e=>e.type==='proc'?`${e.parent} → ${e.image}: ${e.cmd}`:e.type==='net'?`${e.proc} → ${e.dst}`:`${e.user} from ${e.src}`;
+const rows=Object.fromEntries(E.map(e=>[e.id,[]]));
+function draw(){$('log').innerHTML=E.map(e=>{const r=rows[e.id];return `<tr class="${r.includes('R2')?'hit':r.includes('R3')?'hit3':r.length?'hit2':''}"><td class="mono">${e.id}</td><td class="mono">+${e.t}s</td><td>${e.host}</td><td><span class="tag">${e.type}</span></td><td class="mono" style="font-size:12px">${esc(detail(e))}</td><td>${r.map(x=>`<span class="tag">${x}</span>`).join('')}</td></tr>`}).join('');}
+draw();
+$('run').onclick=()=>{
+ Object.keys(rows).forEach(k=>rows[k]=[]);const F=[];
+ const flag=(ids,r)=>ids.forEach(i=>rows[i].push(r));
+ if($('e1').checked)E.filter(e=>e.type==='proc'&&e.image.toLowerCase().endsWith('powershell.exe')&&/ -enc/i.test(e.cmd)).forEach(e=>{flag([e.id],'R1');F.push({r:'R1',sev:'high',t:'Encoded PowerShell on '+e.host,d:`Event ${e.id}: ${e.cmd.slice(0,60)}…`});});
+ if($('e2').checked){const N=+$('n2').value,W=+$('w2').value,S=+$('s2').value;const bySrc={};E.filter(e=>e.type==='logon_fail').forEach(e=>(bySrc[e.src]??=[]).push(e));
+  Object.entries(bySrc).forEach(([src,f])=>{for(let i=0;i+N-1<f.length;i++){const grp=f.slice(i,i+N);if(grp[N-1].t-grp[0].t<=W){const last=grp[N-1];const ok=E.find(e=>e.type==='logon_ok'&&e.src===src&&e.t>=last.t&&e.t-last.t<=S);if(ok){flag([...grp.map(g=>g.id),ok.id],'R2');F.push({r:'R2',sev:'critical',t:`Possible account compromise from ${src}`,d:`${N}+ failures in ${W}s, success ${ok.t-last.t}s later (events ${grp[0].id}–${ok.id}).`});break;}}}});}
+ if($('e3').checked){const W=+$('w3').value;E.filter(e=>e.type==='proc'&&/^(WINWORD|EXCEL|OUTLOOK)\.EXE$/i.test(e.parent)&&/^(cmd|powershell)\.exe$/i.test(e.image)).forEach(p=>{const n=E.find(e=>e.type==='net'&&e.host===p.host&&e.t>=p.t&&e.t-p.t<=W);if(n){flag([p.id,n.id],'R3');F.push({r:'R3',sev:'high',t:`Office-spawned shell phoned out on ${p.host}`,d:`${p.parent} → ${p.image}, then connection to ${n.dst} after ${n.t-p.t}s.`});}});}
+ if($('e4').checked)E.filter(e=>e.type==='proc'&&/localgroup administrators/i.test(e.cmd)&&/\/add/i.test(e.cmd)).forEach(e=>{flag([e.id],'R4');F.push({r:'R4',sev:'medium',t:'Local admin added on '+e.host,d:`Event ${e.id}: ${e.cmd}`});});
+ draw();$('sum').textContent=`${F.length} finding(s)`;
+ $('find').innerHTML=F.length?F.map(f=>`<div class="rule"><span class="sev ${f.sev}">${f.sev}</span> <span class="tag">${f.r}</span> <b>${esc(f.t)}</b><p class="muted" style="margin-top:6px">${esc(f.d)}</p></div>`).join(''):'No detections. Try loosening the thresholds or windows.';};
+</script></body></html>

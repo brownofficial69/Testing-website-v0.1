@@ -3,10 +3,10 @@
 const PROJECTS = {
   threatweave:  { name:'ThreatWeave', icon:'TW', bg:'linear-gradient(135deg,#6366f1,#8b5cf6)', desc:'AI-powered threat intelligence correlation engine aggregating IOCs from multiple feeds using Go and Claude API.', tags:['Go','Claude API','Redis','IOC Analysis'] },
   secureview:   { name:'SecureView',  icon:'SV', bg:'linear-gradient(135deg,#06b6d4,#3b82f6)', desc:'Real-time SOC monitoring dashboard with AI-assisted alert triage built in TypeScript and React.',            tags:['React','TypeScript','Vite','Claude API'] },
-  soclab:       { name:'SOC Detection Lab', icon:'SD', bg:'linear-gradient(135deg,#f43f5e,#ec4899)', desc:'Detection engineering lab producing Sigma rules mapped to MITRE ATT&CK. 94% framework coverage.',    tags:['Python','Sigma','MITRE ATT&CK'] },
+  soclab:       { name:'SOC Detection Lab', icon:'SD', bg:'linear-gradient(135deg,#f43f5e,#ec4899)', desc:'Detection engineering lab producing Sigma rules mapped to MITRE ATT&CK. Multi-stage detections with time-window correlation.',    tags:['Python','Sigma','MITRE ATT&CK'] },
   iochunter:    { name:'IOC Hunter',  icon:'IH', bg:'linear-gradient(135deg,#10b981,#059669)', desc:'CLI IOC aggregator and enrichment tool pulling from VirusTotal, ThreatFox, and custom feed sources.',  tags:['Python','VirusTotal','ThreatFox'] },
-  nist:         { name:'NIST CSF 2.0', icon:'NI', bg:'linear-gradient(135deg,#f59e0b,#d97706)', desc:'Governance gap analysis tool with automated remediation roadmap for NIST CSF 2.0 compliance.',        tags:['GRC','NIST CSF','SVG'] },
-  aws:          { name:'AWS Healthcare', icon:'AW', bg:'linear-gradient(135deg,#f97316,#ef4444)', desc:'Healthcare threat modelling using STRIDE methodology with GDPR compliance and AWS architecture review.', tags:['AWS','STRIDE','GDPR'] },
+  nist:         { name:'Supply Chain Risk Framework', icon:'NI', bg:'linear-gradient(135deg,#f59e0b,#d97706)', desc:'Weighted 15-criterion vendor-risk model informed by NIST SP 800-161, refined through UAT with non-technical users.',        tags:['GRC','NIST CSF','SVG'] },
+  aws:          { name:'ADAM / EVE / Mizan', icon:'AW', bg:'linear-gradient(135deg,#f97316,#ef4444)', desc:'AI-agent authorization prototype separating proposals, adversarial critique and independent policy mediation. 21/21 Phase-8 and 7/7 concept tests passing.', tags:['AI Agents','Evals','Policy'] },
 };
 
 // Color syntax for cert JSON
