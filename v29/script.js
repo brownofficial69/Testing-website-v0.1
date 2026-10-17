@@ -10,8 +10,8 @@ const PLANETS = [
   {name:'IOC Hunter',  label:'Project', r:14, orbit:290, speed:0.009, color:'#10b981', glow:'#10b981', desc:'CLI IOC aggregation and enrichment tool.', tags:['Python','APIs']},
   {name:'NIST CSF',    label:'GRC',     r:16, orbit:340, speed:0.004, color:'#f59e0b', glow:'#f59e0b', desc:'Governance gap analysis tool with automated NIST CSF 2.0 roadmap.', tags:['GRC','NIST']},
   {name:'AWS Health',  label:'Cloud',   r:15, orbit:390, speed:0.003, color:'#f97316', glow:'#f97316', desc:'Healthcare threat modelling: STRIDE + GDPR + AWS architecture.', tags:['AWS','STRIDE','GDPR']},
-  {name:'OSCP',        label:'Cert',    r:12, orbit:440, speed:0.007, color:'#fbbf24', glow:'#fbbf24', desc:'Offensive Security Certified Professional certification.', tags:['OffSec']},
-  {name:'CISM',        label:'Cert',    r:11, orbit:480, speed:0.0055,color:'#a78bfa', glow:'#a78bfa', desc:'Certified Information Security Manager. ISACA governance cert.', tags:['ISACA']},
+  {name:'Claude Academy',        label:'Cert',    r:12, orbit:440, speed:0.007, color:'#fbbf24', glow:'#fbbf24', desc:'Anthropic Claude Academy: nine courses completed in 2026.', tags:['Anthropic']},
+  {name:'BTEC L3',        label:'Cert',    r:11, orbit:480, speed:0.0055,color:'#a78bfa', glow:'#a78bfa', desc:'BTEC Level 3 National Diploma in IT, Double Distinction Merit.', tags:['BMet']},
 ];
 
 // Background stars

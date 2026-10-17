@@ -13,8 +13,8 @@ const TIMELINE_DATA = {
   },
   2021: {
     title: '2021: Foundations',
-    description: 'Deepened knowledge in threat analysis and detection engineering. Started building first security tools. Earned CCNA certification.',
-    achievements: ['CCNA Certified', 'First Detection Lab', 'Threat Analysis'],
+    description: 'Deepened knowledge in threat analysis and detection engineering. Started building first security tools.',
+    achievements: ['First Detection Lab', 'Threat Analysis', 'Security Tooling'],
     skills: 8,
     projects: 1,
     certs: 1
@@ -22,7 +22,7 @@ const TIMELINE_DATA = {
   2022: {
     title: '2022: Build Phase',
     description: 'Developed IOC Hunter and SOC Detection Lab. Started exploring Python automation. Completed GRC training.',
-    achievements: ['IOC Hunter Released', 'Detection Lab 2.0', 'GRC Certified'],
+    achievements: ['IOC Hunter Released', 'Detection Lab 2.0', 'Supply Chain Risk Framework'],
     skills: 15,
     projects: 2,
     certs: 2
@@ -37,23 +37,23 @@ const TIMELINE_DATA = {
   },
   2024: {
     title: '2024: Acceleration',
-    description: 'Developed SecureView SOC dashboard. Contributions to open-source security projects. Earned OSCP certification.',
-    achievements: ['SecureView Released', 'OSCP Certified', 'Open Source Contrib'],
+    description: 'Developed SecureView SOC dashboard. Contributions to open-source security projects. Built typed LLM data contracts with unit-tested components.',
+    achievements: ['SecureView Released', '17/17 Unit Tests', 'Open Source Contrib'],
     skills: 23,
     projects: 4,
     certs: 3
   },
   2025: {
     title: '2025: Mastery',
-    description: 'Advanced threat intelligence systems. AWS Healthcare security case study. Started mentoring. Earned CISM certification.',
-    achievements: ['AWS Case Study', 'CISM Certified', 'Mentoring Begins'],
+    description: 'Advanced threat intelligence systems. AWS Healthcare security case study. Started mentoring.',
+    achievements: ['AWS Case Study', 'ThreatWeave Concurrency Tests', 'Mentoring Begins'],
     skills: 25,
     projects: 5,
     certs: 4
   },
   2026: {
     title: '2026: Present',
-    description: 'Final year student at Coventry University. Leading security research initiatives. Building AI-powered security solutions. Portfolio includes 6 major projects.',
+    description: 'First-Class graduate of Coventry University. Leading security research initiatives. Building AI-powered security solutions. Portfolio includes 6 major projects.',
     achievements: ['Portfolio V9', 'AI Integration', 'Security Research'],
     skills: 25,
     projects: 6,
@@ -127,7 +127,7 @@ function updateTimeline() {
       <div class="stat-value">${data.projects}</div>
     </div>
     <div class="stat-box">
-      <div class="stat-label">Certs</div>
+      <div class="stat-label">Education</div>
       <div class="stat-value">${data.certs}</div>
     </div>
   `;

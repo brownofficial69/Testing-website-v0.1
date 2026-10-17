@@ -30,10 +30,10 @@ const SKILLS = [
 ];
 
 const CERTS = [
-  'CCNA',
-  'OSCP',
-  'CISM',
-  'Security+'
+  'BSc 1st',
+  'Claude Academy',
+  'BTEC L3',
+  'FDM'
 ];
 
 const CODE_SNIPPETS = [

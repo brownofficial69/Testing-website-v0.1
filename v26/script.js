@@ -31,14 +31,14 @@ const CONTENT = `
   </div>
 </div>
 <div class="section">
-  <div class="section-title">[CREDENTIALS]</div>
-  <div class="cert-row"><span class="cert-item">CCNA</span><span class="cert-item">OSCP</span><span class="cert-item">CISM</span><span class="cert-item">SEC+</span></div>
+  <div class="section-title">[EDUCATION]</div>
+  <div class="cert-row"><span class="cert-item">BSc 1st</span><span class="cert-item">Claude Academy</span><span class="cert-item">BTEC L3</span><span class="cert-item">FDM</span></div>
 </div>
 <div class="section">
   <div class="section-title">[SECURE CHANNELS]</div>
-  <div class="contact-row"><span>EMAIL  ► </span>brownofficial69@gmail.com</div>
-  <div class="contact-row"><span>GITHUB ► </span>github.com/brownofficial69</div>
-  <div class="contact-row"><span>LINKED ► </span>linkedin.com/in/shadman-hossain-5ab649223</div>
+  <div class="contact-row"><span>EMAIL  ► </span>sm.shadman.hossain@gmail.com</div>
+  <div class="contact-row"><span>GITHUB ► </span>github.com/shaddiegit</div>
+  <div class="contact-row"><span>LINKED ► </span>linkedin.com/in/shadman-hossain</div>
 </div>`;
 
 const TYPEOUTS = ['RUN THREATWEAVE.EXE','LIST PROJECTS /ALL','GREP -r "cybersec" ./skills','nmap -sV localhost'];
