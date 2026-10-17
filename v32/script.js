@@ -9,7 +9,7 @@ const PAIRS = [
   ['ThreatWeave','Threat Intel'],['SecureView','Detection Eng'],['SOC Lab','Sigma Rules'],
   ['IOC Hunter','YARA'],['NIST CSF','GRC'],['AWS Health','Cloud Sec'],
   ['Python','Go'],['React','TypeScript'],['Docker','Redis'],
-  ['OSCP','CCNA'],['CISM','Security+'],['Pentest','OWASP'],
+  ['Claude Academy','BSc 1st'],['BTEC L3','FDM'],['Pentest','OWASP'],
   ['Burp Suite','Nmap'],['MITRE ATT&CK','Splunk'],['FastAPI','PostgreSQL']
 ];
 

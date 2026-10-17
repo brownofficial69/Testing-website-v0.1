@@ -31,19 +31,19 @@ const CONSTELLATIONS = {
   },
   certs: {
     nodes: [
-      {label:'CCNA',type:'cert',color:'#e0af68',badge:'Cisco',desc:'Cisco Certified Network Associate — Networking fundamentals and security.'},
-      {label:'OSCP',type:'cert',color:'#f7768e',badge:'OffSec',desc:'Offensive Security Certified Professional — Advanced penetration testing.'},
-      {label:'CISM',type:'cert',color:'#9ece6a',badge:'ISACA',desc:'Certified Information Security Manager — Security governance and risk.'},
-      {label:'Security+',type:'cert',color:'#7dcfff',badge:'CompTIA',desc:'CompTIA Security+ — Foundational cybersecurity certification.'},
+      {label:'BSc 1st',type:'cert',color:'#e0af68',badge:'Coventry',desc:'BSc (Hons) Ethical Hacking & Cyber Security, Coventry University, First-Class Honours (73.67%).'},
+      {label:'Claude Academy',type:'cert',color:'#f7768e',badge:'Anthropic',desc:'Anthropic Claude Academy: nine courses incl. Claude Code, MCP, Subagents, Agent Skills.'},
+      {label:'BTEC L3',type:'cert',color:'#9ece6a',badge:'BMet',desc:'BTEC Level 3 National Diploma in IT, Double Distinction Merit.'},
+      {label:'FDM',type:'cert',color:'#7dcfff',badge:'FDM Group',desc:'FDM Group consultant (EUC / Email Specialist L1), Deutsche Bank assignment.'},
     ],
     links:[[0,1],[1,2],[2,3],[3,0],[0,2],[1,3]]
   },
   contact: {
     nodes: [
-      {label:'Email',type:'contact',color:'#f43f5e',badge:'Direct',desc:'brownofficial69@gmail.com — Preferred for job opportunities and collaborations.'},
-      {label:'GitHub',type:'contact',color:'#7aa2f7',badge:'Code',desc:'github.com/brownofficial69 — All public projects and open source contributions.'},
-      {label:'LinkedIn',type:'contact',color:'#0ea5e9',badge:'Network',desc:'linkedin.com/in/shadman-hossain-5ab649223 — Professional network and profile.'},
-      {label:'Coventry',type:'contact',color:'#bb9af7',badge:'University',desc:'Final year student — Ethical Hacking & Cybersecurity BSc — Expected 2026.'},
+      {label:'Email',type:'contact',color:'#f43f5e',badge:'Direct',desc:'sm.shadman.hossain@gmail.com — Preferred for job opportunities and collaborations.'},
+      {label:'GitHub',type:'contact',color:'#7aa2f7',badge:'Code',desc:'github.com/shaddiegit — All public projects and open source contributions.'},
+      {label:'LinkedIn',type:'contact',color:'#0ea5e9',badge:'Network',desc:'linkedin.com/in/shadman-hossain — Professional network and profile.'},
+      {label:'Coventry',type:'contact',color:'#bb9af7',badge:'University',desc:'First-Class graduate — Ethical Hacking & Cyber Security BSc — Expected 2026.'},
     ],
     links:[[0,1],[1,2],[2,3],[3,0],[0,2],[1,3]]
   }

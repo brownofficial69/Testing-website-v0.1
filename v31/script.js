@@ -1,5 +1,5 @@
 /* v31: News Wire */
-const TICKER_ITEMS = ['ThreatWeave v2.1 deployed','SOC Detection Lab hits 94% ATT&CK coverage','SecureView dashboard goes live','IOC Hunter aggregates 1,247 indicators','OSCP Certified','AWS Healthcare threat model published','CISM Certification earned','NIST CSF 2.0 tool released'];
+const TICKER_ITEMS = ['ThreatWeave v2.1 deployed','SOC Detection Lab hits 94% ATT&CK coverage','SecureView dashboard goes live','IOC Hunter aggregates 1,247 indicators','First-Class BSc (73.67%)','AWS Healthcare threat model published','Anthropic Claude Academy: 9 courses','NIST CSF 2.0 tool released'];
 const SKILLS = ['Threat Intel','Detection Eng','Sigma Rules','YARA','Splunk','Python','Go','TypeScript','React','Docker','AWS','GRC','Pentest','OWASP','Burp Suite'];
 
 document.getElementById('ticker').textContent = TICKER_ITEMS.map(t=>`   ◆ ${t}   `).join('');

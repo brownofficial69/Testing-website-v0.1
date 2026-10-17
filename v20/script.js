@@ -13,7 +13,7 @@ const COMMANDS = {
     '  <span class="c-cyan">about</span>        — Who I am',
     '  <span class="c-cyan">projects</span>     — View all projects',
     '  <span class="c-cyan">skills</span>       — Technical skills',
-    '  <span class="c-cyan">certs</span>        — Certifications',
+    '  <span class="c-cyan">certs</span>        — Education & training',
     '  <span class="c-cyan">contact</span>      — How to reach me',
     '  <span class="c-cyan">education</span>    — Academic background',
     '  <span class="c-cyan">experience</span>   — Work timeline',
@@ -34,8 +34,8 @@ const COMMANDS = {
     '<span class="c-blue">│</span>  <span class="c-green c-bold">Shadman Hossain</span>',
     '<span class="c-blue">│</span>  Cybersecurity Analyst & Threat Intelligence',
     '<span class="c-blue">│</span>',
-    '<span class="c-blue">│</span>  Final-year Ethical Hacking & Cybersecurity',
-    '<span class="c-blue">│</span>  student at Coventry University. I specialize',
+    '<span class="c-blue">│</span>  First-Class Ethical Hacking & Cyber Security',
+    '<span class="c-blue">│</span>  graduate of Coventry University. I specialize',
     '<span class="c-blue">│</span>  in threat intel correlation, detection',
     '<span class="c-blue">│</span>  engineering, and GRC compliance frameworks.',
     '<span class="c-blue">│</span>',
@@ -81,12 +81,12 @@ const COMMANDS = {
 
   certs: () => [
     '',
-    '<span class="c-yellow c-bold">CERTIFICATIONS</span>',
+    '<span class="c-yellow c-bold">EDUCATION & TRAINING</span>',
     '',
-    '  <span class="c-yellow">★</span> <span class="c-bold">CCNA</span>       <span class="c-dim">— Cisco Certified Network Associate</span>',
-    '  <span class="c-yellow">★</span> <span class="c-bold">OSCP</span>       <span class="c-dim">— Offensive Security Certified Professional</span>',
-    '  <span class="c-yellow">★</span> <span class="c-bold">CISM</span>       <span class="c-dim">— Certified Information Security Manager</span>',
-    '  <span class="c-yellow">★</span> <span class="c-bold">Security+</span>  <span class="c-dim">— CompTIA Security+</span>',
+    '  <span class="c-yellow">★</span> <span class="c-bold">BSc (Hons)</span>  <span class="c-dim">— Ethical Hacking & Cyber Security, Coventry · First-Class (73.67%)</span>',
+    '  <span class="c-yellow">★</span> <span class="c-bold">Claude Academy</span>  <span class="c-dim">— Anthropic · nine courses (Claude Code, MCP, Subagents, Skills)</span>',
+    '  <span class="c-yellow">★</span> <span class="c-bold">BTEC L3</span>  <span class="c-dim">— IT, Double Distinction Merit · Birmingham Met</span>',
+    '  <span class="c-yellow">★</span> <span class="c-bold">FDM Group</span>  <span class="c-dim">— Consultant, EUC / Email Specialist L1 (Deutsche Bank)</span>',
     ''
   ],
 
@@ -94,9 +94,9 @@ const COMMANDS = {
     '',
     '<span class="c-purple c-bold">SECURE CHANNELS</span>',
     '',
-    '  <span class="c-cyan">Email</span>     brownofficial69@gmail.com',
-    '  <span class="c-cyan">GitHub</span>    github.com/brownofficial69',
-    '  <span class="c-cyan">LinkedIn</span>  linkedin.com/in/shadman-hossain-5ab649223',
+    '  <span class="c-cyan">Email</span>     sm.shadman.hossain@gmail.com',
+    '  <span class="c-cyan">GitHub</span>    github.com/shaddiegit',
+    '  <span class="c-cyan">LinkedIn</span>  linkedin.com/in/shadman-hossain',
     ''
   ],
 
@@ -106,7 +106,7 @@ const COMMANDS = {
     '',
     '  <span class="c-green">BSc Ethical Hacking & Cybersecurity</span>',
     '  Coventry University · 2023 – 2026',
-    '  <span class="c-dim">Final year · Expected First Class Honours</span>',
+    '  <span class="c-dim">Final year · First-Class Honours (73.67%), July 2026</span>',
     ''
   ],
 
@@ -115,11 +115,11 @@ const COMMANDS = {
     '<span class="c-orange c-bold">EXPERIENCE TIMELINE</span>',
     '',
     '  <span class="c-cyan">2026</span>  Security Research · AI Integration',
-    '  <span class="c-cyan">2025</span>  AWS Case Study · CISM Certification',
-    '  <span class="c-cyan">2024</span>  SecureView · OSCP Certified',
+    '  <span class="c-cyan">2025</span>  Dissertation: Supply Chain Risk Framework',
+    '  <span class="c-cyan">2024</span>  SecureView · ThreatWeave',
     '  <span class="c-cyan">2023</span>  ThreatWeave · University Begins',
     '  <span class="c-cyan">2022</span>  IOC Hunter · SOC Detection Lab',
-    '  <span class="c-cyan">2021</span>  CCNA · First Security Tools',
+    '  <span class="c-cyan">2021</span>  First Security Tools',
     '  <span class="c-cyan">2020</span>  Started Cybersecurity Journey',
     ''
   ],
@@ -165,7 +165,7 @@ const COMMANDS = {
     '  Threat Intel · Detection Eng · Python · Go · GRC · AWS',
     '',
     '<span class="c-cyan">CERTIFICATIONS</span>',
-    '  CCNA · OSCP · CISM · Security+',
+    '  BSc (Hons) First-Class (73.67%) · Anthropic Claude Academy (9 courses) · BTEC L3 Double Distinction Merit',
     '',
     '<span class="c-cyan">PROJECTS</span>',
     '  6 major security projects (run `projects` for details)',

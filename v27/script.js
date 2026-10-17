@@ -1,7 +1,7 @@
 /* v27: Periodic Table */
 const ELEMENTS = [
   // Row 1 — Identity (cols 1,18)
-  {n:1,sym:'Sh',name:'Shadman',cat:'Identity',col:1,row:1,color:'#6366f1',desc:'Final-year Ethical Hacking & Cybersecurity student at Coventry University.'},
+  {n:1,sym:'Sh',name:'Shadman',cat:'Identity',col:1,row:1,color:'#6366f1',desc:'First-Class Ethical Hacking & Cyber Security graduate from Coventry University.'},
   {n:2,sym:'CU',name:'Coventry',cat:'Identity',col:18,row:1,color:'#6366f1',desc:'Coventry University — BSc Ethical Hacking & Cybersecurity, 2023–2026.'},
 
   // Row 2 — Projects
@@ -47,10 +47,10 @@ const ELEMENTS = [
   {n:34,sym:'Cl',name:'CloudSec',  cat:'Skill',col:14,row:6,color:'#22c55e',desc:'Cloud security architecture on AWS, IAM policies, threat modelling.'},
 
   // Row 7 — Certifications
-  {n:35,sym:'CC',name:'CCNA',      cat:'Cert',col:1,row:7,color:'#f59e0b',desc:'Cisco Certified Network Associate. Networking fundamentals.'},
-  {n:36,sym:'Op',name:'OSCP',      cat:'Cert',col:2,row:7,color:'#f59e0b',desc:'Offensive Security Certified Professional. Advanced pentesting.'},
-  {n:37,sym:'Ci',name:'CISM',      cat:'Cert',col:3,row:7,color:'#f59e0b',desc:'Certified Information Security Manager. ISACA governance cert.'},
-  {n:38,sym:'S+',name:'Security+', cat:'Cert',col:4,row:7,color:'#f59e0b',desc:'CompTIA Security+. Foundational cybersecurity certification.'},
+  {n:35,sym:'CC',name:'BSc 1st',      cat:'Cert',col:1,row:7,color:'#f59e0b',desc:'BSc (Hons) Ethical Hacking & Cyber Security, First-Class Honours (73.67%).'},
+  {n:36,sym:'Op',name:'Claude Academy',      cat:'Cert',col:2,row:7,color:'#f59e0b',desc:'Anthropic Claude Academy: nine courses completed in 2026.'},
+  {n:37,sym:'Ci',name:'BTEC L3',      cat:'Cert',col:3,row:7,color:'#f59e0b',desc:'BTEC Level 3 National Diploma in IT, Double Distinction Merit.'},
+  {n:38,sym:'S+',name:'FDM', cat:'Cert',col:4,row:7,color:'#f59e0b',desc:'FDM Group consultant, Deutsche Bank assignment.'},
 ];
 
 const pt = document.getElementById('pt');
