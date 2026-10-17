@@ -19,8 +19,8 @@ const CONTENT = `
   <div class="project-row"><span class="proj-id">CASE-002</span><span>SecureView — Real-time SOC monitoring dashboard</span><span class="proj-stack">React · TypeScript</span></div>
   <div class="project-row"><span class="proj-id">CASE-003</span><span>SOC Detection Lab — Sigma rules + MITRE ATT&CK</span><span class="proj-stack">Python · Sigma</span></div>
   <div class="project-row"><span class="proj-id">CASE-004</span><span>IOC Hunter — CLI IOC aggregator</span><span class="proj-stack">Python · APIs</span></div>
-  <div class="project-row"><span class="proj-id">CASE-005</span><span>NIST CSF 2.0 Assessment Tool</span><span class="proj-stack">GRC · NIST</span></div>
-  <div class="project-row"><span class="proj-id">CASE-006</span><span>AWS Healthcare AI Triage</span><span class="proj-stack">STRIDE · GDPR</span></div>
+  <div class="project-row"><span class="proj-id">CASE-005</span><span>Supply Chain Risk Framework</span><span class="proj-stack">GRC · NIST</span></div>
+  <div class="project-row"><span class="proj-id">CASE-006</span><span>ADAM / EVE / Mizan</span><span class="proj-stack">AI Agents · Evals</span></div>
 </div>
 <div class="section">
   <div class="section-title">[SKILL MATRIX]</div>

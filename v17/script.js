@@ -145,14 +145,14 @@ function drawBarChart() {
 
 // Activity feed
 const feedEvents = [
-  { time: '11:42', text: 'Deployed ThreatWeave v2.1 to production', color: '#22c55e' },
+  { time: '11:42', text: 'ThreatWeave: 5/5 concurrency tests passing', color: '#22c55e' },
   { time: '11:38', text: 'Merged SOC Detection Lab PR #47', color: '#3b82f6' },
-  { time: '11:22', text: 'IOC Hunter scanned 1,247 indicators', color: '#a78bfa' },
-  { time: '10:55', text: 'NIST CSF gap analysis report generated', color: '#eab308' },
+  { time: '11:22', text: 'IOC Hunter: 19/19 security tests passing', color: '#a78bfa' },
+  { time: '10:55', text: 'Supply chain risk model refined through UAT', color: '#eab308' },
   { time: '10:30', text: 'SecureView dashboard alert triage completed', color: '#22d3ee' },
   { time: '10:12', text: 'AWS threat model updated with new findings', color: '#ef4444' },
   { time: '09:45', text: 'Morning intelligence briefing reviewed', color: '#3b82f6' },
-  { time: '09:20', text: 'Sigma rule coverage increased to 94%', color: '#22c55e' },
+  { time: '09:20', text: 'SOC Detection Lab: multi-stage correlation rules', color: '#22c55e' },
   { time: '09:00', text: 'System initialized — all services healthy', color: '#71717a' },
 ];
 

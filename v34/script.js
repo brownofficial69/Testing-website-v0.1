@@ -4,8 +4,8 @@ const POLAROIDS = [
   {caption:'SecureView',detail:'React · TypeScript · Vite',color:'pol-purple',style:'background:linear-gradient(135deg,#1a3a4a,#2a6a8a)',text:'SV',pos:{top:80,left:320},rot:3},
   {caption:'SOC Detection Lab',detail:'Python · Sigma · MITRE',color:'pol-pink',style:'background:linear-gradient(135deg,#3a1a1a,#8a2a2a)',text:'SD',pos:{top:300,left:80},rot:-6},
   {caption:'IOC Hunter',detail:'Python · VirusTotal · APIs',color:'pol-green',style:'background:linear-gradient(135deg,#1a3a1a,#2a7a2a)',text:'IH',pos:{top:280,left:560},rot:5},
-  {caption:'NIST CSF 2.0',detail:'GRC · Compliance · SVG',color:'pol-yellow',style:'background:linear-gradient(135deg,#3a3a0a,#7a7a1a)',text:'NC',pos:{top:520,left:200},rot:-3},
-  {caption:'AWS Healthcare',detail:'STRIDE · GDPR · AWS',color:'pol-blue',style:'background:linear-gradient(135deg,#2a1a3a,#6a2a8a)',text:'AW',pos:{top:500,left:480},rot:4},
+  {caption:'Supply Chain Risk Framework',detail:'GRC · Compliance · SVG',color:'pol-yellow',style:'background:linear-gradient(135deg,#3a3a0a,#7a7a1a)',text:'NC',pos:{top:520,left:200},rot:-3},
+  {caption:'ADAM / EVE / Mizan',detail:'AI Agents · Evals',color:'pol-blue',style:'background:linear-gradient(135deg,#2a1a3a,#6a2a8a)',text:'AW',pos:{top:500,left:480},rot:4},
   {caption:'BSc 1st · Claude Academy · BTEC L3 · FDM',detail:'Certifications',color:'pol-yellow',style:'background:linear-gradient(135deg,#3a2a0a,#8a6a1a)',text:'★',pos:{top:460,left:740},rot:-5},
   {caption:'Contact Me',detail:'sm.shadman.hossain@gmail.com',color:'pol-pink',style:'background:linear-gradient(135deg,#2a0a1a,#6a1a3a)',text:'✉',pos:{top:80,left:700},rot:6},
 ];

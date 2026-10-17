@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Supply Chain Risk Framework Demo | Shadman Hossain</title><link rel="stylesheet" href="demo.css"/>
+<style>.crit{display:grid;grid-template-columns:1fr 120px 36px;gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}.crit small{display:block;color:var(--faint)}input[type=range]{width:100%;accent-color:var(--accent)}.score{font-size:54px;font-weight:800;line-height:1}.band{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:8px;font-weight:700}.b-low{background:#10332a;color:#6ee7b7}.b-mod{background:#352f10;color:#f5d567}.b-high{background:#3a2210;color:#ffb36b}.b-crit{background:#3b1216;color:#ff8a8a}.ctr{display:grid;grid-template-columns:150px 1fr 40px;gap:8px;align-items:center;font-size:12px;margin:4px 0}</style></head>
+<body>
+<div class="top"><h1>Supply Chain <span>Risk</span> demo</h1><nav><a href="index.html">All demos</a><a href="../versions.html">Portfolio</a></nav></div>
+<div class="notice"><b>Illustrative model; runs in your browser.</b> The dissertation framework is a 15-criterion weighted vendor-risk model informed by NIST SP 800-161 (built in VBA). The criterion names and weights below are <b>example values written for this demo</b>, not the dissertation's actual figures, and the model is not a substitute for a real third-party risk assessment.</div>
+<main>
+<div class="grid2">
+<div class="card"><h2>Vendor profile (1 = low risk, 5 = high risk)</h2>
+<div class="row" style="margin:0 0 10px"><select id="preset" style="width:auto"></select><button class="ghost" id="reset">Reset</button></div><div id="crits"></div></div>
+<div>
+<div class="card"><h2>Overall risk</h2><div class="score" id="score">0</div><span class="band" id="band"></span><p class="muted" style="margin-top:10px" id="advice"></p></div>
+<div class="card" style="margin-top:20px"><h2>Largest contributors</h2><div id="contrib"></div></div>
+</div></div>
+</main>
+<footer>© 2026 Shadman Hossain · demo</footer>
+<script>
+const C=[
+['Access to sensitive data','Volume and classification of data the vendor handles',9],['Privileged system access','Admin or network-level access into our environment',8],
+['Single point of failure','No practical alternative if they fail',8],['Software provenance / SBOM','Visibility of components and build integrity',7],
+['Fourth-party depth','Reliance on the vendor’s own subcontractors',6],['Past security incidents','Breach history and how it was handled',7],
+['Patch and vulnerability handling','Speed and discipline of remediation',6],['Security assurance','Independent audits or recognised assurance',6],
+['Contractual security terms','Security clauses, liability and flow-down',5],['Right to audit','Ability to inspect controls or evidence',4],
+['Breach notification commitment','Contractual notification timing',5],['Business continuity','Tested recovery and failover plans',6],
+['Financial stability','Risk of the vendor failing or being acquired',4],['Jurisdiction and data location','Legal exposure from where they operate',4],['Lock-in and exit difficulty','Cost and effort to leave or migrate',3]];
+const TW=C.reduce((s,c)=>s+c[2],0);
+const PRESETS={'Custom (all moderate)':C.map(()=>3),'Payroll SaaS (handles personal data)':[5,2,4,2,3,2,2,2,2,2,2,3,2,3,4],'Open-source library supplier':[1,1,3,5,4,3,4,5,4,5,5,4,3,2,1],'Managed IT provider (privileged access)':[4,5,5,3,4,3,3,3,3,3,3,3,2,2,4],'Low-risk stationery supplier':[1,1,1,1,1,1,1,1,1,1,1,1,2,1,1]};
+const $=id=>document.getElementById(id);
+$('preset').innerHTML=Object.keys(PRESETS).map(k=>`<option>${k}</option>`).join('');
+$('crits').innerHTML=C.map((c,i)=>`<div class="crit"><div>${i+1}. ${c[0]}<small>${c[1]} · weight ${c[2]}</small></div><input type="range" min="1" max="5" step="1" id="r${i}" value="3"/><b class="mono" id="v${i}">3</b></div>`).join('');
+function set(arr){arr.forEach((v,i)=>{$('r'+i).value=v});calc();}
+function calc(){
+ let sum=0;const parts=C.map((c,i)=>{const v=+$('r'+i).value;$('v'+i).textContent=v;const p=(v-1)/4*c[2];sum+=p;return{n:c[0],p,max:c[2]};});
+ const score=Math.round(sum/TW*100);$('score').textContent=score;
+ const b=score<30?['Low','b-low','Routine monitoring is likely enough.']:score<55?['Moderate','b-mod','Request evidence for the higher-scoring areas and review annually.']:score<75?['High','b-high','Require remediation commitments and closer oversight before onboarding or renewal.']:['Critical','b-crit','Escalate to risk owners. Consider alternatives or strong compensating controls.'];
+ $('band').textContent=b[0]+' risk';$('band').className='band '+b[1];$('advice').textContent=b[2];
+ const top=[...parts].sort((a,b)=>b.p-a.p).slice(0,5);const mx=top[0].p||1;
+ $('contrib').innerHTML=top.map(t=>`<div class="ctr"><span>${t.n}</span><div class="bar"><i style="width:${t.p/t.max*100}%"></i></div><span class="mono">${t.p.toFixed(1)}</span></div>`).join('');}
+C.forEach((_,i)=>$('r'+i).oninput=calc);
+$('preset').onchange=()=>set(PRESETS[$('preset').value]);$('reset').onclick=()=>{$('preset').selectedIndex=0;set(PRESETS['Custom (all moderate)']);};
+set(PRESETS['Payroll SaaS (handles personal data)']);$('preset').value='Payroll SaaS (handles personal data)';
+</script></body></html>

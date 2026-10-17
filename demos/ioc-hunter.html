@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IOC Hunter Demo | Shadman Hossain</title><link rel="stylesheet" href="demo.css"/>
+<style>.scroll{max-height:480px;overflow:auto}.flag{color:var(--warn);font-size:12px}</style></head>
+<body>
+<div class="top"><h1>IOC <span>Hunter</span> demo</h1><nav><a href="index.html">All demos</a><a href="../versions.html">Portfolio</a></nav></div>
+<div class="notice"><b>Runs in your browser; nothing is sent anywhere.</b> This demo does the parsing side of IOC Hunter: refanging, classification, validation, de-duplication and input hardening. The real tool is Python and enriches indicators through services such as VirusTotal and ThreatFox. This demo makes <b>no lookups</b>, so it shows no reputation data.</div>
+<main>
+<div class="grid2">
+<div class="card"><h2>Paste indicators (one per line or mixed text)</h2><textarea id="in" spellcheck="false"></textarea>
+<div class="row"><button id="go">Analyse</button><button class="ghost" id="sample">Load messy sample</button><button class="ghost" id="clear">Clear</button></div></div>
+<div class="card"><h2>Summary</h2><div class="grid3"><div class="stat"><b id="n1">0</b><span>Valid</span></div><div class="stat"><b id="n2">0</b><span>Rejected</span></div><div class="stat"><b id="n3">0</b><span>Duplicates merged</span></div></div>
+<div class="row"><button class="ghost" id="csv" disabled>Download CSV</button><button class="ghost" id="json" disabled>Download JSON</button></div>
+<p class="muted" style="margin-top:12px">CSV export prefixes cells that start with = + - @ so spreadsheets cannot run them as formulas. All output is HTML-escaped.</p></div>
+</div>
+<div class="card" style="margin-top:20px"><h2>Results</h2><div class="scroll"><table><thead><tr><th>Input</th><th>Type</th><th>Normalised (safe to share)</th><th>Notes</th></tr></thead><tbody id="res"><tr><td colspan="4" class="muted">No results yet.</td></tr></tbody></table></div></div>
+</main>
+<footer>© 2026 Shadman Hossain · demo</footer>
+<script>
+const $=id=>document.getElementById(id);const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+$('sample').onclick=()=>{$('in').value=`hxxp://evil-login[.]example/verify?id=1
+198[.]51[.]100[.]23
+198.51.100.23
+10.0.0.5
+999.1.1.1
+d41d8cd98f00b204e9800998ecf8427e
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+CVE-2024-3094
+phisher@bad-domain.example
+=HYPERLINK("http://x.example","click")
+; rm -rf / #
+<script>alert(1)<\/script>
+2001:db8::1
+malware.example
+notanindicator`;};
+$('clear').onclick=()=>{$('in').value='';};
+const refang=s=>s.replace(/hxxp/gi,'http').replace(/\[\.\]|\(\.\)|\{\.\}/g,'.').replace(/\[:\]/g,':').replace(/\[at\]/gi,'@').replace(/\[@\]/g,'@');
+const defang=s=>s.replace(/^http/i,'hxxp').replace(/\./g,'[.]');
+const isV4=s=>{const p=s.split('.');return p.length===4&&p.every(x=>/^\d{1,3}$/.test(x)&&+x<=255&&String(+x)===x);};
+const priv=s=>{const [a,b]=s.split('.').map(Number);return a===10||(a===172&&b>=16&&b<=31)||(a===192&&b===168)||a===127||(a===169&&b===254)||(a===192&&b===0)||(a===198&&b===51)||(a===203&&b===0);};
+const DOM=/^(?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i;
+function classify(raw){
+ const s0=raw.trim();if(!s0)return null;
+ const notes=[];
+ if(/[<>`$|;&\\]|\.\.\/|<script/i.test(s0)&&!/^https?:\/\//i.test(refang(s0))){return{raw:s0,type:'rejected',norm:'—',notes:['Contains shell/HTML metacharacters; dropped, never executed or rendered']};}
+ let s=refang(s0);if(s!==s0)notes.push('refanged');
+ if(/^[=+\-@]/.test(s)){return{raw:s0,type:'rejected',norm:'—',notes:['Leading formula character (CSV injection risk)']};}
+ let m;
+ if(/^[a-f0-9]{32}$/i.test(s))return{raw:s0,type:'md5',norm:s.toLowerCase(),notes:s.toLowerCase()==='d41d8cd98f00b204e9800998ecf8427e'?['hash of empty input']:notes};
+ if(/^[a-f0-9]{40}$/i.test(s))return{raw:s0,type:'sha1',norm:s.toLowerCase(),notes};
+ if(/^[a-f0-9]{64}$/i.test(s))return{raw:s0,type:'sha256',norm:s.toLowerCase(),notes:s.toLowerCase()==='e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'?['hash of empty input']:notes};
+ if(/^CVE-\d{4}-\d{4,7}$/i.test(s))return{raw:s0,type:'cve',norm:s.toUpperCase(),notes};
+ if(/^https?:\/\//i.test(s)){try{const u=new URL(s);if(!DOM.test(u.hostname)&&!isV4(u.hostname))throw 0;return{raw:s0,type:'url',norm:defang(u.href),notes};}catch{return{raw:s0,type:'rejected',norm:'—',notes:['Malformed URL']};}}
+ if(/^[^@\s]+@[^@\s]+$/.test(s)){const d=s.split('@')[1];if(DOM.test(d))return{raw:s0,type:'email',norm:defang(s.toLowerCase()).replace('@','[@]'),notes};}
+ if(/^\d+\.\d+\.\d+\.\d+$/.test(s)){if(!isV4(s))return{raw:s0,type:'rejected',norm:'—',notes:['Invalid IPv4 (octet out of range)']};if(priv(s))notes.push('private/reserved range');return{raw:s0,type:'ipv4',norm:defang(s),notes};}
+ if(/^[0-9a-f:]+$/i.test(s)&&s.includes(':')&&/^([0-9a-f]{0,4}:){2,7}[0-9a-f]{0,4}$/i.test(s)){if(s.toLowerCase().startsWith('2001:db8'))notes.push('documentation range');return{raw:s0,type:'ipv6',norm:s.toLowerCase(),notes};}
+ if(DOM.test(s))return{raw:s0,type:'domain',norm:defang(s.toLowerCase()),notes};
+ return{raw:s0,type:'rejected',norm:'—',notes:['Not a recognised indicator']};}
+let OUT=[];
+$('go').onclick=()=>{
+ const seen=new Map();let dup=0;
+ $('in').value.split(/\r?\n/).forEach(l=>{if(l.length>2048)l=l.slice(0,2048);const r=classify(l);if(!r)return;const k=r.type+'|'+r.norm;if(r.type!=='rejected'&&seen.has(k)){dup++;seen.get(k).notes.push('duplicate input merged');return;}seen.set(r.type==='rejected'?Symbol():k,r);});
+ OUT=[...seen.values()];
+ $('n1').textContent=OUT.filter(r=>r.type!=='rejected').length;$('n2').textContent=OUT.filter(r=>r.type==='rejected').length;$('n3').textContent=dup;
+ $('res').innerHTML=OUT.length?OUT.map(r=>`<tr><td class="mono" style="font-size:12px">${esc(r.raw.slice(0,90))}</td><td><span class="tag" style="${r.type==='rejected'?'color:var(--bad)':''}">${r.type}</span></td><td class="mono" style="font-size:12px">${esc(r.norm)}</td><td class="flag">${r.notes.map(esc).join('; ')}</td></tr>`).join(''):'<tr><td colspan="4" class="muted">Nothing to analyse.</td></tr>';
+ $('csv').disabled=$('json').disabled=!OUT.length;};
+const safeCell=v=>{v=String(v);if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"';};
+const dl=(name,txt,type)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href);};
+$('csv').onclick=()=>dl('iocs.csv','type,indicator,notes\n'+OUT.filter(r=>r.type!=='rejected').map(r=>[r.type,r.norm,r.notes.join('; ')].map(safeCell).join(',')).join('\n'),'text/csv');
+$('json').onclick=()=>dl('iocs.json',JSON.stringify(OUT.filter(r=>r.type!=='rejected').map(({type,norm,notes})=>({type,indicator:norm,notes})),null,2),'application/json');
+</script></body></html>

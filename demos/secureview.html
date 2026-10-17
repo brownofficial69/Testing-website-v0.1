@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SecureView Demo | Shadman Hossain</title><link rel="stylesheet" href="demo.css"/>
+<style>.layout{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}@media(max-width:900px){.layout{grid-template-columns:1fr}}.st{font-size:11px;font-family:var(--mono);color:var(--dim)}.pri{font-family:var(--mono);font-weight:700}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.filters button.on{background:var(--accent);color:#08102a}</style></head>
+<body>
+<div class="top"><h1>Secure<span>View</span> demo</h1><nav><a href="index.html">All demos</a><a href="../versions.html">Portfolio</a></nav></div>
+<div class="notice"><b>Sample alerts, runs in your browser.</b> The real SecureView is a TypeScript/React dashboard that uses the Claude API with typed data contracts. This demo ranks alerts with a simple scoring rule and shows static remediation guidance; no AI model is called.</div>
+<main>
+<div class="grid3" style="margin-bottom:20px"><div class="card stat"><b id="cOpen">0</b><span>Open</span></div><div class="card stat"><b id="cEsc">0</b><span>Escalated</span></div><div class="card stat"><b id="cClosed">0</b><span>Closed / false positive</span></div></div>
+<div class="layout">
+<div class="card"><h2>Alert queue (highest priority first)</h2><div class="filters" id="filters"></div><table><thead><tr><th>Pri</th><th>Alert</th><th>Asset</th><th>Sev</th><th></th></tr></thead><tbody id="q"></tbody></table></div>
+<div class="card"><h2>Triage</h2><div id="detail" class="muted">Select an alert.</div></div>
+</div></main>
+<footer>© 2026 Shadman Hossain · demo</footer>
+<script>
+const GUIDE={
+ T1110:['Check the source IP against recent successful logons.','Lock the targeted account if a success follows the failures.','Enable or tighten MFA and rate limiting on the login endpoint.'],
+ T1059:['Isolate the host from the network.','Capture the full command line and parent process.','Block the script hash and hunt for the same pattern fleet-wide.'],
+ T1566:['Pull the message from all mailboxes.','Block the sender and any linked domains.','Reset credentials for anyone who clicked or submitted details.'],
+ T1486:['Isolate affected hosts immediately.','Preserve memory and disk images before reboot.','Start the ransomware incident runbook and notify the incident lead.'],
+ T1071:['Block the destination at the proxy and firewall.','Identify the process opening the connection.','Search for other hosts contacting the same destination.'],
+ T1078:['Confirm the sign-in with the account owner.','Revoke active sessions and rotate credentials.','Review what the account accessed since the sign-in.'],
+ T1046:['Confirm whether this is an approved vulnerability scan.','If not, block the source and review exposed services.'],
+ T1136:['Verify the new account against change tickets.','Disable it if unapproved and review who created it.']};
+const A=[
+ {id:'A-1042',title:'Mass file renaming with .locked extension',tech:'T1486',asset:'FIN-SRV-02',crit:5,conf:0.9,sev:'critical'},
+ {id:'A-1041',title:'Successful logon after 23 failed attempts',tech:'T1110',asset:'VPN-GW-01',crit:4,conf:0.85,sev:'high'},
+ {id:'A-1040',title:'Encoded PowerShell spawned by Word',tech:'T1059',asset:'HR-LT-117',crit:3,conf:0.8,sev:'high'},
+ {id:'A-1039',title:'Impossible-travel sign-in for admin account',tech:'T1078',asset:'M365 tenant',crit:5,conf:0.6,sev:'high'},
+ {id:'A-1038',title:'Beaconing to rare domain every 60s',tech:'T1071',asset:'DEV-WS-044',crit:2,conf:0.7,sev:'medium'},
+ {id:'A-1037',title:'Phishing email reported by 6 users',tech:'T1566',asset:'Mail gateway',crit:3,conf:0.75,sev:'medium'},
+ {id:'A-1036',title:'New local admin account created',tech:'T1136',asset:'WEB-SRV-03',crit:4,conf:0.5,sev:'medium'},
+ {id:'A-1035',title:'Port sweep from internal scanner IP',tech:'T1046',asset:'Subnet 10.20.0.0/24',crit:2,conf:0.4,sev:'low'},
+ {id:'A-1034',title:'Single failed logon, known user',tech:'T1110',asset:'FILE-SRV-01',crit:2,conf:0.2,sev:'low'}];
+const W={critical:40,high:30,medium:18,low:8};
+A.forEach(a=>{a.pri=Math.round(W[a.sev]+a.crit*8+a.conf*20);a.status='open';});
+A.sort((x,y)=>y.pri-x.pri);
+let sel=null,filter='all';const $=id=>document.getElementById(id);
+function render(){
+ $('filters').innerHTML=['all','open','escalated','closed'].map(f=>`<button class="ghost ${filter===f?'on':''}" onclick="filter='${f}';render()">${f}</button>`).join('');
+ $('q').innerHTML=A.filter(a=>filter==='all'||(filter==='closed'?['closed','fp'].includes(a.status):a.status===filter)).map(a=>`<tr class="click ${sel===a.id?'sel':''}" onclick="sel='${a.id}';render()"><td class="pri">${a.pri}</td><td>${a.title}<div class="st">${a.id} · ${a.tech}</div></td><td>${a.asset}</td><td><span class="sev ${a.sev}">${a.sev}</span></td><td class="st">${a.status}</td></tr>`).join('');
+ $('cOpen').textContent=A.filter(a=>a.status==='open').length;$('cEsc').textContent=A.filter(a=>a.status==='escalated').length;$('cClosed').textContent=A.filter(a=>['closed','fp'].includes(a.status)).length;
+ const a=A.find(x=>x.id===sel);if(!a)return;
+ $('detail').innerHTML=`<h3>${a.title}</h3><p class="muted">${a.id} · ${a.asset} · ATT&amp;CK ${a.tech}</p>
+ <p style="margin:10px 0"><b>Priority ${a.pri}</b> = severity (${W[a.sev]}) + asset criticality ${a.crit}×8 + confidence ${Math.round(a.conf*100)}%×20</p>
+ <h2 style="margin-top:14px">Recommended steps</h2><ol style="padding-left:18px">${(GUIDE[a.tech]||[]).map(s=>`<li style="margin:6px 0">${s}</li>`).join('')}</ol>
+ <div class="row"><button onclick="setS('${a.id}','escalated')">Escalate</button><button class="ghost" onclick="setS('${a.id}','closed')">Close</button><button class="ghost" onclick="setS('${a.id}','fp')">False positive</button><button class="ghost" onclick="setS('${a.id}','open')">Reopen</button></div>`;}
+function setS(id,s){A.find(a=>a.id===id).status=s;render();}
+render();
+</script></body></html>

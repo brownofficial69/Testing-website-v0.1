@@ -37,7 +37,7 @@ const TIMELINE_DATA = {
   },
   2024: {
     title: '2024: Acceleration',
-    description: 'Developed SecureView SOC dashboard. Contributions to open-source security projects. Built typed LLM data contracts with unit-tested components.',
+    description: 'Developed SecureView SOC dashboard. Built typed LLM data contracts. Built typed LLM data contracts with unit-tested components.',
     achievements: ['SecureView Released', '17/17 Unit Tests', 'Open Source Contrib'],
     skills: 23,
     projects: 4,
@@ -45,7 +45,7 @@ const TIMELINE_DATA = {
   },
   2025: {
     title: '2025: Mastery',
-    description: 'Advanced threat intelligence systems. AWS Healthcare security case study. Started mentoring.',
+    description: 'Advanced threat intelligence systems. ADAM / EVE / Mizan agent-safety prototype.',
     achievements: ['AWS Case Study', 'ThreatWeave Concurrency Tests', 'Mentoring Begins'],
     skills: 25,
     projects: 5,

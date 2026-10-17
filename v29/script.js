@@ -8,8 +8,8 @@ const PLANETS = [
   {name:'SecureView',  label:'Project', r:18, orbit:180, speed:0.006, color:'#06b6d4', glow:'#06b6d4', desc:'Real-time SOC monitoring dashboard with AI-assisted alert triage.', tags:['React','TypeScript']},
   {name:'SOC Lab',     label:'Project', r:20, orbit:240, speed:0.005, color:'#f43f5e', glow:'#f43f5e', desc:'Detection engineering with Sigma rules mapped to MITRE ATT&CK.', tags:['Python','Sigma']},
   {name:'IOC Hunter',  label:'Project', r:14, orbit:290, speed:0.009, color:'#10b981', glow:'#10b981', desc:'CLI IOC aggregation and enrichment tool.', tags:['Python','APIs']},
-  {name:'NIST CSF',    label:'GRC',     r:16, orbit:340, speed:0.004, color:'#f59e0b', glow:'#f59e0b', desc:'Governance gap analysis tool with automated NIST CSF 2.0 roadmap.', tags:['GRC','NIST']},
-  {name:'AWS Health',  label:'Cloud',   r:15, orbit:390, speed:0.003, color:'#f97316', glow:'#f97316', desc:'Healthcare threat modelling: STRIDE + GDPR + AWS architecture.', tags:['AWS','STRIDE','GDPR']},
+  {name:'NIST CSF',    label:'GRC',     r:16, orbit:340, speed:0.004, color:'#f59e0b', glow:'#f59e0b', desc:'Weighted 15-criterion vendor-risk model informed by NIST SP 800-161, refined through UAT with non-technical users.', tags:['GRC','NIST']},
+  {name:'ADAM / EVE / Mizan',  label:'AI Safety', r:15, orbit:390, speed:0.003, color:'#f97316', glow:'#f97316', desc:'AI-agent authorization prototype separating proposals, adversarial critique and independent policy mediation. 21/21 Phase-8 and 7/7 concept tests passing.', tags:['AWS','STRIDE','GDPR']},
   {name:'Claude Academy',        label:'Cert',    r:12, orbit:440, speed:0.007, color:'#fbbf24', glow:'#fbbf24', desc:'Anthropic Claude Academy: nine courses completed in 2026.', tags:['Anthropic']},
   {name:'BTEC L3',        label:'Cert',    r:11, orbit:480, speed:0.0055,color:'#a78bfa', glow:'#a78bfa', desc:'BTEC Level 3 National Diploma in IT, Double Distinction Merit.', tags:['BMet']},
 ];

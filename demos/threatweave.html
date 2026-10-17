@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ThreatWeave Demo | Shadman Hossain</title><link rel="stylesheet" href="demo.css"/>
+<style>.feed{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:var(--faint);display:inline-block;margin-right:8px}.dot.run{background:var(--warn)}.dot.done{background:var(--ok)}.dos{border-left:3px solid var(--accent);padding-left:14px;margin-bottom:18px}</style></head>
+<body>
+<div class="top"><h1>Threat<span>Weave</span> demo</h1><nav><a href="index.html">All demos</a><a href="../versions.html">Portfolio</a></nav></div>
+<div class="notice"><b>Sample data, runs in your browser.</b> This mirrors the idea of ThreatWeave (parallel feed collection, then correlation by ASN and MITRE ATT&amp;CK overlap). The real tool is a Go CLI that also uses the Claude API; this demo does neither. IPs and ASNs are reserved documentation values.</div>
+<main>
+<div class="grid2">
+<div class="card"><h2>1. Collect feeds in parallel</h2>
+<div id="feeds"></div>
+<div class="row"><button id="run">Run collection</button><span class="muted" id="status">Idle</span></div>
+<h2 style="margin-top:20px">Filter (optional)</h2>
+<input type="text" id="filter" placeholder="Only keep IOCs containing… e.g. 198.51.100 or T1071"/>
+</div>
+<div class="card"><h2>Collection summary</h2>
+<div class="grid3"><div class="stat"><b id="sIoc">0</b><span>IOCs</span></div><div class="stat"><b id="sAsn">0</b><span>ASNs</span></div><div class="stat"><b id="sCl">0</b><span>Clusters</span></div></div>
+<p class="muted" style="margin-top:14px">A cluster is two or more IOCs sharing an ASN. Clusters are scored by feed corroboration and shared MITRE techniques.</p></div>
+</div>
+<div class="card" style="margin-top:20px"><h2>2. Dossiers</h2><div id="out" class="muted">Run the collection to build dossiers.</div></div>
+</main>
+<footer>© 2026 Shadman Hossain · demo</footer>
+<script>
+const FEEDS=[
+{name:'FeedAlpha (C2 tracker)',ms:700,items:[
+ ['198.51.100.23','AS64500',['T1071','T1573'],'C2 beacon'],['198.51.100.77','AS64500',['T1071'],'C2 staging'],['203.0.113.9','AS64501',['T1566'],'Phishing relay'],['evil-update.example','AS64500',['T1071','T1105'],'Payload host']]},
+{name:'FeedBravo (malware URLs)',ms:1100,items:[
+ ['198.51.100.23','AS64500',['T1105'],'Dropper host'],['192.0.2.14','AS64502',['T1190'],'Exploit scanner'],['203.0.113.40','AS64501',['T1566','T1204'],'Phishing kit']]},
+{name:'FeedCharlie (scanners)',ms:400,items:[
+ ['192.0.2.14','AS64502',['T1190','T1595'],'Mass scanning'],['192.0.2.88','AS64502',['T1595'],'Scanning'],['198.51.100.77','AS64500',['T1573'],'Encrypted C2']]},
+{name:'FeedDelta (phishing)',ms:900,items:[
+ ['203.0.113.9','AS64501',['T1566','T1598'],'Credential phishing'],['203.0.113.40','AS64501',['T1204'],'User-exec lure'],['203.0.113.51','AS64501',['T1566'],'Phishing']]}];
+const TECH={T1071:'Application Layer Protocol',T1573:'Encrypted Channel',T1105:'Ingress Tool Transfer',T1566:'Phishing',T1204:'User Execution',T1190:'Exploit Public-Facing App',T1595:'Active Scanning',T1598:'Phishing for Information'};
+const $=id=>document.getElementById(id);
+$('feeds').innerHTML=FEEDS.map((f,i)=>`<div class="feed"><span><i class="dot" id="d${i}"></i>${f.name}</span><span class="muted mono" id="t${i}">waiting</span></div>`).join('');
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function pull(f,i){$('d'+i).className='dot run';$('t'+i).textContent='fetching…';const t0=performance.now();await new Promise(r=>setTimeout(r,f.ms));$('d'+i).className='dot done';$('t'+i).textContent=`${f.items.length} IOCs · ${Math.round(performance.now()-t0)} ms`;return f.items.map(([ioc,asn,tech,note])=>({ioc,asn,tech,note,feed:f.name}));}
+$('run').onclick=async()=>{
+ $('run').disabled=true;$('status').textContent='Fetching 4 feeds concurrently…';const t0=performance.now();
+ let all=(await Promise.all(FEEDS.map(pull))).flat();
+ const q=$('filter').value.trim().toLowerCase();if(q)all=all.filter(r=>(r.ioc+r.tech.join(' ')+r.asn).toLowerCase().includes(q));
+ $('status').textContent=`Done in ${Math.round(performance.now()-t0)} ms (wall clock, feeds ran in parallel)`;
+ correlate(all);$('run').disabled=false;};
+function correlate(rows){
+ const byIoc={};rows.forEach(r=>{(byIoc[r.ioc]??={ioc:r.ioc,asn:r.asn,feeds:new Set(),tech:new Set(),notes:new Set()});const o=byIoc[r.ioc];o.feeds.add(r.feed);r.tech.forEach(t=>o.tech.add(t));o.notes.add(r.note);});
+ const iocs=Object.values(byIoc);const byAsn={};iocs.forEach(o=>(byAsn[o.asn]??=[]).push(o));
+ const clusters=Object.entries(byAsn).filter(([,v])=>v.length>1).map(([asn,list])=>{
+  const tc={};list.forEach(o=>o.tech.forEach(t=>tc[t]=(tc[t]||0)+1));
+  const shared=Object.entries(tc).filter(([,n])=>n>1).sort((a,b)=>b[1]-a[1]);
+  const corrob=list.reduce((s,o)=>s+o.feeds.size,0);
+  const score=list.length*10+corrob*5+shared.length*8;
+  return{asn,list,shared,corrob,score,sev:score>=70?'critical':score>=50?'high':score>=30?'medium':'low'};}).sort((a,b)=>b.score-a.score);
+ $('sIoc').textContent=iocs.length;$('sAsn').textContent=Object.keys(byAsn).length;$('sCl').textContent=clusters.length;
+ if(!clusters.length){$('out').innerHTML='No clusters. Loosen the filter.';return;}
+ $('out').innerHTML=clusters.map(c=>`<div class="dos"><h3>${esc(c.asn)} <span class="sev ${c.sev}">${c.sev.toUpperCase()}</span> <span class="muted">score ${c.score}</span></h3>
+ <p class="muted">${c.list.length} IOCs, ${c.corrob} feed sightings.</p>
+ <p style="margin-top:8px"><b>Shared ATT&amp;CK techniques:</b> ${c.shared.length?c.shared.map(([t,n])=>`<span class="tag">${t} ${esc(TECH[t]||'')} ×${n}</span>`).join(''):'<span class="muted">none</span>'}</p>
+ <table><thead><tr><th>IOC</th><th>Reported by</th><th>Techniques</th><th>Notes</th></tr></thead><tbody>${c.list.map(o=>`<tr><td class="mono">${esc(o.ioc)}</td><td>${[...o.feeds].map(esc).join('<br>')}</td><td>${[...o.tech].map(t=>`<span class="tag">${t}</span>`).join('')}</td><td>${[...o.notes].map(esc).join('; ')}</td></tr>`).join('')}</tbody></table></div>`).join('');}
+</script></body></html>
