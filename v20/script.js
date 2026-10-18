@@ -96,7 +96,7 @@ const COMMANDS = {
     '',
     '  <span class="c-cyan">Email</span>     sm.shadman.hossain@gmail.com',
     '  <span class="c-cyan">GitHub</span>    github.com/shaddiegit',
-    '  <span class="c-cyan">LinkedIn</span>  linkedin.com/in/shadman-hossain',
+    '  <span class="c-cyan">LinkedIn</span>  linkedin.com/in/shadman-hossain1206',
     ''
   ],
 

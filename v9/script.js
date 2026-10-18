@@ -244,22 +244,22 @@ function buildAboutContent() {
           <tr><td>Name</td><td><b>Shadman Hossain</b></td></tr>
           <tr><td>Degree</td><td>BSc (Hons) Ethical Hacking &amp; Cyber Security</td></tr>
           <tr><td>University</td><td>Coventry University</td></tr>
-          <tr><td>Average</td><td><b style="color:#000080">76.67%</b> (First-Class track)</td></tr>
+          <tr><td>Average</td><td><b style="color:#000080">73.67%</b> (First-Class track)</td></tr>
           <tr><td>Location</td><td>Coventry, UK</td></tr>
           <tr><td>Target</td><td>Junior SOC / GRC / CTI roles, UK</td></tr>
-          <tr><td>ISC2 CC</td><td>Exam scheduled — <b style="color:#800000">11 June 2026</b></td></tr>
+          <tr><td>Claude Academy</td><td>Completed — <b style="color:#800000">2026</b></td></tr>
         </table>
       </div>
     </div>
     <div class="aw-bio">
-      <p>I'm a final-year <b>BSc Ethical Hacking &amp; Cyber Security</b> student at Coventry University, on track for First-Class Honours. My current average is <b>76.67%</b>; research project scored 87%.</p><br>
+      <p>I'm a First-Class <b>BSc Ethical Hacking &amp; Cyber Security</b> graduate of Coventry University, awarded First-Class Honours. My Final Result is <b>73.67%</b>; research project scored 87%.</p><br>
       <p>Work spans <b>blue team detection engineering</b> — Wazuh-compatible Sigma rules and intrusion simulation — to <b>GRC compliance</b>, delivering full NIST CSF 2.0 assessments for regulated sectors. I also build <b>AI-augmented security tools</b> in Python and Go.</p>
     </div>
     <div class="aw-stats">
-      <div class="aws-box"><div class="aws-num">76.67%</div><div class="aws-lbl">CURRENT AVERAGE</div></div>
+      <div class="aws-box"><div class="aws-num">73.67%</div><div class="aws-lbl">FINAL RESULT</div></div>
       <div class="aws-box"><div class="aws-num">87%</div><div class="aws-lbl">RESEARCH PROJECT</div></div>
       <div class="aws-box"><div class="aws-num">5</div><div class="aws-lbl">GITHUB PROJECTS</div></div>
-      <div class="aws-box"><div class="aws-num">ISC2</div><div class="aws-lbl">CC — JUN 2026</div></div>
+      <div class="aws-box"><div class="aws-num">FDM</div><div class="aws-lbl">CONSULTANT</div></div>
     </div>
   </div>`;
 }
@@ -301,8 +301,8 @@ function buildEducationContent() {
   Degree:      BSc (Hons) Ethical Hacking &amp; Cyber Security
   Institution: Coventry University
   Period:      September 2023 – July 2026
-  Status:      <span class="en-hl">IN PROGRESS — EXPECTED FIRST-CLASS</span>
-  Average:     <span class="en-hl">76.67%</span>
+  Status:      <span class="en-hl">COMPLETED — FIRST-CLASS HONOURS</span>
+  Average:     <span class="en-hl">73.67%</span>
 
   Module Grades:
   ┌──────────────────────────────────────────┬─────┐
@@ -338,17 +338,17 @@ function buildCertsContent() {
     <div class="cert-item">
       <div class="ci-badge">🛡️</div>
       <div>
-        <div class="ci-issuer">ISC2</div>
-        <div class="ci-name">Certified in Cybersecurity (CC)</div>
-        <div class="ci-desc">Vendor-neutral security certification covering risk management, network security, security operations, and access controls.</div>
-        <div class="ci-status"><span class="ci-dot"></span> Exam Scheduled — 11 June 2026</div>
+        <div class="ci-issuer">Anthropic</div>
+        <div class="ci-name">Anthropic Claude Academy</div>
+        <div class="ci-desc">Nine courses including Claude Code, MCP, Subagents and Agent Skills.</div>
+        <div class="ci-status"><span class="ci-dot"></span> Completed 2026 · nine courses</div>
       </div>
     </div>
     <div class="cert-item">
       <div class="ci-badge">➕</div>
       <div>
         <div class="ci-issuer" style="color:#808080">FUTURE</div>
-        <div class="ci-name">More Certifications Coming</div>
+        <div class="ci-name">More Training Planned</div>
         <div class="ci-desc">Continuing professional development in SOC operations, threat hunting, and GRC disciplines post-graduation 2026.</div>
         <div class="ci-status"><span class="ci-dot dim"></span> Planned — Post-Graduation 2026</div>
       </div>
@@ -396,15 +396,15 @@ function buildSysinfoContent() {
       <tr><td>Name</td><td>Shadman Hossain</td></tr>
       <tr><td>Degree</td><td>BSc (Hons) Ethical Hacking &amp; Cyber Security</td></tr>
       <tr><td>University</td><td>Coventry University</td></tr>
-      <tr><td>Current Average</td><td><b>76.67%</b> — First-Class track</td></tr>
+      <tr><td>Final Result</td><td><b>73.67%</b> — First-Class track</td></tr>
       <tr><td>Research Project</td><td><b>87%</b></td></tr>
       <tr><td>Location</td><td>Coventry, UK</td></tr>
       <tr><td>Seeking</td><td>Junior SOC Analyst · GRC Analyst · CTI Analyst</td></tr>
-      <tr><td>ISC2 CC Exam</td><td>11 June 2026</td></tr>
+      <tr><td>Claude Academy</td><td>Completed 2026</td></tr>
       <tr><td>Portfolio Views</td><td>${1200 + Math.floor(Math.random()*200)}</td></tr>
       <tr><td>System Date</td><td>${now.toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</td></tr>
       <tr class="si-bar-row"><td>Academic Performance</td><td>
-        <div class="si-bar-wrap"><div class="si-bar" style="width:76.67%">76.67%</div></div>
+        <div class="si-bar-wrap"><div class="si-bar" style="width:73.67%">73.67%</div></div>
       </td></tr>
     </table>
   </div>`;
@@ -426,7 +426,7 @@ function buildWelcomeContent() {
     <div class="welcome-icon">💻</div>
     <div class="welcome-title">Welcome to ShadmanOS 95!</div>
     <div class="welcome-body">
-      <p>Hello! I'm <b>Shadman Hossain</b>, a final-year cybersecurity student at Coventry University.</p><br>
+      <p>Hello! I'm <b>Shadman Hossain</b>, a First-Class cybersecurity graduate of Coventry University.</p><br>
       <p>This portfolio is styled as <b>Windows 95</b> — you can:</p>
       <ul style="padding-left:1.5rem;margin-top:4px;line-height:1.8">
         <li>Double-click desktop icons to open windows</li>

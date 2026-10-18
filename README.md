@@ -1,6 +1,6 @@
 # Shadman Hossain — Cybersecurity Portfolio
 
-Personal portfolio website for Shadman Hossain, a final-year Ethical Hacking & Cybersecurity student at Coventry University. Built as a fully static site with a cyberpunk/terminal aesthetic, deployed automatically to GitHub Pages.
+Personal portfolio website for Shadman Hossain, a First-Class Ethical Hacking & Cyber Security graduate of Coventry University. Built as a fully static site with a cyberpunk/terminal aesthetic, deployed automatically to GitHub Pages.
 
 **Live site:** https://brownofficial69.github.io/Testing-website-v0.1/
 
@@ -104,3 +104,7 @@ The workflow file is at `.github/workflows/deploy.yml`.
 ## Built With
 
 [Claude Code](https://claude.ai/code) — Anthropic's AI coding assistant, used to design, build, and iterate the entire site across multiple sessions.
+
+## Project demos
+
+Six interactive, in-browser demos (sample data, no network calls) live in [`demos/`](demos/index.html): ThreatWeave, SecureView, SOC Detection Lab, IOC Hunter, ADAM / EVE / Mizan and the Supply Chain Risk Framework.

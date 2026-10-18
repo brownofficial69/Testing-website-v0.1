@@ -1325,12 +1325,12 @@ function initAmbientText() {
     },
     {
       id: 'education',
-      tokens: ['76.67%', 'First Class', 'BSc', '2023–2026', 'Coventry', 'BTEC D*D*D*',
+      tokens: ['73.67%', 'First Class', 'BSc', '2023–2026', 'Coventry', 'BTEC D*D*D*',
                'cybersec', 'thesis', '87%', 'module', 'lecture', 'lab', 'research', 'ethics'],
     },
     {
       id: 'certifications',
-      tokens: ['ISC2', 'CC', '11.06.2026', 'CISSP', 'IAM', 'risk', 'policy', 'governance',
+      tokens: ['Claude', 'MCP', 'Agents', 'Skills', 'IAM', 'risk', 'policy', 'governance',
                'CIA triad', 'zero-trust', 'SOC2', 'ISO 27001', 'NIST', 'GDPR'],
     },
     {

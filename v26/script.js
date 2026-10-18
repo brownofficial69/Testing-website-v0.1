@@ -38,7 +38,7 @@ const CONTENT = `
   <div class="section-title">[SECURE CHANNELS]</div>
   <div class="contact-row"><span>EMAIL  ► </span>sm.shadman.hossain@gmail.com</div>
   <div class="contact-row"><span>GITHUB ► </span>github.com/shaddiegit</div>
-  <div class="contact-row"><span>LINKED ► </span>linkedin.com/in/shadman-hossain</div>
+  <div class="contact-row"><span>LINKED ► </span>linkedin.com/in/shadman-hossain1206</div>
 </div>`;
 
 const TYPEOUTS = ['RUN THREATWEAVE.EXE','LIST PROJECTS /ALL','GREP -r "cybersec" ./skills','nmap -sV localhost'];
