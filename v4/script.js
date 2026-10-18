@@ -23,13 +23,13 @@ const FILES = {
 <span class="hl">Location:</span>      Coventry, UK
 <span class="hl">University:</span>    Coventry University
 <span class="hl">Degree:</span>        BSc (Hons) Ethical Hacking & Cyber Security
-<span class="hl">Status:</span>        Final Year · Expected First-Class Honours
-<span class="hl">Average:</span>       <span class="hlg">76.67%</span>  ·  Research Project: <span class="hlg">87%</span>
+<span class="hl">Status:</span>        First-Class · First-Class Honours
+<span class="hl">Average:</span>       <span class="hlg">73.67%</span>  ·  Research Project: <span class="hlg">87%</span>
 <span class="hl">Target roles:</span>  Junior SOC Analyst · GRC Analyst · CTI Analyst
 
 <span class="dim">────────────────────────────────────────────────</span>
 
-Final-year cybersecurity student specialising in <span class="hlg">blue team
+First-Class cybersecurity student specialising in <span class="hlg">blue team
 detection engineering</span>, <span class="hl">GRC compliance</span>, and <span class="hlg">AI-augmented
 security tools</span>.
 
@@ -37,7 +37,7 @@ Work spans Wazuh-compatible Sigma rules, full NIST CSF 2.0
 assessments, and building tools in Python and Go — including
 a <span class="hlg">Claude API-powered threat intelligence correlation engine</span>.
 
-Preparing for <span class="hla">ISC2 CC</span> (June 2026). Actively seeking junior
+FDM Group consultant on a Deutsche Bank assignment. Actively seeking junior
 SOC / GRC / CTI roles in the UK.`,
 
 'skills.md': `
@@ -70,7 +70,7 @@ SOC / GRC / CTI roles in the UK.`,
 
 <span class="hlw bold">BSc (Hons) Ethical Hacking & Cyber Security</span>
 <span class="hlg">Coventry University</span>  ·  Sep 2023 – Jul 2026
-Expected First-Class Honours  ·  Average: <span class="hlg">76.67%</span>
+First-Class Honours  ·  Average: <span class="hlg">73.67%</span>
 
   Module Grades:
   ┌──────────────────────────────────────┬──────┐
@@ -95,9 +95,9 @@ Expected First-Class Honours  ·  Average: <span class="hlg">76.67%</span>
 'certifications.txt': `
 <span class="hl">## Certifications</span>
 
-<span class="hla">[ UPCOMING ]</span>  <span class="hlw bold">ISC2 Certified in Cybersecurity (CC)</span>
-Issuer:       ISC2
-Exam Date:    11 June 2026
+<span class="hla">[ COMPLETE ]</span>  <span class="hlw bold">Anthropic Claude Academy</span>
+Issuer:       Anthropic
+Completed:    2026
 Status:       <span class="yellow">● SCHEDULED</span>
 
 Description:
@@ -417,7 +417,7 @@ function cmdWhois() {
     '  AI-Augmented Security Tools',
     '',
     'Certifications:',
-    '  ISC2 CC    [PENDING — 11 Jun 2026]',
+    '  Claude Academy    [COMPLETE — 2026]',
     '',
     'Contact:',
     '  Email:    sm.shadman.hossain@gmail.com',
@@ -548,7 +548,7 @@ function cmdTraceroute() {
     { n:7,  host:'secureview.dashboard',     ms:'19.3',   note:'SecureView — AI-powered SOC dashboard' },
     { n:8,  host:'threatweave.go.ai',        ms:'41.2',   note:'ThreatWeave — Claude AI CTI engine' },
     { n:9,  host:'nist.csf.gap.assessment',  ms:'35.7',   note:'NIST CSF 2.0 — NHS supplier GRC' },
-    { n:10, host:'isc2.cc.exam',             ms:'???',    note:'<span class="hla">11 June 2026 — INCOMING</span>' },
+    { n:10, host:'claude.academy',             ms:'???',    note:'<span class="hla">2026 — COMPLETE</span>' },
     { n:11, host:'junior.soc.grc.analyst',   ms:'???',    note:'<span class="hlg">DESTINATION — UK security role</span>' },
   ];
 
@@ -595,7 +595,7 @@ function cmdPs() {
     ['shadman', '133',  '3.1', '0.9', 'wazuh-agent --monitor /var/log'],
     ['shadman', '256',  '0.4', '0.3', 'sigma-rules --validate *.yml'],
     ['shadman', '512',  '22.1','4.2', 'nmap -A -sV target_network'],
-    ['shadman', '1024', '0.0', '0.1', 'study isc2_cc --mode intense'],
+    ['shadman', '1024', '0.0', '0.1', 'study claude_academy --mode intense'],
     ['shadman', '2048', '5.3', '1.2', 'bash grc_assessment.sh --nist'],
     ['shadman', '4096', '0.0', '0.0', 'grep -r "opportunities" ./uk-jobs'],
   ];
@@ -928,7 +928,7 @@ function boot() {
     { t:'dim',    s:'[    0.531209] Loading sigma rule engine... OK' },
     { t:'dim',    s:'[    0.678341] Connecting to threat feeds... OK' },
     { t:'yellow', s:'[    0.802651] WARNING: cv.pdf not found — button disabled' },
-    { t:'dim',    s:'[    0.921437] ISC2 CC exam countdown: 13 days' },
+    { t:'dim',    s:'[    0.921437] Claude Academy: 9 courses completed' },
     { t:'dim',    s:'[    1.042831] All systems operational.' },
     { t:'dim',    s:'' },
     { t:'white',  s:'┌─────────────────────────────────────────────────┐' },

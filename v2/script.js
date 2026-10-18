@@ -419,7 +419,7 @@ function initCardTilt() {
 }
 
 /* ══════════════════════════════════════════════════
-   ISC2 EXAM COUNTDOWN
+   (removed) exam countdown
 ══════════════════════════════════════════════════ */
 function initCertCountdown() {
   const examDate=new Date('2026-06-11T09:00:00');

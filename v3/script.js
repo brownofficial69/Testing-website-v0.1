@@ -141,7 +141,7 @@ const SOLAR_SYSTEMS = {
     {id:'edu-bmet',    label:'BTEC Level 3 IT',color:[147,197,253],pColor:'#0d1e38', atmo:'rgba(147,197,253',orbitR:230,orbitRY:96, speed:0.00007,sz:17, type:'edu-bmet'    },
   ]},
   certifications:{starColor:[251,191,36],starLabel:'CC',planets:[
-    {id:'cert-isc2',  label:'ISC2 CC',   color:[251,191,36], pColor:'#2a1802', atmo:'rgba(251,191,36', orbitR:145,orbitRY:60, speed:0.00009,sz:22, type:'cert-isc2'  },
+    {id:'cert-claude',  label:'Claude Academy',   color:[251,191,36], pColor:'#2a1802', atmo:'rgba(251,191,36', orbitR:145,orbitRY:60, speed:0.00009,sz:22, type:'cert-claude'  },
     {id:'cert-future',label:'Planned',   color:[253,230,138],pColor:'#201404', atmo:'rgba(253,230,138',orbitR:228,orbitRY:95, speed:0.00006,sz:15, type:'cert-future'},
   ]},
   contact:{starColor:[244,114,182],starLabel:'@',planets:[
@@ -832,7 +832,7 @@ function openPanel(type) {
   const body  = document.getElementById('panel-body');
   body.innerHTML = buildPanelContent(type);
   panel.classList.add('open');
-  if (type === 'cert-isc2') initCountdownInPanel();
+  if (type === 'cert-claude') initCountdownInPanel();
   if (type === 'contact-form') initPanelForm();
 }
 
@@ -871,15 +871,15 @@ function buildPanelContent(type) {
   switch(type) {
     case 'bio': return ep('01','#22d3ee','about','Shadman Hossain',`
       <div class="ep-terminal">
-        <p><span class="t-prompt">&gt;</span> Final-year <span class="t-hl">BSc Ethical Hacking &amp; Cyber Security</span> at Coventry University.</p>
-        <p><span class="t-prompt">&gt;</span> On track for First-Class Honours — current average: <span class="t-hl">76.67%</span>. Research: 87%.</p>
+        <p><span class="t-prompt">&gt;</span> First-Class <span class="t-hl">BSc Ethical Hacking &amp; Cyber Security</span> at Coventry University.</p>
+        <p><span class="t-prompt">&gt;</span> On track for First-Class Honours — Final Result: <span class="t-hl">73.67%</span>. Research: 87%.</p>
         <p><span class="t-prompt">&gt;</span> Blue team detection engineering, GRC compliance, AI-augmented security tools in Python and Go.</p>
-        <p><span class="t-prompt">&gt;</span> Preparing for <span class="t-hl">ISC2 CC</span> (June 2026). Seeking junior SOC / GRC roles in the UK.</p>
+        <p><span class="t-prompt">&gt;</span> FDM Group consultant on a Deutsche Bank assignment. Seeking junior SOC / GRC roles in the UK.</p>
       </div>
       <p style="font-family:var(--font-mono);font-size:0.75rem;color:var(--muted)">
         <i class="fas fa-location-dot" style="color:#22d3ee;margin-right:0.4rem"></i>Coventry, UK
       </p>`,
-      [{k:'Location',v:'Coventry, UK'},{k:'Degree',v:'BSc Hons'},{k:'Status',v:'Final Year'}]);
+      [{k:'Location',v:'Coventry, UK'},{k:'Degree',v:'BSc Hons'},{k:'Status',v:'First-Class'}]);
 
     case 'stats': return ep('02','#22d3ee','statistics','Academic Stats',`
       Key modules from Coventry University BSc Ethical Hacking &amp; Cyber Security.
@@ -892,7 +892,7 @@ function buildPanelContent(type) {
         <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Info Security Management — 70%</span>
         <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Security Operations — 67%</span>
       </div>`,
-      [{k:'Average',v:'76.67%'},{k:'Research',v:'87%'},{k:'Projects',v:'5'}]);
+      [{k:'Average',v:'73.67%'},{k:'Research',v:'87%'},{k:'Projects',v:'5'}]);
 
     case 'photo': return ep('03','#22d3ee','profile','Profile',`
       <div style="display:flex;justify-content:center;margin:0.5rem 0 1.25rem">
@@ -900,8 +900,8 @@ function buildPanelContent(type) {
           onerror="this.style.display='none'"
           style="width:180px;height:180px;object-fit:cover;border-radius:50%;border:2px solid rgba(34,211,238,0.3)" />
       </div>
-      Coventry, UK · BSc Ethical Hacking &amp; Cyber Security · Final Year 2026`,
-      [{k:'University',v:'Coventry'},{k:'Year',v:'2026'},{k:'Expected',v:'First Class'}]);
+      Coventry, UK · BSc Ethical Hacking &amp; Cyber Security · First-Class 2026`,
+      [{k:'University',v:'Coventry'},{k:'Year',v:'2026'},{k:'Result',v:'First Class'}]);
 
     case 'skill-soc':   return buildSkillEp('01','#4ade80','SOC &amp; Detection',    ['SIEM','Wazuh','ELK Stack','Splunk','Sigma Rules','MITRE ATT&CK','Log Analysis','Incident Triage'],'Core blue-team monitoring and threat detection capabilities.');
     case 'skill-off':   return buildSkillEp('02','#86efac','Offensive / Pen-test',   ['Kali Linux','Nmap','Burp Suite','Metasploit','Wireshark','OSINT','Vuln Assessment'],'Ethical hacking and penetration testing toolchain.');
@@ -911,13 +911,13 @@ function buildPanelContent(type) {
     case 'skill-fw':    return buildSkillEp('06','#10b981','Frameworks',              ['MITRE ATT&CK','OWASP Top 10','Cyber Kill Chain','NIST RMF','STRIDE'],'Industry security frameworks and methodologies.');
 
     case 'edu-coventry': return ep('01','#60a5fa','education','BSc Ethical Hacking &amp; Cyber Security',`
-      <strong style="color:#60a5fa">Coventry University</strong> · Sep 2023 – Jul 2026 · Expected First-Class Honours
+      <strong style="color:#60a5fa">Coventry University</strong> · Sep 2023 – Jul 2026 · First-Class Honours
       <div class="ep-tags" style="margin-top:1rem">
         <span class="ep-tag">Digital Security Risk — 73%</span><span class="ep-tag">Security Operations — 67%</span>
         <span class="ep-tag">Info Security Management — 70%</span><span class="ep-tag">Applied Cryptography — 75%</span>
         <span class="ep-tag">Advanced Pen Testing — 71%</span><span class="ep-tag">Project Delivery — 76%</span><span class="ep-tag">Research Project — 87%</span>
       </div>`,
-      [{k:'Average',v:'76.67%'},{k:'Graduation',v:'Jul 2026'},{k:'Class',v:'First'}]);
+      [{k:'Average',v:'73.67%'},{k:'Graduation',v:'Jul 2026'},{k:'Class',v:'First'}]);
 
     case 'edu-bmet': return ep('02','#93c5fd','education','BTEC Level 3 IT',`
       <strong style="color:#93c5fd">Birmingham Metropolitan College</strong> · Sep 2020 – Jul 2022
@@ -929,28 +929,18 @@ function buildPanelContent(type) {
       </div>`,
       [{k:'Grade',v:'DDM'},{k:'Graduated',v:'2022'},{k:'College',v:'BMet'}]);
 
-    case 'cert-isc2': return `<div class="ep-wrap">
+    case 'cert-claude': return `<div class="ep-wrap">
       <p class="ep-eyebrow">// certifications</p>
       <div class="ep-row"><div class="ep-num">01</div><div>
-        <div class="ep-title">ISC2 CC</div>
+        <div class="ep-title">Claude Academy</div>
         <div class="ep-accent" style="background:#fbbf24"></div>
       </div></div>
-      <div class="ep-body">Vendor-neutral security certification covering risk management, network security, security operations, and access controls. Exam scheduled 11 June 2026.</div>
-      <div class="cert-countdown">
-        <span class="cd-lbl">Exam in</span>
-        <div class="cd-units">
-          <div class="cd-unit"><span class="cd-v" id="cd-days">--</span><span class="cd-k">days</span></div>
-          <span class="cd-sep">:</span>
-          <div class="cd-unit"><span class="cd-v" id="cd-hrs">--</span><span class="cd-k">hrs</span></div>
-          <span class="cd-sep">:</span>
-          <div class="cd-unit"><span class="cd-v" id="cd-min">--</span><span class="cd-k">min</span></div>
-        </div>
-      </div>
-      <div class="cert-status" style="margin-bottom:1.5rem"><span class="sdot"></span>Exam Scheduled — 11 June 2026</div>
+      <div class="ep-body">Nine courses including Claude Code, MCP, Subagents and Agent Skills.</div>
+      <div class="cert-status" style="margin-bottom:1.5rem"><span class="sdot"></span>Completed 2026 · nine courses</div>
       <div class="ep-stats">
-        <div><div class="ep-stat-key">Issuer</div><div class="ep-stat-val">ISC2</div></div>
-        <div><div class="ep-stat-key">Exam</div><div class="ep-stat-val">11 Jun 2026</div></div>
-        <div><div class="ep-stat-key">Status</div><div class="ep-stat-val">Upcoming</div></div>
+        <div><div class="ep-stat-key">Issuer</div><div class="ep-stat-val">Anthropic</div></div>
+        <div><div class="ep-stat-key">Completed</div><div class="ep-stat-val">2026</div></div>
+        <div><div class="ep-stat-key">Status</div><div class="ep-stat-val">Completed</div></div>
       </div></div>`;
 
     case 'cert-future': return ep('02','rgba(255,255,255,0.18)','certifications','More Coming Soon',

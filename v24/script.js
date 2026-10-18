@@ -42,7 +42,7 @@ const CONSTELLATIONS = {
     nodes: [
       {label:'Email',type:'contact',color:'#f43f5e',badge:'Direct',desc:'sm.shadman.hossain@gmail.com — Preferred for job opportunities and collaborations.'},
       {label:'GitHub',type:'contact',color:'#7aa2f7',badge:'Code',desc:'github.com/shaddiegit — All public projects and open source contributions.'},
-      {label:'LinkedIn',type:'contact',color:'#0ea5e9',badge:'Network',desc:'linkedin.com/in/shadman-hossain — Professional network and profile.'},
+      {label:'LinkedIn',type:'contact',color:'#0ea5e9',badge:'Network',desc:'linkedin.com/in/shadman-hossain1206 — Professional network and profile.'},
       {label:'Coventry',type:'contact',color:'#bb9af7',badge:'University',desc:'First-Class graduate — Ethical Hacking & Cyber Security BSc — Expected 2026.'},
     ],
     links:[[0,1],[1,2],[2,3],[3,0],[0,2],[1,3]]
