@@ -1,111 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>CyberCity | Shadman Hossain</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="style.css"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CyberCity | Shadman Hossain</title>
+<meta name="description" content="Shadman Hossain's projects as landmarks in a 3D night city. Orbit it, take the guided tour or fly into any tower." />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
 </head>
 <body>
-  <!-- Animated city canvas -->
-  <canvas id="city-canvas"></canvas>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div id="labels" aria-hidden="true"></div>
 
-  <!-- Floating UI -->
-  <div class="ui-layer">
-    <!-- Top HUD -->
-    <div class="hud-top">
-      <div class="hud-left">
-        <span class="hud-logo">CYBERCITY</span>
-        <span class="hud-version">v19.0</span>
-      </div>
-      <div class="hud-center">
-        <img class="hud-photo" src="../assets/profile.jpg" alt="Shadman Hossain" width="34" height="42" loading="lazy">
-        <span class="hud-name">SHADMAN HOSSAIN</span>
-        <span class="hud-role">CYBERSECURITY ARCHITECT</span>
-      </div>
-      <div class="hud-right">
-        <span class="hud-clock" id="clock"></span>
-        <span class="hud-ping">PING: <span id="ping">12</span>ms</span>
-      </div>
-    </div>
+<header class="head">
+  <img class="me" src="../assets/profile.jpg" alt="Shadman Hossain" width="64" height="80" />
+  <div><h1>CyberCity</h1><p>Shadman Hossain's projects, built as a skyline. Six landmarks, one city.</p></div>
+</header>
 
-    <!-- Building info cards (positioned by JS) -->
-    <div class="building-cards">
-      <div class="bcard" id="bcard-1" data-project="threatweave">
-        <div class="bcard-header">
-          <span class="bcard-icon">🏢</span>
-          <span class="bcard-name">ThreatWeave Tower</span>
-        </div>
-        <p>Go + Claude API — Threat intel correlation engine</p>
-        <div class="bcard-bar"><div style="width:92%"></div></div>
-      </div>
+<nav class="bar" aria-label="City controls">
+  <button id="tour" type="button" class="primary" aria-pressed="false">Start the tour</button>
+  <button id="rain" type="button" aria-pressed="true">Rain</button>
+  <a href="../versions.html">Gallery</a>
+  <a href="../index.html">Main site</a>
+</nav>
 
-      <div class="bcard" id="bcard-2" data-project="secureview">
-        <div class="bcard-header">
-          <span class="bcard-icon">🏗️</span>
-          <span class="bcard-name">SecureView Center</span>
-        </div>
-        <p>React + TypeScript — SOC monitoring dashboard</p>
-        <div class="bcard-bar"><div style="width:88%"></div></div>
-      </div>
+<ul class="dir" id="dir" aria-label="Landmarks"></ul>
 
-      <div class="bcard" id="bcard-3" data-project="soclab">
-        <div class="bcard-header">
-          <span class="bcard-icon">🏭</span>
-          <span class="bcard-name">Detection Factory</span>
-        </div>
-        <p>Python + Sigma — Detection engineering lab</p>
-        <div class="bcard-bar"><div style="width:95%"></div></div>
-      </div>
+<section class="card" id="card" hidden aria-live="polite">
+  <button class="x" id="close" type="button" aria-label="Close details">&times;</button>
+  <p class="k" id="cK"></p>
+  <h2 id="cT"></h2>
+  <p id="cD"></p>
+  <ul class="facts" id="cF"></ul>
+  <div class="acts" id="cA"></div>
+</section>
 
-      <div class="bcard" id="bcard-4" data-project="iochunter">
-        <div class="bcard-header">
-          <span class="bcard-icon">🔬</span>
-          <span class="bcard-name">IOC Research Lab</span>
-        </div>
-        <p>Python + APIs — IOC aggregation and enrichment</p>
-        <div class="bcard-bar"><div style="width:90%"></div></div>
-      </div>
-
-      <div class="bcard" id="bcard-5" data-project="nist">
-        <div class="bcard-header">
-          <span class="bcard-icon">🏛️</span>
-          <span class="bcard-name">GRC Headquarters</span>
-        </div>
-        <p>Supply chain vendor-risk model (NIST SP 800-161)</p>
-        <div class="bcard-bar"><div style="width:85%"></div></div>
-      </div>
-
-      <div class="bcard" id="bcard-6" data-project="aws">
-        <div class="bcard-header">
-          <span class="bcard-icon">☁️</span>
-          <span class="bcard-name">Cloud Fortress</span>
-        </div>
-        <p>AI-agent authorization & safety prototype</p>
-        <div class="bcard-bar"><div style="width:78%"></div></div>
-      </div>
-    </div>
-
-    <!-- Bottom panel -->
-    <div class="bottom-panel">
-      <div class="bp-stats">
-        <div class="bp-stat"><span class="bp-val">6</span><span class="bp-label">Buildings</span></div>
-        <div class="bp-stat"><span class="bp-val">25+</span><span class="bp-label">Tech Skills</span></div>
-        <div class="bp-stat"><span class="bp-val">4</span><span class="bp-label">Credentials</span></div>
-      </div>
-      <div class="bp-links">
-        <a href="https://github.com/shaddiegit" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://linkedin.com/in/shadman-hossain1206" target="_blank"><i class="fab fa-linkedin"></i></a>
-        <a href="mailto:sm.shadman.hossain@gmail.com"><i class="fas fa-envelope"></i></a>
-      </div>
-      <div class="bp-hint">Click buildings to explore · Scroll to zoom</div>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+<p class="hint" id="hint">Drag to orbit · scroll to zoom · click a glowing tower</p>
+<script type="module" src="app.js"></script>
 </body>
 </html>
