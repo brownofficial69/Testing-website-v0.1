@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Collision Lab | Shadman Hossain</title>
+<meta name="description" content="Hash random inputs until two of them collide, and see why a hash only needs the square root of its size to break. Guess how many tries it will take." />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../labs.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="lab-top">
+  <div>
+    <h1>Collision Lab</h1>
+    <p class="sub">A hash with 2<sup>n</sup> possible values does not need 2<sup>n</sup> tries to collide. Guess how many it takes, then watch the maths win.</p>
+  </div>
+  <nav><a href="../versions.html">Gallery</a><a href="../index.html">Main site</a></nav>
+</header>
+
+<main class="lab">
+  <section class="stack">
+    <div class="box">
+      <h2>HASH SPACE (each lit cell is a value that has been produced)</h2>
+      <canvas id="grid" aria-label="Grid of hash values, lighting up as they are produced"></canvas>
+      <div class="row ctl">
+        <label for="bits">Hash size <output id="bitsOut">16</output> bits (<span id="spaceOut">65,536</span> values)</label>
+        <input id="bits" type="range" min="8" max="32" value="16" />
+      </div>
+      <div class="row ctl">
+        <label for="guess">Your guess: tries before the first collision <output id="guessOut">300</output></label>
+        <input id="guess" type="range" min="0" max="1000" value="400" />
+      </div>
+      <div class="row">
+        <button class="btn go" id="go" type="button">Hash until a collision</button>
+        <button class="btn" id="many" type="button">Repeat 40 times</button>
+      </div>
+    </div>
+    <div class="box">
+      <h2 id="chartTitle">CHANCE OF A COLLISION AFTER k TRIES</h2>
+      <canvas id="curve" aria-label="Chart of collision probability against number of tries"></canvas>
+    </div>
+  </section>
+
+  <aside class="stack">
+    <div class="box">
+      <h2>Result</h2>
+      <div class="stat"><div><b id="rTries">–</b><span>tries</span></div><div><b id="rExp">–</b><span>expected (≈1.25·√N)</span></div><div><b id="rScore">–</b><span>your guess was off by</span></div></div>
+      <p class="learn" id="rMsg" style="margin-top:10px">Set a hash size, make a guess, then press the button.</p>
+      <p class="small" id="best"></p>
+    </div>
+    <div class="box" id="histBox" hidden>
+      <h2>40 RUNS AT THIS SIZE</h2>
+      <canvas id="hist" aria-label="Histogram of tries to first collision over 40 runs"></canvas>
+      <p class="small" id="histTxt"></p>
+    </div>
+    <div class="box learn">
+      <h2>THE SCIENCE</h2>
+      <p><b>The birthday paradox.</b> In a room of 23 people there is a better than even chance that two share a birthday, even though there are 365 days. Pairs grow faster than people: k items make about k²/2 pairs.</p>
+      <p><b>Why it matters.</b> To find two inputs with the same n-bit hash you need about 2<sup>n/2</sup> tries, not 2<sup>n</sup>. That is why a 160-bit hash gives only 80 bits of collision resistance.</p>
+      <p>In 2017 researchers published the first practical SHA-1 collision, called SHAttered. It needed roughly 2<sup>63</sup> computations, cheaper than the 2<sup>80</sup> the birthday bound predicts, because SHA-1 also has structural weaknesses.</p>
+      <p class="small">The hash here is a toy 32-bit mixer cut down to n bits, so the experiment finishes in your browser.</p>
+    </div>
+  </aside>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

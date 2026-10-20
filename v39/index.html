@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Worm Outbreak | Shadman Hossain</title>
+<meta name="description" content="Contain a worm spreading through a network using the epidemic models that biologists use. Patch the right machines and the outbreak dies; patch the wrong ones and it doesn't." />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../labs.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="lab-top">
+  <div>
+    <h1>Worm Outbreak</h1>
+    <p class="sub">A worm is about to start spreading through 90 machines. You have 10 patches. Epidemiologists have a rule for where to put them, and you can find it by playing.</p>
+  </div>
+  <nav><a href="../versions.html">Gallery</a><a href="../index.html">Main site</a></nav>
+</header>
+
+<main class="lab">
+  <section class="stack">
+    <div class="box stage">
+      <canvas id="net" tabindex="0" aria-label="Network of 90 machines. Click a machine to patch it before the outbreak, or isolate it during the outbreak."></canvas>
+      <div class="key"><span><i style="background:#6db7ff"></i>healthy</span><span><i style="background:#ff5c6c"></i>infected</span><span><i style="background:#5cf2b0"></i>patched</span><span><i style="background:#8b97ad"></i>recovered</span></div>
+    </div>
+    <div class="row">
+      <button class="btn go" id="release" type="button">Release the worm</button>
+      <button class="btn" id="rand" type="button">Patch 10 at random</button>
+      <button class="btn" id="hubs" type="button">Patch the 10 biggest hubs</button>
+      <button class="btn" id="reset" type="button">Reset</button>
+    </div>
+  </section>
+
+  <aside class="stack">
+    <div class="box">
+      <h2>Outbreak threshold (R0)</h2>
+      <div class="r0"><b id="r0">0.0</b><span id="r0txt"></span></div>
+      <div class="meter"><i id="r0bar"></i><u></u></div>
+      <p class="small">Above 1, each infection causes more than one more, so the worm spreads. Below 1 it fizzles out.</p>
+    </div>
+    <div class="box">
+      <h2>Live</h2>
+      <div class="stat"><div><b id="sInf">0</b><span>infected now</span></div><div><b id="sTot">0</b><span>ever infected</span></div><div><b id="sBud">10</b><span>patches left</span></div></div>
+      <p class="small" id="iso" style="margin-top:10px">During the outbreak, click a machine to cut it off the network. You have 4 isolations.</p>
+    </div>
+    <div class="box" id="res" hidden>
+      <h2>Result, averaged over 300 runs</h2>
+      <div id="bars"></div>
+      <p class="learn" id="verdict"></p>
+    </div>
+    <div class="box learn">
+      <h2>THE SCIENCE</h2>
+      <p>The SIR model (Kermack and McKendrick, 1927) splits a population into susceptible, infected and recovered. It was built for disease, and it describes worms just as well.</p>
+      <p>Real networks have hubs. In 2001 Pastor-Satorras and Vespignani showed that on such networks the epidemic threshold nearly vanishes, which is why patching the best-connected machines beats patching at random.</p>
+    </div>
+  </aside>
+</main>
+<div class="toast" id="toast" hidden role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
