@@ -24,7 +24,7 @@ const FILES = {
 <span class="hl">University:</span>    Coventry University
 <span class="hl">Degree:</span>        BSc (Hons) Ethical Hacking & Cyber Security
 <span class="hl">Status:</span>        First-Class · First-Class Honours
-<span class="hl">Average:</span>       <span class="hlg">73.67%</span>  ·  Research Project: <span class="hlg">87%</span>
+<span class="hl">Average:</span>       <span class="hlg">76.4%</span>  ·  Research Project: <span class="hlg">87%</span>
 <span class="hl">Target roles:</span>  Junior SOC Analyst · GRC Analyst · CTI Analyst
 
 <span class="dim">────────────────────────────────────────────────</span>
@@ -70,7 +70,7 @@ SOC / GRC / CTI roles in the UK.`,
 
 <span class="hlw bold">BSc (Hons) Ethical Hacking & Cyber Security</span>
 <span class="hlg">Coventry University</span>  ·  Sep 2023 – Jul 2026
-First-Class Honours  ·  Average: <span class="hlg">73.67%</span>
+First-Class Honours  ·  Average: <span class="hlg">76.4%</span>
 
   Module Grades:
   ┌──────────────────────────────────────┬──────┐
