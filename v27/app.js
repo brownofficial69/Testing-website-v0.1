@@ -36,7 +36,7 @@ const EL = [
   ['Sp', 'Splunk',           'det', 17, 3, 'Search and correlation over machine data.'],
   ['Io', 'IOC analysis',     'det', 18, 3, 'Triage of indicators of compromise across feeds.'],
   ['Th', 'Threat hunting',   'det',  1, 4, 'Looking for adversary activity the rules have not caught.'],
-  ['Cl', 'Claude API',       'ai',   2, 4, 'Used in ThreatWeave and SecureView, and studied through nine Claude Academy courses.'],
+  ['Cl', 'Claude API',       'ai',   2, 4, 'Used in ThreatWeave and SecureView, and studied through Claude Academy coursework.'],
   ['Mc', 'MCP',              'ai',   3, 4, 'Model Context Protocol fundamentals.'],
   ['Ev', 'Evaluation design','ai',   4, 4, 'Designing tests that show what an AI system can and cannot be trusted to do.'],
   ['Tc', 'Tool-use controls','ai',   5, 4, 'Limiting which tools an agent can call, and when.'],
@@ -57,7 +57,7 @@ const EL = [
   ['Bs', 'BSc First',        'cred', 7, 5, 'Awarded the Bachelor of Science with Honours, First Class.'],
   ['Bt', 'BTEC L3',          'cred', 8, 5, 'Double Distinction Merit, Birmingham Metropolitan College.'],
   ['Fd', 'FDM Group',        'cred', 9, 5, 'Consultant on a Deutsche Bank assignment.'],
-  ['Ca', 'Claude Academy',   'cred',10, 5, 'Nine courses, including Claude Code, MCP, subagents and agent skills.'],
+  ['Ca', 'Claude Academy',   'cred',10, 5, 'Seven completion badges: Claude 101, MCP, Claude Code, Claude Cowork, AI capabilities and limitations, and AI Fluency.'],
   ['Dd', 'Dissertation',     'cred',11, 5, 'Research Project Preparation 87% and Research Project Delivery 76%.'],
 ].map((r, i) => ({ n: i + 1, s: r[0], name: r[1], cat: r[2], col: r[3], row: r[4], desc: r[5], c: CATS[r[2]].c }));
 const bySym = Object.fromEntries(EL.map(e => [e.s, e]));
