@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chess | Shadman Hossain</title>
+<meta name="description" content="Play chess against an engine written from scratch in JavaScript: legal move generation verified with perft tests, alpha-beta search and three strengths." />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../labs.css" />
+<link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../transitions.css" />
+</head>
+<body>
+<header class="lab-top">
+  <div>
+    <h1>Chess</h1>
+    <p class="sub">You play White against a chess engine I wrote from scratch in JavaScript. It runs in your browser, in a background thread, with nothing downloaded and no server.</p>
+  </div>
+  <nav><a href="../versions.html">Gallery</a><a href="../index.html">Main site</a></nav>
+</header>
+
+<main class="chess">
+  <section class="boardcol">
+    <div class="players"><span class="who" id="topWho">Engine</span><span class="cap" id="capTop" aria-label="Pieces captured by the engine"></span></div>
+    <div class="boardwrap">
+      <div class="evalbar" aria-hidden="true"><i id="evalFill"></i><b id="evalTxt">0.0</b></div>
+      <div class="board" id="board" role="grid" aria-label="Chessboard">
+        <div class="squares" id="squares"></div>
+        <div class="pieces" id="pieces" aria-hidden="true"></div>
+        <div class="coords files" id="files" aria-hidden="true"></div>
+        <div class="coords ranks" id="ranks" aria-hidden="true"></div>
+        <div class="promo" id="promo" hidden role="dialog" aria-label="Choose a promotion piece"></div>
+        <div class="over" id="over" hidden role="dialog" aria-live="assertive"></div>
+      </div>
+    </div>
+    <div class="players"><span class="who">You</span><span class="cap" id="capBot" aria-label="Pieces you captured"></span></div>
+    <p class="status" id="status" role="status">Your move.</p>
+  </section>
+
+  <aside class="side">
+    <div class="box agents" aria-live="polite">
+      <h2>Engine</h2>
+      <div class="agent adam"><b>Considering</b><p id="adam">Waiting for your move.</p></div>
+      <div class="agent mizan"><b>Played</b><p id="mizan">Search depth and speed appear here.</p></div>
+    </div>
+    <div class="box">
+      <div class="row ctls">
+        <button class="btn go" id="newg" type="button">New game</button>
+        <button class="btn" id="undo" type="button">Undo</button>
+        <button class="btn" id="hint" type="button">Hint</button>
+        <button class="btn" id="flip" type="button">Flip</button>
+      </div>
+      <div class="row opts">
+        <label>Strength <select id="level"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></label>
+      </div>
+    </div>
+    <div class="box">
+      <h2>Moves</h2>
+      <ol class="moves" id="moves" aria-label="Move list"></ol>
+    </div>
+    <div class="box learn small">
+      <p><b>How it works.</b> Moves are generated and checked for legality by a board model that I tested against the standard perft node counts, so castling, en passant and promotion behave. The engine searches with alpha-beta pruning, a capture search to avoid horizon blunders, and a hand-weighted evaluation.</p>
+      <p>Easy looks two moves ahead and sometimes plays a near-best move. Medium and Hard search deeper. The bar beside the board is the engine's evaluation.</p>
+    </div>
+  </aside>
+</main>
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

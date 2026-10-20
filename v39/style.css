@@ -14,3 +14,5 @@
 .bar i { display: block; height: 100%; background: var(--c, var(--bad)); border-radius: 5px; transition: width .6s cubic-bezier(.2, .8, .2, 1); }
 .bar b { font-family: 'JetBrains Mono', monospace; font-size: .74rem; text-align: right; }
 .bar.you { color: var(--a); }
+
+.opts2 { gap: 16px; } .opts2 label { display: grid; gap: 4px; font-size: .74rem; color: var(--mute); font-family: 'JetBrains Mono', monospace; } .opts2 select { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; font-family: 'Space Grotesk', sans-serif; font-size: .85rem; }

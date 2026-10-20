@@ -11,12 +11,13 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../labs.css" />
 <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../transitions.css" />
 </head>
 <body>
 <header class="lab-top">
   <div>
     <h1>Worm Outbreak</h1>
-    <p class="sub">A worm is about to start spreading through 90 machines. You have 10 patches. Epidemiologists have a rule for where to put them, and you can find it by playing.</p>
+    <p class="sub">A worm is about to start spreading through 90 machines. You have 10 patches. Epidemiologists have a rule for where to put them. Find it by playing, then switch the network type and see when it stops working.</p>
   </div>
   <nav><a href="../versions.html">Gallery</a><a href="../index.html">Main site</a></nav>
 </header>
@@ -32,6 +33,10 @@
       <button class="btn" id="rand" type="button">Patch 10 at random</button>
       <button class="btn" id="hubs" type="button">Patch the 10 biggest hubs</button>
       <button class="btn" id="reset" type="button">Reset</button>
+    </div>
+    <div class="row opts2">
+      <label>Network <select id="net-type"><option value="hub" selected>With hubs (like real networks)</option><option value="random">Evenly connected</option></select></label>
+      <label>Speed <select id="speed-sel"><option value="800">Slow</option><option value="520" selected>Normal</option><option value="220">Fast</option></select></label>
     </div>
   </section>
 

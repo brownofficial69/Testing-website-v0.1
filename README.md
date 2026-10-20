@@ -4,6 +4,19 @@ Personal portfolio website for Shadman Hossain, a First-Class Ethical Hacking & 
 
 **Live site:** https://brownofficial69.github.io/Testing-website-v0.1/
 
+
+## What is on the site now
+
+- **Homepage** with five themes drawn from the CV (Terminal, Kill chain, Mizan, Blueprint, Phosphor), a circular-reveal theme switcher (press T), a 3D-ready hero, and smooth page transitions between every page.
+- **Interactive gallery** (`versions.html`):
+  - `v42` ADAM / EVE / Mizan arena: a live agent-authorization simulation with missions, a human approval gate, a red-team mode and a tamper-evident hash-chain ledger.
+  - `v36` Threat Graph, `v19` CyberCity, `v32` DNA Helix (Three.js), `v28` Career Metro, `v27` Periodic Table and `v37` Intrusion Replay.
+  - Games: `v41` Chess (engine written from scratch, move generation checked against perft counts), `v38` Cipher Lab, `v39` Worm Outbreak, `v40` Collision Lab.
+- Earlier design experiments `v2` to `v35` are kept in the archive list.
+- Degree: First Class Honours, with no percentage shown.
+
+Everything is static. The 3D pages load Three.js from a CDN and need WebGL.
+
 ---
 
 ## Features
