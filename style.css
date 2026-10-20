@@ -2545,3 +2545,7 @@ html[data-theme="phosphor"] body::after {
   .project-card::before { display: none; }
   .theme-menu { transition: none; }
 }
+
+.hero-alt { margin-top: 1.4rem; font-size: 0.85rem; color: var(--text-secondary); max-width: 44ch; margin-left: auto; margin-right: auto; line-height: 1.6; }
+.hero-alt a { color: var(--accent-cyan); text-decoration: underline; text-decoration-color: rgba(var(--c-rgb), .4); text-underline-offset: 3px; transition: color var(--transition-fast), text-decoration-color var(--transition-fast); }
+.hero-alt a:hover { color: var(--accent-green); text-decoration-color: currentColor; }
