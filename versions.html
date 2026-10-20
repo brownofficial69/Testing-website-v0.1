@@ -3,38 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Design Gallery | Shadman Hossain</title>
-  <meta name="description" content="Seven alternative designs of Shadman Hossain's portfolio, each built around a different part of the CV." />
+  <title>Interactive Gallery | Shadman Hossain</title>
+  <meta name="description" content="Six interactive ways to explore Shadman Hossain's CV: a 3D threat graph, a playable detection lab, a neon city, a DNA helix, a metro map and a periodic table." />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #030d1a; --card: #071428; --line: rgba(0, 255, 136, .16); --line-hi: rgba(0, 255, 136, .55);
-      --text: #e2e8f0; --muted: #94a3b8; --accent: #00ff88; --accent2: #00d4ff;
-    }
+    :root { --bg: #030d1a; --card: #071428; --line: rgba(0, 255, 136, .16); --line-hi: rgba(0, 255, 136, .6); --text: #e2e8f0; --muted: #94a3b8; --accent: #00ff88; --accent2: #00d4ff; }
     @media (prefers-color-scheme: light) { :root { --bg: #eef3fa; --card: #fff; --line: rgba(11, 74, 160, .18); --line-hi: rgba(11, 74, 160, .6); --text: #0b2447; --muted: #4b6280; --accent: #0b4aa0; --accent2: #007a8a; } }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', system-ui, sans-serif; line-height: 1.55; }
+    body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', system-ui, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
     a { color: inherit; }
     .wrap { max-width: 1180px; margin: 0 auto; padding: 56px 24px 80px; }
     .back { font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--accent2); text-decoration: none; }
     .back:hover { text-decoration: underline; }
-    h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; margin: 28px 0 14px; letter-spacing: -.02em; max-width: 18ch; }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; margin: 28px 0 14px; letter-spacing: -.02em; max-width: 17ch; }
     .lede { color: var(--muted); max-width: 62ch; font-size: 1.05rem; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; margin-top: 44px; }
-    .card { position: relative; display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; text-decoration: none; transition: border-color .25s, transform .35s cubic-bezier(.16, 1, .3, 1); }
+    .card { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; text-decoration: none; transition: border-color .25s, transform .35s cubic-bezier(.16, 1, .3, 1); }
     .card:hover, .card:focus-visible { border-color: var(--line-hi); transform: translateY(-4px); outline: none; }
-    .shot { position: relative; height: 230px; overflow: hidden; background: #000; border-bottom: 1px solid var(--line); }
-    .shot iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 920px; border: 0; transform: scale(var(--s, .28)); transform-origin: 0 0; pointer-events: none; }
-    .body { padding: 18px 20px 20px; }
-    .body h2 { font-size: 1.15rem; margin-bottom: 4px; }
-    .tag { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent2); }
+    .shot { aspect-ratio: 16 / 10; overflow: hidden; background: #000; border-bottom: 1px solid var(--line); }
+    .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; transition: transform .8s cubic-bezier(.16, 1, .3, 1); }
+    .card:hover .shot img { transform: scale(1.04); }
+    .body { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
+    .body h2 { font-size: 1.15rem; margin-bottom: 2px; }
+    .do { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent2); }
     .body p { color: var(--muted); font-size: .93rem; margin-top: 10px; }
-    .open { display: inline-block; margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--accent); }
-    .card.home .shot { height: 130px; display: grid; grid-template-columns: repeat(5, 1fr); }
-    .card.home .shot i { display: block; }
+    .open { margin-top: auto; padding-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--accent); }
     h3 { margin: 64px 0 8px; font-size: 1.2rem; }
     .note { color: var(--muted); font-size: .92rem; max-width: 62ch; }
     details { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 18px; }
@@ -42,56 +38,50 @@
     .archive { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
     .archive a { font-family: 'JetBrains Mono', monospace; font-size: .78rem; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; text-decoration: none; color: var(--muted); }
     .archive a:hover { border-color: var(--line-hi); color: var(--text); }
-    @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .card, .shot img { transition: none; } .card:hover { transform: none; } }
   </style>
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="index.html">&larr; Back to the portfolio</a>
-  <h1>Seven ways to read the same CV</h1>
-  <p class="lede">Each design below turns a different part of my work into its structure: a career as a metro map, skills as a periodic table, projects as a city. Open one to explore it.</p>
+  <h1>Six ways to explore the same CV</h1>
+  <p class="lede">Each one turns my work into something you can pull, play or fly through. They run in your browser and use only what is on my CV.</p>
 
   <div class="grid">
-    <a class="card" href="v28/index.html">
-      <div class="shot"><iframe src="v28/index.html" title="Career Metro preview" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="body"><span class="tag">v28</span><h2>Career Metro</h2>
-        <p>Education, development, security, GRC and projects run as transit lines. Interchanges show where the paths crossed, from the BTEC to the First-Class degree to FDM.</p>
+    <a class="card" href="v36/index.html">
+      <div class="shot"><img src="gallery/v36.jpg" alt="A glowing 3D graph of linked skills and projects around a photo of Shadman" loading="lazy" /></div>
+      <div class="body"><h2>Threat Graph</h2><span class="do">orbit · search · correlate</span>
+        <p>Every project, skill and framework as a linked node in 3D space. Search it, filter it, fly into a node, or press Correlate and watch it cluster the way ThreatWeave groups indicators.</p>
         <span class="open">Open &rarr;</span></div>
     </a>
-    <a class="card" href="v27/index.html">
-      <div class="shot"><iframe src="v27/index.html" title="Periodic Table preview" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="body"><span class="tag">v27</span><h2>Periodic Table of Shadman</h2>
-        <p>Every project, skill, language and framework is an element, grouped by type, so the whole stack reads at a glance.</p>
-        <span class="open">Open &rarr;</span></div>
-    </a>
-    <a class="card" href="v32/index.html">
-      <div class="shot"><iframe src="v32/index.html" title="DNA Helix preview" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="body"><span class="tag">v32</span><h2>DNA Helix</h2>
-        <p>Two strands, technical skills and security knowledge, paired base by base. Each project sits opposite the discipline it demonstrates: ThreatWeave with threat intel, the detection lab with Sigma rules.</p>
+    <a class="card" href="v37/index.html">
+      <div class="shot"><img src="gallery/v37.jpg" alt="A network map and detection rules for a simulated intrusion" loading="lazy" /></div>
+      <div class="body"><h2>Intrusion Replay</h2><span class="do">tune rules · stop the attack</span>
+        <p>The SOC Detection Lab as a game. Watch a four-stage intrusion with every rule off, then tune the detections: too loose floods the analyst, too lax and the data leaves.</p>
         <span class="open">Open &rarr;</span></div>
     </a>
     <a class="card" href="v19/index.html">
-      <div class="shot"><iframe src="v19/index.html" title="CyberCity preview" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="body"><span class="tag">v19</span><h2>CyberCity</h2>
-        <p>Projects as buildings: ThreatWeave Tower, SecureView Center, Detection Factory, IOC Research Lab and the GRC headquarters.</p>
+      <div class="shot"><img src="gallery/v19.jpg" alt="A neon night city with six glowing landmark towers" loading="lazy" /></div>
+      <div class="body"><h2>CyberCity</h2><span class="do">fly · tour · click a tower</span>
+        <p>My six projects as landmarks in a 3D night city, with traffic, rain and a guided tour that flies into each one.</p>
         <span class="open">Open &rarr;</span></div>
     </a>
-    <a class="card" href="v17/index.html">
-      <div class="shot"><iframe src="v17/index.html" title="Analytics Dashboard preview" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="body"><span class="tag">v17</span><h2>Security Analytics Dashboard</h2>
-        <p>A SOC console for one analyst: a skills radar, a live project registry with status and test progress, and a running clock.</p>
+    <a class="card" href="v32/index.html">
+      <div class="shot"><img src="gallery/v32.jpg" alt="A glowing double helix with projects on one strand and what they show on the other" loading="lazy" /></div>
+      <div class="body"><h2>DNA Helix</h2><span class="do">rotate · unzip a pair</span>
+        <p>What I built on one strand, what it demonstrates on the other. Click any base pair and it unzips to show the details.</p>
         <span class="open">Open &rarr;</span></div>
     </a>
-    <a class="card" href="v31/index.html">
-      <div class="shot"><iframe src="v31/index.html" title="Cyber Wire preview" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="body"><span class="tag">v31</span><h2>Cyber Wire</h2>
-        <p>My projects written up as a news wire: a lead story on ThreatWeave, briefs on SecureView and the detection lab, and a sidebar of credentials.</p>
+    <a class="card" href="v28/index.html">
+      <div class="shot"><img src="gallery/v28.jpg" alt="A metro map with five coloured lines for education, security, projects, AI and work" loading="lazy" /></div>
+      <div class="body"><h2>Career Metro</h2><span class="do">watch it build · ride a line</span>
+        <p>Five lines through six years. Interchanges mark the work that counted twice, like the dissertation that is also a project. Zoom, pan and ride any line.</p>
         <span class="open">Open &rarr;</span></div>
     </a>
-    <a class="card" href="v35/index.html">
-      <div class="shot"><iframe src="v35/index.html" title="Technical Specification preview" loading="lazy" tabindex="-1"></iframe></div>
-      <div class="body"><span class="tag">v35</span><h2>Technical Specification</h2>
-        <p>The portfolio as an engineering datasheet: a title block, a project specification table and a components diagram, drawn on blueprint grid.</p>
+    <a class="card" href="v27/index.html">
+      <div class="shot"><img src="gallery/v27.jpg" alt="A periodic table of skills with bonds drawn between selected elements" loading="lazy" /></div>
+      <div class="body"><h2>Periodic Table of Shadman</h2><span class="do">mix elements · form compounds</span>
+        <p>Pick tools and skills to see which of my projects they combine into, or pick a project and watch its elements bond.</p>
         <span class="open">Open &rarr;</span></div>
     </a>
   </div>
@@ -100,24 +90,11 @@
   <p class="note">Open the palette button in the main portfolio's navigation, or press T. Terminal, Kill chain, Mizan, Blueprint and Phosphor each draw on a different project or skill from the CV.</p>
 
   <details>
-    <summary>Earlier experiments (27 designs)</summary>
+    <summary>Earlier experiments (30 designs)</summary>
     <div class="archive">
-      <a href="v2/index.html">v2</a><a href="v3/index.html">v3</a><a href="v4/index.html">v4</a><a href="v5/index.html">v5</a><a href="v6/index.html">v6</a><a href="v7/index.html">v7</a><a href="v8/index.html">v8</a><a href="v9/index.html">v9 · ShadmanOS 95</a><a href="v10/index.html">v10</a><a href="v11/index.html">v11</a><a href="v12/index.html">v12</a><a href="v13/index.html">v13</a><a href="v14/index.html">v14</a><a href="v15/index.html">v15</a><a href="v16/index.html">v16</a><a href="v18/index.html">v18</a><a href="v20/index.html">v20</a><a href="v21/index.html">v21</a><a href="v22/index.html">v22</a><a href="v23/index.html">v23</a><a href="v24/index.html">v24</a><a href="v25/index.html">v25</a><a href="v26/index.html">v26</a><a href="v29/index.html">v29</a><a href="v30/index.html">v30</a><a href="v33/index.html">v33</a><a href="v34/index.html">v34</a>
+      <a href="v2/index.html">v2</a><a href="v3/index.html">v3</a><a href="v4/index.html">v4</a><a href="v5/index.html">v5</a><a href="v6/index.html">v6</a><a href="v7/index.html">v7</a><a href="v8/index.html">v8</a><a href="v9/index.html">v9 · ShadmanOS 95</a><a href="v10/index.html">v10</a><a href="v11/index.html">v11</a><a href="v12/index.html">v12</a><a href="v13/index.html">v13</a><a href="v14/index.html">v14</a><a href="v15/index.html">v15</a><a href="v16/index.html">v16</a><a href="v17/index.html">v17</a><a href="v18/index.html">v18</a><a href="v20/index.html">v20</a><a href="v21/index.html">v21</a><a href="v22/index.html">v22</a><a href="v23/index.html">v23</a><a href="v24/index.html">v24</a><a href="v25/index.html">v25</a><a href="v26/index.html">v26</a><a href="v29/index.html">v29</a><a href="v30/index.html">v30</a><a href="v31/index.html">v31</a><a href="v33/index.html">v33</a><a href="v34/index.html">v34</a><a href="v35/index.html">v35</a>
     </div>
   </details>
 </div>
-<script>
-  /* scale each live preview to the width of its card */
-  function fit() {
-    document.querySelectorAll('.shot').forEach(function (s) {
-      var f = s.querySelector('iframe');
-      if (!f) return;
-      var k = s.clientWidth / 1280;
-      f.style.setProperty('--s', k);
-      s.style.height = Math.round(920 * k * 0.8) + 'px';
-    });
-  }
-  fit(); addEventListener('resize', fit);
-</script>
 </body>
 </html>

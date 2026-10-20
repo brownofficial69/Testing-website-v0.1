@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Intrusion Replay | Shadman Hossain</title>
+<meta name="description" content="A playable version of the SOC Detection Lab: tune Sigma-style rules, replay a four-stage intrusion and see whether you stop it before the data leaves." />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Intrusion Replay</h1>
+    <p class="sub">The SOC Detection Lab as a game. Four rules, one attacker, 260 simulated seconds. Stop the exfiltration.</p>
+  </div>
+  <nav><a href="../versions.html">Gallery</a><a href="../index.html">Main site</a></nav>
+</header>
+
+<main class="layout">
+  <section class="stage" aria-label="Network replay">
+    <div class="chain" id="chain" role="list" aria-label="Kill chain stages"></div>
+    <div class="canvas-wrap"><canvas id="net" aria-label="Animated network map showing the intrusion"></canvas>
+      <div class="overlay" id="overlay" hidden></div>
+    </div>
+    <div class="transport">
+      <button id="play" class="go" type="button">Replay attack</button>
+      <button id="reset" type="button">Reset</button>
+      <label class="speed"><span>Speed</span>
+        <select id="speed"><option value="4">Slow</option><option value="8" selected>Normal</option><option value="16">Fast</option></select>
+      </label>
+      <label class="auto"><input type="checkbox" id="contain" checked /> Auto-isolate on a real detection</label>
+    </div>
+    <div class="timeline"><input id="scrub" type="range" min="0" max="260" step="0.1" value="0" aria-label="Replay position in seconds" /><output id="clock">0s</output></div>
+    <ol class="log" id="log" aria-live="off" aria-label="Recent events"></ol>
+  </section>
+
+  <aside class="rules" aria-label="Detection rules">
+    <div class="score" id="score" aria-live="polite"></div>
+    <div id="ruleHost"></div>
+    <p class="note">Everything here is simulated and runs in your browser. The real lab is Python with Sigma rules that deploy in Wazuh. <a href="../demos/soc-lab.html">See the lab demo</a>.</p>
+  </aside>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
