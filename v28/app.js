@@ -19,8 +19,8 @@ const S = [
   { lane: 'edu', x: 110,  name: ['BTEC Level 3 IT'], sub: 'Sep 2020', lp: 'a', t: 'Birmingham Metropolitan College. Programming, IT project management and mobile apps, plus a module on cyber security and incident management.' },
   { lane: 'edu', x: 330,  name: ['BTEC complete'], sub: 'Jul 2022', lp: 'a', t: 'Double Distinction Merit.' },
   { lane: 'edu', x: 470,  name: ['Coventry BSc begins'], sub: 'Sep 2023', lp: 'a', t: 'BSc (Hons) Ethical Hacking and Cyber Security at Coventry University.' },
-  { lane: 'edu', x: 760,  ix: 'dis', name: ['Dissertation'], sub: '2025-26', lp: 'a', t: 'Research Project Preparation scored 87% and Research Project Delivery 76%, which is 81.5% across the two modules. The project is the Supply Chain Risk Assessment Framework.', acts: [['See the framework demo', '../demos/supply-chain-risk.html']] },
-  { lane: 'edu', x: 1130, name: ['First-Class Honours'], sub: 'Jul 2026', lp: 'a', t: '76.4% classification average on the best 100 Level 6 credits, with a 73.67% final-year average.', acts: [['Download CV', '../assets/cv.pdf']] },
+  { lane: 'edu', x: 760,  ix: 'dis', name: ['Dissertation'], sub: '2025-26', lp: 'a', t: 'Research Project Preparation scored 87% and Research Project Delivery 76%. The project is the Supply Chain Risk Assessment Framework.', acts: [['See the framework demo', '../demos/supply-chain-risk.html']] },
+  { lane: 'edu', x: 1130, name: ['First-Class Honours'], sub: 'Jul 2026', lp: 'a', t: 'Awarded the Bachelor of Science with Honours, First Class, in Ethical Hacking and Cyber Security.', acts: [['Download CV', '../assets/cv.pdf']] },
   /* security */
   { lane: 'sec', x: 300,  name: ['Cyber Security &', 'Incident Mgmt'], sub: 'BTEC module', lp: 'b', t: 'The first formal security module, taken during the BTEC.' },
   { lane: 'sec', x: 560,  name: ['Security Operations'], sub: 'Year 2 · 67%', lp: 'b', t: 'Coventry Level 5 module on running a security operations function.' },

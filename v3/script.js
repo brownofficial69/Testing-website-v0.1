@@ -872,7 +872,7 @@ function buildPanelContent(type) {
     case 'bio': return ep('01','#22d3ee','about','Shadman Hossain',`
       <div class="ep-terminal">
         <p><span class="t-prompt">&gt;</span> First-Class <span class="t-hl">BSc Ethical Hacking &amp; Cyber Security</span> at Coventry University.</p>
-        <p><span class="t-prompt">&gt;</span> On track for First-Class Honours — Final Result: <span class="t-hl">76.4%</span>. Research: 87%.</p>
+        <p><span class="t-prompt">&gt;</span> On track for First-Class Honours. Research: 87%.</p>
         <p><span class="t-prompt">&gt;</span> Blue team detection engineering, GRC compliance, AI-augmented security tools in Python and Go.</p>
         <p><span class="t-prompt">&gt;</span> FDM Group consultant on a Deutsche Bank assignment. Seeking junior SOC / GRC roles in the UK.</p>
       </div>
@@ -892,7 +892,7 @@ function buildPanelContent(type) {
         <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Info Security Management — 70%</span>
         <span class="ep-tag" style="color:#22d3ee;border-color:#22d3ee33">Security Operations — 67%</span>
       </div>`,
-      [{k:'Average',v:'76.4%'},{k:'Research',v:'87%'},{k:'Projects',v:'5'}]);
+      [{k:'Class',v:'First'},{k:'Research',v:'87%'},{k:'Projects',v:'5'}]);
 
     case 'photo': return ep('03','#22d3ee','profile','Profile',`
       <div style="display:flex;justify-content:center;margin:0.5rem 0 1.25rem">
@@ -917,7 +917,7 @@ function buildPanelContent(type) {
         <span class="ep-tag">Info Security Management — 70%</span><span class="ep-tag">Applied Cryptography — 75%</span>
         <span class="ep-tag">Advanced Pen Testing — 71%</span><span class="ep-tag">Project Delivery — 76%</span><span class="ep-tag">Research Project — 87%</span>
       </div>`,
-      [{k:'Average',v:'76.4%'},{k:'Graduation',v:'Jul 2026'},{k:'Class',v:'First'}]);
+      [{k:'Degree',v:'BSc (Hons)'},{k:'Graduation',v:'Jul 2026'},{k:'Class',v:'First'}]);
 
     case 'edu-bmet': return ep('02','#93c5fd','education','BTEC Level 3 IT',`
       <strong style="color:#93c5fd">Birmingham Metropolitan College</strong> · Sep 2020 – Jul 2022

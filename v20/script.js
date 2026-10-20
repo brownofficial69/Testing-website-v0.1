@@ -83,7 +83,7 @@ const COMMANDS = {
     '',
     '<span class="c-yellow c-bold">EDUCATION & TRAINING</span>',
     '',
-    '  <span class="c-yellow">★</span> <span class="c-bold">BSc (Hons)</span>  <span class="c-dim">— Ethical Hacking & Cyber Security, Coventry · First-Class (73.67%)</span>',
+    '  <span class="c-yellow">★</span> <span class="c-bold">BSc (Hons)</span>  <span class="c-dim">— Ethical Hacking & Cyber Security, Coventry · First-Class</span>',
     '  <span class="c-yellow">★</span> <span class="c-bold">Claude Academy</span>  <span class="c-dim">— Anthropic · nine courses (Claude Code, MCP, Subagents, Skills)</span>',
     '  <span class="c-yellow">★</span> <span class="c-bold">BTEC L3</span>  <span class="c-dim">— IT, Double Distinction Merit · Birmingham Met</span>',
     '  <span class="c-yellow">★</span> <span class="c-bold">FDM Group</span>  <span class="c-dim">— Consultant, EUC / Email Specialist L1 (Deutsche Bank)</span>',
@@ -106,7 +106,7 @@ const COMMANDS = {
     '',
     '  <span class="c-green">BSc Ethical Hacking & Cybersecurity</span>',
     '  Coventry University · 2023 – 2026',
-    '  <span class="c-dim">Final year · First-Class Honours (73.67%), July 2026</span>',
+    '  <span class="c-dim">Final year · First-Class Honours, July 2026</span>',
     ''
   ],
 
@@ -165,7 +165,7 @@ const COMMANDS = {
     '  Threat Intel · Detection Eng · Python · Go · GRC · AWS',
     '',
     '<span class="c-cyan">CERTIFICATIONS</span>',
-    '  BSc (Hons) First-Class (73.67%) · Anthropic Claude Academy (9 courses) · BTEC L3 Double Distinction Merit',
+    '  BSc (Hons) First-Class · Anthropic Claude Academy (9 courses) · BTEC L3 Double Distinction Merit',
     '',
     '<span class="c-cyan">PROJECTS</span>',
     '  6 major security projects (run `projects` for details)',

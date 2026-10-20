@@ -54,11 +54,11 @@ const EL = [
   ['Tm', 'Teams',            'sup',  3, 5, 'First-line support for colleagues in a banking environment.'],
   ['Sn', 'ServiceNow',       'sup',  4, 5, 'Investigating and escalating issues in a ticket workflow.'],
   ['Ng', 'Nagios',           'sup',  5, 5, 'Exposure to operational monitoring.'],
-  ['Bs', 'BSc First',        'cred', 7, 5, 'First-Class Honours. 76.4% classification average on the best 100 Level 6 credits.'],
+  ['Bs', 'BSc First',        'cred', 7, 5, 'Awarded the Bachelor of Science with Honours, First Class.'],
   ['Bt', 'BTEC L3',          'cred', 8, 5, 'Double Distinction Merit, Birmingham Metropolitan College.'],
   ['Fd', 'FDM Group',        'cred', 9, 5, 'Consultant on a Deutsche Bank assignment.'],
   ['Ca', 'Claude Academy',   'cred',10, 5, 'Nine courses, including Claude Code, MCP, subagents and agent skills.'],
-  ['Dd', 'Dissertation',     'cred',11, 5, 'Preparation 87% and delivery 76%, so 81.5% across the two modules.'],
+  ['Dd', 'Dissertation',     'cred',11, 5, 'Research Project Preparation 87% and Research Project Delivery 76%.'],
 ].map((r, i) => ({ n: i + 1, s: r[0], name: r[1], cat: r[2], col: r[3], row: r[4], desc: r[5], c: CATS[r[2]].c }));
 const bySym = Object.fromEntries(EL.map(e => [e.s, e]));
 

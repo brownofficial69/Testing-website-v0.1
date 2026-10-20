@@ -34,7 +34,7 @@ const nodes = [
   { id: 'ioc-hunter', label: 'IOC Hunter', type: 'project', desc: 'CLI tool for aggregating indicators of compromise' },
 
   // Certifications
-  { id: 'ccna', label: 'BSc 1st', type: 'cert', desc: 'BSc (Hons) Ethical Hacking & Cyber Security, First-Class (73.67%)' },
+  { id: 'ccna', label: 'BSc 1st', type: 'cert', desc: 'BSc (Hons) Ethical Hacking & Cyber Security, First-Class' },
   { id: 'oscp', label: 'Claude Academy', type: 'cert', desc: 'Anthropic Claude Academy, nine courses' },
   { id: 'cism', label: 'BTEC L3', type: 'cert', desc: 'BTEC Level 3 IT, Double Distinction Merit' }
 ];
