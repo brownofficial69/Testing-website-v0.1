@@ -1,6 +1,9 @@
 /* ════════════════════════════════════════════════════════════
    PROJECT DATA
    ════════════════════════════════════════════════════════════ */
+/* Theme-aware canvas colours (RGB triplets), updated by the theme manager */
+const T = { g: '0,255,136', c: '0,212,255' };
+
 const PROJECTS = {
   'threatweave': {
     demo: 'demos/threatweave.html',
@@ -364,13 +367,13 @@ function initCanvas() {
     hexCells.forEach(c => {
       const a = 0.05 + c.pulse * 0.26;
       hexPath(c.x, c.y, HEX_R - 1);
-      ctx.strokeStyle = `rgba(0,255,136,${a})`;
+      ctx.strokeStyle = `rgba(${T.g},${a})`;
       ctx.lineWidth   = 0.6;
       ctx.stroke();
       if (c.pulse > 0.25) {
         ctx.beginPath();
         ctx.arc(c.x, c.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,255,136,${c.pulse * 0.7})`;
+        ctx.fillStyle = `rgba(${T.g},${c.pulse * 0.7})`;
         ctx.fill();
       }
     });
@@ -437,7 +440,7 @@ function initCanvas() {
         const bright  = isHead ? Math.min(col.opacity * 4, 1) : col.opacity * fade;
         ctx.fillStyle = isHead
           ? `rgba(180,255,220,${bright})`
-          : `rgba(0,255,136,${bright})`;
+          : `rgba(${T.g},${bright})`;
         ctx.fillText(col.chars[i % col.chars.length], col.x, cy);
       }
     });
@@ -455,13 +458,13 @@ function initCanvas() {
     [1, 0.66, 0.33].forEach((r, i) => {
       ctx.beginPath();
       ctx.arc(cx, cy, R * r, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(0,255,136,${i === 0 ? 0.10 : 0.05})`;
+      ctx.strokeStyle = `rgba(${T.g},${i === 0 ? 0.10 : 0.05})`;
       ctx.lineWidth   = 0.7;
       ctx.stroke();
     });
 
     /* cross-hairs */
-    ctx.strokeStyle = 'rgba(0,255,136,0.05)';
+    ctx.strokeStyle = `rgba(${T.g},0.05)`;
     ctx.lineWidth   = 0.7;
     [[cx - R, cy, cx + R, cy], [cx, cy - R, cx, cy + R]].forEach(([x1, y1, x2, y2]) => {
       ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
@@ -472,9 +475,9 @@ function initCanvas() {
     ctx.translate(cx, cy);
     ctx.rotate(radarAngle);
     const fan = ctx.createLinearGradient(0, 0, R, 0);
-    fan.addColorStop(0,   'rgba(0,255,136,0.22)');
-    fan.addColorStop(0.6, 'rgba(0,255,136,0.06)');
-    fan.addColorStop(1,   'rgba(0,255,136,0)');
+    fan.addColorStop(0,   `rgba(${T.g},0.22)`);
+    fan.addColorStop(0.6, `rgba(${T.g},0.06)`);
+    fan.addColorStop(1,   `rgba(${T.g},0)`);
     ctx.beginPath();
     ctx.moveTo(0, 0);
     ctx.arc(0, 0, R, -Math.PI / 5, 0);
@@ -483,7 +486,7 @@ function initCanvas() {
     ctx.fill();
     /* sweep arm */
     ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(R, 0);
-    ctx.strokeStyle = 'rgba(0,255,136,0.55)';
+    ctx.strokeStyle = `rgba(${T.g},0.55)`;
     ctx.lineWidth   = 1;
     ctx.stroke();
     ctx.restore();
@@ -593,7 +596,7 @@ function initCanvas() {
         const d  = Math.sqrt(dx * dx + dy * dy);
         if (d < CONN_D) {
           const a = (1 - d / CONN_D) * 0.22;
-          ctx.strokeStyle = `rgba(0,255,136,${a})`;
+          ctx.strokeStyle = `rgba(${T.g},${a})`;
           ctx.lineWidth   = 0.65;
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
@@ -609,9 +612,9 @@ function initCanvas() {
 
   function drawScanLine() {
     const g = ctx.createLinearGradient(0, scanY - 3, 0, scanY + 3);
-    g.addColorStop(0,   'rgba(0,255,136,0)');
-    g.addColorStop(0.5, 'rgba(0,255,136,0.13)');
-    g.addColorStop(1,   'rgba(0,255,136,0)');
+    g.addColorStop(0,   `rgba(${T.g},0)`);
+    g.addColorStop(0.5, `rgba(${T.g},0.13)`);
+    g.addColorStop(1,   `rgba(${T.g},0)`);
     ctx.fillStyle = g;
     ctx.fillRect(0, scanY - 3, canvas.width, 6);
     scanY += scanDir * 1.1;
@@ -625,7 +628,7 @@ function initCanvas() {
     bracketT += 0.018;
     const a   = 0.12 + Math.sin(bracketT) * 0.07;
     const sz  = 28, pad = 18;
-    ctx.strokeStyle = `rgba(0,255,136,${a})`;
+    ctx.strokeStyle = `rgba(${T.g},${a})`;
     ctx.lineWidth   = 1.5;
     [
       [pad,                    pad,                     1,  1],
@@ -643,7 +646,7 @@ function initCanvas() {
     /* small blinking cursor bottom-left */
     if (Math.sin(bracketT * 3) > 0) {
       ctx.font      = '11px JetBrains Mono, monospace';
-      ctx.fillStyle = `rgba(0,255,136,${a * 1.4})`;
+      ctx.fillStyle = `rgba(${T.g},${a * 1.4})`;
       ctx.fillText('█', pad + 2, canvas.height - pad - 2);
     }
   }
@@ -672,7 +675,7 @@ function initCanvas() {
       /* occasional horizontal color flash */
       if (Math.random() < 0.35) {
         const gy = Math.random() * canvas.height;
-        ctx.fillStyle = `rgba(0,255,136,${Math.random() * 0.13})`;
+        ctx.fillStyle = `rgba(${T.g},${Math.random() * 0.13})`;
         ctx.fillRect(0, gy, canvas.width, 1 + Math.random() * 3);
       }
       glitchFrames--;
@@ -1350,6 +1353,7 @@ function initBootSequence() {
   const screen = document.getElementById('boot-screen');
   if (!screen) return;
 
+  window.__bootDelay = 0;
   if (sessionStorage.getItem('sh-booted')) {
     screen.style.display = 'none';
     return;
@@ -1381,7 +1385,7 @@ function initBootSequence() {
       bcols.forEach(col => {
         col.y += col.speed;
         if (col.y > bc.height + 160) col.y = -Math.random() * bc.height;
-        bctx.fillStyle = `rgba(0,255,136,${col.opacity})`;
+        bctx.fillStyle = `rgba(${T.g},${col.opacity})`;
         bctx.fillText(BCHARS[Math.floor(Math.random() * BCHARS.length)], col.x, col.y);
       });
       requestAnimationFrame(bframe);
@@ -1393,7 +1397,7 @@ function initBootSequence() {
     { text: '[ OK ]  Initialising threat detection engine', cls: 'boot-ok' },
     { text: '[ OK ]  Connecting to MITRE ATT&CK framework', cls: 'boot-ok' },
     { text: '[ OK ]  Mounting cryptographic subsystems',  cls: 'boot-ok'   },
-    { text: '[ WARN] cv.pdf not found — download disabled', cls: 'boot-warn'},
+    { text: '[ OK ]  cv.pdf located — download enabled', cls: 'boot-ok'   },
     { text: '[ OK ]  Portfolio matrix initialised',       cls: 'boot-ok'   },
     { text: '[ OK ]  All systems operational. Welcome.',  cls: 'boot-info'  },
   ];
@@ -1414,6 +1418,7 @@ function initBootSequence() {
 
   /* Dismiss */
   const dismissAt = 280 + LINES.length * 310 + 350;
+  window.__bootDelay = dismissAt + 1300;
   setTimeout(() => {
     if (status) status.textContent = 'SYSTEM READY';
     setTimeout(() => {
@@ -1576,7 +1581,7 @@ function initMatrixBg() {
         const bright = isHead ? Math.min(col.opacity * 4, 0.85) : col.opacity * fade;
         ctx.fillStyle = isHead
           ? `rgba(180,255,220,${bright})`
-          : `rgba(0,255,136,${bright})`;
+          : `rgba(${T.g},${bright})`;
         ctx.fillText(col.chars[i % col.chars.length], col.x, cy);
       }
     });
@@ -1687,4 +1692,134 @@ document.addEventListener('DOMContentLoaded', () => {
   initCvButton();
   initContactForm();
   initScrollToTop();
+  initThemes();
+  initHeroDecode();
+  initCardSpotlight();
+  initMagneticButtons();
 });
+
+
+/* ════════════════════════════════════════════════════════════
+   THEME MANAGER — five themes, each drawn from the CV
+   ════════════════════════════════════════════════════════════ */
+const THEMES = [
+  { id: 'terminal',  name: 'Terminal',   g: '0,255,136',  c: '0,212,255',  meta: '#030d1a', sw: ['#030d1a', '#00ff88', '#00d4ff', '#7c3aed'],
+    why: 'The SOC analyst console, where the detection work lives.' },
+  { id: 'killchain', name: 'Kill chain', g: '255,59,59',  c: '255,154,60', meta: '#0e0608', sw: ['#0e0608', '#ff3b3b', '#ff9a3c', '#e0457b'],
+    why: 'Incident-response red. Sections become stages of the SOC Detection Lab intrusion.' },
+  { id: 'mizan',     name: 'Mizan',      g: '94,234,212', c: '251,113,133', meta: '#0e0b1a', sw: ['#0e0b1a', '#5eead4', '#fb7185', '#a78bfa'],
+    why: 'Allow and deny, styled after the ADAM / EVE / Mizan policy mediator.' },
+  { id: 'blueprint', name: 'Blueprint',  g: '11,74,160',  c: '0,122,138',  meta: '#e8f0fa', sw: ['#e8f0fa', '#0b4aa0', '#007a8a', '#6c3cbe'],
+    why: 'A light audit sheet on grid paper, for the NIST CSF and ISO 27001 side.' },
+  { id: 'phosphor',  name: 'Phosphor',   g: '255,176,0',  c: '255,214,102', meta: '#0c0800', sw: ['#0c0800', '#ffb000', '#ffd666', '#ff7828'],
+    why: 'Amber radar scope, like ThreatWeave and IOC Hunter plotting indicators.' },
+];
+
+function initThemes() {
+  const btn  = document.getElementById('themeBtn');
+  const menu = document.getElementById('themeMenu');
+  if (!btn || !menu) return;
+  const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const root = document.documentElement;
+  const byId = id => THEMES.find(t => t.id === id) || THEMES[0];
+
+  menu.innerHTML = '<div class="theme-menu-head">Themes drawn from my CV</div>' + THEMES.map(t =>
+    `<button class="theme-opt" role="radio" aria-checked="false" data-theme-id="${t.id}">
+       <span class="theme-swatch" aria-hidden="true">${t.sw.map(c => `<i style="background:${c}"></i>`).join('')}</span>
+       <span><span class="theme-opt-name">${t.name}</span><span class="theme-opt-why">${t.why}</span></span>
+     </button>`).join('') +
+    '<a class="theme-menu-foot" href="versions.html">Browse the full design gallery</a>';
+
+  function paint(id) {
+    const th = byId(id);
+    root.setAttribute('data-theme', th.id);
+    T.g = th.g; T.c = th.c;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', th.meta);
+    menu.querySelectorAll('.theme-opt').forEach(o => o.setAttribute('aria-checked', String(o.dataset.themeId === th.id)));
+    try { localStorage.setItem('sh-theme', th.id); } catch (e) { /* storage blocked */ }
+  }
+
+  function apply(id, origin) {
+    if (!document.startViewTransition || reduced()) { paint(id); return; }
+    const x = origin ? origin.x : innerWidth - 40, y = origin ? origin.y : 30;
+    const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    const vt = document.startViewTransition(() => paint(id));
+    vt.ready.then(() => root.animate(
+      { clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },
+      { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)', pseudoElement: '::view-transition-new(root)' }
+    )).catch(() => {});
+  }
+
+  const setOpen = open => {
+    menu.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  };
+
+  btn.addEventListener('click', e => { e.stopPropagation(); setOpen(!menu.classList.contains('open')); });
+  menu.addEventListener('click', e => {
+    const opt = e.target.closest('.theme-opt');
+    if (!opt) return;
+    const r = btn.getBoundingClientRect();
+    apply(opt.dataset.themeId, { x: r.left + r.width / 2, y: r.top + r.height / 2 });
+    setOpen(false);
+    btn.focus();
+  });
+  document.addEventListener('click', e => { if (!menu.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { setOpen(false); return; }
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (e.key.toLowerCase() === 't' && !e.metaKey && !e.ctrlKey && !e.altKey && !['input', 'textarea', 'select'].includes(tag)) {
+      const cur = THEMES.findIndex(t => t.id === root.getAttribute('data-theme'));
+      apply(THEMES[(Math.max(cur, 0) + 1) % THEMES.length].id);
+    }
+  });
+
+  paint(root.getAttribute('data-theme') || 'terminal');
+}
+
+/* ════════════════════════════════════════════════════════════
+   MOTION — hero name decodes once; cards follow the cursor; CTAs pull toward it
+   ════════════════════════════════════════════════════════════ */
+function initHeroDecode() {
+  const el = document.querySelector('.hero-name');
+  if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const final = el.textContent;
+  const GLYPHS = '01<>/{}[]#$%&*+=';
+  el.setAttribute('aria-label', final);
+  el.textContent = final.replace(/\S/g, () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)]);
+  setTimeout(() => {
+    const t0 = performance.now(), DUR = 1100;
+    (function step(now) {
+      const p = Math.min((now - t0) / DUR, 1);
+      el.textContent = [...final].map((ch, i) => {
+        if (ch === ' ') return ' ';
+        return p >= (i + 1) / final.length ? ch : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+      }).join('');
+      if (p < 1) requestAnimationFrame(step); else el.textContent = final;
+    })(t0);
+  }, (window.__bootDelay || 0) + 150);
+}
+
+function initCardSpotlight() {
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+}
+
+function initMagneticButtons() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce), (hover: none)').matches) return;
+  document.querySelectorAll('.hero-cta .btn').forEach(btn => {
+    btn.addEventListener('pointermove', e => {
+      const r = btn.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+      const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+      btn.style.transform = `translate(${dx * 8}px, ${dy * 6}px)`;
+    });
+    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+  });
+}
