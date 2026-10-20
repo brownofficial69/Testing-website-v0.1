@@ -244,7 +244,7 @@ function buildAboutContent() {
           <tr><td>Name</td><td><b>Shadman Hossain</b></td></tr>
           <tr><td>Degree</td><td>BSc (Hons) Ethical Hacking &amp; Cyber Security</td></tr>
           <tr><td>University</td><td>Coventry University</td></tr>
-          <tr><td>Average</td><td><b style="color:#000080">76.4%</b> (First-Class track)</td></tr>
+          <tr><td>Class</td><td><b style="color:#000080">First-Class Honours</b></td></tr>
           <tr><td>Location</td><td>Coventry, UK</td></tr>
           <tr><td>Target</td><td>Junior SOC / GRC / CTI roles, UK</td></tr>
           <tr><td>Claude Academy</td><td>Completed — <b style="color:#800000">2026</b></td></tr>
@@ -252,11 +252,11 @@ function buildAboutContent() {
       </div>
     </div>
     <div class="aw-bio">
-      <p>I'm a First-Class <b>BSc Ethical Hacking &amp; Cyber Security</b> graduate of Coventry University, awarded First-Class Honours. My Final Result is <b>76.4%</b>; research project scored 87%.</p><br>
+      <p>I'm a First-Class <b>BSc Ethical Hacking &amp; Cyber Security</b> graduate of Coventry University, awarded First-Class Honours. Research project scored 87%.</p><br>
       <p>Work spans <b>blue team detection engineering</b> — Wazuh-compatible Sigma rules and intrusion simulation — to <b>GRC compliance</b>, delivering full NIST CSF 2.0 assessments for regulated sectors. I also build <b>AI-augmented security tools</b> in Python and Go.</p>
     </div>
     <div class="aw-stats">
-      <div class="aws-box"><div class="aws-num">76.4%</div><div class="aws-lbl">FINAL RESULT</div></div>
+      <div class="aws-box"><div class="aws-num">1st</div><div class="aws-lbl">CLASS</div></div>
       <div class="aws-box"><div class="aws-num">87%</div><div class="aws-lbl">RESEARCH PROJECT</div></div>
       <div class="aws-box"><div class="aws-num">5</div><div class="aws-lbl">GITHUB PROJECTS</div></div>
       <div class="aws-box"><div class="aws-num">FDM</div><div class="aws-lbl">CONSULTANT</div></div>
@@ -302,7 +302,7 @@ function buildEducationContent() {
   Institution: Coventry University
   Period:      September 2023 – July 2026
   Status:      <span class="en-hl">COMPLETED — FIRST-CLASS HONOURS</span>
-  Average:     <span class="en-hl">76.4%</span>
+  Class:       <span class="en-hl">First</span>
 
   Module Grades:
   ┌──────────────────────────────────────────┬─────┐
@@ -396,7 +396,7 @@ function buildSysinfoContent() {
       <tr><td>Name</td><td>Shadman Hossain</td></tr>
       <tr><td>Degree</td><td>BSc (Hons) Ethical Hacking &amp; Cyber Security</td></tr>
       <tr><td>University</td><td>Coventry University</td></tr>
-      <tr><td>Final Result</td><td><b>76.4%</b> — First-Class track</td></tr>
+      <tr><td>Result</td><td><b>First-Class Honours</b></td></tr>
       <tr><td>Research Project</td><td><b>87%</b></td></tr>
       <tr><td>Location</td><td>Coventry, UK</td></tr>
       <tr><td>Seeking</td><td>Junior SOC Analyst · GRC Analyst · CTI Analyst</td></tr>
@@ -404,7 +404,7 @@ function buildSysinfoContent() {
       <tr><td>Portfolio Views</td><td>${1200 + Math.floor(Math.random()*200)}</td></tr>
       <tr><td>System Date</td><td>${now.toLocaleDateString('en-GB',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</td></tr>
       <tr class="si-bar-row"><td>Academic Performance</td><td>
-        <div class="si-bar-wrap"><div class="si-bar" style="width:76.4%">76.4%</div></div>
+        <div class="si-bar-wrap"><div class="si-bar" style="width:100%">First</div></div>
       </td></tr>
     </table>
   </div>`;

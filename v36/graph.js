@@ -89,7 +89,7 @@ const N = [
   /* education and work */
   { id: 'cov', g: 'edu', label: 'Coventry University', kind: 'BSc (Hons) · 2023-26',
     desc: 'Ethical Hacking and Cyber Security, graduating with First-Class Honours.',
-    facts: ['76.4% classification average (best 100 Level 6 credits)', 'Final-year average 73.67%', 'Dissertation 81.5% across its two modules'] },
+    facts: ['Bachelor of Science with Honours, First Class', 'Dissertation modules: 87% (preparation) and 76% (delivery)'] },
   { id: 'btec', g: 'edu', label: 'BTEC Level 3 IT', kind: 'Birmingham Metropolitan College · 2020-22', desc: 'Double Distinction Merit.' },
   { id: 'acad', g: 'edu', label: 'Claude Academy', kind: 'Anthropic · 2026', desc: 'Nine courses, including Claude Code, MCP, Subagents, Agent Skills and AI capabilities and limitations.' },
   { id: 'fdm', g: 'edu', label: 'FDM Group', kind: 'Consultant · current', desc: 'First-line Outlook and Teams support on a Deutsche Bank assignment, working in a ServiceNow ticket workflow and escalating what needs more technical help.' },

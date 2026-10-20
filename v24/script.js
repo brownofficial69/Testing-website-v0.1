@@ -31,7 +31,7 @@ const CONSTELLATIONS = {
   },
   certs: {
     nodes: [
-      {label:'BSc 1st',type:'cert',color:'#e0af68',badge:'Coventry',desc:'BSc (Hons) Ethical Hacking & Cyber Security, Coventry University, First-Class Honours (73.67%).'},
+      {label:'BSc 1st',type:'cert',color:'#e0af68',badge:'Coventry',desc:'BSc (Hons) Ethical Hacking & Cyber Security, Coventry University, First-Class Honours.'},
       {label:'Claude Academy',type:'cert',color:'#f7768e',badge:'Anthropic',desc:'Anthropic Claude Academy: nine courses incl. Claude Code, MCP, Subagents, Agent Skills.'},
       {label:'BTEC L3',type:'cert',color:'#9ece6a',badge:'BMet',desc:'BTEC Level 3 National Diploma in IT, Double Distinction Merit.'},
       {label:'FDM',type:'cert',color:'#7dcfff',badge:'FDM Group',desc:'FDM Group consultant (EUC / Email Specialist L1), Deutsche Bank assignment.'},

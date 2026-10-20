@@ -26,7 +26,7 @@ const PAIRS = [
     t: 'A 15-criterion weighted vendor-risk model, tested against historical incidents and refined through UAT with non-technical users. The two dissertation modules scored 87% and 76%.',
     acts: [['Try the demo', '../demos/supply-chain-risk.html']] },
   { k: 'Degree · 2023-26', a: 'Coventry BSc (Hons)', b: 'First-Class Honours',
-    t: 'Ethical Hacking and Cyber Security. 76.4% classification average on the best 100 Level 6 credits, and a 73.67% final-year average.', acts: [['Download CV', '../assets/cv.pdf']] },
+    t: 'Awarded the Bachelor of Science with Honours, First Class, in Ethical Hacking and Cyber Security.', acts: [['Download CV', '../assets/cv.pdf']] },
   { k: 'Training · 2026', a: 'Claude Academy', b: 'MCP, subagents, skills',
     t: 'Nine courses covering Claude Code, MCP, subagents, agent skills and what AI systems can and cannot do.', acts: [] },
   { k: 'Work · current', a: 'FDM · Deutsche Bank', b: 'Escalation discipline',
