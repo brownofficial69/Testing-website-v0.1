@@ -55,3 +55,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .wire-footer{background:var(--text);color:var(--bg);padding:10px 24px;font-family:var(--mono);font-size:10px;letter-spacing:1px;text-align:center}
 
 @media(max-width:900px){.wire-layout{grid-template-columns:1fr}.wire-aside,.wire-right{border:none;border-bottom:1px solid var(--border)}}
+
+/* portrait */
+.pc-photo{width:100%;max-width:200px;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;border-radius:2px;display:block;margin-bottom:10px;filter:grayscale(1) contrast(1.08)}

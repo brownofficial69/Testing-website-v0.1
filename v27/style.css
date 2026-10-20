@@ -87,3 +87,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 }
 
 @media(max-width:640px){.info-box{width:calc(100% - 48px);right:24px;bottom:60px}}
+
+/* portrait */
+.pt-title{position:relative}.pt-photo{float:left;width:64px;height:80px;object-fit:cover;object-position:50% 20%;border-radius:6px;margin-right:16px;border:1px solid rgba(255,255,255,.25)}

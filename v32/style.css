@@ -29,3 +29,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);overflow-x:h
 .dna-footer a{font-size:13px;color:var(--text-2);text-decoration:none;font-family:var(--mono);transition:color 0.2s}
 .dna-footer a:hover{color:var(--text)}
 @media(max-width:600px){.dna-info{position:static;max-width:100%;margin-bottom:16px}.dna-legend{flex-direction:column;align-items:center}}
+
+/* portrait */
+.dna-photo{display:block;margin:0 auto 14px;width:96px;height:120px;object-fit:cover;object-position:50% 20%;border-radius:48px 48px 12px 12px;border:2px solid rgba(180,160,255,.6);box-shadow:0 0 24px rgba(120,160,255,.35)}
