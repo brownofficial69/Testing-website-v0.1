@@ -3,6 +3,7 @@
    ════════════════════════════════════════════════════════════ */
 const PROJECTS = {
   'threatweave': {
+    demo: 'demos/threatweave.html',
     title: 'ThreatWeave',
     category: 'Threat Intelligence / CTI',
     icon: 'fas fa-brain',
@@ -27,6 +28,7 @@ const PROJECTS = {
   },
 
   'secureview': {
+    demo: 'demos/secureview.html',
     title: 'SecureView',
     category: 'SOC Dashboard / Blue Team',
     icon: 'fas fa-desktop',
@@ -51,6 +53,7 @@ const PROJECTS = {
   },
 
   'soc-lab': {
+    demo: 'demos/soc-lab.html',
     title: 'SOC Detection Lab',
     category: 'Blue Team / Detection Engineering',
     icon: 'fas fa-shield-halved',
@@ -77,6 +80,7 @@ const PROJECTS = {
   },
 
   'ioc-hunter': {
+    demo: 'demos/ioc-hunter.html',
     title: 'IOC Hunter',
     category: 'Threat Intelligence / CLI Tool',
     icon: 'fas fa-magnifying-glass',
@@ -100,46 +104,45 @@ const PROJECTS = {
     note: null
   },
 
-  'nist-csf': {
-    title: 'NIST CSF 2.0 Gap Assessment',
-    category: 'GRC / Compliance',
-    icon: 'fas fa-clipboard-check',
+  'adam-eve-mizan': {
+    demo: 'demos/adam-eve-mizan.html',
+    title: 'ADAM / EVE / Mizan',
+    category: 'AI-Agent Authorization & Safety',
+    icon: 'fas fa-user-shield',
     iconClass: 'purple-icon',
-    description: 'A professional-grade GRC gap assessment for a fictional UK pharmaceutical supplier — Meridian Health Logistics Ltd — evaluated against all 6 functions of the NIST Cybersecurity Framework 2.0. This project demonstrates the analytical rigour expected of a junior GRC analyst: quantitative maturity scoring, structured gap identification, and a phased remediation roadmap aligned to business risk priorities.',
+    description: 'A prototype exploring how to keep an autonomous AI agent inside safe authorization boundaries. Action proposals (ADAM), adversarial critique (EVE) and independent policy and execution mediation (Mizan) are deliberately kept separate, so no single component can both decide and carry out a consequential action. The work evaluates authorization boundaries, tool-use controls and persistent-memory integrity.',
     highlights: [
-      'Full assessment across all 6 CSF 2.0 functions: Govern, Identify, Protect, Detect, Respond, Recover',
-      'Quantitative maturity scoring on a 1–4 scale per sub-category (current: 1.32 → target: 2.75)',
-      'Two High-severity findings identified as root-cause blockers gating all other improvements',
-      'Three-phase remediation roadmap spanning 0–12 months with prioritised actions',
-      'UK GDPR Article 28 supplier due-diligence questionnaire for procurement',
-      'SVG maturity radar chart comparing current vs target capability across all 6 functions',
-      'NHS pharmaceutical sector context applied throughout — regulatory and operational risk-aware'
+      'Separates action proposals, adversarial critique and independent policy/execution mediation',
+      'Evaluates least privilege, execution mediation and tool-use controls',
+      'Memory-integrity work, including a memory purger',
+      'Reported 21/21 Phase-8 and 7/7 concept tests passing',
+      '16 memory-purger tests passing (one CUDA-only skip)',
+      'Retains an explicit no-go boundary for consequential autonomous use'
     ],
-    tech: ['NIST CSF 2.0', 'UK GDPR Art. 28', 'ISO 27001', 'Risk Assessment', 'Supplier Due Diligence', 'Maturity Modelling'],
+    tech: ['Python', 'pytest', 'Agent safety', 'Least privilege', 'Policy mediation'],
     mitre: [],
-    github: 'https://github.com/shaddiegit/nist-csf-gap-assessment',
-    note: 'This is a professional documentation set — a Markdown assessment report, SVG maturity radar chart, and supplier questionnaire. The GitHub repository contains the full deliverable.'
+    github: 'https://github.com/brownofficial69/adam-eve-mizan',
+    note: 'Research prototype, not production software. The no-go boundary for consequential autonomous use is deliberate.'
   },
 
-  'aws-arch': {
-    title: 'AWS Healthcare AI Triage Architecture',
-    category: 'Cloud Security / Architecture Review',
-    icon: 'fab fa-aws',
+  'supply-chain': {
+    demo: 'demos/supply-chain-risk.html',
+    title: 'Supply Chain Risk Assessment Framework',
+    category: 'GRC / Third-Party Risk',
+    icon: 'fas fa-diagram-project',
     iconClass: 'amber-icon',
-    description: 'As team lead at Birmingham Metropolitan College, I guided a team in designing an AWS-hosted AI triage system for NHS healthcare use. Applying STRIDE threat modelling across all system components and data flows, I identified three critical legal and privacy violations — most significantly the processing of GDPR Article 9 special-category biometric and health data without a lawful basis, and an OSINT re-identification risk in the proposed data pipeline. My findings led to the strategic cancellation of the project before implementation, preventing potential ICO enforcement action.',
+    description: 'My dissertation project: a weighted vendor-risk model for assessing supply-chain security risk, informed by NIST SP 800-161. The model was evaluated against historical incident cases and refined through user acceptance testing with non-technical users.',
     highlights: [
-      'Led a cross-functional team through the complete architecture design phase',
-      'Applied STRIDE threat modelling to AWS S3, IAM, EC2 components, and all data flows',
-      'Identified GDPR Art.9 special-category data violation before any code was written',
-      'Identified OSINT re-identification risk in the proposed patient data pipeline',
-      'Strategic cancellation recommendation accepted — regulatory exposure prevented',
-      'Demonstrates security-first architecture thinking and GRC sequencing judgement',
-      'Identified 3 critical legal/privacy violations in a single architecture review'
+      '15-criterion weighted vendor-risk scoring model',
+      'Informed by NIST SP 800-161 supply-chain risk guidance',
+      'Evaluated against historical supply-chain incident cases',
+      'Iterated through UAT with non-technical users',
+      'Implemented in VBA'
     ],
-    tech: ['AWS (S3, IAM, EC2)', 'STRIDE Threat Modelling', 'GDPR Article 9', 'Healthcare Compliance', 'Architecture Review'],
+    tech: ['VBA', 'NIST SP 800-161', 'Risk modelling', 'UAT'],
     mitre: [],
     github: null,
-    note: 'This is a case study. The project was strategically cancelled based on the threat modelling findings — there is no public codebase. The work product is an architecture threat model and risk findings report.'
+    note: 'This was an academic dissertation (2025–2026); there is no public repository.'
   }
 };
 
@@ -287,97 +290,6 @@ function initSoundToggle() {
     /* play tick only when turning ON */
     if (on) SoundEngine.play('tick');
   });
-}
-
-/* ════════════════════════════════════════════════════════════
-   FULL-PAGE MATRIX BACKGROUND CANVAS
-   Fixed behind all sections — the primary matrix rain effect
-   ════════════════════════════════════════════════════════════ */
-function initMatrixBg() {
-  const canvas = document.getElementById('matrix-bg');
-  if (!canvas) return;
-
-  const ctx     = canvas.getContext('2d');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) return;
-
-  const FONT   = 14;
-  const CHARS  =
-    'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ' +
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*<>[]{}|\\/:;' +
-    '01001101010011010001100101';
-  let cols = [];
-
-  function randChar() {
-    return CHARS[Math.floor(Math.random() * CHARS.length)];
-  }
-
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initCols();
-  }
-
-  function initCols() {
-    cols = [];
-    const count = Math.floor(canvas.width / FONT);
-    for (let i = 0; i < count; i++) {
-      if (Math.random() > 0.52) continue;
-      const len = 10 + Math.floor(Math.random() * 26);
-      cols.push({
-        x:          i * FONT,
-        y:          Math.random() * -canvas.height,
-        speed:      0.65 + Math.random() * 1.9,
-        chars:      Array.from({ length: len + 4 }, randChar),
-        len,
-        opacity:    0.20 + Math.random() * 0.38,
-        mutateAcc:  0,
-        mutateEvery:45 + Math.random() * 120,
-      });
-    }
-  }
-
-  let lastTs = 0;
-  function frame(ts) {
-    const dt = Math.min(ts - lastTs, 50);
-    lastTs = ts;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = `${FONT}px 'JetBrains Mono', monospace`;
-
-    cols.forEach(col => {
-      col.y        += col.speed;
-      col.mutateAcc += dt;
-      if (col.mutateAcc > col.mutateEvery) {
-        col.mutateAcc = 0;
-        col.chars[Math.floor(Math.random() * col.chars.length)] = randChar();
-      }
-      if (col.y > canvas.height + col.len * FONT) {
-        col.y      = -(col.len * FONT + Math.random() * canvas.height * 0.4);
-        col.speed  = 0.65 + Math.random() * 1.9;
-        col.opacity= 0.20 + Math.random() * 0.38;
-        col.len    = 10 + Math.floor(Math.random() * 26);
-      }
-
-      for (let i = 0; i < col.len; i++) {
-        const cy = col.y + i * FONT;
-        if (cy < -FONT || cy > canvas.height) continue;
-        const isHead = i === col.len - 1;
-        const fade   = isHead ? 1 : (1 - i / col.len) * 0.88;
-        const a      = isHead ? Math.min(col.opacity * 3.8, 1) : col.opacity * fade;
-        ctx.fillStyle = isHead
-          ? `rgba(200,255,220,${a})`
-          : `rgba(0,255,136,${a})`;
-        ctx.fillText(col.chars[i % col.chars.length], col.x, cy);
-      }
-    });
-
-    requestAnimationFrame(frame);
-  }
-
-  resize();
-  requestAnimationFrame(frame);
-  window.addEventListener('resize', resize);
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -812,11 +724,11 @@ function initTyping() {
   if (!el) return;
 
   const titles = [
-    'Junior SOC Analyst',
-    'GRC Analyst',
-    'Cyber Threat Intelligence',
-    'Detection Engineer',
-    'Blue Teamer'
+    'Cybersecurity Graduate',
+    'AI Security',
+    'Security Engineering',
+    'Detection Engineering',
+    'Threat Intelligence'
   ];
 
   let idx = 0, charIdx = 0, deleting = false;
@@ -1144,6 +1056,13 @@ function initModal() {
 
     /* Action buttons */
     elActions.innerHTML = '';
+    if (d.demo) {
+      const demo = document.createElement('a');
+      demo.href      = d.demo;
+      demo.className = 'btn-github';
+      demo.innerHTML = '<i class="fas fa-play"></i> Try live demo';
+      elActions.appendChild(demo);
+    }
     if (d.github) {
       const a = document.createElement('a');
       a.href      = d.github;
@@ -1297,74 +1216,6 @@ function initScrollToTop() {
   btn.addEventListener('click', () => {
     SoundEngine.play('click');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-}
-
-/* ════════════════════════════════════════════════════════════
-   AMBIENT TEXT DECORATORS
-   Sprinkles low-opacity terminal text into section backgrounds
-   ════════════════════════════════════════════════════════════ */
-function initAmbientText() {
-  const defs = [
-    {
-      id: 'about',
-      tokens: ['WHOIS', '0x1F4', 'nmap -sV', 'traceroute', 'SHA-256', 'ARP', '192.168.1.1',
-               'TTL:64', 'ICMP', 'RST ACK', '0xDEAD', 'ping -c4', 'OSINT', 'recon'],
-    },
-    {
-      id: 'skills',
-      tokens: ['SIGMA', '#!/bin/bash', '443/tcp', '22/tcp', 'CVE-2024', 'MITRE', 'ATT&CK',
-               '0xFF0A', 'sudo !!', 'chmod 700', 'grep -r', 'netstat', 'ps aux', 'tcpdump',
-               'wireshark', 'burp', 'nessus', 'CVSS:3.1', '/dev/null', 'enum4linux'],
-    },
-    {
-      id: 'projects',
-      tokens: ['git push', 'go build', 'npm run', 'docker run', 'BUILD OK', 'PASS ✓',
-               'v2.4.1', '0xDEAD', 'IOC:', 'T1059', 'T1190', 'HASH:', 'func main()',
-               'interface{}', 'goroutine', 'async/await', 'jest --pass', 'pytest -v'],
-    },
-    {
-      id: 'education',
-      tokens: ['73.67%', 'First Class', 'BSc', '2023–2026', 'Coventry', 'BTEC D*D*D*',
-               'cybersec', 'thesis', '87%', 'module', 'lecture', 'lab', 'research', 'ethics'],
-    },
-    {
-      id: 'certifications',
-      tokens: ['Claude', 'MCP', 'Agents', 'Skills', 'IAM', 'risk', 'policy', 'governance',
-               'CIA triad', 'zero-trust', 'SOC2', 'ISO 27001', 'NIST', 'GDPR'],
-    },
-    {
-      id: 'experience',
-      tokens: ['team lead', 'agile', 'sprint', 'KPI', 'SLA', 'threat model', 'GDPR art.9',
-               'cancelled', 'AWS', 'IAM', 'VPC', 'EC2', 'S3', 'compliance'],
-    },
-    {
-      id: 'contact',
-      tokens: ['> ping', 'SSH', 'OPEN', 'CONNECT', 'mailto:', '250 OK', 'HELO',
-               '200 OK', 'TLS 1.3', 'cert valid', 'PGP', 'ed25519', 'GPG', 'SMTPS'],
-    },
-  ];
-
-  const RNG = () => Math.random();
-
-  defs.forEach(({ id, tokens }) => {
-    const section = document.getElementById(id);
-    if (!section) return;
-
-    const count = Math.min(tokens.length, 20);
-    const shuffled = [...tokens].sort(() => RNG() - 0.5);
-
-    for (let i = 0; i < count; i++) {
-      const el   = document.createElement('span');
-      el.className    = 'ambient-token';
-      el.textContent  = shuffled[i % shuffled.length];
-      el.style.top    = `${4 + RNG() * 88}%`;
-      el.style.left   = `${2 + RNG() * 93}%`;
-      el.style.opacity= `${0.035 + RNG() * 0.055}`;
-      el.style.fontSize= `${9 + RNG() * 6}px`;
-      el.style.transform = `rotate(${(RNG() - 0.5) * 8}deg)`;
-      section.appendChild(el);
-    }
   });
 }
 
@@ -1635,7 +1486,7 @@ function initAmbientText() {
   ];
 
   const sections = document.querySelectorAll(
-    '#about, #skills, #projects, #education, #certifications, #contact'
+    '#about, #skills, #projects, #experience, #education, #certifications, #contact'
   );
 
   sections.forEach(section => {
@@ -1776,30 +1627,36 @@ function initStatCounters() {
   const vals = document.querySelectorAll('.stat-value');
   if (!vals.length) return;
 
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Targets come from data-count / data-decimals / data-suffix. Show the final
+     value immediately for reduced motion, then animate up when scrolled into view. */
+  const fmt = (el, v) =>
+    v.toFixed(parseInt(el.dataset.decimals || '0', 10)) + (el.dataset.suffix || '');
+
+  vals.forEach(el => {
+    if (el.dataset.count !== undefined && reduced) el.textContent = fmt(el, parseFloat(el.dataset.count));
+  });
+  if (reduced) return;
+
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      const el   = entry.target;
-      const node = el.childNodes[0];
-      if (!node) return;
-      const raw  = node.textContent.trim();
-      const num  = parseFloat(raw);
+      const el  = entry.target;
+      const num = parseFloat(el.dataset.count);
+      observer.unobserve(el);
       if (isNaN(num)) return;
-      const dec  = raw.includes('.') ? 2 : 0;
-      const dur  = 1400;
-      const t0   = performance.now();
+      const dur = 1400;
+      const t0  = performance.now();
       (function step(now) {
         const p = Math.min((now - t0) / dur, 1);
-        const e = 1 - Math.pow(1 - p, 3);
-        node.textContent = (e * num).toFixed(dec);
+        el.textContent = fmt(el, (1 - Math.pow(1 - p, 3)) * num);
         if (p < 1) requestAnimationFrame(step);
-        else node.textContent = raw;
       })(t0);
-      observer.unobserve(el);
     });
   }, { threshold: 0.6 });
 
-  vals.forEach(el => observer.observe(el));
+  vals.forEach(el => { if (el.dataset.count !== undefined) observer.observe(el); });
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1830,6 +1687,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initCvButton();
   initContactForm();
   initScrollToTop();
-  initAmbientText();
-  initStatCounters();
 });

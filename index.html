@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Primary SEO -->
-  <title>Shadman Hossain | Cybersecurity Portfolio</title>
-  <meta name="description" content="Shadman Hossain — Junior SOC Analyst, GRC Analyst & Cyber Threat Intelligence analyst. First-Class Ethical Hacking & Cyber Security graduate of Coventry University." />
-  <meta name="keywords" content="cybersecurity, SOC analyst, GRC, threat intelligence, ethical hacking, detection engineering, SIEM, MITRE ATT&CK, Shadman Hossain" />
+  <title>Shadman Hossain | AI Security &amp; Security Engineering</title>
+  <meta name="description" content="Shadman Hossain — AI security and security engineering. First-Class Ethical Hacking & Cyber Security graduate of Coventry University building AI-agent authorization prototypes, detection engineering tools and security automation." />
+  <meta name="keywords" content="AI security, security engineering, detection engineering, threat intelligence, LLM agents, MITRE ATT&CK, Sigma, Python, Go, Shadman Hossain" />
   <meta name="author" content="Shadman Hossain" />
   <meta name="theme-color" content="#030d1a" />
   <link rel="canonical" href="https://brownofficial69.github.io/Testing-website-v0.1/" />
@@ -14,20 +14,21 @@
   <!-- Open Graph (LinkedIn / Slack / iMessage previews) -->
   <meta property="og:type"         content="website" />
   <meta property="og:url"          content="https://brownofficial69.github.io/Testing-website-v0.1/" />
-  <meta property="og:title"        content="Shadman Hossain | Cybersecurity Portfolio" />
-  <meta property="og:description"  content="SOC Detection Engineering · GRC Compliance · Threat Intelligence — Coventry University BSc Ethical Hacking & Cyber Security, First-Class Honours (73.67%)." />
+  <meta property="og:title"        content="Shadman Hossain | AI Security &amp; Security Engineering" />
+  <meta property="og:description"  content="AI-agent authorization · Detection engineering · Threat intelligence — Coventry University BSc Ethical Hacking & Cyber Security, First-Class Honours (73.67%)." />
   <meta property="og:image"        content="https://brownofficial69.github.io/Testing-website-v0.1/assets/profile.jpg" />
-  <meta property="og:image:width"  content="600" />
-  <meta property="og:image:height" content="800" />
+  <meta property="og:image:width"  content="900" />
+  <meta property="og:image:height" content="1154" />
   <meta property="og:locale"       content="en_GB" />
 
   <!-- Twitter / X Card -->
   <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content="Shadman Hossain | Cybersecurity Portfolio" />
-  <meta name="twitter:description" content="SOC Detection Engineering · GRC Compliance · Threat Intelligence" />
+  <meta name="twitter:title"       content="Shadman Hossain | AI Security &amp; Security Engineering" />
+  <meta name="twitter:description" content="AI-agent authorization · Detection engineering · Threat intelligence" />
   <meta name="twitter:image"       content="https://brownofficial69.github.io/Testing-website-v0.1/assets/profile.jpg" />
 
   <!-- Favicon -->
+  <meta name="robots" content="index, follow" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -68,8 +69,9 @@
     <li><a href="#about"     class="nav-link" data-index="01">About</a></li>
     <li><a href="#skills"    class="nav-link" data-index="02">Skills</a></li>
     <li><a href="#projects"  class="nav-link" data-index="03">Projects</a></li>
-    <li><a href="#education" class="nav-link" data-index="04">Education</a></li>
-    <li><a href="#contact"   class="nav-link" data-index="05">Contact</a></li>
+    <li><a href="#experience" class="nav-link" data-index="04">Experience</a></li>
+    <li><a href="#education" class="nav-link" data-index="05">Education</a></li>
+    <li><a href="#contact"   class="nav-link" data-index="06">Contact</a></li>
   </ul>
 
   <div class="nav-right">
@@ -101,8 +103,9 @@
     <a href="#about"     class="mobile-nav-link" data-index="01">About</a>
     <a href="#skills"    class="mobile-nav-link" data-index="02">Skills</a>
     <a href="#projects"  class="mobile-nav-link" data-index="03">Projects</a>
-    <a href="#education" class="mobile-nav-link" data-index="04">Education</a>
-    <a href="#contact"   class="mobile-nav-link" data-index="05">Contact</a>
+    <a href="#experience" class="mobile-nav-link" data-index="04">Experience</a>
+    <a href="#education" class="mobile-nav-link" data-index="05">Education</a>
+    <a href="#contact"   class="mobile-nav-link" data-index="06">Contact</a>
   </nav>
   <div class="mobile-socials">
     <a href="https://github.com/shaddiegit" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
@@ -127,15 +130,16 @@
     </div>
 
     <p class="hero-description">
-      First-Class cybersecurity graduate from Coventry University specialising in SOC detection engineering,
-      GRC compliance &amp; threat intelligence. Building defences that hold.
+      First-Class cybersecurity graduate building AI-agent authorization prototypes, detection
+      engineering tools and security automation. Least privilege, execution mediation and
+      defences that hold.
     </p>
 
     <div class="hero-cta">
       <a href="#projects" class="btn btn-primary">
         <i class="fas fa-folder-open"></i> View Projects
       </a>
-      <a href="demos/index.html" class="btn btn-secondary"><i class="fas fa-play"></i> Try My Projects</a>
+      <a href="demos/index.html" class="btn btn-secondary"><i class="fas fa-play"></i> Try Live Demos</a>
       <a href="#contact" class="btn btn-secondary">
         <i class="fas fa-terminal"></i> Get In Touch
       </a>
@@ -183,36 +187,40 @@
         </div>
         <div class="about-location">
           <i class="fas fa-location-dot"></i>
-          <span>Coventry, UK</span>
+          <span>Birmingham, UK</span>
         </div>
       </div>
 
       <div class="about-text">
         <p>
-          I'm a <span class="text-green">BSc (Hons) Ethical Hacking &amp; Cyber Security</span> graduate of Coventry University with First-Class Honours (<span class="text-cyan">73.67%</span>, July 2026). My dissertation built a weighted supply chain risk assessment framework informed by NIST SP 800-161.
+          I'm a <span class="text-green">First-Class BSc Ethical Hacking &amp; Cyber Security</span>
+          graduate from Coventry University (<span class="text-cyan">73.67%</span>, July 2026),
+          now working as an FDM consultant on a Deutsche Bank assignment.
         </p>
         <p>
-          My work spans <span class="text-green">blue team detection engineering</span> — writing
-          Wazuh-compatible Sigma rules and simulating intrusion campaigns — to
-          <span class="text-cyan">GRC compliance</span>, with a focus on third-party and supply chain risk. I also build <span class="text-green">AI-augmented security tools</span>
-          in Python and Go, including a Claude API-powered threat intelligence correlation engine.
+          My project work focuses on <span class="text-green">AI-agent authorization and safety</span> —
+          least privilege, execution mediation, memory integrity and structured LLM outputs — alongside
+          <span class="text-cyan">detection engineering</span> (multi-stage Sigma detections, IOC
+          correlation) and security automation in Python, Go and TypeScript.
         </p>
         <p>
-          I'm an <span class="text-cyan">FDM Group consultant</span> on a Deutsche Bank assignment (first-line Outlook and Teams support), and actively seeking junior security-engineering or AI-evaluation roles in the UK.
+          I've completed <span class="text-green">nine Anthropic Claude Academy courses</span> and I'm
+          seeking <span class="text-cyan">junior security-engineering or AI-evaluation</span>
+          roles in the UK. I have full UK right to work — no sponsorship required.
         </p>
 
         <div class="about-stats">
           <div class="stat-card reveal fade-up">
             <div class="stat-value" data-count="73.67" data-decimals="2" data-suffix="%">0%</div>
-            <div class="stat-label">Final Result</div>
+            <div class="stat-label">First-Class Honours</div>
           </div>
           <div class="stat-card reveal fade-up" style="transition-delay:0.1s">
-            <div class="stat-value" data-count="5" data-decimals="0">0</div>
-            <div class="stat-label">GitHub Projects</div>
+            <div class="stat-value" data-count="6" data-decimals="0">0</div>
+            <div class="stat-label">Security Projects</div>
           </div>
           <div class="stat-card reveal fade-up" style="transition-delay:0.2s">
-            <div class="stat-value">FDM</div>
-            <div class="stat-label">Deutsche Bank assignment</div>
+            <div class="stat-value" data-count="9" data-decimals="0">0</div>
+            <div class="stat-label">Claude Academy Courses</div>
           </div>
         </div>
       </div>
@@ -231,94 +239,76 @@
 
       <div class="skill-row reveal fade-up" data-color="green">
         <div class="skill-row-header">
-          <i class="fas fa-shield-halved"></i>
-          <span>SOC &amp; Detection</span>
+          <i class="fas fa-code"></i>
+          <span>Engineering</span>
         </div>
         <div class="skill-tags">
-          <span class="skill-tag">SIEM</span>
-          <span class="skill-tag">Wazuh</span>
-          <span class="skill-tag">ELK Stack</span>
-          <span class="skill-tag">Splunk</span>
-          <span class="skill-tag">Sigma Rules</span>
-          <span class="skill-tag">MITRE ATT&amp;CK</span>
-          <span class="skill-tag">Log Analysis</span>
-          <span class="skill-tag">Incident Triage</span>
+          <span class="skill-tag">Python / pytest</span>
+          <span class="skill-tag">Go</span>
+          <span class="skill-tag">TypeScript / React</span>
+          <span class="skill-tag">Bash</span>
+          <span class="skill-tag">Linux</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">Git / GitHub</span>
         </div>
       </div>
 
       <div class="skill-row reveal fade-up" data-color="cyan" style="transition-delay:0.05s">
         <div class="skill-row-header">
-          <i class="fas fa-bug"></i>
-          <span>Offensive / Pen-test</span>
+          <i class="fas fa-shield-halved"></i>
+          <span>Security &amp; Detection</span>
         </div>
         <div class="skill-tags">
-          <span class="skill-tag">Kali Linux</span>
-          <span class="skill-tag">Nmap</span>
-          <span class="skill-tag">Burp Suite</span>
-          <span class="skill-tag">Metasploit</span>
-          <span class="skill-tag">Wireshark</span>
-          <span class="skill-tag">OSINT</span>
-          <span class="skill-tag">Vuln Assessment</span>
+          <span class="skill-tag">MITRE ATT&amp;CK</span>
+          <span class="skill-tag">Sigma</span>
+          <span class="skill-tag">Wazuh</span>
+          <span class="skill-tag">ELK</span>
+          <span class="skill-tag">Splunk</span>
+          <span class="skill-tag">IOC analysis</span>
+          <span class="skill-tag">Threat hunting</span>
         </div>
       </div>
 
       <div class="skill-row reveal fade-up" data-color="purple" style="transition-delay:0.1s">
         <div class="skill-row-header">
-          <i class="fas fa-file-contract"></i>
-          <span>GRC &amp; Compliance</span>
+          <i class="fas fa-robot"></i>
+          <span>AI &amp; Agent Safety</span>
         </div>
         <div class="skill-tags">
-          <span class="skill-tag">NIST CSF 2.0</span>
-          <span class="skill-tag">ISO 27001</span>
-          <span class="skill-tag">UK GDPR</span>
-          <span class="skill-tag">Threat Modelling</span>
-          <span class="skill-tag">Risk Assessment</span>
-          <span class="skill-tag">Supplier Due Diligence</span>
-          <span class="skill-tag">Audit Management</span>
+          <span class="skill-tag">Claude API / Anthropic SDK</span>
+          <span class="skill-tag">Evaluation design</span>
+          <span class="skill-tag">MCP fundamentals</span>
+          <span class="skill-tag">Tool-use controls</span>
+          <span class="skill-tag">Structured LLM outputs</span>
         </div>
       </div>
 
       <div class="skill-row reveal fade-up" data-color="green" style="transition-delay:0.15s">
         <div class="skill-row-header">
-          <i class="fas fa-code"></i>
-          <span>Programming &amp; Automation</span>
+          <i class="fas fa-file-contract"></i>
+          <span>GRC &amp; Risk</span>
         </div>
         <div class="skill-tags">
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">Go</span>
-          <span class="skill-tag">Bash</span>
-          <span class="skill-tag">TypeScript</span>
-          <span class="skill-tag">Playwright</span>
-          <span class="skill-tag">pytest</span>
-          <span class="skill-tag">Web Scraping</span>
+          <span class="skill-tag">NIST CSF</span>
+          <span class="skill-tag">NIST SP 800-161</span>
+          <span class="skill-tag">ISO 27001</span>
+          <span class="skill-tag">Third-party risk</span>
+          <span class="skill-tag">UK GDPR</span>
         </div>
       </div>
 
       <div class="skill-row reveal fade-up" data-color="cyan" style="transition-delay:0.2s">
         <div class="skill-row-header">
           <i class="fas fa-cloud"></i>
-          <span>Cloud &amp; Infrastructure</span>
+          <span>Cloud &amp; Support</span>
         </div>
         <div class="skill-tags">
           <span class="skill-tag">AWS S3</span>
           <span class="skill-tag">AWS IAM</span>
           <span class="skill-tag">AWS EC2</span>
-          <span class="skill-tag">Linux Admin</span>
-          <span class="skill-tag">Windows AD</span>
-        </div>
-      </div>
-
-      <div class="skill-row reveal fade-up" data-color="purple" style="transition-delay:0.25s">
-        <div class="skill-row-header">
-          <i class="fas fa-network-wired"></i>
-          <span>Frameworks</span>
-        </div>
-        <div class="skill-tags">
-          <span class="skill-tag">MITRE ATT&amp;CK</span>
-          <span class="skill-tag">OWASP Top 10</span>
-          <span class="skill-tag">Cyber Kill Chain</span>
-          <span class="skill-tag">NIST RMF</span>
-          <span class="skill-tag">STRIDE</span>
+          <span class="skill-tag">Outlook</span>
+          <span class="skill-tag">Teams</span>
+          <span class="skill-tag">ServiceNow</span>
         </div>
       </div>
 
@@ -337,11 +327,42 @@
 
     <div class="projects-grid">
 
-      <!-- 1. ThreatWeave -->
+      <article class="project-card reveal fade-up"
+               data-project="adam-eve-mizan"
+               role="button" tabindex="0"
+               aria-label="ADAM / EVE / Mizan — AI-Agent Authorization &amp; Safety. Click to view details.">
+        <div class="card-scan-line" aria-hidden="true"></div>
+        <div class="project-header">
+          <div class="project-icon purple-icon"><i class="fas fa-user-shield"></i></div>
+          <div class="project-badges-top">
+            <span class="project-year">2026</span>
+            <span class="project-badge badge-ai">AI Safety</span>
+          </div>
+        </div>
+        <h3 class="project-title">ADAM / EVE / Mizan</h3>
+        <p class="project-category">AI-Agent Authorization &amp; Safety</p>
+        <p class="project-description">
+          Prototype that separates action proposals, adversarial critique and independent policy/execution mediation — evaluating authorization boundaries, tool-use controls and memory integrity.
+        </p>
+        <div class="tech-pills">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Agent safety</span>
+          <span class="tech-pill">Least privilege</span>
+          <span class="tech-pill">pytest</span>
+        </div>
+        <div class="project-footer">
+          <div class="mitre-mini">
+
+          </div>
+          <span class="view-hint">Details <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </article>
+
       <article class="project-card reveal fade-up"
                data-project="threatweave"
                role="button" tabindex="0"
-               aria-label="ThreatWeave — AI Threat Intelligence Engine. Click to view details.">
+               aria-label="ThreatWeave — Threat Intelligence / CTI. Click to view details."
+               style="transition-delay:0.05s">
         <div class="card-scan-line" aria-hidden="true"></div>
         <div class="project-header">
           <div class="project-icon green-icon"><i class="fas fa-brain"></i></div>
@@ -353,12 +374,11 @@
         <h3 class="project-title">ThreatWeave</h3>
         <p class="project-category">Threat Intelligence / CTI</p>
         <p class="project-description">
-          AI-powered IOC correlation engine written in Go. Clusters indicators by ASN, temporal
-          proximity, and MITRE tactics — generates analyst-grade threat narratives via Claude AI.
+          Concurrent Go CLI aggregating four threat feeds, correlating IOCs by ASN and MITRE ATT&amp;CK overlap, and producing structured dossiers with the Claude API.
         </p>
         <div class="tech-pills">
           <span class="tech-pill">Go</span>
-          <span class="tech-pill">Claude AI</span>
+          <span class="tech-pill">Claude API</span>
           <span class="tech-pill">MITRE ATT&amp;CK</span>
           <span class="tech-pill">CTI</span>
         </div>
@@ -371,12 +391,11 @@
         </div>
       </article>
 
-      <!-- 2. SecureView -->
       <article class="project-card reveal fade-up"
                data-project="secureview"
                role="button" tabindex="0"
-               aria-label="SecureView — AI-Powered SOC Dashboard. Click to view details."
-               style="transition-delay:0.05s">
+               aria-label="SecureView — SOC Dashboard / Blue Team. Click to view details."
+               style="transition-delay:0.1s">
         <div class="card-scan-line" aria-hidden="true"></div>
         <div class="project-header">
           <div class="project-icon cyan-icon"><i class="fas fa-desktop"></i></div>
@@ -388,13 +407,12 @@
         <h3 class="project-title">SecureView</h3>
         <p class="project-category">SOC Dashboard / Blue Team</p>
         <p class="project-description">
-          Full-stack SOC analyst dashboard with a live alert queue, AI-powered triage using Claude API,
-          automated incident report generation, and 17 unit tests.
+          SOC triage dashboard for alert prioritisation and remediation guidance, built on typed LLM data contracts with 17 passing unit tests.
         </p>
         <div class="tech-pills">
           <span class="tech-pill">TypeScript</span>
           <span class="tech-pill">React</span>
-          <span class="tech-pill">Claude AI</span>
+          <span class="tech-pill">Claude API</span>
           <span class="tech-pill">Vite</span>
         </div>
         <div class="project-footer">
@@ -406,12 +424,11 @@
         </div>
       </article>
 
-      <!-- 3. SOC Detection Lab -->
       <article class="project-card reveal fade-up"
                data-project="soc-lab"
                role="button" tabindex="0"
-               aria-label="SOC Detection Lab — Detection Engineering. Click to view details."
-               style="transition-delay:0.1s">
+               aria-label="SOC Detection Lab — Blue Team / Detection Engineering. Click to view details."
+               style="transition-delay:0.15s">
         <div class="card-scan-line" aria-hidden="true"></div>
         <div class="project-header">
           <div class="project-icon green-icon"><i class="fas fa-shield-halved"></i></div>
@@ -422,8 +439,7 @@
         <h3 class="project-title">SOC Detection Lab</h3>
         <p class="project-category">Blue Team / Detection Engineering</p>
         <p class="project-description">
-          Simulated 4-stage intrusion campaign with Sigma-compatible YAML detection rules deployable
-          in Wazuh — validated with a full pytest suite covering true and false positives.
+          Multi-stage detections and time-window event correlation across a simulated 4-stage intrusion, as Sigma-style rules deployable in Wazuh and validated with pytest.
         </p>
         <div class="tech-pills">
           <span class="tech-pill">Python</span>
@@ -441,12 +457,11 @@
         </div>
       </article>
 
-      <!-- 4. IOC Hunter -->
       <article class="project-card reveal fade-up"
                data-project="ioc-hunter"
                role="button" tabindex="0"
-               aria-label="IOC Hunter — Threat Intelligence Aggregator. Click to view details."
-               style="transition-delay:0.15s">
+               aria-label="IOC Hunter — Threat Intelligence / CLI Tool. Click to view details."
+               style="transition-delay:0.2s">
         <div class="card-scan-line" aria-hidden="true"></div>
         <div class="project-header">
           <div class="project-icon cyan-icon"><i class="fas fa-magnifying-glass"></i></div>
@@ -457,8 +472,7 @@
         <h3 class="project-title">IOC Hunter</h3>
         <p class="project-category">Threat Intelligence / CLI Tool</p>
         <p class="project-description">
-          Multi-source IOC lookup CLI concurrently querying ThreatFox, URLhaus, AbuseIPDB, and
-          VirusTotal — with 19 security tests and CI/SOAR-compatible output.
+          Multi-source IOC lookup CLI, hardened against malformed input and injection risks, with 19 passing security tests and CI/SOAR-compatible output.
         </p>
         <div class="tech-pills">
           <span class="tech-pill">Python</span>
@@ -475,69 +489,88 @@
         </div>
       </article>
 
-      <!-- 5. NIST CSF 2.0 Gap Assessment -->
       <article class="project-card reveal fade-up"
-               data-project="nist-csf"
+               data-project="supply-chain"
                role="button" tabindex="0"
-               aria-label="NIST CSF 2.0 Gap Assessment — GRC project. Click to view details."
-               style="transition-delay:0.2s">
+               aria-label="Supply Chain Risk Framework — GRC / Third-Party Risk. Click to view details."
+               style="transition-delay:0.25s">
         <div class="card-scan-line" aria-hidden="true"></div>
         <div class="project-header">
-          <div class="project-icon purple-icon"><i class="fas fa-clipboard-check"></i></div>
+          <div class="project-icon amber-icon"><i class="fas fa-diagram-project"></i></div>
           <div class="project-badges-top">
-            <span class="project-year">2026</span>
-            <span class="project-badge badge-grc">GRC</span>
+            <span class="project-year">2025–26</span>
+            <span class="project-badge badge-grc">Dissertation</span>
           </div>
         </div>
-        <h3 class="project-title">NIST CSF 2.0 Gap Assessment</h3>
-        <p class="project-category">GRC / Compliance</p>
+        <h3 class="project-title">Supply Chain Risk Framework</h3>
+        <p class="project-category">GRC / Third-Party Risk</p>
         <p class="project-description">
-          Professional gap assessment for a fictional NHS supplier across all 6 CSF 2.0 functions —
-          maturity scoring, 12-month remediation roadmap, and UK GDPR supplier questionnaire.
+          15-criterion weighted vendor-risk model informed by NIST SP 800-161, evaluated against historical incidents and refined through UAT with non-technical users.
         </p>
         <div class="tech-pills">
-          <span class="tech-pill">NIST CSF 2.0</span>
-          <span class="tech-pill">UK GDPR</span>
-          <span class="tech-pill">ISO 27001</span>
-          <span class="tech-pill">Risk Assessment</span>
+          <span class="tech-pill">VBA</span>
+          <span class="tech-pill">NIST SP 800-161</span>
+          <span class="tech-pill">Risk modelling</span>
+          <span class="tech-pill">UAT</span>
         </div>
         <div class="project-footer">
-          <div class="mitre-mini"></div>
+          <div class="mitre-mini">
+
+          </div>
           <span class="view-hint">Details <i class="fas fa-arrow-right"></i></span>
         </div>
       </article>
 
-      <!-- 6. AWS Healthcare AI Triage — Case Study -->
-      <article class="project-card case-study-card reveal fade-up"
-               data-project="aws-arch"
-               role="button" tabindex="0"
-               aria-label="AWS Healthcare AI Triage Architecture — Case Study. Click to view details."
-               style="transition-delay:0.25s">
-        <div class="card-scan-line" aria-hidden="true"></div>
-        <div class="project-header">
-          <div class="project-icon amber-icon"><i class="fab fa-aws"></i></div>
-          <div class="project-badges-top">
-            <span class="project-year">2022</span>
-            <span class="project-badge badge-case">Case Study</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ EXPERIENCE ════════════════════════════════ -->
+<section id="experience">
+  <div class="section-inner">
+    <p class="section-label">// 04. experience</p>
+    <h2 class="section-title">Experience</h2>
+
+    <div class="timeline" id="experience-timeline">
+
+      <div class="timeline-item reveal fade-left">
+        <div class="timeline-dot dot-green"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <span class="timeline-date">Current</span>
+            <span class="timeline-status">Client: Deutsche Bank</span>
+          </div>
+          <h3 class="timeline-degree">Consultant, EUC / Email Specialist (Level 1)</h3>
+          <p class="timeline-institution">
+            <i class="fas fa-briefcase"></i> FDM Group
+          </p>
+          <p class="timeline-grade">
+            First-line Outlook and Microsoft Teams support for colleagues in a banking environment.
+          </p>
+          <div class="timeline-modules">
+            <span class="module-tag">ServiceNow ticket workflow</span>
+            <span class="module-tag">Issue investigation &amp; escalation</span>
+            <span class="module-tag">Nagios monitoring exposure</span>
           </div>
         </div>
-        <h3 class="project-title">AWS Healthcare AI Triage</h3>
-        <p class="project-category">Cloud Security / Architecture Review</p>
-        <p class="project-description">
-          Led team threat-modelling of an AWS-hosted AI healthcare triage system — GDPR Art.9 violations
-          discovered drove strategic project cancellation, preventing regulatory exposure.
-        </p>
-        <div class="tech-pills">
-          <span class="tech-pill">AWS</span>
-          <span class="tech-pill">STRIDE</span>
-          <span class="tech-pill">GDPR Art.9</span>
-          <span class="tech-pill">Architecture</span>
+      </div>
+
+      <div class="timeline-item reveal fade-left" style="transition-delay:0.2s">
+        <div class="timeline-dot dot-purple"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <span class="timeline-date">2020 – 2025</span>
+            <span class="timeline-status complete">Completed</span>
+          </div>
+          <h3 class="timeline-degree">Hospitality &amp; Operations</h3>
+          <p class="timeline-institution">
+            <i class="fas fa-briefcase"></i> Multiple venues · Jaguar Land Rover
+          </p>
+          <p class="timeline-grade">
+            Customer-facing service, stock handling and operational teamwork alongside full-time study.
+          </p>
         </div>
-        <div class="project-footer">
-          <div class="mitre-mini"></div>
-          <span class="view-hint">Details <i class="fas fa-arrow-right"></i></span>
-        </div>
-      </article>
+      </div>
 
     </div>
   </div>
@@ -607,8 +640,8 @@
 <!-- ════════════════════════════════ CERTIFICATIONS ════════════════════════════════ -->
 <section id="certifications">
   <div class="section-inner">
-    <p class="section-label">// 05. education &amp; training</p>
-    <h2 class="section-title">Education &amp; Training</h2>
+    <p class="section-label">// 05.1 training</p>
+    <h2 class="section-title">Training &amp; Courses</h2>
 
     <div class="certs-row">
       <div class="cert-card reveal scale-in">
@@ -621,8 +654,8 @@
           <p class="cert-issuer">Anthropic</p>
           <h3 class="cert-name">Anthropic Claude Academy</h3>
           <p class="cert-desc">
-            Vendor-neutral security certification covering risk management, network security,
-            security operations, and access controls.
+            Nine courses completed, including Claude Code, MCP, Subagents, Agent Skills and
+            AI capabilities and limitations.
           </p>
           <div class="cert-status">
             <span class="status-dot"></span>
@@ -641,7 +674,7 @@
           <p class="cert-issuer">Future</p>
           <h3 class="cert-name">More Training Planned</h3>
           <p class="cert-desc">
-            Continuing professional development in SOC operations, threat hunting, and GRC disciplines.
+            Continuing professional development in AI security, detection engineering and security automation.
           </p>
           <div class="cert-status cert-status-dim">
             <span class="status-dot status-dot-dim"></span>
@@ -660,10 +693,9 @@
     <p class="section-label">// 06. contact</p>
     <h2 class="section-title">Get In Touch</h2>
     <p class="contact-intro">
-      Open to <span class="text-green">Junior SOC Analyst</span>,
-      <span class="text-cyan">GRC Analyst</span>, and
-      <span class="text-green">Cyber Threat Intelligence</span> roles in the UK.
-      Feel free to reach out through any channel below.
+      Open to <span class="text-green">junior security-engineering</span> and
+      <span class="text-cyan">AI-evaluation</span> roles in the UK — full right to work,
+      no sponsorship required. Feel free to reach out through any channel below.
     </p>
 
     <!-- Contact form — submits via mailto, no backend needed -->
@@ -745,10 +777,10 @@
       <span class="text-green">Shadman Hossain</span>
     </p>
     <p class="footer-tagline">
-      <span class="text-muted">// Junior SOC Analyst · GRC Analyst · Cyber Threat Intelligence</span>
+      <span class="text-muted">// AI Security &amp; Security Engineering · Cybersecurity Graduate</span>
     </p>
     <p class="footer-copy">
-      Coventry, UK &nbsp;·&nbsp; &copy; 2026 &nbsp;·&nbsp;
+      Birmingham, UK &nbsp;·&nbsp; &copy; 2026 &nbsp;·&nbsp;
       <span class="text-muted">Built with HTML · CSS · JavaScript · GitHub Pages</span>
     </p>
   </div>
