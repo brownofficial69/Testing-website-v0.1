@@ -1,0 +1,7 @@
+#grid { width: 100%; max-width: 520px; aspect-ratio: 1; display: block; margin: 0 auto 14px; background: #05080d; border: 1px solid var(--line); border-radius: 10px; image-rendering: pixelated; }
+#curve, #hist { width: 100%; height: 190px; display: block; }
+.ctl { display: grid; gap: 6px; margin-bottom: 12px; }
+.ctl label { font-size: .85rem; color: #c3cdde; }
+.ctl output { font-family: 'JetBrains Mono', monospace; color: var(--a); }
+.small { font-size: .8rem; color: var(--mute); line-height: 1.45; margin-top: 8px; }
+.stat b { font-size: 1rem; }
