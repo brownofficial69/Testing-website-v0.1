@@ -73,13 +73,28 @@ function drawCurve() {
   const half = 1.1774 * Math.sqrt(N); x.fillStyle = '#ffb547'; x.beginPath(); x.arc(px(half), py(.5), 4.5, 0, 6.283); x.fill(); x.textAlign = 'left'; x.fillText('50% at ≈ ' + fmt(half), px(half) + 8, py(.5) + 14);
 }
 
+/* ───────── birthdays in a room ───────── */
+function roomTheory(n) { let q = 1; for (let i = 0; i < n; i++) q *= (365 - i) / 365; return 1 - q; }
+function roomDraw() {
+  const c = $('room'), x = setupCanvas(c), W = c.clientWidth, H = c.clientHeight, n = +$('people').value, cols = 73, rows = 5, cw = (W - 16) / cols, ch = (H - 16) / rows;
+  const counts = new Uint8Array(365); for (let i = 0; i < n; i++) counts[Math.floor(Math.random() * 365)]++; let shared = false;
+  x.clearRect(0, 0, W, H);
+  for (let d = 0; d < 365; d++) { const cx = 8 + (d % cols) * cw + cw / 2, cy = 8 + Math.floor(d / cols) * ch + ch / 2, k = counts[d]; if (k > 1) shared = true;
+    x.fillStyle = k > 1 ? '#ff5c6c' : k === 1 ? '#5cf2b0' : 'rgba(150,175,210,.14)'; x.beginPath(); x.arc(cx, cy, k > 1 ? Math.min(cw, ch) * .46 : k ? Math.min(cw, ch) * .34 : 1.6, 0, 6.283); x.fill(); }
+  $('roomTxt').textContent = `${n} people: a ${(roomTheory(n) * 100).toFixed(0)}% chance that at least two share a birthday. This room ${shared ? 'does have a shared birthday (red).' : 'has none.'}`;
+}
+$('people').addEventListener('input', () => { $('peopleOut').textContent = $('people').value; roomDraw(); });
+$('newroom').addEventListener('click', roomDraw);
+$('simroom').addEventListener('click', () => { const n = +$('people').value; let hit = 0; for (let r = 0; r < 5000; r++) { const seen = new Set(); for (let i = 0; i < n; i++) { const d = Math.floor(Math.random() * 365); if (seen.has(d)) { hit++; break; } seen.add(d); } }
+  $('roomTxt').textContent = `${hit.toLocaleString('en-GB')} of 5,000 simulated rooms of ${n} had a shared birthday (${(hit / 50).toFixed(1)}%). The formula says ${(roomTheory(n) * 100).toFixed(1)}%.`; });
+
 /* ───────── wiring ───────── */
 function labels() { $('bitsOut').textContent = bits(); $('spaceOut').textContent = fmt(space()); $('guessOut').textContent = fmt(guess()); $('chartTitle').textContent = `CHANCE OF A COLLISION AFTER k TRIES · ${bits()}-BIT HASH`; }
 bitsEl.addEventListener('input', () => { result = null; $('histBox').hidden = true; labels(); clearGrid(); drawCurve(); });
 guessEl.addEventListener('input', () => { labels(); drawCurve(); });
 $('go').addEventListener('click', animateRun); $('many').addEventListener('click', many);
-addEventListener('resize', drawCurve);
-labels(); clearGrid(); drawCurve();
+addEventListener('resize', () => { drawCurve(); roomDraw(); });
+labels(); clearGrid(); drawCurve(); roomDraw();
 try { const b = +localStorage.getItem('collisionBest'); if (b) $('best').textContent = `Your best guess so far was off by ${b.toFixed(1)}×.`; } catch (e) { /* storage off */ }
 window.__coll = { collideOnce, expectedTries, setBits(b) { bitsEl.value = b; bitsEl.dispatchEvent(new Event('input')); }, run: animateRun, many };
 })();

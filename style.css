@@ -2527,7 +2527,7 @@ html[data-theme="phosphor"] body::after {
 .theme-menu-foot { display: block; padding: .6rem .7rem .4rem; font-family: var(--font-mono); font-size: .72rem; color: var(--accent-cyan); }
 
 /* theme change: circular reveal from the picker (View Transitions) */
-::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+html.theme-switching::view-transition-old(root), html.theme-switching::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 
 /* ════════════════════════════════════════════════════════════
    MOTION — hover responses only; reduced motion switches them off
@@ -2549,3 +2549,14 @@ html[data-theme="phosphor"] body::after {
 .hero-alt { margin-top: 1.4rem; font-size: 0.85rem; color: var(--text-secondary); max-width: 44ch; margin-left: auto; margin-right: auto; line-height: 1.6; }
 .hero-alt a { color: var(--accent-cyan); text-decoration: underline; text-decoration-color: rgba(var(--c-rgb), .4); text-underline-offset: 3px; transition: color var(--transition-fast), text-decoration-color var(--transition-fast); }
 .hero-alt a:hover { color: var(--accent-green); text-decoration-color: currentColor; }
+
+/* ───── polish: smoother anchors, calmer reveals, clearer focus ───── */
+html { scroll-padding-top: 76px; }
+section[id] { scroll-margin-top: 76px; }
+.nav-play { color: var(--accent-cyan); }
+.reveal { transition-timing-function: cubic-bezier(.16, 1, .3, 1); }
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 3px; border-radius: 4px; }
+.btn { transition: transform var(--transition-fast), box-shadow var(--transition-med), border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast); }
+.btn:active { transform: translateY(1px) scale(.985); }
+.project-card, .timeline-card, .cert-card, .stat-card, .contact-card { transition: transform .45s cubic-bezier(.16, 1, .3, 1), border-color .3s ease, box-shadow .45s ease, background .3s ease; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

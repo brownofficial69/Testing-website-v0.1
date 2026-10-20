@@ -33,3 +33,11 @@ button.c { background: none; border: 0; cursor: pointer; font: inherit; }
 .ic i { display: block; width: 100%; background: var(--c); border-radius: 3px 3px 0 0; }
 .ic .hi i { background: var(--a); }
 .keyin { width: 160px; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-family: 'JetBrains Mono', monospace; letter-spacing: .3em; text-transform: uppercase; }
+
+.chart button { position: relative; }
+.chart .ghost { position: absolute; left: 12%; right: 12%; height: 0; border-top: 2px dashed rgba(92, 242, 176, .9); pointer-events: none; }
+.eng + .chart::after { content: none; }
+.ch .p { transition: color .25s, transform .25s; }
+.ch .p:not(.unk) { animation: pop .3s cubic-bezier(.2, .8, .2, 1); }
+@keyframes pop { from { transform: translateY(-6px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ch .p:not(.unk) { animation: none; } }

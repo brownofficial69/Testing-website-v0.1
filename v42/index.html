@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ADAM / EVE / Mizan Arena | Shadman Hossain</title>
+<meta name="description" content="Watch an AI agent try to complete a mission while an adversarial critic and an independent policy mediator stand between it and the tools. Run missions, approve actions and try to break the mediator yourself." />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../transitions.css" />
+</head>
+<body>
+<header class="hero">
+  <nav class="topnav"><a href="../versions.html">Gallery</a><a href="../demos/adam-eve-mizan.html">Simple demo</a><a href="../index.html">Main site</a></nav>
+  <p class="eyebrow">Research prototype · 2026</p>
+  <h1>ADAM <i>/</i> EVE <i>/</i> Mizan</h1>
+  <p class="lede">An AI agent should not be the thing that decides what it is allowed to do. Here the agent proposes, a critic attacks the proposal, and a separate mediator that never reads the agent's explanation applies the policy.</p>
+  <div class="pillars">
+    <div><b class="a">ADAM</b><span>proposes actions</span></div>
+    <div><b class="e">EVE</b><span>critiques them adversarially, and can only add restrictions</span></div>
+    <div><b class="m">Mizan</b><span>decides from structured fields and policy alone</span></div>
+  </div>
+</header>
+
+<main class="arena">
+  <section class="stagecol">
+    <div class="stage"><canvas id="cv" aria-label="Diagram of the operator, the untrusted world, the three agents and the tools, with requests moving between them"></canvas>
+      <div class="gate" id="gate" hidden role="dialog" aria-label="Human approval required"></div>
+    </div>
+    <div class="missions" id="missions" role="tablist" aria-label="Missions"></div>
+    <div class="row ctl">
+      <button class="btn go" id="run" type="button">Run mission</button>
+      <button class="btn" id="reset" type="button">Reset</button>
+      <label class="spd">Speed <select id="speed"><option value="1.6">Slow</option><option value="1" selected>Normal</option><option value="0.45">Fast</option></select></label>
+      <span class="mono small" id="missionGoal"></span>
+    </div>
+    <div class="box" id="read" hidden><h2>WHAT ADAM READ FROM THE WORLD (untrusted)</h2><p class="doc" id="readTxt"></p></div>
+    <div class="box" id="red" hidden>
+      <h2>RED TEAM · TRY TO GET AN ACTION THROUGH MIZAN</h2>
+      <div class="presets" id="presets"></div>
+      <form id="rtForm" class="rt">
+        <label>Tool <select id="rtTool"><option>read_file</option><option>write_file</option><option>http_get</option><option>send_email</option><option>run_shell</option><option>delete_records</option><option>memory_write</option></select></label>
+        <label>Target <input id="rtTarget" autocomplete="off" /></label>
+        <label class="wide">Payload <input id="rtPayload" autocomplete="off" /></label>
+        <label class="wide">ADAM's stated reason (Mizan never reads this) <input id="rtWhy" autocomplete="off" /></label>
+        <label>Instruction came from <select id="rtSrc"><option value="operator">the operator</option><option value="untrusted">untrusted content</option></select></label>
+        <label class="chk"><input type="checkbox" id="rtForge" /> claim a human already approved it</label>
+        <button class="btn go" type="submit">Submit to the pipeline</button>
+      </form>
+      <p class="small" id="rtScore"></p>
+    </div>
+  </section>
+
+  <aside class="side">
+    <div class="box scoreb" id="score"></div>
+    <div class="box caps"><h2>CAPABILITIES GRANTED FOR THIS MISSION</h2><div id="caps" class="capchips"></div></div>
+    <div class="box"><h2>TRACE</h2><ol id="trace" class="trace" aria-live="polite"><li class="empty">Pick a mission and press Run.</li></ol></div>
+  </aside>
+</main>
+
+<section class="ledger box" aria-label="Memory ledger">
+  <div class="lhead"><h2>TAMPER-EVIDENT MEMORY LEDGER · SHA-256 HASH CHAIN</h2><span class="mono small" id="anchor"></span></div>
+  <div class="chain" id="chain"></div>
+  <div class="row">
+    <button class="btn" id="tamper" type="button">Edit an entry</button>
+    <button class="btn" id="rehash" type="button">Edit and re-hash the chain</button>
+    <button class="btn go" id="verify" type="button">Verify</button>
+    <span id="vres" class="small" role="status"></span>
+  </div>
+  <p class="small">Editing an entry breaks the chain at that block. An attacker who edits and recomputes every later hash still fails, because the final hash was anchored separately when the entry was written.</p>
+</section>
+
+<section class="why box">
+  <h2>WHY THE SEPARATION MATTERS</h2>
+  <div class="cols">
+    <p><b>Mizan never reads the rationale.</b> The agent's explanation is the easiest place to hide a manipulation, so the mediator decides only from the structured request and the policy.</p>
+    <p><b>EVE can only restrict.</b> A critic that could approve things would just become another target. Its findings can add a denial, never remove one.</p>
+    <p><b>Approval is bound to the request.</b> A human approves one exact request and gets a token for it. Claiming approval in text, or changing a field afterwards, does not work.</p>
+    <p><b>Memory is evidence.</b> Writes are screened for injected instructions and chained by hash, so poisoning the agent's memory is both harder and detectable.</p>
+  </div>
+  <p class="small">This page is an illustration: the rules are deterministic and run in your browser. The research prototype goes further and keeps an explicit no-go boundary for consequential autonomous use.</p>
+</section>
+<script src="app.js"></script>
+</body>
+</html>

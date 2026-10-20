@@ -1744,7 +1744,9 @@ function initThemes() {
     if (!document.startViewTransition || reduced()) { paint(id); return; }
     const x = origin ? origin.x : innerWidth - 40, y = origin ? origin.y : 30;
     const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    root.classList.add('theme-switching');
     const vt = document.startViewTransition(() => paint(id));
+    vt.finished.finally(() => root.classList.remove('theme-switching'));
     vt.ready.then(() => root.animate(
       { clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },
       { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)', pseudoElement: '::view-transition-new(root)' }

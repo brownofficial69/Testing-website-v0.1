@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Gallery | Shadman Hossain</title>
-  <meta name="description" content="Six interactive ways to explore Shadman Hossain's CV: a 3D threat graph, a playable detection lab, a neon city, a DNA helix, a metro map and a periodic table." />
+  <meta name="description" content="Shadman Hossain's interactive work: a live agent-authorization arena, six ways to explore the CV, and games built on real security and science." />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,99 +13,130 @@
     :root { --bg: #030d1a; --card: #071428; --line: rgba(0, 255, 136, .16); --line-hi: rgba(0, 255, 136, .6); --text: #e2e8f0; --muted: #94a3b8; --accent: #00ff88; --accent2: #00d4ff; }
     @media (prefers-color-scheme: light) { :root { --bg: #eef3fa; --card: #fff; --line: rgba(11, 74, 160, .18); --line-hi: rgba(11, 74, 160, .6); --text: #0b2447; --muted: #4b6280; --accent: #0b4aa0; --accent2: #007a8a; } }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', system-ui, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
     a { color: inherit; }
+    a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent2); outline-offset: 3px; border-radius: 6px; }
     .wrap { max-width: 1180px; margin: 0 auto; padding: 56px 24px 80px; }
     .back { font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--accent2); text-decoration: none; }
     .back:hover { text-decoration: underline; }
-    h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; margin: 28px 0 14px; letter-spacing: -.02em; max-width: 17ch; }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.08; margin: 28px 0 14px; letter-spacing: -.02em; max-width: 18ch; }
     .lede { color: var(--muted); max-width: 62ch; font-size: 1.05rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; margin-top: 44px; }
-    .card { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; text-decoration: none; transition: border-color .25s, transform .35s cubic-bezier(.16, 1, .3, 1); }
-    .card:hover, .card:focus-visible { border-color: var(--line-hi); transform: translateY(-4px); outline: none; }
+    h3 { margin: 64px 0 6px; font-size: 1.25rem; }
+    .note { color: var(--muted); font-size: .92rem; max-width: 62ch; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 26px; margin-top: 26px; }
+    .card { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; text-decoration: none; transition: border-color .25s, transform .45s cubic-bezier(.16, 1, .3, 1), box-shadow .45s; animation: cardIn .7s cubic-bezier(.16, 1, .3, 1) both; }
+    .card:hover, .card:focus-visible { border-color: var(--line-hi); transform: translateY(-5px); box-shadow: 0 24px 50px rgba(0, 0, 0, .25); outline: none; }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(22px); } }
+    .grid .card:nth-child(2) { animation-delay: .06s; } .grid .card:nth-child(3) { animation-delay: .12s; } .grid .card:nth-child(4) { animation-delay: .18s; } .grid .card:nth-child(5) { animation-delay: .24s; } .grid .card:nth-child(6) { animation-delay: .3s; }
     .shot { aspect-ratio: 16 / 10; overflow: hidden; background: #000; border-bottom: 1px solid var(--line); }
-    .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; transition: transform .8s cubic-bezier(.16, 1, .3, 1); }
-    .card:hover .shot img { transform: scale(1.04); }
+    .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; transition: transform .9s cubic-bezier(.16, 1, .3, 1); }
+    .card:hover .shot img { transform: scale(1.05); }
     .body { padding: 18px 20px 20px; display: flex; flex-direction: column; flex: 1; }
     .body h2 { font-size: 1.15rem; margin-bottom: 2px; }
     .do { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent2); }
     .body p { color: var(--muted); font-size: .93rem; margin-top: 10px; }
     .open { margin-top: auto; padding-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--accent); }
-    h3 { margin: 64px 0 8px; font-size: 1.2rem; }
-    .note { color: var(--muted); font-size: .92rem; max-width: 62ch; }
-    details { margin-top: 28px; border-top: 1px solid var(--line); padding-top: 18px; }
+    .open::after { content: " \2192"; display: inline-block; transition: transform .3s cubic-bezier(.16, 1, .3, 1); } .card:hover .open::after { transform: translateX(5px); }
+
+    .feature { display: grid; grid-template-columns: 1.15fr 1fr; margin-top: 30px; }
+    .feature .shot { aspect-ratio: auto; min-height: 280px; border-bottom: 0; border-right: 1px solid var(--line); }
+    .feature .body { padding: 28px 30px; justify-content: center; }
+    .feature .tag { font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent); }
+    .feature h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); letter-spacing: -.02em; margin: 6px 0 6px; line-height: 1.08; }
+    .feature p { font-size: 1rem; }
+    .feature .open { padding-top: 22px; font-size: .9rem; }
+    @media (max-width: 760px) { .feature { grid-template-columns: 1fr; } .feature .shot { border-right: 0; border-bottom: 1px solid var(--line); min-height: 0; aspect-ratio: 16 / 10; } }
+
+    details { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 18px; }
     summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: .85rem; color: var(--accent2); }
     .archive { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .archive a { font-family: 'JetBrains Mono', monospace; font-size: .78rem; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; text-decoration: none; color: var(--muted); }
+    .archive a { font-family: 'JetBrains Mono', monospace; font-size: .78rem; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; text-decoration: none; color: var(--muted); transition: border-color .2s, color .2s; }
     .archive a:hover { border-color: var(--line-hi); color: var(--text); }
-    @media (prefers-reduced-motion: reduce) { .card, .shot img { transition: none; } .card:hover { transform: none; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .card, .shot img, .open::after { transition: none; animation: none; } .card:hover { transform: none; } }
   </style>
+  <link rel="stylesheet" href="transitions.css" />
 </head>
 <body>
 <div class="wrap">
   <a class="back" href="index.html">&larr; Back to the portfolio</a>
-  <h1>Six ways to explore the same CV, and three games</h1>
-  <p class="lede">Each one turns my work into something you can pull, play or fly through. They run in your browser and use only what is on my CV.</p>
+  <h1>Things to explore and play with</h1>
+  <p class="lede">Everything here runs in your browser and draws on my CV. Start with the biggest project, then pick a way to explore the rest.</p>
 
+  <a class="card feature" href="v42/index.html">
+    <div class="shot"><img src="gallery/v42.jpg" alt="A diagram of an operator, an untrusted world, three agents and six tools, with requests moving between them" /></div>
+    <div class="body"><span class="tag">My largest project</span><h2>ADAM / EVE / Mizan</h2><span class="do">run missions · approve actions · try to break it</span>
+      <p>An AI agent proposes actions, an adversarial critic attacks them, and an independent mediator that never reads the agent's explanation applies the policy. Run a hijacked web page through it, approve an irreversible deletion, tamper with the memory ledger, or play the attacker.</p>
+      <span class="open">Open the arena</span></div>
+  </a>
+
+  <h3>Six ways to explore the CV</h3>
+  <p class="note">The same work, as a graph, a city, a helix, a metro map, a periodic table and a detection game.</p>
   <div class="grid">
     <a class="card" href="v36/index.html">
       <div class="shot"><img src="gallery/v36.jpg" alt="A glowing 3D graph of linked skills and projects around a photo of Shadman" loading="lazy" /></div>
       <div class="body"><h2>Threat Graph</h2><span class="do">orbit · search · correlate</span>
         <p>Every project, skill and framework as a linked node in 3D space. Search it, filter it, fly into a node, or press Correlate and watch it cluster the way ThreatWeave groups indicators.</p>
-        <span class="open">Open &rarr;</span></div>
+        <span class="open">Open</span></div>
     </a>
     <a class="card" href="v37/index.html">
       <div class="shot"><img src="gallery/v37.jpg" alt="A network map and detection rules for a simulated intrusion" loading="lazy" /></div>
       <div class="body"><h2>Intrusion Replay</h2><span class="do">tune rules · stop the attack</span>
         <p>The SOC Detection Lab as a game. Watch a four-stage intrusion with every rule off, then tune the detections: too loose floods the analyst, too lax and the data leaves.</p>
-        <span class="open">Open &rarr;</span></div>
+        <span class="open">Open</span></div>
     </a>
     <a class="card" href="v19/index.html">
       <div class="shot"><img src="gallery/v19.jpg" alt="A neon night city with six glowing landmark towers" loading="lazy" /></div>
       <div class="body"><h2>CyberCity</h2><span class="do">fly · tour · click a tower</span>
         <p>My six projects as landmarks in a 3D night city, with traffic, rain and a guided tour that flies into each one.</p>
-        <span class="open">Open &rarr;</span></div>
+        <span class="open">Open</span></div>
     </a>
     <a class="card" href="v32/index.html">
       <div class="shot"><img src="gallery/v32.jpg" alt="A glowing double helix with projects on one strand and what they show on the other" loading="lazy" /></div>
       <div class="body"><h2>DNA Helix</h2><span class="do">rotate · unzip a pair</span>
         <p>What I built on one strand, what it demonstrates on the other. Click any base pair and it unzips to show the details.</p>
-        <span class="open">Open &rarr;</span></div>
+        <span class="open">Open</span></div>
     </a>
     <a class="card" href="v28/index.html">
       <div class="shot"><img src="gallery/v28.jpg" alt="A metro map with five coloured lines for education, security, projects, AI and work" loading="lazy" /></div>
       <div class="body"><h2>Career Metro</h2><span class="do">watch it build · ride a line</span>
         <p>Five lines through six years. Interchanges mark the work that counted twice, like the dissertation that is also a project. Zoom, pan and ride any line.</p>
-        <span class="open">Open &rarr;</span></div>
+        <span class="open">Open</span></div>
     </a>
     <a class="card" href="v27/index.html">
       <div class="shot"><img src="gallery/v27.jpg" alt="A periodic table of skills with bonds drawn between selected elements" loading="lazy" /></div>
       <div class="body"><h2>Periodic Table of Shadman</h2><span class="do">mix elements · form compounds</span>
         <p>Pick tools and skills to see which of my projects they combine into, or pick a project and watch its elements bond.</p>
-        <span class="open">Open &rarr;</span></div>
+        <span class="open">Open</span></div>
     </a>
   </div>
 
-  <h3>Three science games</h3>
-  <p class="note">Small experiments from the maths and the history behind security. Each one lets you find the result yourself.</p>
+  <h3>Games</h3>
+  <p class="note">Four small ones: a chess engine I wrote from scratch, and three experiments from the maths and history behind security. Each lets you find the result yourself.</p>
   <div class="grid">
+    <a class="card" href="v41/index.html">
+      <div class="shot"><img src="gallery/v41.jpg" alt="A chessboard mid-game with the engine's evaluation bar" loading="lazy" /></div>
+      <div class="body"><h2>Chess</h2><span class="do">play the engine · three strengths</span>
+        <p>A chess engine written from scratch in JavaScript, with move generation checked against the standard perft counts, alpha-beta search and an evaluation bar. Drag a piece or click a square.</p>
+        <span class="open">Play</span></div>
+    </a>
     <a class="card" href="v38/index.html">
       <div class="shot"><img src="gallery/v38.jpg" alt="A substitution cipher being solved with a letter frequency chart" loading="lazy" /></div>
-      <div class="body"><h2>Cipher Lab</h2><span class="do">frequency analysis · index of coincidence</span>
-        <p>Break a Caesar shift, a substitution cipher and a Vigenère cipher using the methods cryptanalysts discovered, from a ninth-century manuscript to the 1920s.</p>
-        <span class="open">Play &rarr;</span></div>
+      <div class="body"><h2>Cipher Lab</h2><span class="do">frequency analysis · one-time pad</span>
+        <p>Break a Caesar shift, a substitution cipher and a Vigenère cipher with the methods cryptanalysts discovered, then meet the one cipher that cannot be broken.</p>
+        <span class="open">Play</span></div>
     </a>
     <a class="card" href="v39/index.html">
       <div class="shot"><img src="gallery/v39.jpg" alt="A network of machines with patched hubs and an outbreak result chart" loading="lazy" /></div>
       <div class="body"><h2>Worm Outbreak</h2><span class="do">epidemic model · network hubs</span>
-        <p>Contain a worm with 10 patches using the SIR epidemic model. Patch at random and it spreads; patch the hubs and the threshold collapses.</p>
-        <span class="open">Play &rarr;</span></div>
+        <p>Contain a worm with 10 patches using the SIR epidemic model. Patch the hubs and the outbreak collapses, then switch to an evenly connected network and watch the advantage vanish.</p>
+        <span class="open">Play</span></div>
     </a>
     <a class="card" href="v40/index.html">
       <div class="shot"><img src="gallery/v40.jpg" alt="A grid of hash values with one red collision" loading="lazy" /></div>
       <div class="body"><h2>Collision Lab</h2><span class="do">birthday paradox · hash collisions</span>
-        <p>Guess how many hashes it takes to find a collision, then watch the maths win. A hash breaks at about the square root of its size, not its size.</p>
-        <span class="open">Play &rarr;</span></div>
+        <p>Guess how many hashes it takes to find a collision, watch the maths win, then check the classic birthday room for yourself.</p>
+        <span class="open">Play</span></div>
     </a>
   </div>
 

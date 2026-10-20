@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../labs.css" />
 <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../transitions.css" />
 </head>
 <body>
 <header class="lab-top">
@@ -38,6 +39,13 @@
         <button class="btn go" id="go" type="button">Hash until a collision</button>
         <button class="btn" id="many" type="button">Repeat 40 times</button>
       </div>
+    </div>
+    <div class="box">
+      <h2>THE CLASSIC · BIRTHDAYS IN A ROOM</h2>
+      <canvas id="room" aria-label="365 days of the year; each person is a dot on their birthday, and shared birthdays are red"></canvas>
+      <div class="row ctl"><label for="people">People in the room <output id="peopleOut">23</output></label><input id="people" type="range" min="2" max="80" value="23" /></div>
+      <div class="row"><button class="btn" id="newroom" type="button">New room</button><button class="btn" id="simroom" type="button">Simulate 5,000 rooms</button></div>
+      <p class="small" id="roomTxt"></p>
     </div>
     <div class="box">
       <h2 id="chartTitle">CHANCE OF A COLLISION AFTER k TRIES</h2>
