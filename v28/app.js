@@ -36,7 +36,7 @@ const S = [
   { lane: 'prj', x: 1180, ix: 'sv',  name: ['SecureView'], sub: '2026', lp: 'a', t: 'A SOC triage dashboard that prioritises alerts and gives remediation guidance, built on typed LLM data contracts. 17/17 unit tests pass.', acts: [['Try the demo', '../demos/secureview.html'], ['GitHub', 'https://github.com/shaddiegit/secureview']] },
   { lane: 'prj', x: 1280, ix: 'aem', name: ['ADAM / EVE / Mizan'], sub: '2026', lp: 'a', t: 'An AI-agent authorization prototype: proposals, adversarial critique and independent policy mediation kept apart. 21/21 Phase-8 and 7/7 concept tests pass.', acts: [['Try the demo', '../demos/adam-eve-mizan.html'], ['GitHub', 'https://github.com/brownofficial69/adam-eve-mizan']] },
   /* ai */
-  { lane: 'ai', x: 830,  name: ['Claude Academy'], sub: '2026 · nine courses', lp: 'b', t: 'Claude Code, MCP, subagents, agent skills and what AI systems can and cannot do.' },
+  { lane: 'ai', x: 830,  name: ['Claude Academy'], sub: '2026 · seven badges', lp: 'b', t: 'Seven completion badges: Claude 101, MCP, Claude Code in Action, Claude Code 101, AI capabilities and limitations, Claude Cowork and AI Fluency.' },
   { lane: 'ai', x: 1080, ix: 'tw',  name: ['ThreatWeave'], sub: 'Claude API', lp: 'b', t: null },
   { lane: 'ai', x: 1180, ix: 'sv',  name: ['SecureView'], sub: 'typed LLM output', lp: 'b', t: null },
   { lane: 'ai', x: 1280, ix: 'aem', name: ['ADAM / EVE / Mizan'], sub: 'agent safety', lp: 'b', t: null },

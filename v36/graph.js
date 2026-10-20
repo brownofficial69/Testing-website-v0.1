@@ -50,7 +50,7 @@ const N = [
     actions: [['Try the demo', '../demos/supply-chain-risk.html']] },
 
   /* ai */
-  { id: 'claude', g: 'ai', label: 'Claude API', kind: 'AI · Anthropic SDK', desc: 'Used in ThreatWeave for dossiers and SecureView for triage, and studied through nine Claude Academy courses.' },
+  { id: 'claude', g: 'ai', label: 'Claude API', kind: 'AI · Anthropic SDK', desc: 'Used in ThreatWeave for dossiers and SecureView for triage, and studied through Claude Academy coursework.' },
   { id: 'mcp', g: 'ai', label: 'MCP', kind: 'AI · Model Context Protocol', desc: 'Model Context Protocol fundamentals, covered in the Claude Academy courses.' },
   { id: 'evals', g: 'ai', label: 'Evaluation design', kind: 'AI · evaluation', desc: 'Designing tests that show what an AI system can and cannot be trusted to do.' },
   { id: 'toolctl', g: 'ai', label: 'Tool-use controls', kind: 'AI · agent safety', desc: 'Limiting which tools an agent can call and under what conditions.' },
@@ -91,7 +91,7 @@ const N = [
     desc: 'Ethical Hacking and Cyber Security, graduating with First-Class Honours.',
     facts: ['Bachelor of Science with Honours, First Class', 'Dissertation modules: 87% (preparation) and 76% (delivery)'] },
   { id: 'btec', g: 'edu', label: 'BTEC Level 3 IT', kind: 'Birmingham Metropolitan College · 2020-22', desc: 'Double Distinction Merit.' },
-  { id: 'acad', g: 'edu', label: 'Claude Academy', kind: 'Anthropic · 2026', desc: 'Nine courses, including Claude Code, MCP, Subagents, Agent Skills and AI capabilities and limitations.' },
+  { id: 'acad', g: 'edu', label: 'Claude Academy', kind: 'Anthropic · 2026', desc: 'Seven completion badges: Claude 101, Introduction to MCP, Claude Code in Action, Claude Code 101, AI Capabilities and Limitations, Introduction to Claude Cowork and AI Fluency.' },
   { id: 'fdm', g: 'edu', label: 'FDM Group', kind: 'Consultant · current', desc: 'First-line Outlook and Teams support on a Deutsche Bank assignment, working in a ServiceNow ticket workflow and escalating what needs more technical help.' },
 
   /* support */
