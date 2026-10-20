@@ -131,3 +131,6 @@ body{
   .bp-stats{gap:20px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* portrait */
+.hud-photo{width:34px;height:42px;object-fit:cover;object-position:50% 20%;border-radius:5px;border:1px solid rgba(120,200,255,.6);margin-right:10px;vertical-align:middle}

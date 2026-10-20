@@ -17,3 +17,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:1
 .map-footer a:hover{color:var(--text)}
 .map-ver{margin-left:auto;font-family:var(--mono);font-size:11px;color:#3a3a55}
 @media(max-width:640px){.map-header{flex-direction:column;gap:8px;text-align:center}.map-footer{justify-content:center}.map-ver{margin:0}}
+
+/* portrait */
+.map-photo{width:44px;height:55px;object-fit:cover;object-position:50% 20%;border-radius:6px;border:2px solid #fff;margin-right:12px;vertical-align:middle}
+
+.map-logo{display:inline-flex;align-items:center}
+
+.map-photo{flex:none;display:block;width:44px!important;height:55px!important;margin-right:12px!important}
