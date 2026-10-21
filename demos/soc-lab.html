@@ -3,6 +3,7 @@
 <title>SOC Detection Lab Demo | Shadman Hossain</title><link rel="stylesheet" href="demo.css"/>
 <style>.hit td{background:#2a1a1e}.hit2 td{background:#2a2414}.hit3 td{background:#14222a}.rule{border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:12px}.rule label{font-size:12px;color:var(--dim);display:inline-flex;align-items:center;gap:6px;margin-right:12px}.rule input[type=number]{width:70px;padding:4px 6px}.scroll{max-height:460px;overflow:auto}</style>  <link rel="stylesheet" href="../transitions.css?v=20261022" />
   <script src="../site-fx.js" defer></script>
+<link rel="stylesheet" href="../theme.css?v=20261023"/><link rel="stylesheet" href="../fxpage.css?v=20261023"/>
 </head>
 <body>
 <div class="top"><h1>SOC Detection <span>Lab</span> demo</h1><nav><a href="index.html">All demos</a><a href="../versions.html">Portfolio</a></nav></div>
@@ -82,4 +83,6 @@ $('run').onclick=()=>{
  if($('e4').checked)E.filter(e=>e.type==='proc'&&/localgroup administrators/i.test(e.cmd)&&/\/add/i.test(e.cmd)).forEach(e=>{flag([e.id],'R4');F.push({r:'R4',sev:'medium',t:'Local admin added on '+e.host,d:`Event ${e.id}: ${e.cmd}`});});
  draw();$('sum').textContent=`${F.length} finding(s)`;
  $('find').innerHTML=F.length?F.map(f=>`<div class="rule"><span class="sev ${f.sev}">${f.sev}</span> <span class="tag">${f.r}</span> <b>${esc(f.t)}</b><p class="muted" style="margin-top:6px">${esc(f.d)}</p></div>`).join(''):'No detections. Try loosening the thresholds or windows.';};
-</script></body></html>
+</script><script src="../fx.js?v=20261023"></script>
+<script src="../page-fx.js?v=20261023"></script>
+</body></html>
