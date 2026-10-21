@@ -1,9 +1,6 @@
 /* ════════════════════════════════════════════════════════════
    PROJECT DATA
    ════════════════════════════════════════════════════════════ */
-/* Theme-aware canvas colours (RGB triplets), updated by the theme manager */
-const T = { g: '0,255,136', c: '0,212,255' };
-
 const PROJECTS = {
   'threatweave': {
     demo: 'demos/threatweave.html',
@@ -264,6 +261,10 @@ const SoundEngine = (() => {
     /* mobile menu open */
     menuOpen()  { sweep(320, 640, 'sine', 0.055, 0.14); },
 
+    /* water drop: a quick downward pitch bend and a softer echo, like a bead hitting still water */
+    drop()      { sweep(1500, 420, 'sine', 0.05, 0.13); osc(210, 'sine', 0.02, 0.01, 0.2, 0.05); },
+    bigDrop()   { sweep(1100, 260, 'sine', 0.085, 0.24); sweep(520, 130, 'sine', 0.045, 0.4, 0.04); osc(160, 'sine', 0.03, 0.02, 0.5, 0.1); },
+
     /* mobile menu close */
     menuClose() { sweep(640, 320, 'sine', 0.045, 0.11); },
   };
@@ -307,417 +308,7 @@ function initSoundToggle() {
      7. Corner brackets   — animated terminal corners
      8. Glitch            — occasional slice displacement
    ════════════════════════════════════════════════════════════ */
-function initCanvas() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
 
-  const ctx  = canvas.getContext('2d');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const mouse = { x: null, y: null };
-
-  /* ── resize ── */
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initHexGrid();
-  }
-
-  /* ════ LAYER 1 — HEX GRID ════ */
-  const HEX_R = 36;
-  let hexCells = [];
-
-  function initHexGrid() {
-    hexCells = [];
-    const hx = HEX_R * Math.sqrt(3);
-    const hy = HEX_R * 1.5;
-    for (let row = 0; row * hy < canvas.height + HEX_R * 2; row++) {
-      for (let col = 0; col * hx < canvas.width + hx; col++) {
-        hexCells.push({
-          x:         col * hx + (row % 2 ? hx / 2 : 0),
-          y:         row * hy,
-          pulse:     0,
-          nextPulse: Math.random() * 3000,
-        });
-      }
-    }
-  }
-
-  function hexPath(cx, cy, r) {
-    ctx.beginPath();
-    for (let i = 0; i < 6; i++) {
-      const a  = (Math.PI / 3) * i - Math.PI / 6;
-      const px = cx + r * Math.cos(a);
-      const py = cy + r * Math.sin(a);
-      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-    }
-    ctx.closePath();
-  }
-
-  function updateHexGrid(ts) {
-    hexCells.forEach(c => {
-      if (ts > c.nextPulse) {
-        c.pulse     = 1;
-        c.nextPulse = ts + 1200 + Math.random() * 6000;
-      }
-      if (c.pulse > 0) c.pulse = Math.max(0, c.pulse - 0.018);
-    });
-  }
-
-  function drawHexGrid() {
-    hexCells.forEach(c => {
-      const a = 0.05 + c.pulse * 0.26;
-      hexPath(c.x, c.y, HEX_R - 1);
-      ctx.strokeStyle = `rgba(${T.g},${a})`;
-      ctx.lineWidth   = 0.6;
-      ctx.stroke();
-      if (c.pulse > 0.25) {
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${T.g},${c.pulse * 0.7})`;
-        ctx.fill();
-      }
-    });
-  }
-
-  /* ════ LAYER 2 — MATRIX RAIN ════ */
-  const MATRIX_CHARS =
-    'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ' +
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
-    '0123456789ABCDEF' +
-    '!@#$%&*<>[]{}/\\|' +
-    '01001101010110001';
-  const FONT_SIZE = 13;
-  let matrixCols  = [];
-
-  function randChar() {
-    return MATRIX_CHARS[Math.floor(Math.random() * MATRIX_CHARS.length)];
-  }
-
-  function initMatrixColumns() {
-    matrixCols = [];
-    const count = Math.floor(canvas.width / FONT_SIZE);
-    for (let i = 0; i < count; i++) {
-      if (Math.random() > 0.38) continue;
-      const len = 10 + Math.floor(Math.random() * 28);
-      matrixCols.push({
-        x:           i * FONT_SIZE,
-        y:           Math.random() * -canvas.height,
-        speed:       0.6 + Math.random() * 2.0,
-        chars:       Array.from({ length: len + 5 }, randChar),
-        len,
-        opacity:     0.15 + Math.random() * 0.32,
-        mutateEvery: 60 + Math.random() * 120,
-        mutateAcc:   0,
-      });
-    }
-  }
-
-  function updateMatrix(dt) {
-    matrixCols.forEach(col => {
-      col.y         += col.speed;
-      col.mutateAcc += dt;
-      if (col.mutateAcc > col.mutateEvery) {
-        col.mutateAcc = 0;
-        col.chars[Math.floor(Math.random() * col.chars.length)] = randChar();
-      }
-      if (col.y > canvas.height + col.len * FONT_SIZE) {
-        col.y       = -(col.len * FONT_SIZE + Math.random() * canvas.height * 0.5);
-        col.speed   = 0.6 + Math.random() * 2.0;
-        col.opacity = 0.15 + Math.random() * 0.32;
-        col.len     = 10 + Math.floor(Math.random() * 22);
-      }
-    });
-  }
-
-  function drawMatrix() {
-    ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
-    matrixCols.forEach(col => {
-      for (let i = 0; i < col.len; i++) {
-        const cy = col.y + i * FONT_SIZE;
-        if (cy < -FONT_SIZE || cy > canvas.height) continue;
-        const isHead  = i === col.len - 1;
-        const fade    = isHead ? 1 : (1 - i / col.len) * 0.9;
-        const bright  = isHead ? Math.min(col.opacity * 4, 1) : col.opacity * fade;
-        ctx.fillStyle = isHead
-          ? `rgba(180,255,220,${bright})`
-          : `rgba(${T.g},${bright})`;
-        ctx.fillText(col.chars[i % col.chars.length], col.x, cy);
-      }
-    });
-  }
-
-  /* ════ LAYER 3 — RADAR SWEEP ════ */
-  let radarAngle = 0;
-
-  function drawRadar() {
-    const cx = canvas.width  * 0.84;
-    const cy = canvas.height * 0.18;
-    const R  = Math.min(canvas.width, canvas.height) * 0.22;
-
-    /* rings */
-    [1, 0.66, 0.33].forEach((r, i) => {
-      ctx.beginPath();
-      ctx.arc(cx, cy, R * r, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(${T.g},${i === 0 ? 0.10 : 0.05})`;
-      ctx.lineWidth   = 0.7;
-      ctx.stroke();
-    });
-
-    /* cross-hairs */
-    ctx.strokeStyle = `rgba(${T.g},0.05)`;
-    ctx.lineWidth   = 0.7;
-    [[cx - R, cy, cx + R, cy], [cx, cy - R, cx, cy + R]].forEach(([x1, y1, x2, y2]) => {
-      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
-    });
-
-    /* sweep fan */
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(radarAngle);
-    const fan = ctx.createLinearGradient(0, 0, R, 0);
-    fan.addColorStop(0,   `rgba(${T.g},0.22)`);
-    fan.addColorStop(0.6, `rgba(${T.g},0.06)`);
-    fan.addColorStop(1,   `rgba(${T.g},0)`);
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.arc(0, 0, R, -Math.PI / 5, 0);
-    ctx.closePath();
-    ctx.fillStyle = fan;
-    ctx.fill();
-    /* sweep arm */
-    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(R, 0);
-    ctx.strokeStyle = `rgba(${T.g},0.55)`;
-    ctx.lineWidth   = 1;
-    ctx.stroke();
-    ctx.restore();
-
-    radarAngle += 0.007;
-  }
-
-  /* ════ LAYER 4 — DATA STREAMS ════ */
-  let   dataStreams = [];
-  let   streamAcc   = 0;
-  const HEX_CHARS   = '0123456789ABCDEF';
-
-  function hexToken(len) {
-    return Array.from({ length: len }, () => HEX_CHARS[Math.floor(Math.random() * 16)]).join('');
-  }
-
-  function spawnStream() {
-    const segments = 5 + Math.floor(Math.random() * 6);
-    const text     = Array.from({ length: segments }, () =>
-      `${hexToken(2)}:${hexToken(4)}`
-    ).join('  ');
-    dataStreams.push({
-      x:       -ctx.measureText(text).width - 20,
-      y:       Math.random() * canvas.height,
-      speed:   1.2 + Math.random() * 2.2,
-      text,
-      alpha:   0.10 + Math.random() * 0.18,
-      color:   Math.random() < 0.7 ? '0,212,255' : '0,255,136',
-    });
-  }
-
-  function updateStreams(dt) {
-    streamAcc += dt;
-    if (streamAcc > 700 + Math.random() * 900) {
-      streamAcc = 0;
-      if (dataStreams.length < 10) spawnStream();
-    }
-    dataStreams = dataStreams.filter(s => s.x < canvas.width + 400);
-    dataStreams.forEach(s => { s.x += s.speed; });
-  }
-
-  function drawStreams() {
-    ctx.font = '9px JetBrains Mono, monospace';
-    dataStreams.forEach(s => {
-      ctx.fillStyle = `rgba(${s.color},${s.alpha})`;
-      ctx.fillText(s.text, s.x, s.y);
-    });
-  }
-
-  /* ════ LAYER 5 — PARTICLE NETWORK ════ */
-  const P_COUNT  = window.innerWidth < 768 ? 45 : 80;
-  const CONN_D   = 145;
-  let   particles = [];
-
-  class Particle {
-    constructor() { this.reset(true); }
-    reset(initial = false) {
-      this.x  = Math.random() * canvas.width;
-      this.y  = initial ? Math.random() * canvas.height : (Math.random() > 0.5 ? -5 : canvas.height + 5);
-      this.vx = (Math.random() - 0.5) * 0.38;
-      this.vy = (Math.random() - 0.5) * 0.38;
-      this.r  = Math.random() * 1.8 + 0.5;
-      this.a  = Math.random() * 0.55 + 0.15;
-      const rng = Math.random();
-      this.color = rng < 0.62 ? '0,255,136' : rng < 0.86 ? '0,212,255' : '124,58,237';
-    }
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      if (mouse.x !== null) {
-        const dx = this.x - mouse.x, dy = this.y - mouse.y;
-        const d  = Math.sqrt(dx * dx + dy * dy);
-        if (d < 100) {
-          const f = (100 - d) / 100;
-          this.vx += (dx / d) * f * 0.45;
-          this.vy += (dy / d) * f * 0.45;
-          const sp = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
-          if (sp > 2.4) { this.vx /= sp * 0.72; this.vy /= sp * 0.72; }
-        }
-      }
-      if (this.x < -10 || this.x > canvas.width + 10 ||
-          this.y < -10 || this.y > canvas.height + 10) this.reset();
-    }
-    draw() {
-      /* glow halo */
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color},${this.a * 0.10})`;
-      ctx.fill();
-      /* core dot */
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color},${this.a})`;
-      ctx.fill();
-    }
-  }
-
-  function buildParticles() {
-    particles = Array.from({ length: P_COUNT }, () => new Particle());
-  }
-
-  function drawConnections() {
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const d  = Math.sqrt(dx * dx + dy * dy);
-        if (d < CONN_D) {
-          const a = (1 - d / CONN_D) * 0.22;
-          ctx.strokeStyle = `rgba(${T.g},${a})`;
-          ctx.lineWidth   = 0.65;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-  }
-
-  /* ════ LAYER 6 — SCAN LINE ════ */
-  let scanY = 0, scanDir = 1;
-
-  function drawScanLine() {
-    const g = ctx.createLinearGradient(0, scanY - 3, 0, scanY + 3);
-    g.addColorStop(0,   `rgba(${T.g},0)`);
-    g.addColorStop(0.5, `rgba(${T.g},0.13)`);
-    g.addColorStop(1,   `rgba(${T.g},0)`);
-    ctx.fillStyle = g;
-    ctx.fillRect(0, scanY - 3, canvas.width, 6);
-    scanY += scanDir * 1.1;
-    if (scanY > canvas.height || scanY < 0) scanDir *= -1;
-  }
-
-  /* ════ LAYER 7 — CORNER BRACKETS ════ */
-  let bracketT = 0;
-
-  function drawBrackets() {
-    bracketT += 0.018;
-    const a   = 0.12 + Math.sin(bracketT) * 0.07;
-    const sz  = 28, pad = 18;
-    ctx.strokeStyle = `rgba(${T.g},${a})`;
-    ctx.lineWidth   = 1.5;
-    [
-      [pad,                    pad,                     1,  1],
-      [canvas.width  - pad,    pad,                    -1,  1],
-      [pad,                    canvas.height - pad,     1, -1],
-      [canvas.width  - pad,    canvas.height - pad,    -1, -1],
-    ].forEach(([x, y, sx, sy]) => {
-      ctx.beginPath();
-      ctx.moveTo(x, y + sy * sz);
-      ctx.lineTo(x, y);
-      ctx.lineTo(x + sx * sz, y);
-      ctx.stroke();
-    });
-
-    /* small blinking cursor bottom-left */
-    if (Math.sin(bracketT * 3) > 0) {
-      ctx.font      = '11px JetBrains Mono, monospace';
-      ctx.fillStyle = `rgba(${T.g},${a * 1.4})`;
-      ctx.fillText('█', pad + 2, canvas.height - pad - 2);
-    }
-  }
-
-  /* ════ LAYER 8 — GLITCH ════ */
-  let glitchAcc    = 0;
-  let glitchFrames = 0;
-
-  function maybeGlitch(dt) {
-    glitchAcc += dt;
-    if (glitchFrames === 0 && glitchAcc > 5000 + Math.random() * 9000) {
-      glitchAcc    = 0;
-      glitchFrames = 4 + Math.floor(Math.random() * 6);
-    }
-    if (glitchFrames > 0) {
-      const slices = 2 + Math.floor(Math.random() * 3);
-      for (let i = 0; i < slices; i++) {
-        const sy = Math.floor(Math.random() * canvas.height);
-        const sh = 2 + Math.floor(Math.random() * 7);
-        const dx = (Math.random() - 0.5) * 28;
-        try {
-          const data = ctx.getImageData(0, sy, canvas.width, sh);
-          ctx.putImageData(data, dx, sy);
-        } catch (_) {}
-      }
-      /* occasional horizontal color flash */
-      if (Math.random() < 0.35) {
-        const gy = Math.random() * canvas.height;
-        ctx.fillStyle = `rgba(${T.g},${Math.random() * 0.13})`;
-        ctx.fillRect(0, gy, canvas.width, 1 + Math.random() * 3);
-      }
-      glitchFrames--;
-    }
-  }
-
-  /* ════ MAIN LOOP ════ */
-  let lastTs = 0;
-
-  function frame(ts) {
-    const dt = Math.min(ts - lastTs, 50);
-    lastTs   = ts;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    if (!reduced) {
-      updateHexGrid(ts);   drawHexGrid();
-                           drawRadar();
-      updateStreams(dt);   drawStreams();
-    }
-
-    particles.forEach(p => p.update());
-    drawConnections();
-    particles.forEach(p => p.draw());
-
-    if (!reduced) {
-      drawScanLine();
-      drawBrackets();
-      maybeGlitch(dt);
-    }
-
-    requestAnimationFrame(frame);
-  }
-
-  resize();
-  buildParticles();
-  requestAnimationFrame(frame);
-
-  window.addEventListener('resize', () => { resize(); buildParticles(); });
-  canvas.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-  canvas.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-}
 
 /* ════════════════════════════════════════════════════════════
    TYPING ENGINE
@@ -766,21 +357,7 @@ function initTyping() {
   setTimeout(tick, 900);
 }
 
-/* ════════════════════════════════════════════════════════════
-   GLITCH ENGINE
-   ════════════════════════════════════════════════════════════ */
-function initGlitch() {
-  const name = document.querySelector('.hero-name');
-  if (!name) return;
 
-  function trigger() {
-    name.classList.add('glitch');
-    setTimeout(() => name.classList.remove('glitch'), 380);
-    setTimeout(trigger, 5000 + Math.random() * 9000);
-  }
-
-  setTimeout(trigger, 3500);
-}
 
 /* ════════════════════════════════════════════════════════════
    NAVBAR
@@ -1026,6 +603,10 @@ function initModal() {
 
     /* Description */
     elDesc.textContent = d.description;
+
+    /* Architecture diagram */
+    const dgWrap = document.getElementById('modal-diagram-wrap'), dg = window.DIAGRAMS && window.DIAGRAMS[id];
+    document.getElementById('modal-diagram').innerHTML = dg || ''; dgWrap.style.display = dg ? '' : 'none';
 
     /* Highlights */
     elHighList.innerHTML = d.highlights
@@ -1346,90 +927,7 @@ function initSectionDots() {
   updateDots();
 }
 
-/* ════════════════════════════════════════════════════════════
-   BOOT SEQUENCE  (once per browser session)
-   ════════════════════════════════════════════════════════════ */
-function initBootSequence() {
-  const screen = document.getElementById('boot-screen');
-  if (!screen) return;
 
-  window.__bootDelay = 0;
-  if (sessionStorage.getItem('sh-booted')) {
-    screen.style.display = 'none';
-    return;
-  }
-
-  const logEl  = document.getElementById('boot-log');
-  const barEl  = document.getElementById('boot-bar');
-  const status = document.getElementById('boot-status');
-  document.body.classList.add('no-scroll');
-
-  /* Mini matrix inside boot screen */
-  const bc = document.getElementById('boot-matrix');
-  if (bc) {
-    const bctx = bc.getContext('2d');
-    bc.width  = window.innerWidth;
-    bc.height = window.innerHeight;
-    const BFONT = 12;
-    const BCHARS = 'ｦｧｨｩｪｫｬｭｮｯABCDEF0123456789';
-    const bcols = Array.from({ length: Math.floor(bc.width / BFONT) }, (_, i) => ({
-      x: i * BFONT, y: Math.random() * -bc.height,
-      speed: 0.5 + Math.random() * 1.5,
-      opacity: 0.04 + Math.random() * 0.10,
-    })).filter(() => Math.random() > 0.5);
-
-    (function bframe() {
-      if (!document.getElementById('boot-screen') || screen.style.display === 'none') return;
-      bctx.clearRect(0, 0, bc.width, bc.height);
-      bctx.font = `${BFONT}px 'JetBrains Mono',monospace`;
-      bcols.forEach(col => {
-        col.y += col.speed;
-        if (col.y > bc.height + 160) col.y = -Math.random() * bc.height;
-        bctx.fillStyle = `rgba(${T.g},${col.opacity})`;
-        bctx.fillText(BCHARS[Math.floor(Math.random() * BCHARS.length)], col.x, col.y);
-      });
-      requestAnimationFrame(bframe);
-    })();
-  }
-
-  const LINES = [
-    { text: '[ OK ]  Loading security modules',           cls: 'boot-ok'   },
-    { text: '[ OK ]  Initialising threat detection engine', cls: 'boot-ok' },
-    { text: '[ OK ]  Connecting to MITRE ATT&CK framework', cls: 'boot-ok' },
-    { text: '[ OK ]  Mounting cryptographic subsystems',  cls: 'boot-ok'   },
-    { text: '[ OK ]  cv.pdf located — download enabled', cls: 'boot-ok'   },
-    { text: '[ OK ]  Portfolio matrix initialised',       cls: 'boot-ok'   },
-    { text: '[ OK ]  All systems operational. Welcome.',  cls: 'boot-info'  },
-  ];
-
-  /* Start progress bar */
-  setTimeout(() => { if (barEl) barEl.style.width = '100%'; }, 60);
-
-  /* Print lines with delay */
-  LINES.forEach((line, i) => {
-    setTimeout(() => {
-      if (!logEl) return;
-      const div = document.createElement('div');
-      div.className = `boot-line`;
-      div.innerHTML = `<span class="${line.cls}">${line.text}</span>`;
-      logEl.appendChild(div);
-    }, 280 + i * 310);
-  });
-
-  /* Dismiss */
-  const dismissAt = 280 + LINES.length * 310 + 350;
-  window.__bootDelay = dismissAt + 1300;
-  setTimeout(() => {
-    if (status) status.textContent = 'SYSTEM READY';
-    setTimeout(() => {
-      screen.classList.add('fade-out');
-      document.body.classList.remove('no-scroll');
-      setTimeout(() => { screen.style.display = 'none'; }, 750);
-    }, 420);
-  }, dismissAt);
-
-  sessionStorage.setItem('sh-booted', '1');
-}
 
 /* ════════════════════════════════════════════════════════════
    CUSTOM CURSOR
@@ -1475,124 +973,9 @@ function initCursor() {
   });
 }
 
-/* ════════════════════════════════════════════════════════════
-   AMBIENT CODE TOKENS
-   ════════════════════════════════════════════════════════════ */
-function initAmbientText() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const pool = [
-    '0xDEADBEEF','T1059.001','0.0.0.0/0','443/tcp','CVE-2024-1234',
-    'SHA-256','10.0.0.1','AES-256-GCM','MITRE','80/http',
-    'T1071.001','0xff4c','RSA-4096','22/ssh','T1548.003',
-    'NIST CSF 2.0','ISO27001','0x00ff88','T1190','4444/tcp',
-    'bcrypt','JWT','OSINT','T1566','IOC','T1110.001',
-    'GDPR Art.9','STRIDE','T1041','Sigma','Wazuh',
-  ];
 
-  const sections = document.querySelectorAll(
-    '#about, #skills, #projects, #experience, #education, #certifications, #contact'
-  );
 
-  sections.forEach(section => {
-    for (let i = 0; i < 20; i++) {
-      const span = document.createElement('span');
-      span.className = 'ambient-token';
-      span.textContent = pool[Math.floor(Math.random() * pool.length)];
-      span.style.left      = Math.random() * 96 + '%';
-      span.style.top       = Math.random() * 96 + '%';
-      span.style.opacity   = (0.028 + Math.random() * 0.062).toFixed(3);
-      span.style.fontSize  = (0.58 + Math.random() * 0.46).toFixed(2) + 'rem';
-      span.style.transform = `rotate(${((Math.random() - 0.5) * 26).toFixed(1)}deg)`;
-      section.appendChild(span);
-    }
-  });
-}
-
-/* ════════════════════════════════════════════════════════════
-   FULL-PAGE MATRIX BACKGROUND
-   ════════════════════════════════════════════════════════════ */
-function initMatrixBg() {
-  const canvas = document.getElementById('matrix-bg');
-  if (!canvas) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const ctx = canvas.getContext('2d');
-  const CHARS =
-    'ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ' +
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEF!@#$%&*<>[]{}/\\|';
-  const FONT = 13;
-  let cols = [];
-
-  function randChar() {
-    return CHARS[Math.floor(Math.random() * CHARS.length)];
-  }
-
-  function initCols() {
-    cols = [];
-    const count = Math.floor(canvas.width / FONT);
-    for (let i = 0; i < count; i++) {
-      if (Math.random() > 0.48) continue;
-      const len = 8 + Math.floor(Math.random() * 20);
-      cols.push({
-        x:       i * FONT,
-        y:       Math.random() * -canvas.height,
-        speed:   0.35 + Math.random() * 1.1,
-        chars:   Array.from({ length: len + 4 }, randChar),
-        len,
-        opacity: 0.035 + Math.random() * 0.09,
-        acc:     0,
-      });
-    }
-  }
-
-  function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    initCols();
-  }
-
-  let lastTs = 0;
-  function frame(ts) {
-    const dt = Math.min(ts - lastTs, 50);
-    lastTs = ts;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = `${FONT}px 'JetBrains Mono', monospace`;
-
-    cols.forEach(col => {
-      col.y   += col.speed;
-      col.acc += dt;
-      if (col.acc > 90 + Math.random() * 110) {
-        col.acc = 0;
-        col.chars[Math.floor(Math.random() * col.chars.length)] = randChar();
-      }
-      if (col.y > canvas.height + col.len * FONT) {
-        col.y       = -(col.len * FONT + Math.random() * canvas.height * 0.6);
-        col.speed   = 0.35 + Math.random() * 1.1;
-        col.opacity = 0.035 + Math.random() * 0.09;
-        col.len     = 8 + Math.floor(Math.random() * 20);
-      }
-      for (let i = 0; i < col.len; i++) {
-        const cy = col.y + i * FONT;
-        if (cy < -FONT || cy > canvas.height) continue;
-        const isHead = i === col.len - 1;
-        const fade   = isHead ? 1 : (1 - i / col.len) * 0.85;
-        const bright = isHead ? Math.min(col.opacity * 4, 0.85) : col.opacity * fade;
-        ctx.fillStyle = isHead
-          ? `rgba(180,255,220,${bright})`
-          : `rgba(${T.g},${bright})`;
-        ctx.fillText(col.chars[i % col.chars.length], col.x, cy);
-      }
-    });
-
-    requestAnimationFrame(frame);
-  }
-
-  resize();
-  window.addEventListener('resize', resize);
-  requestAnimationFrame(frame);
-}
 
 /* ════════════════════════════════════════════════════════════
    SCROLL PROGRESS BAR
@@ -1668,19 +1051,16 @@ function initStatCounters() {
    BOOT
    ════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  initBootSequence();
-  initMatrixBg();
+  initFX();
+  initIntro();
   initCursor();
-  initAmbientText();
   initSectionTitleGlitch();
   initClickRipple();
   initSectionDots();
   initScrollProgress();
   initCardTilt();
   initStatCounters();
-  initCanvas();
   initTyping();
-  initGlitch();
   initNavbar();
   initScrollReveal();
   initSkillTags();
@@ -1692,6 +1072,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCvButton();
   initContactForm();
   initScrollToTop();
+  initCinematic();
   initThemes();
   initHeroDecode();
   initCardSpotlight();
@@ -1703,16 +1084,16 @@ document.addEventListener('DOMContentLoaded', () => {
    THEME MANAGER — five themes, each drawn from the CV
    ════════════════════════════════════════════════════════════ */
 const THEMES = [
-  { id: 'terminal',  name: 'Terminal',   g: '0,255,136',  c: '0,212,255',  meta: '#030d1a', sw: ['#030d1a', '#00ff88', '#00d4ff', '#7c3aed'],
-    why: 'The SOC analyst console, where the detection work lives.' },
-  { id: 'killchain', name: 'Kill chain', g: '255,59,59',  c: '255,154,60', meta: '#0e0608', sw: ['#0e0608', '#ff3b3b', '#ff9a3c', '#e0457b'],
-    why: 'Incident-response red. Sections become stages of the SOC Detection Lab intrusion.' },
-  { id: 'mizan',     name: 'Mizan',      g: '94,234,212', c: '251,113,133', meta: '#0e0b1a', sw: ['#0e0b1a', '#5eead4', '#fb7185', '#a78bfa'],
-    why: 'Allow and deny, styled after the ADAM / EVE / Mizan policy mediator.' },
-  { id: 'blueprint', name: 'Blueprint',  g: '11,74,160',  c: '0,122,138',  meta: '#e8f0fa', sw: ['#e8f0fa', '#0b4aa0', '#007a8a', '#6c3cbe'],
-    why: 'A light audit sheet on grid paper, for the NIST CSF and ISO 27001 side.' },
-  { id: 'phosphor',  name: 'Phosphor',   g: '255,176,0',  c: '255,214,102', meta: '#0c0800', sw: ['#0c0800', '#ffb000', '#ffd666', '#ff7828'],
-    why: 'Amber radar scope, like ThreatWeave and IOC Hunter plotting indicators.' },
+  { id: 'aqua',   name: 'Aqua',       meta: '#03131f', sw: ['#03131f', '#19d3e6', '#8fe3ff', '#7c8cff'],
+    why: 'Water-drop technology. Every touch sends ripples through the page, a nod to the Galaxy S III era Nature UX.' },
+  { id: 'neural', name: 'Neural',     meta: '#09051a', sw: ['#09051a', '#a58bff', '#5af0d8', '#ff7ad9'],
+    why: 'Contour lines of a learned field, for the agent-authorization work.' },
+  { id: 'holo',   name: 'Hologram',   meta: '#eaf1fc', sw: ['#eaf1fc', '#2b57d8', '#0e8fa6', '#7a3ff0'],
+    why: 'Light, iridescent glass, like thin-film optics.' },
+  { id: 'plasma', name: 'Plasma',     meta: '#0c0305', sw: ['#0c0305', '#ff5a1f', '#ffb04a', '#ff3d7f'],
+    why: 'A reactor core in motion, for the incident-response side.' },
+  { id: 'aurora', name: 'Aurora',     meta: '#030812', sw: ['#030812', '#3dffa8', '#3fc7ff', '#d76bff'],
+    why: 'Curtains of light over a night sky, for threat intelligence.' },
 ];
 
 function initThemes() {
@@ -1733,7 +1114,7 @@ function initThemes() {
   function paint(id) {
     const th = byId(id);
     root.setAttribute('data-theme', th.id);
-    T.g = th.g; T.c = th.c;
+    if (window.FXC) window.FXC.setTheme(th.id);
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', th.meta);
     menu.querySelectorAll('.theme-opt').forEach(o => o.setAttribute('aria-checked', String(o.dataset.themeId === th.id)));
@@ -1745,8 +1126,9 @@ function initThemes() {
     const x = origin ? origin.x : innerWidth - 40, y = origin ? origin.y : 30;
     const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
     root.classList.add('theme-switching');
+    if (window.FXC) window.FXC.drop(x, y, 1.7);
     const vt = document.startViewTransition(() => paint(id));
-    vt.finished.finally(() => root.classList.remove('theme-switching'));
+    vt.finished.catch(() => {}).finally(() => root.classList.remove('theme-switching'));
     vt.ready.then(() => root.animate(
       { clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },
       { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)', pseudoElement: '::view-transition-new(root)' }
@@ -1777,7 +1159,7 @@ function initThemes() {
     }
   });
 
-  paint(root.getAttribute('data-theme') || 'terminal');
+  paint(root.getAttribute('data-theme') || 'aqua');
 }
 
 /* ════════════════════════════════════════════════════════════
@@ -1824,4 +1206,50 @@ function initMagneticButtons() {
     });
     btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
   });
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   WATER-DROP ENGINE, INTRO AND CINEMATIC TRANSITIONS
+   ════════════════════════════════════════════════════════════ */
+function initFX() {
+  const c = document.getElementById('fx');
+  if (!c || !window.FX) return;
+  const th = document.documentElement.getAttribute('data-theme');
+  window.FXC = window.FX.create(c, { theme: window.FX.THEMES[th] ? th : 'aqua', onDrop: (x, y, a) => SoundEngine.play(a > 1.2 ? 'bigDrop' : 'drop') });
+  if (!window.FXC) c.remove();
+}
+
+function initIntro() {
+  const el = document.getElementById('intro');
+  window.__bootDelay = 0;
+  if (!el) return;
+  const skip = () => { el.remove(); document.body.classList.remove('no-scroll'); };
+  let seen = false; try { seen = !!sessionStorage.getItem('sh-intro'); } catch (e) { /* storage off */ }
+  if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches || !window.FXC) { skip(); return; }
+  try { sessionStorage.setItem('sh-intro', '1'); } catch (e) { /* storage off */ }
+  document.body.classList.add('no-scroll'); window.__bootDelay = 1500;
+  setTimeout(() => { window.FXC.drop(innerWidth / 2, innerHeight / 2, 2.0); el.classList.add('done'); }, 850);
+  setTimeout(() => { document.body.classList.remove('no-scroll'); }, 1500);
+  setTimeout(skip, 2600);
+}
+
+function initCinematic() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  /* every section settles into focus as it arrives: depth, blur and a ripple at its heading */
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.utils.toArray('section:not(#hero) .section-inner').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, y: 64, scale: 0.975, filter: 'blur(14px)' },
+        { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 1.1, ease: 'power3.out', clearProps: 'filter,transform',
+          scrollTrigger: { trigger: el, start: 'top 82%', once: true } });
+    });
+  }
+  if (!('IntersectionObserver' in window)) return;
+  const seen = new Set();
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting || seen.has(e.target)) return; seen.add(e.target);
+    const lbl = e.target.querySelector('.section-label, .section-title'); if (!lbl || !window.FXC) return;
+    const r = lbl.getBoundingClientRect(); window.FXC.drop(r.left + 40, r.top + r.height / 2, 0.62);
+  }), { threshold: 0.35 });
+  document.querySelectorAll('section:not(#hero)').forEach(s => io.observe(s));
 }

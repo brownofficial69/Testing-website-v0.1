@@ -7,9 +7,12 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 ## What is on the site
 
 **Homepage** (`index.html`, `style.css`, `script.js`)
-- About, skills, projects with detail panels, experience, education, Claude Academy badges, Pluralsight Skill IQs and courses, and a contact form.
-- Five themes drawn from the CV: Terminal, Kill chain, Mizan, Blueprint and Phosphor. Switch with the palette button or press T.
-- Page-to-page transitions (`transitions.css`) for browsers that support cross-document view transitions, with reduced-motion fallbacks.
+- About, skills, projects, a showreel, experience, education, Claude Academy badges, Pluralsight Skill IQs and courses, and a contact form.
+- **Water-drop technology** (`fx.js`): one WebGL canvas behind the page. Touch, scrolling and clicks make concentric ripples (a height field turned into normals, which refract the background and add a Fresnel highlight and trough shadow). It is a nod to the Nature UX ripple on the Galaxy S III. The canvas renders at native pixel density, up to 4K, with adaptive resolution.
+- Five futuristic themes, each with its own scene: **Aqua** (default, water), **Neural** (contour field), **Hologram** (light, iridescent), **Plasma** and **Aurora**. Switch with the palette button or press T; the choice carries across the gallery and games.
+- **Showreel** (`showreel.js`): a 37-second cut drawn live on a canvas at native resolution (no video file), with ripple wipes between six scenes.
+- **Architecture diagrams** (`diagrams.js`): animated SVG for each project, shown in the project panels.
+- Cinematic transitions: droplet intro, sections that settle into focus, a circular wipe between pages (`site-fx.js`) and cross-document view transitions (`transitions.css`).
 - CV download from `assets/cv.pdf`.
 
 **Interactive gallery** (`versions.html`)
@@ -34,6 +37,8 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 
 ```
 index.html, style.css, script.js   homepage
+fx.js, site-fx.js, showreel.js, diagrams.js   water engine, page effects, reel, diagrams
+theme.css, fxpage.css, page-fx.js            theme tokens and the water background for the gallery and games
 transitions.css                    shared page transitions
 labs.css                           shared styles for the science games
 versions.html                      gallery
@@ -70,5 +75,5 @@ Push to `main`. The workflow in `.github/workflows/deploy.yml` publishes the rep
 |------|-------|
 | Update the CV | Replace `assets/cv.pdf` |
 | Change a project | The `PROJECTS` object in `script.js` and the matching card in `index.html` |
-| Add a theme | A `html[data-theme="..."]` block at the end of `style.css`, plus an entry in `THEMES` in `script.js` |
+| Add a theme | A scene in `fx.js` (`THEMES` and a GLSL function), a `html[data-theme="..."]` block in `style.css` and `theme.css`, and an entry in `THEMES` in `script.js` |
 | Update badges or Skill IQs | The `#certifications` and `#pluralsight` sections of `index.html` |
