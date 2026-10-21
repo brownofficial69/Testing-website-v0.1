@@ -16,7 +16,7 @@
     html { scroll-behavior: smooth; }
     body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', system-ui, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
     a { color: inherit; }
-    a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent2); outline-offset: 3px; border-radius: 6px; }
+    a:focus-visible { outline: 2px solid var(--accent2); outline-offset: 3px; border-radius: 6px; }
     .wrap { max-width: 1180px; margin: 0 auto; padding: 56px 24px 80px; }
     .back { font-family: 'JetBrains Mono', monospace; font-size: .8rem; color: var(--accent2); text-decoration: none; }
     .back:hover { text-decoration: underline; }
@@ -48,11 +48,6 @@
     .feature .open { padding-top: 22px; font-size: .9rem; }
     @media (max-width: 760px) { .feature { grid-template-columns: 1fr; } .feature .shot { border-right: 0; border-bottom: 1px solid var(--line); min-height: 0; aspect-ratio: 16 / 10; } }
 
-    details { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 18px; }
-    summary { cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: .85rem; color: var(--accent2); }
-    .archive { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .archive a { font-family: 'JetBrains Mono', monospace; font-size: .78rem; padding: 5px 10px; border: 1px solid var(--line); border-radius: 6px; text-decoration: none; color: var(--muted); transition: border-color .2s, color .2s; }
-    .archive a:hover { border-color: var(--line-hi); color: var(--text); }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .card, .shot img, .open::after { transition: none; animation: none; } .card:hover { transform: none; } }
   </style>
   <link rel="stylesheet" href="transitions.css" />
@@ -143,12 +138,6 @@
   <h3>The main site has five themes too</h3>
   <p class="note">Open the palette button in the main portfolio's navigation, or press T. Terminal, Kill chain, Mizan, Blueprint and Phosphor each draw on a different project or skill from the CV.</p>
 
-  <details>
-    <summary>Earlier experiments (30 designs)</summary>
-    <div class="archive">
-      <a href="v2/index.html">v2</a><a href="v3/index.html">v3</a><a href="v4/index.html">v4</a><a href="v5/index.html">v5</a><a href="v6/index.html">v6</a><a href="v7/index.html">v7</a><a href="v8/index.html">v8</a><a href="v9/index.html">v9 · ShadmanOS 95</a><a href="v10/index.html">v10</a><a href="v11/index.html">v11</a><a href="v12/index.html">v12</a><a href="v13/index.html">v13</a><a href="v14/index.html">v14</a><a href="v15/index.html">v15</a><a href="v16/index.html">v16</a><a href="v17/index.html">v17</a><a href="v18/index.html">v18</a><a href="v20/index.html">v20</a><a href="v21/index.html">v21</a><a href="v22/index.html">v22</a><a href="v23/index.html">v23</a><a href="v24/index.html">v24</a><a href="v25/index.html">v25</a><a href="v26/index.html">v26</a><a href="v29/index.html">v29</a><a href="v30/index.html">v30</a><a href="v31/index.html">v31</a><a href="v33/index.html">v33</a><a href="v34/index.html">v34</a><a href="v35/index.html">v35</a>
-    </div>
-  </details>
 </div>
 </body>
 </html>
