@@ -1084,16 +1084,16 @@ document.addEventListener('DOMContentLoaded', () => {
    THEME MANAGER — five themes, each drawn from the CV
    ════════════════════════════════════════════════════════════ */
 const THEMES = [
-  { id: 'aqua',   name: 'Aqua',       meta: '#03131f', sw: ['#03131f', '#19d3e6', '#8fe3ff', '#7c8cff'],
-    why: 'Water-drop technology. Every touch sends ripples through the page, a nod to the Galaxy S III era Nature UX.' },
-  { id: 'neural', name: 'Neural',     meta: '#09051a', sw: ['#09051a', '#a58bff', '#5af0d8', '#ff7ad9'],
-    why: 'Contour lines of a learned field, for the agent-authorization work.' },
-  { id: 'holo',   name: 'Hologram',   meta: '#eaf1fc', sw: ['#eaf1fc', '#2b57d8', '#0e8fa6', '#7a3ff0'],
-    why: 'Light, iridescent glass, like thin-film optics.' },
-  { id: 'plasma', name: 'Plasma',     meta: '#0c0305', sw: ['#0c0305', '#ff5a1f', '#ffb04a', '#ff3d7f'],
-    why: 'A reactor core in motion, for the incident-response side.' },
-  { id: 'aurora', name: 'Aurora',     meta: '#030812', sw: ['#030812', '#3dffa8', '#3fc7ff', '#d76bff'],
-    why: 'Curtains of light over a night sky, for threat intelligence.' },
+  { id: 'aqua',    name: 'Aqua',     meta: '#03131f', sw: ['#03131f', '#19d3e6', '#8fe3ff', '#7c8cff'],
+    why: 'The water theme. Flowing currents, drifting colour and ripples that follow every touch, a nod to Galaxy S III Nature UX.' },
+  { id: 'neural',  name: 'Neural',   meta: '#09051a', sw: ['#09051a', '#a58bff', '#5af0d8', '#ff7ad9'],
+    why: 'A live particle network you can pull apart. tsParticles (MIT).' },
+  { id: 'orbital', name: 'Orbital',  meta: '#02050d', sw: ['#02050d', '#6db7ff', '#f2c15a', '#a58bff'],
+    why: 'A 3D globe over NASA night-time city lights, for threat intelligence. Vanta.js (MIT), NASA imagery.' },
+  { id: 'reactor', name: 'Reactor',  meta: '#0b0204', sw: ['#0b0204', '#ff5a1f', '#ffb04a', '#ff3d7f'],
+    why: 'Concentric rings in 3D, for the incident-response side. Vanta.js (MIT).' },
+  { id: 'holo',    name: 'Hologram', meta: '#eaf1fc', sw: ['#eaf1fc', '#2b57d8', '#0e8fa6', '#7a3ff0'],
+    why: 'A light theme: a field of points on glass. Vanta.js (MIT).' },
 ];
 
 function initThemes() {
@@ -1114,7 +1114,7 @@ function initThemes() {
   function paint(id) {
     const th = byId(id);
     root.setAttribute('data-theme', th.id);
-    if (window.FXC) window.FXC.setTheme(th.id);
+    if (window.FXC) window.FXC.set(th.id);
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', th.meta);
     menu.querySelectorAll('.theme-opt').forEach(o => o.setAttribute('aria-checked', String(o.dataset.themeId === th.id)));
@@ -1215,9 +1215,8 @@ function initMagneticButtons() {
 function initFX() {
   const c = document.getElementById('fx');
   if (!c || !window.FX) return;
-  const th = document.documentElement.getAttribute('data-theme');
-  window.FXC = window.FX.create(c, { theme: window.FX.THEMES[th] ? th : 'aqua', onDrop: (x, y, a) => SoundEngine.play(a > 1.2 ? 'bigDrop' : 'drop') });
-  if (!window.FXC) c.remove();
+  window.FXC = window.BG.create({ canvas: c, z: 0, onDrop: (x, y, a) => SoundEngine.play(a > 1.2 ? 'bigDrop' : 'drop') });
+  window.FXC.set(document.documentElement.getAttribute('data-theme') || 'aqua');
 }
 
 function initIntro() {

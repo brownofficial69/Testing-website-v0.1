@@ -2315,19 +2315,19 @@ html[data-theme="holo"] {
   --text-primary: #0c1b3a; --text-secondary: #34496e; --text-muted: #667a9c;
   color-scheme: light;
 }
-html[data-theme="plasma"] {
+html[data-theme="reactor"] {
   --g-rgb: 255, 90, 31; --c-rgb: 255, 176, 74; --p-rgb: 255, 61, 127; --a-rgb: 255, 217, 160;
   --bg-rgb: 12, 3, 5; --bg2-rgb: 30, 8, 12; --bg3-rgb: 20, 5, 8;
   --bg-primary: #0c0305; --bg-secondary: #1e080c; --bg-tertiary: #2e0d12; --bg-card: #170609; --bg-card-hover: #2e0d12;
   --accent-green: #ff5a1f; --accent-cyan: #ffb04a; --accent-purple: #ff3d7f; --accent-amber: #ffd9a0; --p-soft: #ff8fb1;
   --text-primary: #fff0e8; --text-secondary: #d9ab9a; --text-muted: #94685c;
 }
-html[data-theme="aurora"] {
-  --g-rgb: 61, 255, 168; --c-rgb: 63, 199, 255; --p-rgb: 215, 107, 255; --a-rgb: 255, 226, 122;
-  --bg-rgb: 3, 8, 18; --bg2-rgb: 8, 20, 38; --bg3-rgb: 5, 13, 28;
-  --bg-primary: #030812; --bg-secondary: #081426; --bg-tertiary: #0d2040; --bg-card: #060f20; --bg-card-hover: #0d2040;
-  --accent-green: #3dffa8; --accent-cyan: #3fc7ff; --accent-purple: #d76bff; --accent-amber: #ffe27a; --p-soft: #e8a2ff;
-  --text-primary: #e9fff6; --text-secondary: #9fcfbd; --text-muted: #5f8f80;
+html[data-theme="orbital"] {
+  --g-rgb: 109, 183, 255; --c-rgb: 242, 193, 90; --p-rgb: 165, 139, 255; --a-rgb: 255, 226, 122;
+  --bg-rgb: 2, 5, 13; --bg2-rgb: 8, 20, 38; --bg3-rgb: 5, 13, 28;
+  --bg-primary: #02050d; --bg-secondary: #081426; --bg-tertiary: #0d2040; --bg-card: #060f20; --bg-card-hover: #0d2040;
+  --accent-green: #6db7ff; --accent-cyan: #f2c15a; --accent-purple: #a58bff; --accent-amber: #ffe27a; --p-soft: #c7b6ff;
+  --text-primary: #eaf3ff; --text-secondary: #9fb8d4; --text-muted: #5f7b9c;
 }
 html[data-theme="holo"] .navbar, html[data-theme="holo"] .project-card, html[data-theme="holo"] .timeline-card, html[data-theme="holo"] .cert-card,
 html[data-theme="holo"] .stat-card, html[data-theme="holo"] .contact-card, html[data-theme="holo"] .skill-row, html[data-theme="holo"] .iq,
@@ -2338,7 +2338,7 @@ html[data-theme="holo"] .pcourses, html[data-theme="holo"] .contact-form, html[d
 html[data-theme="holo"] .btn-primary { color: #fff; }
 html[data-theme="holo"] .hero-description, html[data-theme="holo"] .hero-alt { text-shadow: none; }
 html[data-theme="holo"] .badge { box-shadow: 0 14px 32px rgba(30, 60, 130, 0.2); }
-html[data-theme="plasma"] .project-card::after, html[data-theme="plasma"] .iq::after { opacity: .5; }
+html[data-theme="reactor"] .project-card::after, html[data-theme="reactor"] .iq::after { opacity: .5; }
 
 /* ───── architecture diagrams ───── */
 .modal-diagram { border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 18px; padding: 14px 10px 6px; background: radial-gradient(120% 100% at 50% 0%, rgba(var(--g-rgb), 0.10), rgba(255, 255, 255, 0.02)); overflow-x: auto; }
