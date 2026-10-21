@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>ThreatWeave Demo | Shadman Hossain</title><link rel="stylesheet" href="demo.css"/>
-<style>.feed{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:var(--faint);display:inline-block;margin-right:8px}.dot.run{background:var(--warn)}.dot.done{background:var(--ok)}.dos{border-left:3px solid var(--accent);padding-left:14px;margin-bottom:18px}</style>  <link rel="stylesheet" href="../transitions.css?v=20261022" />
+<style>.feed{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:var(--faint);display:inline-block;margin-right:8px}.dot.run{background:var(--warn)}.dot.done{background:var(--ok)}.dos{border-left:3px solid var(--accent);padding-left:14px;margin-bottom:18px}</style>  <link rel="stylesheet" href="../transitions.css?v=20261024" />
   <script src="../site-fx.js" defer></script>
-<link rel="stylesheet" href="../theme.css?v=20261023"/><link rel="stylesheet" href="../fxpage.css?v=20261023"/>
+<link rel="stylesheet" href="../theme.css?v=20261024"/><link rel="stylesheet" href="../fxpage.css?v=20261024"/>
+<link rel="stylesheet" href="extra.css?v=20261024"/>
 </head>
 <body>
 <div class="top"><h1>Threat<span>Weave</span> demo</h1><nav><a href="index.html">All demos</a><a href="../versions.html">Portfolio</a></nav></div>
@@ -59,6 +60,8 @@ function correlate(rows){
  <p class="muted">${c.list.length} IOCs, ${c.corrob} feed sightings.</p>
  <p style="margin-top:8px"><b>Shared ATT&amp;CK techniques:</b> ${c.shared.length?c.shared.map(([t,n])=>`<span class="tag">${t} ${esc(TECH[t]||'')} ×${n}</span>`).join(''):'<span class="muted">none</span>'}</p>
  <table><thead><tr><th>IOC</th><th>Reported by</th><th>Techniques</th><th>Notes</th></tr></thead><tbody>${c.list.map(o=>`<tr><td class="mono">${esc(o.ioc)}</td><td>${[...o.feeds].map(esc).join('<br>')}</td><td>${[...o.tech].map(t=>`<span class="tag">${t}</span>`).join('')}</td><td>${[...o.notes].map(esc).join('; ')}</td></tr>`).join('')}</tbody></table></div>`).join('');}
-</script><script src="../fx.js?v=20261023"></script>
-<script src="../page-fx.js?v=20261023"></script>
+</script><script src="../diagrams.js?v=20261024"></script>
+<script src="extra.js?v=20261024"></script>
+<script src="../fx.js?v=20261024"></script>
+<script src="../page-fx.js?v=20261024"></script>
 </body></html>

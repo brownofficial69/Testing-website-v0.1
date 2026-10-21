@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Break the Login | Shadman Hossain</title>
+<meta name="description" content="A safe sandbox for SQL injection: break a vulnerable login, beat a naive filter, then see why parameterised queries cannot be broken." />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../labs.css" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="../transitions.css?v=20261024" />
+<script src="../site-fx.js" defer></script>
+<link rel="stylesheet" href="../theme.css?v=20261024" />
+<link rel="stylesheet" href="../fxpage.css?v=20261024" />
+</head>
+<body>
+<header class="lab-top">
+  <div>
+    <h1>Break the Login</h1>
+    <p class="sub">A SQL injection sandbox, the sort of thing I practised on my Ethical Hacking and Cyber Security degree. Everything runs in your browser against a tiny pretend database, nothing is sent anywhere. Get in as admin without the password, beat a weak filter, then meet the fix.</p>
+  </div>
+  <nav><a href="../versions.html">Gallery</a><a href="../index.html">Main site</a></nav>
+</header>
+
+<main class="lab">
+  <section class="stack">
+    <div class="box">
+      <div class="row tabs" id="tabs" role="tablist" aria-label="Levels"></div>
+      <p class="mono lvl" id="goal"></p>
+      <form id="form" autocomplete="off" class="login">
+        <label>Username <input id="u" type="text" value="admin" spellcheck="false" /></label>
+        <label>Password <input id="p" type="text" spellcheck="false" placeholder="Try something other than the password" /></label>
+        <button class="btn go" type="submit">Log in</button>
+      </form>
+      <div class="out" id="out" aria-live="polite"></div>
+    </div>
+    <div class="box"><h2>WHAT THE SERVER RUNS</h2><pre class="sql" id="sql"></pre></div>
+  </section>
+  <aside class="stack">
+    <div class="box"><h2>HINTS</h2><div class="row"><button class="btn" id="hint">Next hint</button><button class="btn" id="solve">Show a solution</button></div><p class="learn" id="hintTxt" style="margin-top:10px">Stuck? Hints get more specific each time.</p></div>
+    <div class="box learn" id="learn"></div>
+  </aside>
+</main>
+<div class="toast" id="toast" hidden role="status"></div>
+<script src="app.js"></script>
+<script src="../fx.js?v=20261024"></script>
+<script src="../page-fx.js?v=20261024"></script>
+</body>
+</html>

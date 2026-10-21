@@ -27,11 +27,11 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 | `v28` | Career Metro: education, security, projects, AI and work as five metro lines |
 | `v27` | Periodic Table: pick skills and see which projects they form |
 | `v41` | Chess: an engine written from scratch, with move generation checked against standard perft counts |
-| `v38` | Cipher Lab: Caesar, substitution, Vigenère and a one-time pad |
-| `v39` | Worm Outbreak: an SIR epidemic model on networks with and without hubs |
-| `v40` | Collision Lab: hash collisions and the birthday paradox |
+| `v43` | Prompt Injection Range: defend a simulated AI agent with layered controls and see which attacks still get through |
+| `v45` | Break the Login: a SQL injection sandbox, from a raw query to a weak filter to the parameterised fix |
+| `v44` | Incident Desk: a 75-second service-desk triage shift using the impact and urgency priority matrix |
 
-`demos/` holds the six small project demos linked from the homepage project cards.
+`demos/` holds the six project demos linked from the homepage project cards. Each has a "try this" strip and an animated architecture diagram (`demos/extra.js`, `diagrams.js`).
 
 ## Project layout
 
@@ -45,7 +45,7 @@ versions.html                      gallery
 gallery/                           gallery thumbnails
 assets/                            profile photo, favicon, cv.pdf
 demos/                             project demos
-v19 v27 v28 v32 v36-v42/           interactive pages
+v19 v27 v28 v32 v36-v37 v41-v45/           interactive pages
 .github/workflows/deploy.yml       GitHub Pages deployment
 ```
 

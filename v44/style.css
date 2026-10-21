@@ -1,0 +1,18 @@
+.queue { display: grid; gap: 8px; margin-top: 12px; min-height: 120px; }
+.queue .empty { color: var(--mute); font-size: .9rem; }
+.tk { display: grid; gap: 6px; text-align: left; border: 1px solid var(--line); border-radius: 11px; padding: 10px 12px; background: var(--panel2); cursor: pointer; animation: up .35s cubic-bezier(.16, 1, .3, 1); }
+.tk.sel { border-color: var(--c); background: rgba(109, 183, 255, .08); }
+.tk .id { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--mute); }
+.tk .tx { font-size: .92rem; line-height: 1.45; }
+.sla { height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .1); overflow: hidden; }
+.sla i { display: block; height: 100%; width: 100%; background: var(--a); transform-origin: left; }
+.tk.warn .sla i { background: var(--b); }
+.tk.late .sla i { background: var(--bad); }
+.triage { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+.triage label { display: grid; gap: 4px; font-size: .8rem; color: var(--mute); }
+.triage select { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 8px; color: var(--ink); }
+.fb { font-family: 'JetBrains Mono', monospace; font-size: .74rem; margin-top: 4px; }
+.fb.good { color: var(--a); }
+.fb.meh { color: var(--b); }
+.fb.no { color: var(--bad); }
+@media (max-width: 560px) { .triage { grid-template-columns: 1fr; } }
