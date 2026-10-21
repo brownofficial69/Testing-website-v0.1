@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prompt Injection Range | Shadman Hossain</title>
+<meta name="description" content="Defend a simulated AI agent against five prompt-injection attacks by choosing layered controls, and see why no single control is enough." />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../labs.css" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="../transitions.css?v=20261024" />
+<script src="../site-fx.js" defer></script>
+<link rel="stylesheet" href="../theme.css?v=20261024" />
+<link rel="stylesheet" href="../fxpage.css?v=20261024" />
+</head>
+<body>
+<header class="lab-top">
+  <div>
+    <h1>Prompt Injection Range</h1>
+    <p class="sub">An AI agent reads untrusted content while it does a job for you. Six jobs: five hide an attack and one is innocent. Switch defences on, run the scenarios and see which attacks still get through. This is a simulation of the ideas behind my agent-authorization work, not a real model.</p>
+  </div>
+  <nav><a href="../versions.html">Gallery</a><a href="../index.html">Main site</a></nav>
+</header>
+
+<main class="lab">
+  <section class="stack">
+    <div class="box">
+      <h2>DEFENCES</h2>
+      <div class="defs" id="defs"></div>
+      <div class="row" style="margin-top:12px"><button class="btn go" id="run">Run the six scenarios</button><button class="btn" id="hint">Hint</button><button class="btn" id="reset">Reset</button></div>
+    </div>
+    <div class="box"><h2>SCENARIOS</h2><div class="scen" id="scen"></div></div>
+  </section>
+  <aside class="stack">
+    <div class="box"><h2>SCORE</h2>
+      <div class="stat"><div><b id="sBlk">0/5</b><span>attacks stopped</span></div><div><b id="sUtil">0/6</b><span>jobs done</span></div><div><b id="sFric">0</b><span>approvals asked</span></div></div>
+    </div>
+    <div class="box learn">
+      <p><b>What to notice.</b> Each control stops some attacks and misses others. The keyword filter is easy to walk around and breaks an innocent job. Least privilege and the egress allowlist never look at the wording, which is why they hold up.</p>
+      <p>That is the idea behind ADAM / EVE / Mizan: the part that decides must not depend on what the model was talked into.</p>
+    </div>
+  </aside>
+</main>
+<div class="toast" id="toast" hidden role="status"></div>
+<script src="app.js"></script>
+<script src="../fx.js?v=20261024"></script>
+<script src="../page-fx.js?v=20261024"></script>
+</body>
+</html>

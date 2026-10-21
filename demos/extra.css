@@ -1,0 +1,22 @@
+/* Shared upgrade for the project demos: a "try this" strip and the animated architecture diagram. */
+:root {
+  --accent-green: rgb(var(--g-rgb)); --accent-cyan: rgb(var(--c-rgb)); --accent-purple: rgb(var(--p-rgb)); --accent-amber: rgb(var(--a-rgb));
+  --text-primary: var(--tx1); --text-secondary: var(--tx2); --text-muted: var(--tx2);
+  --font-body: 'Sora', 'Space Grotesk', system-ui, sans-serif; --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+}
+.tips { max-width: 1200px; margin: 18px auto 0; padding: 0 24px; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.tips .tip { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; padding: 12px 14px; border: 1px solid var(--ln); border-radius: 14px; background: rgba(var(--bg2-rgb), .55); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); font-size: 13px; line-height: 1.5; }
+.tips .tip i { font-style: normal; font-family: var(--font-mono); font-size: 11px; color: rgb(var(--g-rgb)); border: 1px solid rgba(var(--g-rgb), .5); border-radius: 999px; padding: 1px 8px; margin-top: 1px; }
+.arch { margin-top: 20px; }
+.arch .dgwrap { border: 1px solid var(--ln); border-radius: 18px; padding: 14px 10px 6px; background: radial-gradient(120% 100% at 50% 0%, rgba(var(--g-rgb), .10), rgba(var(--bg2-rgb), .3)); overflow-x: auto; }
+.arch p.muted { margin-bottom: 12px; }
+.dg { width: 100%; min-width: 560px; height: auto; display: block; }
+.dg-t { font: 600 12.5px var(--font-body); fill: var(--text-primary); }
+.dg-s { font: 400 9.5px var(--font-mono); fill: var(--text-secondary); }
+.dg-elab { font: 500 9px var(--font-mono); fill: var(--text-muted); }
+.dg-flow { animation: dgDash 1.6s linear infinite; }
+@keyframes dgDash { to { stroke-dashoffset: -18; } }
+.dg-node rect:first-child { transition: fill .3s; }
+.dg-node:hover rect:first-child { fill: rgba(var(--g-rgb), .18); }
+.top h1 span { color: rgb(var(--g-rgb)); }
+@media (prefers-reduced-motion: reduce) { .dg-flow { animation: none; } .dg animateMotion { display: none; } }

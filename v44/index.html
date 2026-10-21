@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Incident Desk | Shadman Hossain</title>
+<meta name="description" content="A 75-second shift on a simulated service desk: triage incidents by impact and urgency, route them to the right resolver group and beat the SLA clock." />
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../labs.css" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="../transitions.css?v=20261024" />
+<script src="../site-fx.js" defer></script>
+<link rel="stylesheet" href="../theme.css?v=20261024" />
+<link rel="stylesheet" href="../fxpage.css?v=20261024" />
+</head>
+<body>
+<header class="lab-top">
+  <div>
+    <h1>Incident Desk</h1>
+    <p class="sub">A 75-second shift on a simulated service desk, built around the standard impact and urgency priority matrix that IT service management tools such as ServiceNow use. Read each ticket, set impact and urgency, route it to the right team and beat the SLA clock. My Pluralsight Skill IQ in ServiceNow is on the main site; this is a game, not the product.</p>
+  </div>
+  <nav><a href="../versions.html">Gallery</a><a href="../index.html">Main site</a></nav>
+</header>
+
+<main class="lab">
+  <section class="stack">
+    <div class="box">
+      <div class="row" style="justify-content:space-between"><h2 style="margin:0">QUEUE</h2><button class="btn go" id="start">Start shift</button></div>
+      <div class="queue" id="queue" role="list"><p class="empty">Press Start shift. Tickets arrive every few seconds.</p></div>
+    </div>
+    <div class="box" id="work" hidden>
+      <h2>TRIAGE</h2>
+      <p class="mono" id="wTicket"></p>
+      <div class="triage">
+        <label>Impact <select id="wImp"><option value="1">1 High: many people or a critical service</option><option value="2">2 Medium: a team or one important user</option><option value="3">3 Low: one person, nothing critical</option></select></label>
+        <label>Urgency <select id="wUrg"><option value="1">1 High: no workaround, getting worse</option><option value="2">2 Medium: workaround exists, costly</option><option value="3">3 Low: can wait</option></select></label>
+      </div>
+      <div class="row" id="groups" style="margin-top:10px"></div>
+      <p class="mono" id="wPri" style="margin-top:10px"></p>
+    </div>
+  </section>
+  <aside class="stack">
+    <div class="box"><h2>SHIFT</h2>
+      <div class="stat"><div><b id="sTime">75</b><span>seconds left</span></div><div><b id="sScore">0</b><span>score</span></div><div><b id="sBreach">0</b><span>SLA breaches</span></div></div>
+    </div>
+    <div class="box learn">
+      <p><b>The matrix.</b> Priority comes from impact and urgency together: High + High is P1, Low + Low is P5. A single user whose laptop is dead is not a P1; an authentication outage for the whole company is.</p>
+      <p><b>Scoring.</b> Right team +10, exact priority +10, one step off +5. A breached SLA costs 10.</p>
+    </div>
+  </aside>
+</main>
+<div class="toast" id="toast" hidden role="status"></div>
+<script src="app.js"></script>
+<script src="../fx.js?v=20261024"></script>
+<script src="../page-fx.js?v=20261024"></script>
+</body>
+</html>

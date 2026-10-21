@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>IOC Hunter Demo | Shadman Hossain</title><link rel="stylesheet" href="demo.css"/>
-<style>.scroll{max-height:480px;overflow:auto}.flag{color:var(--warn);font-size:12px}</style>  <link rel="stylesheet" href="../transitions.css?v=20261022" />
+<style>.scroll{max-height:480px;overflow:auto}.flag{color:var(--warn);font-size:12px}</style>  <link rel="stylesheet" href="../transitions.css?v=20261024" />
   <script src="../site-fx.js" defer></script>
-<link rel="stylesheet" href="../theme.css?v=20261023"/><link rel="stylesheet" href="../fxpage.css?v=20261023"/>
+<link rel="stylesheet" href="../theme.css?v=20261024"/><link rel="stylesheet" href="../fxpage.css?v=20261024"/>
+<link rel="stylesheet" href="extra.css?v=20261024"/>
 </head>
 <body>
 <div class="top"><h1>IOC <span>Hunter</span> demo</h1><nav><a href="index.html">All demos</a><a href="../versions.html">Portfolio</a></nav></div>
@@ -71,6 +72,8 @@ const safeCell=v=>{v=String(v);if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.re
 const dl=(name,txt,type)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href);};
 $('csv').onclick=()=>dl('iocs.csv','type,indicator,notes\n'+OUT.filter(r=>r.type!=='rejected').map(r=>[r.type,r.norm,r.notes.join('; ')].map(safeCell).join(',')).join('\n'),'text/csv');
 $('json').onclick=()=>dl('iocs.json',JSON.stringify(OUT.filter(r=>r.type!=='rejected').map(({type,norm,notes})=>({type,indicator:norm,notes})),null,2),'application/json');
-</script><script src="../fx.js?v=20261023"></script>
-<script src="../page-fx.js?v=20261023"></script>
+</script><script src="../diagrams.js?v=20261024"></script>
+<script src="extra.js?v=20261024"></script>
+<script src="../fx.js?v=20261024"></script>
+<script src="../page-fx.js?v=20261024"></script>
 </body></html>
