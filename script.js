@@ -604,6 +604,10 @@ function initModal() {
     /* Description */
     elDesc.textContent = d.description;
 
+    /* Architecture diagram */
+    const dgWrap = document.getElementById('modal-diagram-wrap'), dg = window.DIAGRAMS && window.DIAGRAMS[id];
+    document.getElementById('modal-diagram').innerHTML = dg || ''; dgWrap.style.display = dg ? '' : 'none';
+
     /* Highlights */
     elHighList.innerHTML = d.highlights
       .map(h => `<li>${h}</li>`)
@@ -1124,7 +1128,7 @@ function initThemes() {
     root.classList.add('theme-switching');
     if (window.FXC) window.FXC.drop(x, y, 1.7);
     const vt = document.startViewTransition(() => paint(id));
-    vt.finished.finally(() => root.classList.remove('theme-switching'));
+    vt.finished.catch(() => {}).finally(() => root.classList.remove('theme-switching'));
     vt.ready.then(() => root.animate(
       { clipPath: [`circle(0 at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },
       { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)', pseudoElement: '::view-transition-new(root)' }

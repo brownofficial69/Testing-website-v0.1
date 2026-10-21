@@ -2339,3 +2339,31 @@ html[data-theme="holo"] .btn-primary { color: #fff; }
 html[data-theme="holo"] .hero-description, html[data-theme="holo"] .hero-alt { text-shadow: none; }
 html[data-theme="holo"] .badge { box-shadow: 0 14px 32px rgba(30, 60, 130, 0.2); }
 html[data-theme="plasma"] .project-card::after, html[data-theme="plasma"] .iq::after { opacity: .5; }
+
+/* ───── architecture diagrams ───── */
+.modal-diagram { border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 18px; padding: 14px 10px 6px; background: radial-gradient(120% 100% at 50% 0%, rgba(var(--g-rgb), 0.10), rgba(255, 255, 255, 0.02)); overflow-x: auto; }
+.dg { width: 100%; min-width: 560px; height: auto; display: block; }
+.dg-t { font: 600 12.5px var(--font-body); fill: var(--text-primary); }
+.dg-s { font: 400 9.5px var(--font-mono); fill: var(--text-secondary); }
+.dg-elab { font: 500 9px var(--font-mono); fill: var(--text-muted); }
+.dg-flow { animation: dgDash 1.6s linear infinite; }
+@keyframes dgDash { to { stroke-dashoffset: -18; } }
+.dg-node rect:first-child { transition: fill .3s; }
+.dg-node:hover rect:first-child { fill: rgba(var(--g-rgb), 0.18); }
+@media (prefers-reduced-motion: reduce) { .dg-flow { animation: none; } .dg animateMotion { display: none; } }
+
+/* ───── showreel ───── */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.reel { position: relative; margin-top: 2rem; border-radius: 28px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.16); background: #020a10;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(var(--g-rgb), 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+.reel canvas { width: 100%; aspect-ratio: 16 / 9; display: block; }
+.reel-ui { position: absolute; left: 0; right: 0; bottom: 0; display: flex; gap: 14px; align-items: center; padding: 18px 20px 20px; background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0)); }
+.reel-ui .btn { padding: 7px 16px; font-size: .8rem; color: #fff; border-color: rgba(255, 255, 255, 0.35); background: rgba(255, 255, 255, 0.1); }
+.reel-bar { flex: 1; display: flex; gap: 6px; }
+.reel-seg { flex: 1; height: 6px; padding: 0; border-radius: 3px; background: rgba(255, 255, 255, 0.22); overflow: hidden; cursor: pointer; position: relative; }
+.reel-seg i { display: block; width: 0; height: 100%; background: rgb(var(--c-rgb)); }
+.reel-seg:hover { background: rgba(255, 255, 255, 0.4); }
+.reel-res { font-family: var(--font-mono); font-size: .7rem; color: rgba(255, 255, 255, 0.7); white-space: nowrap; }
+.reel:fullscreen { border-radius: 0; border: 0; display: flex; align-items: center; background: #000; }
+.reel:fullscreen canvas { width: 100vw; height: 100vh; aspect-ratio: auto; }
+@media (max-width: 640px) { .reel-res { display: none; } .reel-ui { padding: 10px 12px 12px; gap: 8px; } }

@@ -1,0 +1,7 @@
+/* Shared theme tokens for every page except the homepage (which carries its own copy).
+   The same five themes drive the water-drop background (fx.js) and the colours of each page. */
+:root { --g-rgb: 25, 211, 235; --c-rgb: 143, 227, 255; --p-rgb: 124, 140, 255; --a-rgb: 255, 211, 122; --bg-rgb: 3, 19, 31; --bg2-rgb: 6, 33, 50; --tx1: #e8f6ff; --tx2: #9dc4d8; --ln: rgba(255, 255, 255, .15); }
+html[data-theme="neural"] { --g-rgb: 165, 139, 255; --c-rgb: 90, 240, 216; --p-rgb: 255, 122, 217; --a-rgb: 255, 214, 120; --bg-rgb: 9, 5, 26; --bg2-rgb: 20, 12, 50; --tx1: #efeaff; --tx2: #b3a8d8; }
+html[data-theme="holo"] { --g-rgb: 43, 87, 216; --c-rgb: 14, 143, 166; --p-rgb: 122, 63, 240; --a-rgb: 194, 122, 0; --bg-rgb: 234, 241, 252; --bg2-rgb: 255, 255, 255; --tx1: #0c1b3a; --tx2: #34496e; --ln: rgba(12, 27, 58, .16); color-scheme: light; }
+html[data-theme="plasma"] { --g-rgb: 255, 90, 31; --c-rgb: 255, 176, 74; --p-rgb: 255, 61, 127; --a-rgb: 255, 217, 160; --bg-rgb: 12, 3, 5; --bg2-rgb: 30, 8, 12; --tx1: #fff0e8; --tx2: #d9ab9a; }
+html[data-theme="aurora"] { --g-rgb: 61, 255, 168; --c-rgb: 63, 199, 255; --p-rgb: 215, 107, 255; --a-rgb: 255, 226, 122; --bg-rgb: 3, 8, 18; --bg2-rgb: 8, 20, 38; --tx1: #e9fff6; --tx2: #9fcfbd; }
