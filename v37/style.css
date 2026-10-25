@@ -67,7 +67,7 @@ h1 { font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -.02em; }
 .rule header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .rule h3 { font-size: .95rem; }
 .rule .tag { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--amber); }
-.rule pre { margin: 10px 0; background: #070a10; border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; font-family: 'JetBrains Mono', monospace; font-size: .7rem; line-height: 1.5; color: var(--tx2, #9fb4d0); overflow: auto; white-space: pre-wrap; }
+.rule pre { margin: 10px 0; background: var(--sf2, #070a10); border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; font-family: 'JetBrains Mono', monospace; font-size: .7rem; line-height: 1.5; color: var(--tx2, #9fb4d0); overflow: auto; white-space: pre-wrap; }
 .rule pre em { color: var(--teal); font-style: normal; }
 .rule label.ctl { display: grid; gap: 4px; font-size: .78rem; color: var(--mute); }
 .rule label.ctl input[type=range] { accent-color: var(--teal); width: 100%; }

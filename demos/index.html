@@ -5,7 +5,7 @@
 
 <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Project Demos | Shadman Hossain</title>
-<link rel="stylesheet" href="demo.css"/>
+<link rel="stylesheet" href="demo.css?v=20261030"/>
 <style>.card a.go{display:inline-block;margin-top:12px;font-weight:600}.hero{padding:36px 0 8px}.hero h2{font-size:34px;letter-spacing:-1px;text-transform:none;color:var(--text);margin-bottom:8px}.hero p{max-width:680px;color:var(--dim)}.proj{display:flex;flex-direction:column}.proj .tags{margin-top:auto;padding-top:10px}</style>
   <link rel="stylesheet" href="../transitions.css?v=20261027" />
   <script src="../site-fx.js?v=20261027" defer></script>
@@ -37,18 +37,24 @@ document.querySelectorAll('.card.proj a.go').forEach(function (a) {
 });
 </script>
 <script>
-/* each card carries its demo's accent and style name (see skins.css) */
+/* each card carries its demo's accent and style name (see skins.css): a deep shade on the
+   light themes and a bright one on the dark themes, so the label always passes 4.5:1 */
 (function () {
-  var S = { 'soc-lab': ['#c27424', 'console'], 'ioc-hunter': ['#8a62cf', 'scanner'], 'threatweave': ['#3f78c4', 'intelligence map'], 'secureview': ['#d0545a', 'dashboard'], 'adam-eve-mizan': ['#1f8f87', 'pipeline'], 'supply-chain-risk': ['#a87a26', 'report'] };
+  var S = { 'soc-lab': ['160,86,16', '232,164,92', 'console'], 'ioc-hunter': ['106,66,168', '182,152,240', 'scanner'], 'threatweave': ['36,88,160', '132,176,236', 'intelligence map'],
+    'secureview': ['172,52,58', '240,134,128', 'dashboard'], 'adam-eve-mizan': ['15,110,106', '111,194,184', 'pipeline'], 'supply-chain-risk': ['134,96,26', '222,182,112', 'report'] };
+  var st = document.createElement('style');
+  st.textContent = '.card.proj{--pa:rgb(var(--pd))}html:is([data-theme="calm"],[data-theme="holo"]) .card.proj{--pa:rgb(var(--pl))}' +
+    'html body .card.proj{border-top:3px solid var(--pa)!important}.proj-style{font:600 11px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;color:var(--pa)}';
+  document.head.appendChild(st);
   document.querySelectorAll('.card.proj').forEach(function (c) {
     var a = c.querySelector('a.go'); if (!a) return; var s = S[a.getAttribute('href').replace('.html', '')]; if (!s) return;
-    c.style.setProperty('border-top', '3px solid ' + s[0], 'important');
-    var e = document.createElement('div'); e.textContent = s[1]; e.style.cssText = 'font:600 11px JetBrains Mono,monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;color:' + s[0];
+    c.style.setProperty('--pl', s[0]); c.style.setProperty('--pd', s[1]);
+    var e = document.createElement('div'); e.className = 'proj-style'; e.textContent = s[2];
     c.insertBefore(e, c.firstChild);
   });
 })();
 </script>
 <script src="../fx.js?v=20261025"></script>
-<script src="../page-fx.js?v=20261029"></script>
+<script src="../page-fx.js?v=20261030"></script>
 </body>
 </html>

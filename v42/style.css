@@ -50,7 +50,7 @@ h1 i { font-style: normal; color: #394560; font-weight: 400; margin: 0 .05em; }
 
 .side { display: grid; gap: 14px; position: sticky; top: 12px; max-height: calc(100vh - 24px); }
 .scoreb { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; text-align: center; } .scoreb b { display: block; font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; } .scoreb span { font-size: .64rem; color: var(--mute); }
-.capchips { display: flex; flex-wrap: wrap; gap: 6px; } .capchips span { font-family: 'JetBrains Mono', monospace; font-size: .7rem; padding: 3px 8px; border: 1px solid rgba(92, 242, 176, .4); color: #9bf6cf; border-radius: 99px; }
+.capchips { display: flex; flex-wrap: wrap; gap: 6px; } .capchips span { font-family: 'JetBrains Mono', monospace; font-size: .7rem; padding: 3px 8px; border: 1px solid rgba(var(--g-rgb, 92, 242, 176), .4); color: var(--m, #9bf6cf); border-radius: 99px; }
 .trace { list-style: none; display: grid; gap: 8px; overflow: auto; max-height: 460px; padding-right: 4px; }
 .trace .empty { color: var(--mute); font-size: .85rem; }
 .tstep { background: var(--panel2); border: 1px solid var(--line); border-left: 3px solid var(--c, #394560); border-radius: 10px; padding: 9px 11px; animation: rise .3s ease; }

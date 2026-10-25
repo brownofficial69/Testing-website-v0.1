@@ -134,7 +134,7 @@ button { cursor: pointer; border: none; background: none; color: inherit; font: 
    ════════════════════════════════════════════════════════════ */
 .text-green  { color: var(--accent-green); }
 .text-cyan   { color: var(--accent-cyan); }
-.text-purple { color: #a78bfa; }
+.text-purple { color: var(--accent-purple, #a78bfa); }
 .text-muted  { color: var(--text-muted); }
 .font-mono   { font-family: var(--font-mono); }
 
@@ -910,7 +910,7 @@ section {
 /* Color variants for header icon/text based on data-color */
 .skill-row[data-color="green"] .skill-row-header  { color: var(--accent-green); }
 .skill-row[data-color="cyan"]  .skill-row-header  { color: var(--accent-cyan); }
-.skill-row[data-color="purple"] .skill-row-header { color: #a78bfa; }
+.skill-row[data-color="purple"] .skill-row-header { color: var(--accent-purple, #a78bfa); }
 
 .skill-tags {
   display: flex;
@@ -959,11 +959,11 @@ section {
 
 .skill-row[data-color="purple"] .skill-tag {
   border-color: rgba(var(--p-rgb),0.30);
-  color: #a78bfa;
+  color: var(--accent-purple, #a78bfa);
   background: rgba(var(--p-rgb),0.07);
 }
 .skill-row[data-color="purple"] .skill-tag:hover {
-  border-color: #a78bfa;
+  border-color: var(--accent-purple, #a78bfa);
   box-shadow: var(--glow-purple);
 }
 
@@ -1065,7 +1065,7 @@ section {
 
 .green-icon  { background: rgba(var(--g-rgb),0.10); border: 1px solid rgba(var(--g-rgb),0.20); color: var(--accent-green); }
 .cyan-icon   { background: rgba(var(--c-rgb),0.10); border: 1px solid rgba(var(--c-rgb),0.20); color: var(--accent-cyan); }
-.purple-icon { background: rgba(var(--p-rgb),0.12); border: 1px solid rgba(var(--p-rgb),0.25); color: #a78bfa; }
+.purple-icon { background: rgba(var(--p-rgb),0.12); border: 1px solid rgba(var(--p-rgb),0.25); color: var(--accent-purple, #a78bfa); }
 .amber-icon  { background: rgba(var(--a-rgb),0.10); border: 1px solid rgba(var(--a-rgb),0.20); color: var(--accent-amber); }
 
 .project-badges-top {
@@ -1093,7 +1093,7 @@ section {
 
 .badge-ai     { background: rgba(var(--g-rgb),0.12); color: var(--accent-green); border: 1px solid rgba(var(--g-rgb),0.25); }
 .badge-webapp { background: rgba(var(--c-rgb),0.12); color: var(--accent-cyan); border: 1px solid rgba(var(--c-rgb),0.25); }
-.badge-grc    { background: rgba(var(--p-rgb),0.12); color: #a78bfa; border: 1px solid rgba(var(--p-rgb),0.25); }
+.badge-grc    { background: rgba(var(--p-rgb),0.12); color: var(--accent-purple, #a78bfa); border: 1px solid rgba(var(--p-rgb),0.25); }
 .badge-case   { background: rgba(var(--a-rgb),0.12); color: var(--accent-amber); border: 1px solid rgba(var(--a-rgb),0.25); }
 
 .project-title {
@@ -1140,7 +1140,7 @@ section {
   border-radius: 3px;
   background: rgba(var(--p-rgb),0.12);
   border: 1px solid rgba(var(--p-rgb),0.28);
-  color: #a78bfa;
+  color: var(--accent-purple, #a78bfa);
 }
 
 .view-hint {
@@ -1858,7 +1858,7 @@ footer {
   border-radius: var(--radius-sm);
   background: rgba(var(--p-rgb),0.14);
   border: 1px solid rgba(var(--p-rgb),0.32);
-  color: #a78bfa;
+  color: var(--accent-purple, #a78bfa);
   transition: box-shadow var(--transition-fast);
 }
 .modal-mitre-item:hover { box-shadow: var(--glow-purple); }
