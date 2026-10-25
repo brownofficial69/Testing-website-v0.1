@@ -1,22 +1,30 @@
-/* Puts the water-drop background behind a page and re-colours it from the shared theme tokens.
-   Loaded after each page's own stylesheet so these values win. */
+/* Re-colours the gallery, games and demos from the shared theme tokens, with the same calm
+   surfaces as the homepage: solid panels, hairline borders, no blur. Loaded after each page's own stylesheet. */
 :root {
   --bg: rgb(var(--bg-rgb)); --ink: var(--tx1); --text: var(--tx1); --mute: var(--tx2); --muted: var(--tx2); --line: var(--ln);
-  --panel: rgba(var(--bg2-rgb), .52); --panel2: rgba(var(--bg2-rgb), .78); --card: rgba(var(--bg2-rgb), .5); --line-hi: rgba(var(--g-rgb), .6);
+  --panel: var(--sf); --panel2: var(--sf2); --card: var(--sf); --line-hi: rgba(var(--g-rgb), .6);
   --a: rgb(var(--g-rgb)); --m: rgb(var(--g-rgb)); --teal: rgb(var(--g-rgb)); --accent: rgb(var(--g-rgb)); --accent2: rgb(var(--c-rgb));
   --c: rgb(var(--c-rgb)); --blue: rgb(var(--c-rgb)); --b: rgb(var(--a-rgb)); --e: rgb(var(--a-rgb)); --amber: rgb(var(--a-rgb));
   --focus: rgb(var(--g-rgb)); --border: var(--ln); --dim: var(--tx2); --faint: var(--tx2); --ok: #34d399;
+  --ease: cubic-bezier(.22, 1, .36, 1);
 }
 html { background: rgb(var(--bg-rgb)); }
-body { background: transparent !important; color: var(--tx1); font-family: 'Sora', 'Space Grotesk', system-ui, sans-serif; }
+body { background: transparent !important; color: var(--tx1); font-family: 'Inter', 'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif; line-height: 1.65; -webkit-font-smoothing: antialiased; }
 #fx { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; display: block; pointer-events: none; }
-h1, h2, .lab-top h1 { letter-spacing: -0.025em; }
+html[data-theme="calm"] #fx, html[data-theme="night"] #fx, html[data-theme="calm"] #bg, html[data-theme="night"] #bg { display: none !important; }
+h1, h2, .lab-top h1 { letter-spacing: -0.02em; }
+.lab-top h1, .wrap > h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; }
 .box, .rule, .score, .mis, .stg, .card, .agent, .comp, .side section, .reel-ui, .stage-card {
-  -webkit-backdrop-filter: blur(18px) saturate(150%); backdrop-filter: blur(18px) saturate(150%);
-  border-color: rgba(255, 255, 255, .13); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 24px 50px -24px rgba(0, 0, 0, .5);
+  background: var(--sf) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+  border: 1px solid var(--ln) !important; box-shadow: var(--sh) !important;
 }
-.box, .rule, .score, .card, .comp { border-radius: 20px; }
-.btn.go, .go { background: linear-gradient(135deg, rgb(var(--g-rgb)), rgb(var(--c-rgb))) !important; border-color: transparent !important; color: rgb(var(--bg-rgb)) !important; }
-html[data-theme="holo"] .box, html[data-theme="holo"] .rule, html[data-theme="holo"] .score, html[data-theme="holo"] .card, html[data-theme="holo"] .mis { background: rgba(255, 255, 255, .62); }
-.top { background: rgba(var(--bg2-rgb), .6) !important; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
-.notice { background: rgba(var(--g-rgb), .12) !important; border-color: rgba(var(--g-rgb), .35) !important; color: var(--tx1) !important; }
+.box, .rule, .score, .card, .comp { border-radius: 16px; }
+.card { transition: transform .32s var(--ease), box-shadow .32s var(--ease), border-color .16s ease !important; }
+a.card:hover, a.card:focus-visible { transform: translateY(-2px) !important; border-color: var(--ln2) !important; }
+.btn, button { border-radius: 10px; }
+.btn.go, .go { background: rgb(var(--g-rgb)) !important; border-color: transparent !important; color: rgb(var(--bg-rgb)) !important; }
+html[data-theme="calm"] .btn.go, html[data-theme="calm"] .go, html[data-theme="holo"] .btn.go, html[data-theme="holo"] .go { color: #fff !important; }
+.top { background: rgba(var(--bg-rgb), .9) !important; border-bottom: 1px solid var(--ln) !important; -webkit-backdrop-filter: saturate(140%) blur(10px); backdrop-filter: saturate(140%) blur(10px); }
+.notice { background: var(--sf2) !important; border-color: var(--ln) !important; color: var(--tx1) !important; }
+:focus-visible { outline: 2px solid rgb(var(--g-rgb)) !important; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { a.card:hover { transform: none !important; } }

@@ -8,7 +8,8 @@
   <meta name="description" content="Shadman Hossain — AI security and security engineering. First-Class Ethical Hacking & Cyber Security graduate of Coventry University building AI-agent authorization prototypes, detection engineering tools and security automation." />
   <meta name="keywords" content="AI security, security engineering, detection engineering, threat intelligence, LLM agents, MITRE ATT&CK, Sigma, Python, Go, Shadman Hossain" />
   <meta name="author" content="Shadman Hossain" />
-  <meta name="theme-color" content="#030d1a" />
+  <meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#131416" media="(prefers-color-scheme: dark)" />
   <link rel="canonical" href="https://brownofficial69.github.io/Testing-website-v0.1/" />
 
   <!-- Open Graph (LinkedIn / Slack / iMessage previews) -->
@@ -28,21 +29,22 @@
   <meta name="twitter:image"       content="https://brownofficial69.github.io/Testing-website-v0.1/assets/profile.jpg" />
 
   <!-- Favicon -->
-  <script>try{var t=localStorage.getItem("sh-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+  <script>(function(){var t=null;try{t=localStorage.getItem("sh-theme")}catch(e){}if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"night":"calm";document.documentElement.setAttribute("data-theme",t)})()</script>
   <meta name="robots" content="index, follow" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
-  <link rel="stylesheet" href="style.css?v=20261022" />
+  <link rel="stylesheet" href="style.css?v=20261025" />
+  <link rel="stylesheet" href="calm.css?v=20261025" />
   <link rel="prefetch" href="versions.html" />
-  <link rel="stylesheet" href="transitions.css?v=20261022" />
+  <link rel="stylesheet" href="transitions.css?v=20261025" />
   <script src="site-fx.js" defer></script>
 </head>
 <body>
@@ -85,8 +87,8 @@
       </button>
       <div class="theme-menu" id="themeMenu" role="radiogroup" aria-label="Site theme"></div>
     </div>
-    <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound" title="Toggle sound effects">
-      <i class="fas fa-volume-up" id="soundIcon"></i>
+    <button class="sound-toggle muted" id="soundToggle" aria-label="Toggle sound" title="Toggle sound effects">
+      <i class="fas fa-volume-xmark" id="soundIcon"></i>
     </button>
     <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -924,13 +926,12 @@
 </button>
 
 <!-- Custom cursor -->
-<div id="cursor-dot"  aria-hidden="true"></div>
-<div id="cursor-ring" aria-hidden="true"></div>
 
-<script src="fx.js?v=20261022"></script>
-<script src="bg.js?v=20261023"></script>
-<script src="diagrams.js?v=20261022"></script>
-<script src="showreel.js?v=20261022" defer></script>
-<script src="script.js?v=20261022" defer></script>
+<script src="fx.js?v=20261025"></script>
+<script src="bg.js?v=20261025"></script>
+<script src="diagrams.js?v=20261025"></script>
+<script src="showreel.js?v=20261025" defer></script>
+<script src="script.js?v=20261025" defer></script>
+<script src="calm.js?v=20261025" defer></script>
 </body>
 </html>

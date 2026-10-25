@@ -15,7 +15,8 @@ var CDN = {
   dots: 'https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.dots.min.js',
   particles: 'https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js',
 };
-var IDS = ['aqua', 'neural', 'orbital', 'reactor', 'holo'];
+var IDS = ['calm', 'night', 'aqua', 'neural', 'orbital', 'reactor', 'holo'];
+var QUIET = ['calm', 'night']; /* the quiet themes draw no background */
 var HUE_VARS = ['--g-rgb', '--c-rgb', '--p-rgb', '--accent-green', '--accent-cyan', '--accent-purple'];
 var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 var loaded = {};
@@ -47,10 +48,11 @@ function create(opts) {
   function poster(id) { host.style.background = ({ neural: 'radial-gradient(120% 90% at 50% 0%,#1d1248,#09051a)', orbital: 'radial-gradient(120% 90% at 50% 100%,#0a1a3a,#02050d)', reactor: 'radial-gradient(120% 90% at 50% 50%,#3a0d08,#0b0204)', holo: 'radial-gradient(120% 90% at 30% 0%,#ffffff,#dbe7fb)' })[id] || ''; }
 
   function set(id) {
-    if (IDS.indexOf(id) < 0) id = 'aqua';
+    if (IDS.indexOf(id) < 0) id = 'calm';
     if (id === current) return; current = id; stop();
     if (id === 'aqua') { clearHue(); host.style.display = 'none'; if (fxCanvas && fx) { fxCanvas.style.display = 'block'; fx.resume(); } return; }
     clearHue(); if (fx) { fx.pause(); fxCanvas.style.display = 'none'; }
+    if (QUIET.indexOf(id) >= 0) { host.style.display = 'none'; return; }
     host.style.display = 'block'; poster(id); host.style.opacity = id === 'reactor' ? 0.45 : 1;
     if (reduced) return;
     var my = token;

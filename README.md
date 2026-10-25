@@ -8,11 +8,14 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 
 **Homepage** (`index.html`, `style.css`, `script.js`)
 - About, skills, projects, a showreel, experience, education, Claude Academy badges, Pluralsight Skill IQs and courses, and a contact form.
-- **Aqua, the one water theme** (`fx.js`): a WebGL canvas with flowing currents (curl-noise flow maps), drifting colour that also tints the page accents, light shafts, plankton, and ripples from touch, scroll and clicks that refract the scene with a Fresnel highlight. Native pixel density up to 4K with adaptive resolution. A nod to the Galaxy S III Nature UX.
-- **Four technology themes** (`bg.js`), built on free resources and loaded only when chosen: **Neural** (tsParticles, MIT), **Orbital** (Vanta.js globe, MIT, over NASA Black Marble night-lights imagery, public domain), **Reactor** (Vanta.js rings, MIT) and **Hologram** (Vanta.js dots, MIT, light). Vanta uses three.js r134 (MIT). Switch with the palette button or press T; the choice carries across the gallery and games.
+- **Calm design** (`calm.css`, `calm.js`): solid surfaces, hairline borders, one accent colour, Fraunces headings over Inter body text, and short eased motion that confirms an action rather than performing. It replaced the earlier blurred-glass panes. Sound is off until you turn it on.
+- **Quiet themes**: **Calm** (warm paper) and **Night** (dark). The site follows your device's light or dark setting until you choose a theme.
+- **Command menu**: press Ctrl/⌘ K or / (or the search button) to jump to a section, open a game or demo, copy the email address, download the CV or switch theme.
+- **Pick up where you left off**: on a return visit a small chip offers to take you back to the section you last read. Only the section id is stored, in your own browser.
+- **Expressive themes** (`fx.js`, `bg.js`): **Aqua** is the one water theme, with flowing currents, drifting colour and ripples that follow touch. **Neural** (tsParticles, MIT), **Orbital** (Vanta.js globe, MIT, over NASA Black Marble imagery, public domain), **Reactor** (Vanta.js rings) and **Hologram** (Vanta.js dots, light) are built on free libraries and load only when chosen. Press T on any page to cycle themes.
 - **Showreel** (`showreel.js`): a 37-second cut drawn live on a canvas at native resolution (no video file), with ripple wipes between six scenes.
 - **Architecture diagrams** (`diagrams.js`): animated SVG for each project, shown in the project panels.
-- Cinematic transitions: droplet intro, sections that settle into focus, a circular wipe between pages (`site-fx.js`) and cross-document view transitions (`transitions.css`).
+- Transitions: sections fade in once with a small rise, a circular wipe between pages (`site-fx.js`) and cross-document view transitions (`transitions.css`). The droplet intro plays only in Aqua.
 - CV download from `assets/cv.pdf`.
 
 **Interactive gallery** (`versions.html`)
@@ -37,6 +40,7 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 
 ```
 index.html, style.css, script.js   homepage
+calm.css, calm.js                  calm design layer, command menu, welcome back
 fx.js, bg.js, site-fx.js, showreel.js, diagrams.js   water engine, theme backgrounds, page effects, reel, diagrams
 theme.css, fxpage.css, page-fx.js            theme tokens and the water background for the gallery and games
 transitions.css                    shared page transitions
@@ -75,9 +79,13 @@ Push to `main`. The workflow in `.github/workflows/deploy.yml` publishes the rep
 |------|-------|
 | Update the CV | Replace `assets/cv.pdf` |
 | Change a project | The `PROJECTS` object in `script.js` and the matching card in `index.html` |
-| Add a theme | A background in `bg.js`, a `html[data-theme="..."]` block in `style.css` and `theme.css`, and an entry in `THEMES` in `script.js` (and `IDS` in `page-fx.js`) |
+| Add a theme | A background in `bg.js` (or add it to `QUIET` for none), a `html[data-theme="..."]` block in `style.css` and `theme.css`, and an entry in `THEMES` in `script.js` (and `IDS` in `page-fx.js`) |
 | Update badges or Skill IQs | The `#certifications` and `#pluralsight` sections of `index.html` |
 
 ## Credits
 
 tsParticles, Vanta.js and three.js (MIT); NASA Earth Observatory Black Marble night-lights imagery (public domain); fonts from Google Fonts (OFL).
+
+## Accessibility
+
+Visible focus rings on every control, 40–44 px targets for icon buttons, colour contrast checked against WCAG 2.2 AA for the quiet themes, a skip link, and `prefers-reduced-motion` respected throughout (hover lifts, the command menu and section reveals all switch off).
