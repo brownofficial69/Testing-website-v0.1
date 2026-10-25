@@ -1,176 +1,316 @@
 /* ════════════════════════════════════════════════════════════
    THEME STYLES
-   Each theme now has its own visual language, not just its own colours and background.
-   Every one keeps the same calm rules: solid readable surfaces, one accent, short eased
-   motion, visible focus, and nothing that moves under reduced motion.
+   Each theme has its own visual language, not just its own colours and background.
+   Every one keeps the same calm rules: solid readable surfaces (WCAG 2.2 AA contrast),
+   one accent, short eased motion, visible focus, and no movement under reduced motion.
      Calm, Night  Editorial   serif headings, paper surfaces (calm.css)
-     Aqua         Liquid      rounded flowing shapes, gradient hairlines, wave rules
-     Neural       Pixel       square corners, pixel type, hard stepped shadows
-     Orbital      HUD         mission-control corner brackets, monospaced labels
-     Reactor      Industrial  condensed uppercase type, hazard-stripe edges
-     Hologram     Iridescent  pearl surfaces with a soft rainbow rim
-   Fonts are open-licence (SIL OFL) and come from Google Fonts, already used by the site.
-   Loaded last on the homepage and, through page-fx.js, on the games and demos.
+     Aqua         Liquid      rounded flowing shapes, gradient rims, wave rules, droplets
+     Neural       Pixel       square corners, pixel type, hard stepped shadows, block caret
+     Orbital      HUD         corner brackets that open on hover, tick rulers, mono labels
+     Reactor      Industrial  condensed uppercase type, hazard stripes, chamfered buttons
+     Hologram     Iridescent  pearl surfaces with a rainbow rim that turns on hover
+   Loaded last on the homepage, on the games and demos (through page-fx.js) and, for type
+   and shape only, on the three 3D scenes (through scene-look.js).
+   Fonts are open-licence (SIL OFL) from Google Fonts, already used by the site. No scripts.
    ════════════════════════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600&family=Barlow+Condensed:wght@600;700&family=Outfit:wght@500;600&family=Sora:wght@500;600&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600&family=Barlow+Condensed:wght@600;700&family=Outfit:wght@500;600&family=Sora:wght@500;600&family=Space+Grotesk:wght@500;600&family=JetBrains+Mono:wght@500;600&family=Fraunces:opsz,wght@9..144,600&display=swap');
 
-/* shared tokens that work on the homepage (calm.css names) and the sub-pages (theme.css names) */
+/* animatable values for the HUD brackets and the iridescent rim */
+@property --bk { syntax: '<length>'; inherits: true; initial-value: 14px; }
+@property --ia { syntax: '<angle>'; inherits: true; initial-value: 200deg; }
+
+/* ───────── shared tokens (homepage names from calm.css, sub-page names from theme.css) ───────── */
 html[data-theme] {
   --st-surf: var(--surface, var(--sf)); --st-surf2: var(--surface-2, var(--sf2)); --st-line: var(--line, var(--ln));
   --st-tx: var(--text-primary, var(--tx1)); --st-tx2: var(--text-secondary, var(--tx2)); --st-acc: rgb(var(--g-rgb));
 }
-/* expressive themes on dark backgrounds need solid, opaque second surfaces */
-html[data-theme="aqua"]    { --surface: #071a28; --surface-2: #0c2536; --sf: #071a28; --sf2: #0c2536; }
-html[data-theme="neural"]  { --surface: #140c33; --surface-2: #1d1446; --sf: #140c33; --sf2: #1d1446; }
-html[data-theme="orbital"] { --surface: #06101f; --surface-2: #0b1a30; --sf: #06101f; --sf2: #0b1a30; }
-html[data-theme="reactor"] { --surface: #170609; --surface-2: #230b10; --sf: #170609; --sf2: #230b10; }
+/* expressive themes: opaque surfaces, and secondary/muted text that passes 4.5:1 on them */
+html[data-theme="aqua"]    { --surface: #071a28; --surface-2: #0c2536; --sf: #071a28; --sf2: #0c2536; --text-muted: #a9c6d6; }
+html[data-theme="neural"]  { --surface: #140c33; --surface-2: #1d1446; --sf: #140c33; --sf2: #1d1446; --text-secondary: #c9c0ea; --text-muted: #bdb3e2; --tx2: #c9c0ea; }
+html[data-theme="orbital"] { --surface: #06101f; --surface-2: #0b1a30; --sf: #06101f; --sf2: #0b1a30; --text-secondary: #b6cbe2; --text-muted: #a9c0da; --tx2: #b6cbe2; }
+html[data-theme="reactor"] { --surface: #170609; --surface-2: #230b10; --sf: #170609; --sf2: #230b10; --text-secondary: #e6c2b5; --text-muted: #dcb4a6; --tx2: #e6c2b5; }
+html[data-theme="holo"]    { --c-rgb: 10, 104, 122; --accent-cyan: #0a687a; --accent-purple: #6a2fd6; --accent-amber: #8a5200; --a-rgb: 138, 82, 0; --text-secondary: #2e4266; --text-muted: #3b4f73; --tx2: #2e4266; }
 
 /* the Claude Academy badges kept dark ink from their old pastel fill; follow the theme instead */
 .badge h3 { color: var(--st-tx) !important; }
 .badge .b-desc { color: var(--st-tx2) !important; }
-.badge .b-date { color: var(--st-tx2) !important; opacity: .85; }
+.badge .b-date { color: var(--st-tx2) !important; opacity: .9; }
 .badge svg, .badge.b-sage svg { color: var(--st-acc) !important; }
 
+/* demo buttons sit on a dark accent in the light themes, so their label is white */
+html[data-demo]:is([data-theme="calm"], [data-theme="holo"]) :is(button:not(.ghost), .btn:not(.ghost), button.ghost.on) { color: #fff !important; }
+html[data-demo]:is([data-theme="calm"], [data-theme="holo"]) button.ghost.on { background: rgb(var(--g-rgb)) !important; }
+
+/* no glass anywhere: tooltips and overlays get solid surfaces */
+html[data-theme] :is(.tip, .overlay) { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+html[data-theme] .tip { background: var(--st-surf) !important; border: 1px solid var(--st-line) !important; color: var(--st-tx) !important; }
+html[data-theme] .overlay { background: rgba(var(--bg-rgb), .94) !important; }
+
+/* editorial sub-pages share the homepage serif */
+html:is([data-theme="calm"], [data-theme="night"]) body:not(:has(#hero)) h1 { font-family: 'Fraunces', Georgia, serif !important; font-weight: 600 !important; letter-spacing: -.02em; }
+
 /* the moving backgrounds sit behind the hero copy: a soft scrim keeps it readable */
-html[data-theme="aqua"] .hero-content::before, html[data-theme="neural"] .hero-content::before,
-html[data-theme="orbital"] .hero-content::before, html[data-theme="reactor"] .hero-content::before,
-html[data-theme="holo"] .hero-content::before {
+html:is([data-theme="aqua"], [data-theme="neural"], [data-theme="orbital"], [data-theme="reactor"], [data-theme="holo"]) .hero-content::before {
   content: ""; position: absolute; inset: -48px -72px; z-index: -1; pointer-events: none;
-  background: radial-gradient(closest-side, rgba(var(--bg-rgb), .82), rgba(var(--bg-rgb), .5) 60%, transparent);
+  background: radial-gradient(closest-side, rgba(var(--bg-rgb), .84), rgba(var(--bg-rgb), .52) 60%, transparent);
 }
 
 /* the option list shows each theme's style name */
 .theme-opt-style { font: 500 .62rem var(--font-mono, monospace); letter-spacing: .08em; text-transform: uppercase; color: var(--st-tx2); border: 1px solid var(--st-line); border-radius: 999px; padding: 1px 7px; margin-left: 6px; vertical-align: 2px; font-style: normal; }
-
 /* on phones the menu hangs from the page edges, not from the button, so it never runs off-screen */
 @media (max-width: 600px) {
   .theme-menu { position: fixed !important; left: 16px !important; right: 16px !important; top: 68px !important; width: auto !important; max-height: calc(100vh - 88px); overflow-y: auto; }
 }
 
+/* ════════════════════════════════════════════════════════════
+   ONE SHAPE SYSTEM, FIVE LANGUAGES
+   Each expressive theme sets these tokens; the rules below apply them everywhere:
+   --k-* cards and panels, --c-r controls and fields, --t-r tags.
+   ════════════════════════════════════════════════════════════ */
+html:is([data-theme="aqua"], [data-theme="neural"], [data-theme="orbital"], [data-theme="reactor"], [data-theme="holo"])
+  :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .skill-row, .iq, .pcourses, .contact-form, .tech-pill-card, .reel, .modal, .badge, .theme-menu, .cmdk-panel, .resume,
+      .box, .rule, .score, .mis, .stg, .card, .agent, .comp, .side section, .stage-card, .stage, .demo-hero, .dgwrap, .lane, .sc, .out, .canvas-wrap, .tip, .notice, .reel-chapters button) {
+  border-radius: var(--k-r) !important; border: var(--k-bw) solid var(--k-line) !important;
+  background: var(--k-bg) !important; box-shadow: var(--k-sh) !important;
+  -webkit-backdrop-filter: none !important; backdrop-filter: none !important;
+}
+html:is([data-theme="aqua"], [data-theme="neural"], [data-theme="orbital"], [data-theme="reactor"], [data-theme="holo"])
+  :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card, .reel-chapters button, .sc):hover {
+  transform: var(--k-lift) !important; box-shadow: var(--k-sh-h) !important; border-color: var(--k-line-h) !important;
+}
+/* controls, fields and code blocks */
+html:is([data-theme="aqua"], [data-theme="neural"], [data-theme="orbital"], [data-theme="reactor"], [data-theme="holo"])
+  :is(.btn, button.go, .btn.go, .skip, .cmdk-btn, .cmdk-input, .contact-form :is(input, textarea, select)) { border-radius: var(--c-r) !important; }
+html:is([data-theme="aqua"], [data-theme="neural"], [data-theme="orbital"], [data-theme="reactor"], [data-theme="holo"])
+  body:not(:has(#hero)) :is(button:not(.sq), input, select, textarea, pre, .board, label.def, .tab) { border-radius: var(--c-r) !important; }
+/* tags and chips */
+html:is([data-theme="aqua"], [data-theme="neural"], [data-theme="orbital"], [data-theme="reactor"], [data-theme="holo"])
+  :is(.skill-tag, .tech-pill, .module-tag, .project-badge, .mitre-mini-tag, .tag, .cat, .band, .theme-opt, .theme-opt-style, .project-year) { border-radius: var(--t-r) !important; }
+html:is([data-theme="aqua"], [data-theme="neural"], [data-theme="orbital"], [data-theme="reactor"], [data-theme="holo"]) body:not(:has(#hero)) :is(#ride, button.cat) { border-radius: var(--t-r) !important; }
+
+/* headings on the sub-pages take the theme's display face */
+html[data-theme] body:not(:has(#hero)) :is(h1, h2) { font-family: var(--st-display, inherit); }
+
 /* ════════ AQUA · LIQUID ════════ */
 html[data-theme="aqua"] {
-  --font-display: 'Sora', system-ui, sans-serif; --r-card: 28px; --r-ctl: 999px;
-  --liquid-rim: linear-gradient(135deg, rgba(var(--g-rgb), .6), rgba(var(--p-rgb), .18) 45%, rgba(var(--c-rgb), .55));
+  --font-display: 'Sora', system-ui, sans-serif; --st-display: 'Sora', system-ui, sans-serif; --r-card: 28px; --r-ctl: 999px;
+  --rim: linear-gradient(135deg, rgba(var(--g-rgb), .6), rgba(var(--p-rgb), .18) 45%, rgba(var(--c-rgb), .55));
+  --rim-h: linear-gradient(135deg, rgba(var(--g-rgb), .95), rgba(var(--p-rgb), .35) 45%, rgba(var(--c-rgb), .9));
+  --k-r: 28px; --k-bw: 1px; --k-line: transparent; --k-line-h: transparent;
+  --k-bg: linear-gradient(var(--st-surf), var(--st-surf)) padding-box, var(--rim) border-box;
+  --k-sh: 0 14px 34px -22px rgba(0, 0, 0, .7); --k-sh-h: 0 22px 46px -22px rgba(var(--g-rgb), .45); --k-lift: translateY(-3px);
+  --c-r: 999px; --t-r: 999px;
 }
-html[data-theme="aqua"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .skill-row, .iq, .pcourses, .contact-form, .tech-pill-card, .reel, .modal,
-  .box, .rule, .score, .mis, .stg, .card, .agent, .comp, .side section, .stage-card) {
-  border: 1px solid transparent !important; border-radius: 28px !important;
-  background: linear-gradient(var(--st-surf), var(--st-surf)) padding-box, var(--liquid-rim) border-box !important;
-}
-html[data-theme="aqua"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, a.card):hover {
-  box-shadow: 0 20px 44px -20px rgba(var(--g-rgb), .45) !important;
-}
-html[data-theme="aqua"] :is(.hero-name, .section-title, .lab-top h1, .wrap > h1, body:not(:has(#hero)) :is(h1, h2)) { font-family: 'Sora', system-ui, sans-serif !important; font-weight: 600 !important; letter-spacing: -.035em; }
+html[data-theme="aqua"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card, .reel-chapters button):hover { background: linear-gradient(var(--st-surf), var(--st-surf)) padding-box, var(--rim-h) border-box !important; }
+html[data-theme="aqua"] :is(.hero-name, .section-title, .lab-top h1, .wrap > h1) { font-family: 'Sora', system-ui, sans-serif !important; font-weight: 600 !important; letter-spacing: -.035em; }
+html[data-theme="aqua"] :is(.project-card h3, .project-title, .timeline-card h3, .cert-card h3, .badge h3) { font-family: 'Sora', system-ui, sans-serif !important; }
 html[data-theme="aqua"] .section-title { padding-bottom: 14px; }
-/* a single soft wave under each section title */
 html[data-theme="aqua"] .section-title::after {
   display: block !important; content: ""; position: static; width: 84px; height: 10px; margin-top: 10px; opacity: .9;
   background: linear-gradient(90deg, rgb(var(--g-rgb)), rgb(var(--c-rgb)));
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 10'%3E%3Cpath d='M1 5c7-5 14-5 21 0s14 5 20 0 14-5 21 0 13 5 20 0' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
           mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 84 10'%3E%3Cpath d='M1 5c7-5 14-5 21 0s14 5 20 0 14-5 21 0 13 5 20 0' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
-html[data-theme="aqua"] :is(.btn, .btn.go, button.go) { border-radius: 999px !important; }
-html[data-theme="aqua"] :is(.btn-primary, .btn.go, button.go) { background: linear-gradient(135deg, rgb(var(--g-rgb)), rgb(var(--c-rgb))) !important; color: #03131f !important; }
+html[data-theme="aqua"] .section-label { display: inline-block; padding: .28rem .8rem; border-radius: 999px; background: rgba(var(--g-rgb), .1); border: 1px solid rgba(var(--g-rgb), .25); }
+html[data-theme="aqua"] .section-label::before { display: none; }
+html[data-theme="aqua"] :is(.btn-primary, .btn.go, button.go) { background: linear-gradient(135deg, rgb(var(--g-rgb)), rgb(var(--c-rgb))) !important; color: #03131f !important; border-color: transparent !important; }
 html[data-theme="aqua"] :is(.skill-tag, .tech-pill, .module-tag, .project-badge) { background: rgba(var(--g-rgb), .08) !important; border-color: rgba(var(--g-rgb), .25) !important; }
+html[data-theme="aqua"] .project-icon { border-radius: 50% !important; }
 html[data-theme="aqua"] .about-photo { border-radius: 46% 54% 50% 50% / 52% 46% 54% 48% !important; }
+html[data-theme="aqua"] .timeline-dot { border-radius: 50% 50% 50% 0 !important; transform: rotate(-45deg); }
+html[data-theme="aqua"] .timeline-item:hover .timeline-dot { transform: rotate(-45deg) scale(1.25); }
+html[data-theme="aqua"] :is(.scroll-progress, .nav-ind) { height: 3px !important; border-radius: 3px !important; background: linear-gradient(90deg, rgb(var(--g-rgb)), rgb(var(--c-rgb))) !important; }
+html[data-theme="aqua"] .navbar { border-bottom: 0 !important; box-shadow: 0 1px 0 rgba(var(--g-rgb), .22) !important; }
+html[data-theme="aqua"] .cursor { width: 3px !important; border-radius: 3px; }
+html[data-theme="aqua"] :focus-visible { border-radius: 999px; }
 html[data-theme="aqua"] .badge.b0 { border-radius: 52% 48% 56% 44% / 46% 54% 46% 54% !important; }
 html[data-theme="aqua"] .badge.b1 { border-radius: 46% 54% 44% 56% / 55% 45% 55% 45% !important; }
 html[data-theme="aqua"] .badge.b2 { border-radius: 55% 45% 50% 50% / 50% 56% 44% 50% !important; }
 html[data-theme="aqua"] .badge.b3 { border-radius: 48% 52% 46% 54% / 44% 50% 50% 56% !important; }
-html[data-theme="aqua"] .badge { background: linear-gradient(var(--st-surf), var(--st-surf)) padding-box, var(--liquid-rim) border-box !important; border: 1px solid transparent !important; }
+html[data-theme="aqua"] ::selection { background: rgba(var(--g-rgb), .3); }
 
 /* ════════ NEURAL · PIXEL ════════ */
-html[data-theme="neural"] { --font-display: 'Pixelify Sans', 'Courier New', monospace; --r-card: 0; --r-ctl: 0; --px: rgba(var(--g-rgb), .5); }
-html[data-theme="neural"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .skill-row, .iq, .pcourses, .contact-form, .tech-pill-card, .reel, .modal, .badge, .theme-menu, .cmdk-panel,
-  .box, .rule, .score, .mis, .stg, .card, .agent, .comp, .side section, .stage-card) {
-  border-radius: 0 !important; border: 2px solid var(--px) !important; box-shadow: 4px 4px 0 rgba(var(--g-rgb), .28) !important;
+html[data-theme="neural"] {
+  --font-display: 'Pixelify Sans', 'Courier New', monospace; --st-display: 'Pixelify Sans', 'Courier New', monospace; --r-card: 0; --r-ctl: 0;
+  --k-r: 0; --k-bw: 2px; --k-line: rgba(var(--g-rgb), .5); --k-line-h: rgb(var(--g-rgb)); --k-bg: var(--st-surf);
+  --k-sh: 4px 4px 0 rgba(var(--g-rgb), .28); --k-sh-h: 6px 6px 0 rgba(var(--g-rgb), .42); --k-lift: translate(-2px, -2px);
+  --c-r: 0; --t-r: 0;
 }
-html[data-theme="neural"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card):hover {
-  transform: translate(-2px, -2px) !important; box-shadow: 6px 6px 0 rgba(var(--g-rgb), .4) !important; border-color: rgb(var(--g-rgb)) !important;
-}
-html[data-theme="neural"] :is(.hero-name, .section-title, .lab-top h1, .wrap > h1, body:not(:has(#hero)) :is(h1, h2), .project-card h3, .project-title, .timeline-card h3, .cert-card h3, .badge h3, .stat-number, .stat-value, .nav-logo, .rc-b b) {
+html[data-theme="neural"] :is(.hero-name, .section-title, .lab-top h1, .wrap > h1, .project-card h3, .project-title, .timeline-card h3, .cert-card h3, .badge h3, .stat-number, .stat-value, .nav-logo, .rc-b b) {
   font-family: 'Pixelify Sans', 'Courier New', monospace !important; letter-spacing: 0 !important; font-weight: 600 !important;
 }
 html[data-theme="neural"] .hero-name { text-shadow: 4px 4px 0 rgba(var(--p-rgb), .45) !important; }
-html[data-theme="neural"] :is(.section-label, .hero-greeting) { font-family: 'Pixelify Sans', monospace !important; letter-spacing: .04em; }
-html[data-theme="neural"] :is(.btn, button.go, .btn.go, .reel-chapters button, .cmdk-btn) { border-radius: 0 !important; border-width: 2px !important; box-shadow: 3px 3px 0 rgba(var(--g-rgb), .35) !important; font-family: 'Pixelify Sans', monospace !important; letter-spacing: .02em !important; }
+html[data-theme="neural"] :is(.section-label, .hero-greeting, .skill-row-header, .theme-menu-group) { font-family: 'Pixelify Sans', monospace !important; letter-spacing: .04em !important; }
+/* a row of pixels under each section title */
+html[data-theme="neural"] .section-title::after { display: block !important; content: ""; position: static; width: 72px; height: 6px; margin-top: 12px;
+  background: repeating-linear-gradient(90deg, rgb(var(--g-rgb)) 0 6px, transparent 6px 10px); }
+html[data-theme="neural"] .section-label::before { width: 8px !important; height: 8px !important; background: rgb(var(--g-rgb)) !important; border-radius: 0 !important; }
+html[data-theme="neural"] :is(.btn, button.go, .btn.go, .reel-chapters button, .cmdk-btn) { border-width: 2px !important; box-shadow: 3px 3px 0 rgba(var(--g-rgb), .35) !important; font-family: 'Pixelify Sans', monospace !important; letter-spacing: .02em !important; }
+html[data-theme="neural"] body:not(:has(#hero)) button:not(.sq) { font-family: 'Pixelify Sans', monospace !important; }
 html[data-theme="neural"] :is(.btn, button.go, .btn.go):hover { transform: translate(-1px, -1px) !important; box-shadow: 4px 4px 0 rgba(var(--g-rgb), .45) !important; }
 html[data-theme="neural"] :is(.btn, button.go, .btn.go):active { transform: translate(3px, 3px) !important; box-shadow: 0 0 0 transparent !important; }
-html[data-theme="neural"] :is(.skill-tag, .tech-pill, .module-tag, .project-badge, .theme-opt, .theme-opt-style) { border-radius: 0 !important; }
 html[data-theme="neural"] :is(.about-photo, .project-icon, .timeline-dot) { border-radius: 0 !important; }
 html[data-theme="neural"] .about-photo { box-shadow: 6px 6px 0 rgba(var(--g-rgb), .35) !important; }
-html[data-theme="neural"] .nav-ind, html[data-theme="neural"] .scroll-progress { border-radius: 0 !important; height: 3px !important; }
+html[data-theme="neural"] .scroll-progress { height: 4px !important; border-radius: 0 !important; background: repeating-linear-gradient(90deg, rgb(var(--g-rgb)) 0 10px, transparent 10px 12px) !important; }
+html[data-theme="neural"] .nav-ind { height: 3px !important; border-radius: 0 !important; }
+html[data-theme="neural"] .navbar { border-bottom: 2px solid rgba(var(--g-rgb), .35) !important; }
+/* a solid block caret that blinks in two steps, like a terminal */
+html[data-theme="neural"] .cursor { width: .5em !important; height: 1em !important; background: rgb(var(--g-rgb)) !important; border: 0 !important; animation-timing-function: steps(1, end) !important; vertical-align: -.1em; }
+html[data-theme="neural"] .reveal { transition-timing-function: steps(5, end) !important; }
 html[data-theme="neural"] :focus-visible { border-radius: 0 !important; outline-style: dashed !important; }
+html[data-theme="neural"] ::selection { background: rgb(var(--g-rgb)); color: #09051a; }
 
 /* ════════ ORBITAL · HUD ════════ */
 html[data-theme="orbital"] {
-  --font-display: 'Space Grotesk', system-ui, sans-serif; --r-card: 4px; --r-ctl: 3px; --hud: rgba(var(--g-rgb), .85);
-  /* four corner brackets drawn with gradients, over the solid surface */
+  --font-display: 'Space Grotesk', system-ui, sans-serif; --st-display: 'Space Grotesk', system-ui, sans-serif; --r-card: 4px; --r-ctl: 3px; --hud: rgba(var(--g-rgb), .85);
+  /* four corner brackets drawn with gradients over the solid surface; they open out on hover */
   --brackets:
-    linear-gradient(var(--hud), var(--hud)) top left / 14px 1px no-repeat, linear-gradient(var(--hud), var(--hud)) top left / 1px 14px no-repeat,
-    linear-gradient(var(--hud), var(--hud)) top right / 14px 1px no-repeat, linear-gradient(var(--hud), var(--hud)) top right / 1px 14px no-repeat,
-    linear-gradient(var(--hud), var(--hud)) bottom left / 14px 1px no-repeat, linear-gradient(var(--hud), var(--hud)) bottom left / 1px 14px no-repeat,
-    linear-gradient(var(--hud), var(--hud)) bottom right / 14px 1px no-repeat, linear-gradient(var(--hud), var(--hud)) bottom right / 1px 14px no-repeat;
+    linear-gradient(var(--hud), var(--hud)) top left / var(--bk) 1px no-repeat, linear-gradient(var(--hud), var(--hud)) top left / 1px var(--bk) no-repeat,
+    linear-gradient(var(--hud), var(--hud)) top right / var(--bk) 1px no-repeat, linear-gradient(var(--hud), var(--hud)) top right / 1px var(--bk) no-repeat,
+    linear-gradient(var(--hud), var(--hud)) bottom left / var(--bk) 1px no-repeat, linear-gradient(var(--hud), var(--hud)) bottom left / 1px var(--bk) no-repeat,
+    linear-gradient(var(--hud), var(--hud)) bottom right / var(--bk) 1px no-repeat, linear-gradient(var(--hud), var(--hud)) bottom right / 1px var(--bk) no-repeat;
+  --k-r: 4px; --k-bw: 1px; --k-line: rgba(var(--g-rgb), .2); --k-line-h: rgba(var(--g-rgb), .4);
+  --k-bg: var(--brackets), var(--st-surf); --k-sh: 0 12px 30px -20px rgba(0, 0, 0, .8); --k-sh-h: 0 0 0 1px rgba(var(--g-rgb), .12), 0 16px 34px -20px rgba(var(--g-rgb), .4); --k-lift: none;
+  --c-r: 3px; --t-r: 3px;
 }
-html[data-theme="orbital"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .skill-row, .iq, .pcourses, .contact-form, .tech-pill-card, .reel, .badge,
-  .box, .rule, .score, .mis, .stg, .card, .agent, .comp, .side section, .stage-card) {
-  border-radius: 4px !important; border: 1px solid rgba(var(--g-rgb), .2) !important; background: var(--brackets), var(--st-surf) !important;
-}
-html[data-theme="orbital"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card):hover { --hud: rgb(var(--c-rgb)); border-color: rgba(var(--g-rgb), .4) !important; }
-html[data-theme="orbital"] :is(.hero-name, .section-title, .lab-top h1, .wrap > h1, body:not(:has(#hero)) :is(h1, h2)) { font-family: 'Space Grotesk', system-ui, sans-serif !important; font-weight: 600 !important; letter-spacing: -.03em; }
+html[data-theme="orbital"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .skill-row, .iq, .pcourses, .badge, .box, .card, .stage-card, .demo-hero, .dgwrap, .sc) { transition: --bk .35s var(--ease, ease), border-color .2s ease, box-shadow .3s ease !important; }
+html[data-theme="orbital"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card, .sc):hover { --bk: 24px; --hud: rgb(var(--c-rgb)); }
+html[data-theme="orbital"] :is(.hero-name, .section-title, .lab-top h1, .wrap > h1) { font-family: 'Space Grotesk', system-ui, sans-serif !important; font-weight: 600 !important; letter-spacing: -.03em; }
 html[data-theme="orbital"] :is(.project-card h3, .project-title, .timeline-card h3, .cert-card h3, .badge h3) { font-family: 'Space Grotesk', system-ui, sans-serif !important; }
-html[data-theme="orbital"] :is(.section-label, .hero-greeting, .skill-row-header, .project-badge, .rc-n) { font-family: 'JetBrains Mono', monospace !important; text-transform: uppercase; letter-spacing: .14em !important; }
-html[data-theme="orbital"] .section-label::after { content: " ▸ online"; color: rgb(var(--c-rgb)); opacity: .8; }
-html[data-theme="orbital"] :is(.btn, button.go, .btn.go) { border-radius: 3px !important; font: 500 .78rem 'JetBrains Mono', monospace !important; text-transform: uppercase; letter-spacing: .12em !important; }
-html[data-theme="orbital"] :is(.skill-tag, .tech-pill, .module-tag, .project-badge) { border-radius: 3px !important; font-family: 'JetBrains Mono', monospace !important; }
+html[data-theme="orbital"] :is(.section-label, .hero-greeting, .skill-row-header, .project-badge, .rc-n, .stat-label, .theme-menu-group) { font-family: 'JetBrains Mono', monospace !important; text-transform: uppercase; letter-spacing: .14em !important; }
+html[data-theme="orbital"] .section-label::after { content: " ▸ online"; color: rgb(var(--c-rgb)); opacity: .85; }
+/* a ruler with ticks under each section title */
+html[data-theme="orbital"] .section-title::after { display: block !important; content: ""; position: static; width: 120px; height: 7px; margin-top: 12px;
+  background: linear-gradient(rgb(var(--g-rgb)), rgb(var(--g-rgb))) left bottom / 100% 1px no-repeat, repeating-linear-gradient(90deg, rgba(var(--g-rgb), .8) 0 1px, transparent 1px 12px) left bottom / 100% 7px no-repeat; }
+html[data-theme="orbital"] :is(.btn, button.go, .btn.go) { font: 500 .78rem 'JetBrains Mono', monospace !important; text-transform: uppercase; letter-spacing: .12em !important; }
+html[data-theme="orbital"] body:not(:has(#hero)) button:not(.sq) { font-family: 'JetBrains Mono', monospace !important; letter-spacing: .06em; }
+html[data-theme="orbital"] :is(.btn-secondary, .btn-cv) { background: var(--brackets), transparent !important; --bk: 8px; border-color: rgba(var(--g-rgb), .3) !important; }
+html[data-theme="orbital"] :is(.skill-tag, .tech-pill, .module-tag, .project-badge) { font-family: 'JetBrains Mono', monospace !important; }
+html[data-theme="orbital"] .project-icon { border-radius: 2px !important; box-shadow: inset 0 0 0 1px rgba(var(--g-rgb), .45); }
 html[data-theme="orbital"] .about-photo { border-radius: 4px !important; outline: 1px solid rgba(var(--g-rgb), .35); outline-offset: 6px; }
 html[data-theme="orbital"] .timeline-dot { border-radius: 2px !important; transform: rotate(45deg); }
+html[data-theme="orbital"] .timeline-item:hover .timeline-dot { transform: rotate(45deg) scale(1.25); }
+html[data-theme="orbital"] .scroll-progress { height: 3px !important; background: repeating-linear-gradient(90deg, rgb(var(--g-rgb)) 0 2px, transparent 2px 6px) !important; }
+html[data-theme="orbital"] .nav-ind { height: 1px !important; box-shadow: -1px -3px 0 0 rgb(var(--g-rgb)), 1px -3px 0 0 rgb(var(--g-rgb)); }
+html[data-theme="orbital"] .navbar { border-bottom-color: rgba(var(--g-rgb), .25) !important; }
+html[data-theme="orbital"] .cursor { height: 3px !important; width: .6em !important; vertical-align: -.05em; }
+html[data-theme="orbital"] :focus-visible { border-radius: 2px; outline-width: 1px !important; outline-offset: 4px !important; }
 
 /* ════════ REACTOR · INDUSTRIAL ════════ */
 html[data-theme="reactor"] {
-  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif; --r-card: 2px; --r-ctl: 2px;
-  --hazard: repeating-linear-gradient(-45deg, rgba(var(--g-rgb), .85) 0 8px, transparent 8px 16px);
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif; --st-display: 'Barlow Condensed', 'Arial Narrow', sans-serif; --r-card: 2px; --r-ctl: 2px;
+  --hazard: repeating-linear-gradient(-45deg, rgba(var(--g-rgb), .9) 0 8px, transparent 8px 16px);
+  --k-r: 2px; --k-bw: 1px; --k-line: var(--st-line); --k-line-h: rgba(var(--g-rgb), .55); --k-bg: var(--st-surf);
+  --k-sh: 0 10px 24px -16px rgba(0, 0, 0, .8); --k-sh-h: 0 16px 30px -16px rgba(0, 0, 0, .9); --k-lift: translateY(-2px);
+  --c-r: 2px; --t-r: 2px;
+  /* chamfered corners, cut like a stamped plate */
+  --chamfer: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
 }
 html[data-theme="reactor"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .skill-row, .iq, .pcourses, .contact-form, .tech-pill-card, .reel, .badge,
-  .box, .rule, .score, .mis, .stg, .card, .agent, .comp, .side section, .stage-card) {
-  border-radius: 2px !important; border: 1px solid var(--st-line) !important; border-left: 3px solid rgb(var(--g-rgb)) !important;
-}
-/* a thin hazard band across the top of the main cards */
-html[data-theme="reactor"] :is(.project-card, .timeline-card, .iq, .card, .stage-card) { background: var(--hazard) top / 100% 4px no-repeat, var(--st-surf) !important; padding-top: calc(1.5rem + 4px); }
-html[data-theme="reactor"] :is(.hero-name, .section-title, .lab-top h1, .wrap > h1, body:not(:has(#hero)) :is(h1, h2), .project-card h3, .project-title, .timeline-card h3, .cert-card h3, .badge h3, .stat-number, .stat-value, .nav-logo) {
+  .box, .rule, .score, .mis, .stg, .card, .agent, .comp, .side section, .stage-card, .demo-hero, .dgwrap, .lane, .sc) { border-left: 3px solid rgb(var(--g-rgb)) !important; }
+html[data-theme="reactor"] :is(.project-card, .timeline-card, .iq, .card, .stage-card, .demo-hero) { background: var(--hazard) top / 100% 4px no-repeat, var(--st-surf) !important; padding-top: calc(1.5rem + 4px); }
+html[data-theme="reactor"] :is(.hero-name, .section-title, .lab-top h1, .wrap > h1, .project-card h3, .project-title, .timeline-card h3, .cert-card h3, .badge h3, .stat-number, .stat-value, .nav-logo, .rc-b b) {
   font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif !important; font-weight: 700 !important; text-transform: uppercase; letter-spacing: .02em !important;
 }
+html[data-theme="reactor"] body:not(:has(#hero)) :is(h1, h2) { text-transform: uppercase; letter-spacing: .02em; }
 html[data-theme="reactor"] .hero-name { font-size: clamp(3.4rem, 10vw, 7.4rem) !important; line-height: .92 !important; }
 html[data-theme="reactor"] :is(.project-card h3, .project-title, .timeline-card h3, .cert-card h3, .badge h3) { font-size: 1.3rem !important; }
-html[data-theme="reactor"] :is(.section-label, .hero-greeting, .skill-row-header) { text-transform: uppercase; letter-spacing: .16em !important; }
-html[data-theme="reactor"] :is(.btn, button.go, .btn.go) { border-radius: 2px !important; font: 600 1.02rem 'Barlow Condensed', sans-serif !important; text-transform: uppercase; letter-spacing: .08em !important; }
+/* the section label is a stencilled plate */
+html[data-theme="reactor"] .section-label { display: inline-block; background: rgb(var(--g-rgb)); color: #160407 !important; padding: .22rem .6rem; font-weight: 600; text-transform: uppercase; letter-spacing: .16em !important; opacity: 1; clip-path: var(--chamfer); }
+html[data-theme="reactor"] .section-label::before { display: none; }
+html[data-theme="reactor"] .section-title::after { display: block !important; content: ""; position: static; width: 96px; height: 6px; margin-top: 12px; background: var(--hazard); }
+html[data-theme="reactor"] :is(.hero-greeting, .skill-row-header, .stat-label, .theme-menu-group) { text-transform: uppercase; letter-spacing: .16em !important; }
+html[data-theme="reactor"] :is(.btn, button.go, .btn.go) { font: 600 1.02rem 'Barlow Condensed', sans-serif !important; text-transform: uppercase; letter-spacing: .08em !important; clip-path: var(--chamfer); }
+html[data-theme="reactor"] body:not(:has(#hero)) button:not(.sq) { font-family: 'Barlow Condensed', sans-serif !important; text-transform: uppercase; letter-spacing: .06em; font-size: .95rem; }
 html[data-theme="reactor"] :is(.btn-primary, .btn.go, button.go) { color: #160407 !important; }
-html[data-theme="reactor"] :is(.skill-tag, .tech-pill, .module-tag, .project-badge) { border-radius: 2px !important; text-transform: uppercase; letter-spacing: .05em; font-size: .7rem !important; }
+html[data-theme="reactor"] :is(.skill-tag, .tech-pill, .module-tag, .project-badge) { text-transform: uppercase; letter-spacing: .05em; font-size: .7rem !important; }
+html[data-theme="reactor"] .project-icon { border-radius: 2px !important; background: rgb(var(--g-rgb)) !important; color: #160407 !important; clip-path: var(--chamfer); }
 html[data-theme="reactor"] .about-photo { border-radius: 2px !important; border-left: 4px solid rgb(var(--g-rgb)); }
 html[data-theme="reactor"] .timeline-dot { border-radius: 0 !important; }
+html[data-theme="reactor"] .scroll-progress { height: 4px !important; background: var(--hazard) !important; opacity: 1; }
+html[data-theme="reactor"] .nav-ind { height: 3px !important; border-radius: 0 !important; }
+html[data-theme="reactor"] .navbar { border-bottom: 3px solid transparent !important; border-image: var(--hazard) 1 !important; }
+html[data-theme="reactor"] .cursor { width: 4px !important; }
+html[data-theme="reactor"] :focus-visible { border-radius: 0 !important; outline-width: 3px !important; }
 
 /* ════════ HOLOGRAM · IRIDESCENT ════════ */
 html[data-theme="holo"] {
-  --font-display: 'Outfit', system-ui, sans-serif; --r-card: 20px; --r-ctl: 14px;
-  --iris: conic-gradient(from 200deg, #8fd3ff, #c6a8ff, #ffb8e0, #ffe3a8, #a8f0dc, #8fd3ff);
+  --font-display: 'Outfit', system-ui, sans-serif; --st-display: 'Outfit', system-ui, sans-serif; --r-card: 20px; --r-ctl: 14px;
+  --iris: conic-gradient(from var(--ia), #8fd3ff, #c6a8ff, #ffb8e0, #ffe3a8, #a8f0dc, #8fd3ff);
+  --k-r: 20px; --k-bw: 1.5px; --k-line: transparent; --k-line-h: transparent;
+  --k-bg: linear-gradient(var(--st-surf), var(--st-surf)) padding-box, var(--iris) border-box;
+  --k-sh: 0 10px 26px -16px rgba(12, 27, 58, .22); --k-sh-h: 0 20px 42px -20px rgba(122, 63, 240, .35); --k-lift: translateY(-3px);
+  --c-r: 14px; --t-r: 999px;
 }
-html[data-theme="holo"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .skill-row, .iq, .pcourses, .contact-form, .tech-pill-card, .reel, .badge, .modal,
-  .box, .rule, .score, .mis, .stg, .card, .agent, .comp, .side section, .stage-card) {
-  border: 1.5px solid transparent !important; border-radius: 20px !important;
-  background: linear-gradient(var(--st-surf), var(--st-surf)) padding-box, var(--iris) border-box !important;
-}
-html[data-theme="holo"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card):hover {
-  background: linear-gradient(180deg, #fff, #f7f4ff) padding-box, var(--iris) border-box !important; box-shadow: 0 18px 40px -18px rgba(122, 63, 240, .35) !important;
-}
-html[data-theme="holo"] :is(.hero-name, .section-title, .lab-top h1, .wrap > h1, body:not(:has(#hero)) :is(h1, h2), .project-card h3, .project-title, .timeline-card h3, .cert-card h3, .badge h3) { font-family: 'Outfit', system-ui, sans-serif !important; font-weight: 600 !important; letter-spacing: -.02em; }
-/* a pearl rule under the name; the text itself stays solid for contrast */
+/* the rainbow rim turns slowly as you hover */
+html[data-theme="holo"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card, .sc) { transition: --ia 1.2s var(--ease, ease), transform .32s var(--ease, ease), box-shadow .32s ease !important; }
+html[data-theme="holo"] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card, .sc):hover { --ia: 380deg; }
+html[data-theme="holo"] :is(.hero-name, .section-title, .lab-top h1, .wrap > h1, .project-card h3, .project-title, .timeline-card h3, .cert-card h3, .badge h3) { font-family: 'Outfit', system-ui, sans-serif !important; font-weight: 600 !important; letter-spacing: -.02em; }
+/* a pearl rule under the name and the section titles; the text itself stays solid for contrast */
 html[data-theme="holo"] .hero-name { padding-bottom: .12em; background: var(--iris) center bottom / 2.2em 4px no-repeat !important; }
-html[data-theme="holo"] :is(.btn, button.go, .btn.go) { border-radius: 14px !important; }
-html[data-theme="holo"] :is(.btn-primary, .btn.go, button.go) { background: linear-gradient(120deg, #2b57d8, #7a3ff0) !important; color: #fff !important; }
-html[data-theme="holo"] :is(.skill-tag, .tech-pill, .module-tag, .project-badge) { background: linear-gradient(#fff, #fff) padding-box, var(--iris) border-box !important; border: 1px solid transparent !important; }
+html[data-theme="holo"] .section-title::after { display: block !important; content: ""; position: static; width: 64px; height: 4px; margin-top: 12px; border-radius: 4px; background: linear-gradient(90deg, #8fd3ff, #c6a8ff, #ffb8e0, #ffe3a8); }
+html[data-theme="holo"] .section-label { display: inline-block; padding: .26rem .8rem; border-radius: 999px; border: 1px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--iris) border-box; color: #3a2c8c !important; }
+html[data-theme="holo"] .section-label::before { display: none; }
+html[data-theme="holo"] :is(.btn-primary, .btn.go, button.go) { background: linear-gradient(120deg, #2b57d8, #7a3ff0) !important; color: #fff !important; border-color: transparent !important; }
+html[data-theme="holo"] :is(.btn-secondary, .btn-cv) { background: linear-gradient(#fff, #fff) padding-box, var(--iris) border-box !important; border: 1.5px solid transparent !important; }
+html[data-theme="holo"] :is(.skill-tag, .tech-pill, .module-tag, .project-badge) { background: linear-gradient(#fff, #fff) padding-box, var(--iris) border-box !important; border: 1px solid transparent !important; color: #2e4266 !important; }
+html[data-theme="holo"] .project-icon { border-radius: 14px !important; background: linear-gradient(#fff, #fff) padding-box, var(--iris) border-box !important; border: 1.5px solid transparent; }
 html[data-theme="holo"] .about-photo { border-radius: 24px !important; border: 3px solid transparent; background: var(--iris) border-box; }
+html[data-theme="holo"] .timeline-dot { background: var(--iris) !important; border: 0 !important; }
+html[data-theme="holo"] :is(.scroll-progress, .nav-ind) { height: 3px !important; border-radius: 3px !important; background: linear-gradient(90deg, #8fd3ff, #c6a8ff, #ffb8e0, #ffe3a8) !important; }
+html[data-theme="holo"] .navbar { border-bottom: 1px solid transparent !important; border-image: linear-gradient(90deg, #8fd3ff, #c6a8ff, #ffb8e0, #ffe3a8, #a8f0dc) 1 !important; }
+html[data-theme="holo"] :focus-visible { outline-color: #7a3ff0 !important; border-radius: 14px; }
+html[data-theme="holo"] ::selection { background: #e4d8ff; }
 
-/* ════════ motion: the style details never animate for people who ask for less motion ════════ */
+/* ════════ GAMES ════════ */
+/* Periodic Table: on the light themes the tiles become light paper with a deep symbol, instead of dark tiles */
+html:is([data-theme="calm"], [data-theme="holo"]) .el { background: color-mix(in srgb, var(--c) 10%, var(--sf)) !important; }
+html:is([data-theme="calm"], [data-theme="holo"]) .el.hl { background: color-mix(in srgb, var(--c) 24%, var(--sf)) !important; }
+html:is([data-theme="calm"], [data-theme="holo"]) .el .s { color: color-mix(in srgb, var(--c) 55%, #000) !important; }
+html:is([data-theme="calm"], [data-theme="holo"]) .el.on .s { color: #0a0c13 !important; }
+html:is([data-theme="calm"], [data-theme="holo"]) .chips button { color: color-mix(in srgb, var(--c) 55%, #000) !important; }
+/* pastel result colours made for dark pages get deep equivalents on the light themes (Chess, Arena) */
+html:is([data-theme="calm"], [data-theme="holo"]) :is(.agent .bad, .tstep.DENY .dec) { color: #a61e2b !important; }
+html:is([data-theme="calm"], [data-theme="holo"]) .agent .good { color: #0d6e47 !important; }
+html:is([data-theme="calm"], [data-theme="holo"]) .tstep .eve:not(.none) { color: #7d4a00 !important; }
+html:is([data-theme="calm"], [data-theme="holo"]) .doc mark { color: #7a1020 !important; }
+html:is([data-theme="calm"], [data-theme="holo"]) .gate .ok { color: #fff !important; }
+/* tiles, squares and board edges take the theme's corners */
+html:is([data-theme="neural"], [data-theme="reactor"]) :is(.el, .sq) { border-radius: 0 !important; }
+html[data-theme="orbital"] .sq { border-radius: 2px !important; }
+html[data-theme="orbital"] .el { border-radius: 2px !important; }
+html[data-theme="neural"] .el { border-width: 2px !important; }
+html[data-theme="neural"] .el .s { font-family: 'Pixelify Sans', monospace; }
+html[data-theme="reactor"] .el .s { font-family: 'Barlow Condensed', sans-serif; font-size: 1.5rem; }
+html[data-theme="aqua"] .el { border-radius: 14px !important; }
+html[data-theme="holo"] .el { border-radius: 12px !important; }
+
+/* ════════════════════════════════════════════════════════════
+   THE 3D SCENES (CyberCity, DNA Helix, Threat Graph)
+   They stay at night, so only type and shape follow the theme (set by scene-look.js).
+   ════════════════════════════════════════════════════════════ */
+html[data-look="editorial"] h1 { font-family: 'Fraunces', Georgia, serif !important; font-weight: 600; letter-spacing: -.02em; }
+html[data-look="liquid"] h1 { font-family: 'Sora', system-ui, sans-serif !important; letter-spacing: -.03em; }
+html[data-look="liquid"] :is(.card, .panel, .list, .tools) { border-radius: 26px !important; }
+html[data-look="liquid"] :is(button, .bar a, .acts a, .links a, .actions a, .chips > *, .search input) { border-radius: 999px !important; }
+html[data-look="pixel"] :is(h1, .card h2, .panel h2, button, .bar a, .acts a, .actions a) { font-family: 'Pixelify Sans', monospace !important; letter-spacing: .02em !important; }
+html[data-look="pixel"] :is(.card, .panel, .list, .tools, button, .bar a, .acts a, .links a, .actions a, .chips > *, .search input, .me) { border-radius: 0 !important; }
+html[data-look="pixel"] :is(.card, .panel, .list) { border-width: 2px !important; box-shadow: 5px 5px 0 rgba(255, 255, 255, .14) !important; }
+html[data-look="hud"] h1 { font-family: 'Space Grotesk', system-ui, sans-serif !important; letter-spacing: -.03em; }
+html[data-look="hud"] :is(button, .bar a, .acts a, .actions a) { font: 500 .72rem 'JetBrains Mono', monospace !important; text-transform: uppercase; letter-spacing: .12em !important; border-radius: 2px !important; }
+html[data-look="hud"] :is(.card, .panel, .list, .tools, .chips > *, .search input) { border-radius: 3px !important; }
+html[data-look="industrial"] :is(h1, .card h2, .panel h2) { font-family: 'Barlow Condensed', sans-serif !important; font-weight: 700 !important; text-transform: uppercase; letter-spacing: .02em; }
+html[data-look="industrial"] :is(button, .bar a, .acts a, .actions a) { font: 600 .95rem 'Barlow Condensed', sans-serif !important; text-transform: uppercase; letter-spacing: .08em !important; border-radius: 2px !important; }
+html[data-look="industrial"] :is(.card, .panel, .list, .tools, .chips > *, .search input) { border-radius: 2px !important; }
+html[data-look="industrial"] :is(.card, .panel, .list) { border-left-width: 3px !important; }
+html[data-look="iridescent"] h1 { font-family: 'Outfit', system-ui, sans-serif !important; letter-spacing: -.02em; }
+html[data-look="iridescent"] :is(.card, .panel, .list, .tools) { border-radius: 20px !important; border: 1.5px solid transparent !important;
+  background: linear-gradient(rgba(10, 14, 30, .94), rgba(10, 14, 30, .94)) padding-box, conic-gradient(from 200deg, #8fd3ff, #c6a8ff, #ffb8e0, #ffe3a8, #a8f0dc, #8fd3ff) border-box !important; }
+html[data-look="iridescent"] :is(button, .bar a, .acts a, .actions a) { border-radius: 14px !important; }
+
+/* ════════ motion: none of the style details move for people who ask for less motion ════════ */
 @media (prefers-reduced-motion: reduce) {
-  html[data-theme] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card, .btn):hover { transform: none !important; }
+  html[data-theme] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card, .btn, .sc, .reel-chapters button):hover { transform: none !important; }
+  html[data-theme] :is(.project-card, .timeline-card, .cert-card, .stat-card, .contact-card, .iq, .badge, a.card, .sc) { transition: none !important; }
+  html[data-theme="neural"] .reveal { transition-timing-function: ease !important; }
 }

@@ -13,8 +13,8 @@
     if (bg) { bg.set(t); if (announce) bg.drop(innerWidth / 2, innerHeight / 2, 1.6); }
   }
   /* each theme's own visual style (Liquid, Pixel, HUD, Industrial, Iridescent), shared with the homepage */
-  var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = base + 'theme-styles.css?v=20261029'; document.head.appendChild(css);
-  var s = document.createElement('script'); s.src = base + 'bg.js?v=20261029';
+  var css = document.createElement('link'); css.rel = 'stylesheet'; css.href = base + 'theme-styles.css?v=20261030'; document.head.appendChild(css);
+  var s = document.createElement('script'); s.src = base + 'bg.js?v=20261030';
   s.onload = function () {
     bg = window.BG.create({ canvas: c, z: -1, earth: base + 'assets/earth-night.jpg', interactive: false });
     window.PAGEFX = bg; bg.set(theme);
