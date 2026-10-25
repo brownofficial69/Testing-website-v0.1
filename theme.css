@@ -1,7 +1,13 @@
-/* Shared theme tokens for every page except the homepage (which carries its own copy).
-   The same five themes drive the water-drop background (fx.js) and the colours of each page. */
-:root { --g-rgb: 25, 211, 235; --c-rgb: 143, 227, 255; --p-rgb: 124, 140, 255; --a-rgb: 255, 211, 122; --bg-rgb: 3, 19, 31; --bg2-rgb: 6, 33, 50; --tx1: #e8f6ff; --tx2: #9dc4d8; --ln: rgba(255, 255, 255, .15); }
+/* Shared theme tokens for every page except the homepage (which carries its own copy in style.css and calm.css).
+   Calm and Night are the quiet themes; the other five are expressive and draw a background (bg.js).
+   --sf / --sf2 are surfaces, --ln / --ln2 hairlines, --sh the shadow. */
+:root { --g-rgb: 25, 211, 235; --c-rgb: 143, 227, 255; --p-rgb: 124, 140, 255; --a-rgb: 255, 211, 122; --bg-rgb: 3, 19, 31; --bg2-rgb: 6, 33, 50; --tx1: #e8f6ff; --tx2: #9dc4d8; --ln: rgba(255, 255, 255, .12); --ln2: rgba(255, 255, 255, .22);
+  --sf: rgba(var(--bg2-rgb), .92); --sf2: rgba(var(--bg2-rgb), .98); --sh: 0 1px 2px rgba(0, 0, 0, .25), 0 12px 30px -16px rgba(0, 0, 0, .6); }
+html[data-theme="calm"] { --g-rgb: 15, 110, 106; --c-rgb: 42, 92, 140; --p-rgb: 118, 82, 158; --a-rgb: 150, 92, 18; --bg-rgb: 246, 244, 239; --bg2-rgb: 255, 253, 249; --tx1: #1f1d1a; --tx2: #57534c; --ln: rgba(31, 29, 26, .11); --ln2: rgba(31, 29, 26, .22);
+  --sf: #fffdf9; --sf2: #f1eee7; --sh: 0 1px 2px rgba(31, 29, 26, .05), 0 8px 24px -12px rgba(31, 29, 26, .14); color-scheme: light; }
+html[data-theme="night"] { --g-rgb: 111, 194, 184; --c-rgb: 140, 182, 232; --p-rgb: 184, 162, 232; --a-rgb: 230, 182, 112; --bg-rgb: 19, 20, 22; --bg2-rgb: 27, 28, 31; --tx1: #ecebe8; --tx2: #b9b6af; --ln: rgba(255, 255, 255, .08); --ln2: rgba(255, 255, 255, .16);
+  --sf: #1b1c1f; --sf2: #232428; --sh: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 28px -14px rgba(0, 0, 0, .6); color-scheme: dark; }
 html[data-theme="neural"] { --g-rgb: 165, 139, 255; --c-rgb: 90, 240, 216; --p-rgb: 255, 122, 217; --a-rgb: 255, 214, 120; --bg-rgb: 9, 5, 26; --bg2-rgb: 20, 12, 50; --tx1: #efeaff; --tx2: #b3a8d8; }
-html[data-theme="holo"] { --g-rgb: 43, 87, 216; --c-rgb: 14, 143, 166; --p-rgb: 122, 63, 240; --a-rgb: 194, 122, 0; --bg-rgb: 234, 241, 252; --bg2-rgb: 255, 255, 255; --tx1: #0c1b3a; --tx2: #34496e; --ln: rgba(12, 27, 58, .16); color-scheme: light; }
+html[data-theme="holo"] { --g-rgb: 43, 87, 216; --c-rgb: 14, 143, 166; --p-rgb: 122, 63, 240; --a-rgb: 194, 122, 0; --bg-rgb: 234, 241, 252; --bg2-rgb: 255, 255, 255; --tx1: #0c1b3a; --tx2: #34496e; --ln: rgba(12, 27, 58, .14); --ln2: rgba(12, 27, 58, .24); --sf: #ffffff; --sf2: #f2f6fd; --sh: 0 1px 2px rgba(12, 27, 58, .06), 0 10px 26px -14px rgba(12, 27, 58, .2); color-scheme: light; }
 html[data-theme="reactor"] { --g-rgb: 255, 90, 31; --c-rgb: 255, 176, 74; --p-rgb: 255, 61, 127; --a-rgb: 255, 217, 160; --bg-rgb: 12, 3, 5; --bg2-rgb: 30, 8, 12; --tx1: #fff0e8; --tx2: #d9ab9a; }
 html[data-theme="orbital"] { --g-rgb: 109, 183, 255; --c-rgb: 242, 193, 90; --p-rgb: 165, 139, 255; --a-rgb: 255, 226, 122; --bg-rgb: 2, 5, 13; --bg2-rgb: 8, 20, 38; --tx1: #eaf3ff; --tx2: #9fb8d4; }

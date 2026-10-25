@@ -28,7 +28,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .stat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; }
 .stat b { display: block; font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; }
 .stat span { font-size: .68rem; color: var(--mute); }
-.learn { font-size: .88rem; line-height: 1.6; color: #c3cdde; }
+.learn { font-size: .88rem; line-height: 1.6; color: var(--tx2, #c3cdde); }
 .learn b { color: var(--ink); }
 .learn p + p { margin-top: 8px; }
 .tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: .68rem; padding: 2px 8px; border: 1px solid var(--line); border-radius: 99px; color: var(--mute); }

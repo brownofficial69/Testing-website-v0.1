@@ -151,7 +151,7 @@ const PROJECTS = {
    ════════════════════════════════════════════════════════════ */
 const SoundEngine = (() => {
   let ctx = null;
-  let enabled = true;
+  let enabled = false; /* sound is opt-in */
 
   function ac() {
     if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -839,43 +839,7 @@ function initGSAP() {
   });
 }
 
-/* ════════════════════════════════════════════════════════════
-   SECTION TITLE GLITCH ON SCROLL ENTER
-   ════════════════════════════════════════════════════════════ */
-function initSectionTitleGlitch() {
-  const titles = document.querySelectorAll('.section-title');
-  if (!titles.length) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el = entry.target;
-      el.classList.add('title-glitch');
-      el.addEventListener('animationend', () => el.classList.remove('title-glitch'), { once: true });
-      observer.unobserve(el);
-    });
-  }, { threshold: 0.6 });
-
-  titles.forEach(t => observer.observe(t));
-}
-
-/* ════════════════════════════════════════════════════════════
-   CLICK RIPPLE
-   ════════════════════════════════════════════════════════════ */
-function initClickRipple() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  document.addEventListener('click', e => {
-    if (e.target.closest('a, button, input, textarea, .project-card, .copy-btn')) return;
-    const el = document.createElement('div');
-    el.className = 'click-ripple';
-    el.style.left = e.clientX + 'px';
-    el.style.top  = e.clientY + 'px';
-    document.body.appendChild(el);
-    el.addEventListener('animationend', () => el.remove(), { once: true });
-  });
-}
 
 /* ════════════════════════════════════════════════════════════
    SIDE SECTION NAVIGATION DOTS
@@ -929,49 +893,6 @@ function initSectionDots() {
 
 
 
-/* ════════════════════════════════════════════════════════════
-   CUSTOM CURSOR
-   ════════════════════════════════════════════════════════════ */
-function initCursor() {
-  const dot  = document.getElementById('cursor-dot');
-  const ring = document.getElementById('cursor-ring');
-  if (!dot || !ring) return;
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  let mx = -100, my = -100;
-  let rx = mx,   ry = my;
-
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-    dot.style.left = mx + 'px';
-    dot.style.top  = my + 'px';
-  });
-
-  document.addEventListener('mouseleave', () => {
-    dot.style.opacity  = '0';
-    ring.style.opacity = '0';
-  });
-  document.addEventListener('mouseenter', () => {
-    dot.style.opacity  = '1';
-    ring.style.opacity = '1';
-  });
-
-  (function lerp() {
-    rx += (mx - rx) * 0.13;
-    ry += (my - ry) * 0.13;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(lerp);
-  })();
-
-  const hoverSel = 'a, button, .project-card, .skill-tag, .contact-card, .cert-card, .stat-card, [role="button"], input, textarea, .copy-btn, .scroll-top';
-  document.querySelectorAll(hoverSel).forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-  });
-}
 
 
 
@@ -990,23 +911,6 @@ function initScrollProgress() {
   }, { passive: true });
 }
 
-/* ════════════════════════════════════════════════════════════
-   PROJECT CARD — 3D TILT ON MOUSEMOVE
-   ════════════════════════════════════════════════════════════ */
-function initCardTilt() {
-  const MAX = 7;
-  document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const r  = card.getBoundingClientRect();
-      const dx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
-      const dy = ((e.clientY - r.top)  / r.height - 0.5) * 2;
-      card.style.transform = `translateY(-5px) rotateX(${-dy * MAX}deg) rotateY(${dx * MAX}deg)`;
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
-}
 
 /* ════════════════════════════════════════════════════════════
    STAT COUNT-UP ANIMATION
@@ -1051,14 +955,12 @@ function initStatCounters() {
    BOOT
    ════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  /* The calm redesign drops the custom cursor, title glitch, click ripples, card tilt,
+     magnetic buttons and the decoding hero name: motion now only confirms what you did. */
   initFX();
   initIntro();
-  initCursor();
-  initSectionTitleGlitch();
-  initClickRipple();
   initSectionDots();
   initScrollProgress();
-  initCardTilt();
   initStatCounters();
   initTyping();
   initNavbar();
@@ -1074,9 +976,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollToTop();
   initCinematic();
   initThemes();
-  initHeroDecode();
-  initCardSpotlight();
-  initMagneticButtons();
 });
 
 
@@ -1084,7 +983,11 @@ document.addEventListener('DOMContentLoaded', () => {
    THEME MANAGER — five themes, each drawn from the CV
    ════════════════════════════════════════════════════════════ */
 const THEMES = [
-  { id: 'aqua',    name: 'Aqua',     meta: '#03131f', sw: ['#03131f', '#19d3e6', '#8fe3ff', '#7c8cff'],
+  { id: 'calm',    name: 'Calm',     meta: '#f6f4ef', sw: ['#f6f4ef', '#0f6e6a', '#2a5c8c', '#1f1d1a'], quiet: true,
+    why: 'Warm paper, solid surfaces and nothing moving behind the text. The default in light mode.' },
+  { id: 'night',   name: 'Night',    meta: '#131416', sw: ['#131416', '#6fc2b8', '#8cb6e8', '#ecebe8'], quiet: true,
+    why: 'The same quiet layout for dark rooms. The default when your device is in dark mode.' },
+  { id: 'aqua',   name: 'Aqua',     meta: '#03131f', sw: ['#03131f', '#19d3e6', '#8fe3ff', '#7c8cff'],
     why: 'The water theme. Flowing currents, drifting colour and ripples that follow every touch, a nod to Galaxy S III Nature UX.' },
   { id: 'neural',  name: 'Neural',   meta: '#09051a', sw: ['#09051a', '#a58bff', '#5af0d8', '#ff7ad9'],
     why: 'A live particle network you can pull apart. tsParticles (MIT).' },
@@ -1104,21 +1007,22 @@ function initThemes() {
   const root = document.documentElement;
   const byId = id => THEMES.find(t => t.id === id) || THEMES[0];
 
-  menu.innerHTML = '<div class="theme-menu-head">Themes drawn from my CV</div>' + THEMES.map(t =>
-    `<button class="theme-opt" role="radio" aria-checked="false" data-theme-id="${t.id}">
+  const opt = t => `<button class="theme-opt" role="radio" aria-checked="false" data-theme-id="${t.id}">
        <span class="theme-swatch" aria-hidden="true">${t.sw.map(c => `<i style="background:${c}"></i>`).join('')}</span>
        <span><span class="theme-opt-name">${t.name}</span><span class="theme-opt-why">${t.why}</span></span>
-     </button>`).join('') +
+     </button>`;
+  menu.innerHTML = '<div class="theme-menu-group">Quiet</div>' + THEMES.filter(t => t.quiet).map(opt).join('') +
+    '<div class="theme-menu-group">Expressive</div>' + THEMES.filter(t => !t.quiet).map(opt).join('') +
     '<a class="theme-menu-foot" href="versions.html">Browse the full design gallery</a>';
 
-  function paint(id) {
+  function paint(id, save = true) {
     const th = byId(id);
     root.setAttribute('data-theme', th.id);
     if (window.FXC) window.FXC.set(th.id);
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', th.meta);
     menu.querySelectorAll('.theme-opt').forEach(o => o.setAttribute('aria-checked', String(o.dataset.themeId === th.id)));
-    try { localStorage.setItem('sh-theme', th.id); } catch (e) { /* storage blocked */ }
+    if (save) try { localStorage.setItem('sh-theme', th.id); } catch (e) { /* storage blocked */ }
   }
 
   function apply(id, origin) {
@@ -1159,54 +1063,12 @@ function initThemes() {
     }
   });
 
-  paint(root.getAttribute('data-theme') || 'aqua');
+  paint(root.getAttribute('data-theme') || 'calm', false);
+  window.SH_THEMES = { list: THEMES, apply: apply };
 }
 
-/* ════════════════════════════════════════════════════════════
-   MOTION — hero name decodes once; cards follow the cursor; CTAs pull toward it
-   ════════════════════════════════════════════════════════════ */
-function initHeroDecode() {
-  const el = document.querySelector('.hero-name');
-  if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const final = el.textContent;
-  const GLYPHS = '01<>/{}[]#$%&*+=';
-  el.setAttribute('aria-label', final);
-  el.textContent = final.replace(/\S/g, () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)]);
-  setTimeout(() => {
-    const t0 = performance.now(), DUR = 1100;
-    (function step(now) {
-      const p = Math.min((now - t0) / DUR, 1);
-      el.textContent = [...final].map((ch, i) => {
-        if (ch === ' ') return ' ';
-        return p >= (i + 1) / final.length ? ch : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-      }).join('');
-      if (p < 1) requestAnimationFrame(step); else el.textContent = final;
-    })(t0);
-  }, (window.__bootDelay || 0) + 150);
-}
 
-function initCardSpotlight() {
-  document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('pointermove', e => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
-    });
-  });
-}
 
-function initMagneticButtons() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce), (hover: none)').matches) return;
-  document.querySelectorAll('.hero-cta .btn').forEach(btn => {
-    btn.addEventListener('pointermove', e => {
-      const r = btn.getBoundingClientRect();
-      const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
-      const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
-      btn.style.transform = `translate(${dx * 8}px, ${dy * 6}px)`;
-    });
-    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
-  });
-}
 
 
 /* ════════════════════════════════════════════════════════════
@@ -1225,7 +1087,8 @@ function initIntro() {
   if (!el) return;
   const skip = () => { el.remove(); document.body.classList.remove('no-scroll'); };
   let seen = false; try { seen = !!sessionStorage.getItem('sh-intro'); } catch (e) { /* storage off */ }
-  if (seen || matchMedia('(prefers-reduced-motion: reduce)').matches || !window.FXC) { skip(); return; }
+  const aqua = document.documentElement.getAttribute('data-theme') === 'aqua';
+  if (seen || !aqua || matchMedia('(prefers-reduced-motion: reduce)').matches || !window.FXC) { skip(); return; }
   try { sessionStorage.setItem('sh-intro', '1'); } catch (e) { /* storage off */ }
   document.body.classList.add('no-scroll'); window.__bootDelay = 1500;
   setTimeout(() => { window.FXC.drop(innerWidth / 2, innerHeight / 2, 2.0); el.classList.add('done'); }, 850);
@@ -1235,12 +1098,12 @@ function initIntro() {
 
 function initCinematic() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  /* every section settles into focus as it arrives: depth, blur and a ripple at its heading */
+  /* each section eases in once: a short fade and a small rise, nothing more */
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.utils.toArray('section:not(#hero) .section-inner').forEach(el => {
-      gsap.fromTo(el, { opacity: 0, y: 64, scale: 0.975, filter: 'blur(14px)' },
-        { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 1.1, ease: 'power3.out', clearProps: 'filter,transform',
-          scrollTrigger: { trigger: el, start: 'top 82%', once: true } });
+      gsap.fromTo(el, { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', clearProps: 'transform',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
     });
   }
   if (!('IntersectionObserver' in window)) return;

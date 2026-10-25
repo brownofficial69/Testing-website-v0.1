@@ -3,7 +3,7 @@
 .boardcol { min-width: 0; }
 .players { display: flex; justify-content: space-between; align-items: center; min-height: 30px; font-size: .85rem; color: var(--mute); padding: 2px 4px; }
 .players .who { font-family: 'JetBrains Mono', monospace; font-size: .74rem; }
-.cap { font-size: 1.1rem; letter-spacing: -2px; color: #aab6cc; min-height: 1.3rem; }
+.cap { font-size: 1.1rem; letter-spacing: -2px; color: var(--tx2, #aab6cc); min-height: 1.3rem; }
 .boardwrap { display: grid; grid-template-columns: 14px 1fr; gap: 8px; }
 .evalbar { position: relative; background: #11161f; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
 .evalbar i { display: block; width: 100%; height: 50%; background: #e9eef8; transition: height .6s cubic-bezier(.2, .8, .2, 1); }
@@ -44,15 +44,15 @@
 .promo button:hover { transform: translateY(-3px); }
 .over .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px 26px; text-align: center; max-width: 340px; }
 .over h2 { font-size: 1.5rem; margin-bottom: 8px; letter-spacing: -.01em; color: var(--ink); font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
-.over p { color: #c3cdde; font-size: .92rem; line-height: 1.5; margin-bottom: 14px; }
-.status { text-align: center; font-size: .9rem; color: #c3cdde; padding: 10px 0 0; min-height: 2.4rem; }
+.over p { color: var(--tx2, #c3cdde); font-size: .92rem; line-height: 1.5; margin-bottom: 14px; }
+.status { text-align: center; font-size: .9rem; color: var(--tx2, #c3cdde); padding: 10px 0 0; min-height: 2.4rem; }
 
 .side { display: grid; gap: 14px; position: sticky; top: 12px; }
 .agent { border-left: 3px solid; padding: 4px 0 4px 12px; margin-bottom: 12px; }
 .agent:last-child { margin-bottom: 0; }
 .agent.adam { border-color: #6db7ff; } .agent.eve { border-color: #ffb547; } .agent.mizan { border-color: #5cf2b0; }
 .agent b { font-size: .88rem; display: block; margin-bottom: 3px; } .agent b span { font-family: 'JetBrains Mono', monospace; font-size: .66rem; font-weight: 400; color: var(--mute); margin-left: 6px; }
-.agent p { font-size: .84rem; color: #c3cdde; line-height: 1.5; min-height: 1.5em; }
+.agent p { font-size: .84rem; color: var(--tx2, #c3cdde); line-height: 1.5; min-height: 1.5em; }
 .agent .mv { font-family: 'JetBrains Mono', monospace; color: var(--ink); }
 .agent .bad { color: #ff9aa6; } .agent .good { color: #8ef3c6; }
 .agent.think p::after { content: "…"; animation: blink 1s steps(3) infinite; }

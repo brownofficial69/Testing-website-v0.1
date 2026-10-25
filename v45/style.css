@@ -8,7 +8,7 @@
 .out { margin-top: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); font-size: .92rem; line-height: 1.5; min-height: 2.6em; color: var(--mute); }
 .out.ok { border-color: var(--a); background: rgba(92, 242, 176, .1); color: var(--ink); }
 .out.bad { border-color: var(--bad); background: rgba(255, 92, 108, .08); color: var(--ink); }
-.sql { font-family: 'JetBrains Mono', monospace; font-size: .82rem; line-height: 1.7; white-space: pre-wrap; word-break: break-all; color: #c3cdde; }
+.sql { font-family: 'JetBrains Mono', monospace; font-size: .82rem; line-height: 1.7; white-space: pre-wrap; word-break: break-all; color: var(--tx2, #c3cdde); }
 .sql .inj { color: var(--b); background: rgba(255, 181, 71, .14); border-radius: 4px; padding: 0 2px; }
 .sql .kw { color: var(--c); }
 .sql .dead { color: var(--mute); text-decoration: line-through; }

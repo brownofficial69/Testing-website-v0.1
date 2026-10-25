@@ -51,7 +51,7 @@ h1 { font-size: clamp(1.3rem, 3vw, 1.8rem); letter-spacing: -.01em; }
 .x { position: absolute; right: 10px; top: 6px; background: none; border: 0; font-size: 1.6rem; color: var(--mute); cursor: pointer; padding: 4px 8px; line-height: 1; }
 .k { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--c, var(--mute)); }
 .card h2 { font-size: 1.2rem; margin: 4px 0 8px; padding-right: 26px; }
-.card p#cD { color: #c3cde0; font-size: .92rem; line-height: 1.55; }
+.card p#cD { color: var(--tx2, #c3cde0); font-size: .92rem; line-height: 1.55; }
 .serves { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
 .serves li { font-family: 'JetBrains Mono', monospace; font-size: .7rem; padding: 3px 9px; border-radius: 99px; border: 1px solid var(--c2); color: var(--c2); }
 .acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }

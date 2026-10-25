@@ -35,7 +35,7 @@ h1 { font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -.02em; }
 @keyframes fade { from { opacity: 0; } }
 .overlay .card { max-width: 440px; }
 .overlay h2 { font-size: 1.6rem; margin-bottom: 8px; letter-spacing: -.01em; }
-.overlay p { color: #c3cddc; line-height: 1.5; }
+.overlay p { color: var(--tx2, #c3cddc); line-height: 1.5; }
 .overlay .grade { font-size: 3.4rem; font-weight: 700; line-height: 1; margin-bottom: 6px; }
 .overlay button { margin-top: 16px; }
 
@@ -51,7 +51,7 @@ h1 { font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -.02em; }
 .timeline output { font-family: 'JetBrains Mono', monospace; font-size: .8rem; min-width: 4ch; color: var(--mute); }
 
 .log { list-style: none; display: grid; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: .74rem; min-height: 150px; }
-.log li { display: grid; grid-template-columns: 46px 70px 1fr; gap: 10px; padding: 5px 10px; border-radius: 6px; background: var(--panel); color: #b6c2d4; border-left: 2px solid transparent; }
+.log li { display: grid; grid-template-columns: 46px 70px 1fr; gap: 10px; padding: 5px 10px; border-radius: 6px; background: var(--panel); color: var(--tx2, #b6c2d4); border-left: 2px solid transparent; }
 .log li.mal { border-left-color: var(--red); }
 .log li.alert { border-left-color: var(--teal); background: rgba(62, 240, 196, .08); color: var(--ink); }
 .log li.fp { border-left-color: var(--amber); background: rgba(255, 181, 71, .08); color: var(--ink); }
@@ -67,7 +67,7 @@ h1 { font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -.02em; }
 .rule header { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .rule h3 { font-size: .95rem; }
 .rule .tag { font-family: 'JetBrains Mono', monospace; font-size: .68rem; color: var(--amber); }
-.rule pre { margin: 10px 0; background: #070a10; border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; font-family: 'JetBrains Mono', monospace; font-size: .7rem; line-height: 1.5; color: #9fb4d0; overflow: auto; white-space: pre-wrap; }
+.rule pre { margin: 10px 0; background: #070a10; border: 1px solid var(--line); border-radius: 8px; padding: 9px 11px; font-family: 'JetBrains Mono', monospace; font-size: .7rem; line-height: 1.5; color: var(--tx2, #9fb4d0); overflow: auto; white-space: pre-wrap; }
 .rule pre em { color: var(--teal); font-style: normal; }
 .rule label.ctl { display: grid; gap: 4px; font-size: .78rem; color: var(--mute); }
 .rule label.ctl input[type=range] { accent-color: var(--teal); width: 100%; }

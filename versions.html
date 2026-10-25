@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>(function(){var t=null;try{t=localStorage.getItem("sh-theme")}catch(e){}if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"night":"calm";document.documentElement.setAttribute("data-theme",t)})()</script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Gallery | Shadman Hossain</title>
@@ -8,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root { --bg: #030d1a; --card: #071428; --line: rgba(0, 255, 136, .16); --line-hi: rgba(0, 255, 136, .6); --text: #e2e8f0; --muted: #94a3b8; --accent: #00ff88; --accent2: #00d4ff; }
     @media (prefers-color-scheme: light) { :root { --bg: #eef3fa; --card: #fff; --line: rgba(11, 74, 160, .18); --line-hi: rgba(11, 74, 160, .6); --text: #0b2447; --muted: #4b6280; --accent: #0b4aa0; --accent2: #007a8a; } }
@@ -50,10 +52,10 @@
 
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .card, .shot img, .open::after { transition: none; animation: none; } .card:hover { transform: none; } }
   </style>
-  <link rel="stylesheet" href="transitions.css?v=20261023" />
+  <link rel="stylesheet" href="transitions.css?v=20261025" />
   <script src="site-fx.js" defer></script>
-  <link rel="stylesheet" href="theme.css?v=20261023" />
-  <link rel="stylesheet" href="fxpage.css?v=20261023" />
+  <link rel="stylesheet" href="theme.css?v=20261025" />
+  <link rel="stylesheet" href="fxpage.css?v=20261025" />
 </head>
 <body>
 <div class="wrap">
@@ -138,11 +140,11 @@
     </a>
   </div>
 
-  <h3>The main site has five themes too</h3>
-  <p class="note">Open the palette button in the main portfolio's navigation, or press T. Aqua is the water theme; Neural, Orbital, Reactor and Hologram use free particle and 3D libraries.</p>
+  <h3>Seven themes, two of them quiet</h3>
+  <p class="note">Calm and Night are plain, solid and still, and follow your device's light or dark setting. Aqua, Neural, Orbital, Reactor and Hologram add a moving background. Open the palette button on the main site, or press T here to cycle.</p>
 
 </div>
-<script src="fx.js?v=20261023"></script>
-<script src="page-fx.js?v=20261023"></script>
+<script src="fx.js?v=20261025"></script>
+<script src="page-fx.js?v=20261025"></script>
 </body>
 </html>
