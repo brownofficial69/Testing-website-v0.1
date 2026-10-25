@@ -14,6 +14,7 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 - **Command menu**: press Ctrl/⌘ K or / (or the search button) to jump to a section, open a game or demo, copy the email address, download the CV or switch theme.
 - **Pick up where you left off**: on a return visit a small chip offers to take you back to the section you last read. Only the section id is stored, in your own browser.
 - **Expressive themes** (`fx.js`, `bg.js`): **Aqua** is the one water theme, with flowing currents, drifting colour and ripples that follow touch. **Neural** (tsParticles, MIT), **Orbital** (Vanta.js globe, MIT, over NASA Black Marble imagery, public domain), **Reactor** (Vanta.js rings) and **Hologram** (Vanta.js dots, light) are built on free libraries and load only when chosen. Press T on any page to cycle themes.
+- **A style per theme** (`theme-styles.css`): each theme has its own visual language, not just colours. Calm and Night are *Editorial* (serif headings), Aqua is *Liquid* (rounded shapes, gradient rims, wave rules), Neural is *Pixel* (square corners, Pixelify Sans, hard stepped shadows, square particles), Orbital is *HUD* (corner brackets, monospaced labels), Reactor is *Industrial* (condensed uppercase type, hazard-stripe edges) and Hologram is *Iridescent* (pearl cards with a rainbow rim). The same file styles the games and demos through `page-fx.js`. Fonts are SIL OFL from Google Fonts; no new scripts.
 - **Showreel** (`showreel.js`): a 37-second cut drawn live on a canvas at native resolution (no video file), with six chapters you can play with: question the agents, drag the threat graph, switch Sigma rules off to see where an intrusion is caught, and tamper with a ledger whose SHA-256 hashes are computed live with the Web Crypto API. A chapter list underneath explains what each one teaches. Keys: Space, arrows, F.
 - **Architecture diagrams** (`diagrams.js`): animated SVG for each project, shown in the project panels.
 - Transitions: sections fade in once with a small rise, a circular wipe between pages (`site-fx.js`) and cross-document view transitions (`transitions.css`). The droplet intro plays only in Aqua.
@@ -82,7 +83,7 @@ Push to `main`. The workflow in `.github/workflows/deploy.yml` publishes the rep
 |------|-------|
 | Update the CV | Replace `assets/cv.pdf` |
 | Change a project | The `PROJECTS` object in `script.js` and the matching card in `index.html` |
-| Add a theme | A background in `bg.js` (or add it to `QUIET` for none), a `html[data-theme="..."]` block in `style.css` and `theme.css`, and an entry in `THEMES` in `script.js` (and `IDS` in `page-fx.js`) |
+| Add a theme | A background in `bg.js` (or add it to `QUIET` for none), a `html[data-theme="..."]` block in `style.css` and `theme.css`, its style in `theme-styles.css`, and an entry in `THEMES` in `script.js` (and `IDS` in `page-fx.js`) |
 | Update badges or Skill IQs | The `#certifications` and `#pluralsight` sections of `index.html` |
 
 ## Credits
