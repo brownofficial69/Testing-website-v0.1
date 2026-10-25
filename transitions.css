@@ -32,4 +32,8 @@
 .sfx-wipe.in { clip-path: circle(150vmax at var(--x) var(--y)); }
 .sfx-wipe.cover { clip-path: circle(150vmax at var(--x) var(--y)); transition: none; }
 .sfx-wipe.out { clip-path: circle(0px at var(--x) var(--y)); transition: clip-path .8s cubic-bezier(.4, 0, .2, 1); }
+.sfx-wipe.calm { clip-path: none !important; background: rgb(var(--bg-rgb)); opacity: 0; transition: opacity .2s ease; }
+.sfx-wipe.calm.in, .sfx-wipe.calm.cover { opacity: 1; }
+.sfx-wipe.calm.cover { transition: none; }
+.sfx-wipe.calm.out { opacity: 0; transition: opacity .35s cubic-bezier(.22, 1, .36, 1); }
 @media (prefers-reduced-motion: reduce) { .sfx-ring, .sfx-wipe { display: none; } }

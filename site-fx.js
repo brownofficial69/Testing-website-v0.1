@@ -1,14 +1,16 @@
-/* Shared by every page: a water ripple where you touch, and a circular wipe between pages.
-   The homepage draws its own (much larger) WebGL ripples, so the touch rings are skipped there. */
+/* Shared by every page: a water ripple where you touch, and a transition between pages.
+   In the quiet themes (Calm, Night) there are no touch rings and pages simply fade; the expressive
+   themes keep the circular wipe. The homepage draws its own WebGL ripples, so rings are skipped there. */
 (function () {
   'use strict';
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduced) return;
   var KEY = 'sfx-wipe';
+  var quiet = function () { var t = document.documentElement.getAttribute('data-theme'); return t === 'calm' || t === 'night'; };
 
   /* touch ripple */
   addEventListener('pointerdown', function (e) {
-    if (document.getElementById('fx')) return;
+    if (document.getElementById('fx') || quiet()) return;
     if (e.target.closest && e.target.closest('canvas, input, select, textarea')) { /* still ripple on canvases, but not on form fields */ if (e.target.closest('input, select, textarea')) return; }
     ['', 'r2', 'r3'].forEach(function (c) {
       var r = document.createElement('div'); r.className = 'sfx-ring ' + c; r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px'; document.body.appendChild(r);
@@ -17,7 +19,7 @@
   }, { passive: true });
 
   /* page wipe: the old page floods from the click, the new page drains back to it */
-  function wipeEl(x, y) { var w = document.createElement('div'); w.className = 'sfx-wipe'; w.style.setProperty('--x', x + 'px'); w.style.setProperty('--y', y + 'px'); document.body.appendChild(w); return w; }
+  function wipeEl(x, y) { var w = document.createElement('div'); w.className = 'sfx-wipe' + (quiet() ? ' calm' : ''); w.style.setProperty('--x', x + 'px'); w.style.setProperty('--y', y + 'px'); document.body.appendChild(w); return w; }
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href]');
     if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -29,7 +31,7 @@
     var x = e.clientX || innerWidth / 2, y = e.clientY || innerHeight / 2;
     try { sessionStorage.setItem(KEY, JSON.stringify({ x: x, y: y, t: Date.now() })); } catch (err) { /* storage off */ }
     var w = wipeEl(x, y); void w.offsetWidth; w.classList.add('in');
-    setTimeout(function () { location.href = a.href; }, 560);
+    setTimeout(function () { location.href = a.href; }, quiet() ? 200 : 560);
   });
 
   function reveal() {

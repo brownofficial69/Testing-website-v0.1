@@ -147,6 +147,41 @@ a, button, [role="button"], label, select, summary { cursor: pointer; }
 .reveal { transition: opacity .6s var(--ease), transform .6s var(--ease) !important; }
 .reveal.fade-up:not(.visible):not(.revealed) { transform: translateY(12px); }
 
+/* ───── graphics and motion (motion.js) ───── */
+/* the signal field sits behind the hero copy and fades out at the edges */
+.signal-field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: none;
+  -webkit-mask-image: radial-gradient(120% 85% at 50% 45%, #000 35%, transparent 80%); mask-image: radial-gradient(120% 85% at 50% 45%, #000 35%, transparent 80%); }
+#hero .hero-content { position: relative; z-index: 1; }
+/* hero copy arrives in a calm sequence */
+@keyframes calmRise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+html[data-theme="calm"] .hero-content > *, html[data-theme="night"] .hero-content > * { animation: calmRise .8s var(--ease) both !important; }
+html[data-theme] .hero-content > :nth-child(1) { animation-delay: .05s !important; } html[data-theme] .hero-content > :nth-child(2) { animation-delay: .12s !important; }
+html[data-theme] .hero-content > :nth-child(3) { animation-delay: .2s !important; } html[data-theme] .hero-content > :nth-child(4) { animation-delay: .28s !important; }
+html[data-theme] .hero-content > :nth-child(5) { animation-delay: .36s !important; } html[data-theme] .hero-content > :nth-child(n+6) { animation-delay: .44s !important; }
+
+/* nav: one indicator that glides between sections */
+.nav-links { position: relative; }
+.nav-link.active::after { display: none !important; }
+.nav-ind { position: absolute; left: 0; bottom: -6px; height: 2px; border-radius: 2px; background: var(--accent-green); width: 0; opacity: 0; pointer-events: none;
+  transition: transform .45s var(--ease), width .45s var(--ease), opacity .2s ease; }
+
+/* scroll progress: a hairline in the accent colour */
+.scroll-progress { height: 2px !important; background: var(--accent-green) !important; opacity: .85; transition: width 60ms linear !important; }
+
+/* timeline rail follows the scroll */
+.timeline.tl-scroll::before { transform: scaleY(var(--tl, 0)) !important; transition: transform .15s linear !important; background: linear-gradient(to bottom, var(--accent-green), var(--accent-cyan)) !important; }
+.timeline-dot { transition: transform .4s var(--ease), box-shadow .4s ease; }
+.timeline-item:hover .timeline-dot { transform: scale(1.25); box-shadow: 0 0 0 6px rgba(var(--g-rgb), .14); }
+
+/* small, confirming hover details */
+.view-hint i, .open::after { transition: transform var(--t-calm) var(--ease); }
+.project-card:hover .view-hint i { transform: translateX(4px); }
+.project-icon { transition: transform var(--t-calm) var(--ease); }
+.project-card:hover .project-icon { transform: translateY(-2px); }
+.about-text a, .hero-alt a, .section-subtitle a { text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; transition: background-size var(--t-calm) var(--ease); }
+.about-text a:hover, .hero-alt a:hover, .section-subtitle a:hover { background-size: 0 1px; background-position: 100% 100%; }
+.stat-card .stat-value, .stat-number { font-variant-numeric: tabular-nums; }
+
 /* ───── theme menu ───── */
 .theme-menu { padding: 8px !important; }
 .theme-opt { border-radius: 10px !important; }
@@ -202,6 +237,8 @@ html[data-theme="calm"] .resume .go, html[data-theme="holo"] .resume .go { color
 
 /* ───── reduced motion ───── */
 @media (prefers-reduced-motion: reduce) {
+  html[data-theme] .hero-content > * { animation: none !important; }
+  .nav-ind, .timeline-dot, .view-hint i, .project-icon { transition: none !important; }
   .project-card:hover, .iq:hover, .contact-card:hover, .badge:hover, .cert-card:hover, .stat-card:hover, .timeline-card:hover, .btn:hover { transform: none !important; }
   .cmdk-panel, .resume, .calm-toast { transition: none !important; }
 }

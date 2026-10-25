@@ -10,6 +10,7 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 - About, skills, projects, a showreel, experience, education, Claude Academy badges, Pluralsight Skill IQs and courses, and a contact form.
 - **Calm design** (`calm.css`, `calm.js`): solid surfaces, hairline borders, one accent colour, Fraunces headings over Inter body text, and short eased motion that confirms an action rather than performing. It replaced the earlier blurred-glass panes. Sound is off until you turn it on.
 - **Quiet themes**: **Calm** (warm paper) and **Night** (dark). The site follows your device's light or dark setting until you choose a theme.
+- **Quiet motion** (`motion.js`): a slow field of contour lines behind the hero that leans toward the pointer, hero copy that arrives in sequence, cards that enter a beat apart, one nav indicator that glides to the active section, and a timeline rail that grows with scroll. In the quiet themes pages fade into each other instead of wiping. Everything pauses off-screen and stops for reduced-motion users.
 - **Command menu**: press Ctrl/⌘ K or / (or the search button) to jump to a section, open a game or demo, copy the email address, download the CV or switch theme.
 - **Pick up where you left off**: on a return visit a small chip offers to take you back to the section you last read. Only the section id is stored, in your own browser.
 - **Expressive themes** (`fx.js`, `bg.js`): **Aqua** is the one water theme, with flowing currents, drifting colour and ripples that follow touch. **Neural** (tsParticles, MIT), **Orbital** (Vanta.js globe, MIT, over NASA Black Marble imagery, public domain), **Reactor** (Vanta.js rings) and **Hologram** (Vanta.js dots, light) are built on free libraries and load only when chosen. Press T on any page to cycle themes.
@@ -40,7 +41,7 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 
 ```
 index.html, style.css, script.js   homepage
-calm.css, calm.js                  calm design layer, command menu, welcome back
+calm.css, calm.js, motion.js       calm design layer, command menu, welcome back, quiet motion
 fx.js, bg.js, site-fx.js, showreel.js, diagrams.js   water engine, theme backgrounds, page effects, reel, diagrams
 theme.css, fxpage.css, page-fx.js            theme tokens and the water background for the gallery and games
 transitions.css                    shared page transitions
