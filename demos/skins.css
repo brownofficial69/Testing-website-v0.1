@@ -1,0 +1,115 @@
+/* skins.css: gives each project demo its own identity on top of the shared calm surfaces.
+   Each demo sets data-demo on <html>; that picks an accent, a header pattern and a layout style:
+     soc-lab            console     amber    code-editor rules, monospace log, event timeline
+     ioc-hunter         scanner     violet   lined evidence pad, typed result chips, type breakdown
+     threatweave        intel map   blue     contour header, dossier folders, parallel-fetch chart
+     secureview         dashboard   coral    KPI tiles, severity rails, severity mix bar
+     adam-eve-mizan     pipeline    teal     agent lanes, verdict stamp
+     supply-chain-risk  report      ochre    editorial type, risk gauge                          */
+
+/* ───── accents: a darker tone on light themes, a lighter one on dark themes ───── */
+html[data-demo="soc-lab"][data-theme]            { --g-rgb: 232, 164, 92; }
+html[data-demo="ioc-hunter"][data-theme]         { --g-rgb: 182, 152, 240; }
+html[data-demo="threatweave"][data-theme]        { --g-rgb: 132, 176, 236; }
+html[data-demo="secureview"][data-theme]         { --g-rgb: 240, 134, 128; }
+html[data-demo="adam-eve-mizan"][data-theme]     { --g-rgb: 111, 194, 184; }
+html[data-demo="supply-chain-risk"][data-theme]  { --g-rgb: 222, 182, 112; }
+html[data-demo="soc-lab"]:is([data-theme="calm"], [data-theme="holo"])           { --g-rgb: 160, 86, 16; }
+html[data-demo="ioc-hunter"]:is([data-theme="calm"], [data-theme="holo"])        { --g-rgb: 106, 66, 168; }
+html[data-demo="threatweave"]:is([data-theme="calm"], [data-theme="holo"])       { --g-rgb: 36, 88, 160; }
+html[data-demo="secureview"]:is([data-theme="calm"], [data-theme="holo"])        { --g-rgb: 172, 52, 58; }
+html[data-demo="adam-eve-mizan"]:is([data-theme="calm"], [data-theme="holo"])    { --g-rgb: 15, 110, 106; }
+html[data-demo="supply-chain-risk"]:is([data-theme="calm"], [data-theme="holo"]) { --g-rgb: 134, 96, 26; }
+
+/* ───── the demo header: eyebrow, title, one line, a pattern of its own ───── */
+.demo-hero { position: relative; overflow: hidden; max-width: 1200px; margin: 22px auto 0; padding: 30px 32px 28px; border-radius: 20px; border: 1px solid var(--ln); background: var(--sf); }
+.demo-hero::before { content: ""; position: absolute; inset: 0; opacity: .9; pointer-events: none; }
+.demo-hero > * { position: relative; }
+.demo-hero .dh-ico { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: rgba(var(--g-rgb), .12); color: rgb(var(--g-rgb)); margin-bottom: 14px; }
+.demo-hero .dh-ico svg { width: 24px; height: 24px; }
+.demo-hero .dh-eye { font: 600 11px var(--font-mono, monospace); letter-spacing: .1em; text-transform: uppercase; color: rgb(var(--g-rgb)); }
+.demo-hero h2.dh-title { font: 600 clamp(26px, 4vw, 38px)/1.1 'Fraunces', Georgia, serif; letter-spacing: -.02em; text-transform: none; color: var(--tx1); margin: 6px 0 8px; }
+.demo-hero p { max-width: 62ch; color: var(--tx2); font-size: 15px; }
+.demo-hero .dh-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.demo-hero .dh-meta span { font: 500 11px var(--font-mono, monospace); padding: 3px 9px; border-radius: 999px; border: 1px solid var(--ln); color: var(--tx2); }
+@media (max-width: 700px) { .demo-hero { margin: 14px 12px 0; padding: 22px 20px; } }
+.top h1 span { color: rgb(var(--g-rgb)) !important; }
+.card h2 { color: rgb(var(--g-rgb)) !important; opacity: .95; }
+
+/* patterns, one per demo (pure CSS, faint) */
+[data-demo="soc-lab"] .demo-hero::before { background: repeating-linear-gradient(0deg, transparent 0 23px, rgba(var(--g-rgb), .07) 23px 24px), linear-gradient(90deg, transparent 60%, rgba(var(--g-rgb), .10)); }
+[data-demo="ioc-hunter"] .demo-hero::before { background: radial-gradient(rgba(var(--g-rgb), .18) 1px, transparent 1.5px) 0 0 / 14px 14px; -webkit-mask-image: linear-gradient(100deg, transparent 35%, #000); mask-image: linear-gradient(100deg, transparent 35%, #000); }
+[data-demo="threatweave"] .demo-hero::before { background: repeating-radial-gradient(circle at 92% 30%, transparent 0 18px, rgba(var(--g-rgb), .10) 18px 19px); }
+[data-demo="secureview"] .demo-hero::before { background: linear-gradient(90deg, transparent 55%, rgba(var(--g-rgb), .06) 55% 60%, transparent 60% 64%, rgba(var(--g-rgb), .10) 64% 69%, transparent 69% 73%, rgba(var(--g-rgb), .14) 73% 78%, transparent 78% 82%, rgba(var(--g-rgb), .08) 82% 87%, transparent 87%); -webkit-mask-image: linear-gradient(to top, #000 0 70%, transparent); mask-image: linear-gradient(to top, #000 0 70%, transparent); }
+[data-demo="adam-eve-mizan"] .demo-hero::before { background: repeating-linear-gradient(-45deg, transparent 0 22px, rgba(var(--g-rgb), .06) 22px 23px), linear-gradient(90deg, transparent 50%, rgba(var(--g-rgb), .08)); }
+[data-demo="supply-chain-risk"] .demo-hero::before { background: repeating-linear-gradient(0deg, transparent 0 31px, rgba(var(--g-rgb), .10) 31px 32px); -webkit-mask-image: linear-gradient(90deg, transparent 50%, #000); mask-image: linear-gradient(90deg, transparent 50%, #000); }
+
+/* ───── SOC Detection Lab: a console ───── */
+[data-demo="soc-lab"] pre { background: #16181b !important; color: #e8e2d6 !important; border-color: #2a2d31 !important; border-left: 3px solid rgb(var(--g-rgb)) !important; font-size: 12px; line-height: 1.6; }
+[data-demo="soc-lab"] .rule { background: var(--sf2) !important; }
+[data-demo="soc-lab"] table td, [data-demo="soc-lab"] table th { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; }
+[data-demo="soc-lab"] .hit td { background: rgba(214, 72, 84, .14) !important; }
+[data-demo="soc-lab"] .hit2 td { background: rgba(var(--g-rgb), .16) !important; }
+[data-demo="soc-lab"] .hit3 td { background: rgba(72, 132, 214, .15) !important; }
+.sig-timeline svg { width: 100%; height: auto; display: block; }
+.sig-timeline .tk { stroke: var(--ln2); stroke-width: 2; }
+.sig-timeline .tk.h1 { stroke: rgb(var(--g-rgb)); stroke-width: 4; }
+.sig-timeline .tk.h2 { stroke: #d6485a; stroke-width: 4; }
+.sig-timeline .tk.h3 { stroke: #4884d6; stroke-width: 4; }
+.sig-timeline text { font: 500 10px 'JetBrains Mono', monospace; fill: var(--tx2); }
+.sig-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--tx2); margin-top: 6px; }
+.sig-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+/* ───── IOC Hunter: a scanner ───── */
+[data-demo="ioc-hunter"] textarea { background: repeating-linear-gradient(var(--sf) 0 23px, var(--ln) 23px 24px) !important; line-height: 24px !important; padding-top: 4px !important; font-size: 13px !important; min-height: 260px; }
+[data-demo="ioc-hunter"] textarea.scanning { background-image: linear-gradient(transparent, rgba(var(--g-rgb), .22), transparent), repeating-linear-gradient(var(--sf) 0 23px, var(--ln) 23px 24px) !important; background-size: 100% 60px, auto !important; background-repeat: no-repeat, repeat !important; animation: scanY .7s linear; }
+@keyframes scanY { from { background-position: 0 -60px, 0 0; } to { background-position: 0 100%, 0 0; } }
+.sig-types .bar2 { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--sf2); margin: 8px 0 10px; }
+.sig-types .bar2 i { display: block; height: 100%; transition: width .5s cubic-bezier(.22, 1, .36, 1); }
+.sig-types .keys { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--tx2); }
+.sig-types .keys b { color: var(--tx1); font-weight: 600; }
+.sig-types .keys i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+/* ───── ThreatWeave: an intelligence map ───── */
+[data-demo="threatweave"] .dos { border-left: 0 !important; padding: 16px 18px !important; border: 1px solid var(--ln); border-radius: 4px 14px 14px 14px; background: var(--sf2); position: relative; margin-top: 26px !important; }
+[data-demo="threatweave"] .dos::before { content: "DOSSIER"; position: absolute; left: -1px; top: -22px; padding: 3px 12px; font: 600 10px 'JetBrains Mono', monospace; letter-spacing: .1em; color: rgb(var(--g-rgb)); background: var(--sf2); border: 1px solid var(--ln); border-bottom: 0; border-radius: 8px 8px 0 0; }
+.sig-gantt svg { width: 100%; height: auto; display: block; }
+.sig-gantt rect.bg { fill: var(--sf2); }
+.sig-gantt rect.run { fill: rgba(var(--g-rgb), .85); }
+.sig-gantt line.total { stroke: var(--tx1); stroke-dasharray: 4 4; }
+.sig-gantt text { font: 500 11px 'JetBrains Mono', monospace; fill: var(--tx2); }
+
+/* ───── SecureView: a dashboard ───── */
+[data-demo="secureview"] .stat { border-top: 3px solid rgb(var(--g-rgb)) !important; }
+[data-demo="secureview"] .stat b { font: 600 34px 'Fraunces', Georgia, serif !important; }
+[data-demo="secureview"] tr.click td:first-child { border-left: 4px solid var(--sv-sev, var(--ln)); }
+[data-demo="secureview"] tr.sel td { background: rgba(var(--g-rgb), .10) !important; }
+[data-demo="secureview"] td.pri { font: 600 15px 'JetBrains Mono', monospace; }
+.sig-sevmix .bar2 { display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin: 8px 0 8px; background: var(--sf2); }
+.sig-sevmix .bar2 i { display: block; height: 100%; transition: width .5s cubic-bezier(.22, 1, .36, 1); }
+.sig-sevmix .keys { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--tx2); }
+.sig-sevmix .keys i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+
+/* ───── ADAM / EVE / Mizan: a pipeline ───── */
+.sig-lanes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+.sig-lanes .lane { border: 1px solid var(--ln); border-radius: 12px; padding: 10px 12px; background: var(--sf2); transition: border-color .3s, background .3s, transform .3s cubic-bezier(.22, 1, .36, 1); }
+.sig-lanes .lane b { display: block; font-size: 14px; }
+.sig-lanes .lane span { font-size: 12px; color: var(--tx2); }
+.sig-lanes .lane.on { border-color: rgb(var(--g-rgb)); background: rgba(var(--g-rgb), .10); transform: translateY(-2px); }
+.stamp { display: inline-block; margin: 6px 0 12px; padding: 6px 16px; border: 3px solid currentColor; border-radius: 8px; font: 700 22px 'JetBrains Mono', monospace; letter-spacing: .12em; transform: rotate(-4deg); animation: stampIn .45s cubic-bezier(.22, 1.4, .36, 1) both; }
+.stamp.allow { color: #2f9e6e; } .stamp.deny { color: #d0485a; } .stamp.escalate { color: #c98a16; }
+@keyframes stampIn { from { opacity: 0; transform: rotate(-4deg) scale(1.6); } to { opacity: 1; transform: rotate(-4deg) scale(1); } }
+@media (max-width: 600px) { .sig-lanes { grid-template-columns: 1fr; } }
+
+/* ───── Supply chain risk: a report ───── */
+[data-demo="supply-chain-risk"] .card h2 { font: 600 17px 'Fraunces', Georgia, serif !important; text-transform: none !important; letter-spacing: -.01em !important; }
+[data-demo="supply-chain-risk"] .crit { font-size: 14px !important; }
+[data-demo="supply-chain-risk"] .score { display: none; }
+.sig-gauge svg { width: 100%; max-width: 280px; display: block; margin: 0 auto; }
+.sig-gauge .track { stroke: var(--sf2); }
+.sig-gauge .val { transition: stroke-dashoffset .6s cubic-bezier(.22, 1, .36, 1), stroke .4s; }
+.sig-gauge text.n { font: 600 52px 'Fraunces', Georgia, serif; fill: var(--tx1); }
+.sig-gauge text.s { font: 500 11px 'JetBrains Mono', monospace; fill: var(--tx2); }
+
+.sig { margin-top: 16px; }
+@media (prefers-reduced-motion: reduce) { .stamp, [data-demo="ioc-hunter"] textarea.scanning { animation: none; } .sig-lanes .lane, .sig-gauge .val, .sig-types .bar2 i, .sig-sevmix .bar2 i { transition: none; } }

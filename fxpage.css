@@ -22,9 +22,10 @@ h1, h2, .lab-top h1 { letter-spacing: -0.02em; }
 .card { transition: transform .32s var(--ease), box-shadow .32s var(--ease), border-color .16s ease !important; }
 a.card:hover, a.card:focus-visible { transform: translateY(-2px) !important; border-color: var(--ln2) !important; }
 .btn, button { border-radius: 10px; }
-.btn.go, .go { background: rgb(var(--g-rgb)) !important; border-color: transparent !important; color: rgb(var(--bg-rgb)) !important; }
-html[data-theme="calm"] .btn.go, html[data-theme="calm"] .go, html[data-theme="holo"] .btn.go, html[data-theme="holo"] .go { color: #fff !important; }
+.btn.go, button.go { background: rgb(var(--g-rgb)) !important; border-color: transparent !important; color: rgb(var(--bg-rgb)) !important; }
+html[data-theme="calm"] .btn.go, html[data-theme="calm"] button.go, html[data-theme="holo"] .btn.go, html[data-theme="holo"] button.go { color: #fff !important; }
 .top { background: rgba(var(--bg-rgb), .9) !important; border-bottom: 1px solid var(--ln) !important; -webkit-backdrop-filter: saturate(140%) blur(10px); backdrop-filter: saturate(140%) blur(10px); }
+.notice b { color: var(--tx1) !important; }
 .notice { background: var(--sf2) !important; border-color: var(--ln) !important; color: var(--tx1) !important; }
 :focus-visible { outline: 2px solid rgb(var(--g-rgb)) !important; outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { a.card:hover { transform: none !important; } }
