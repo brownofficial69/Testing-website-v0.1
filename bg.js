@@ -5,6 +5,7 @@
      Orbital  - Vanta.js GLOBE (MIT) over NASA's Black Marble night-lights image (public domain, NASA Earth Observatory)
      Reactor  - Vanta.js RINGS (MIT)
      Hologram - Vanta.js DOTS (MIT) on light glass
+   Neural draws square particles to match its Pixel style.
    Vanta runs on three.js r134 (MIT). All are pinned versions published in 2021-2023 and served from vendor/. */
 (function () {
 'use strict';
@@ -63,7 +64,7 @@ function create(opts) {
     var run = {
       neural: function () { return loadScript(CDN.particles).then(function () { if (my !== token || !window.tsParticles) return; var el = document.createElement('div'); el.className = 'tsp'; el.id = 'tsp-' + my; el.style.cssText = 'position:absolute;inset:0'; host.appendChild(el);
         return window.tsParticles.load(el.id, { fpsLimit: 60, detectRetina: true, background: { color: 'transparent' }, fullScreen: { enable: false },
-          particles: { number: { value: 95, density: { enable: true, area: 900 } }, color: { value: ['#a58bff', '#5af0d8', '#ff7ad9'] }, size: { value: { min: 1.2, max: 3.2 } }, opacity: { value: { min: 0.4, max: 0.9 } },
+          particles: { number: { value: 95, density: { enable: true, area: 900 } }, color: { value: ['#a58bff', '#5af0d8', '#ff7ad9'] }, shape: { type: 'square' }, size: { value: { min: 1.5, max: 3.5 } }, opacity: { value: { min: 0.4, max: 0.9 } },
             links: { enable: true, distance: 150, color: '#a58bff', opacity: 0.32, width: 1 }, move: { enable: true, speed: 0.7, outModes: { default: 'bounce' } } },
           interactivity: { events: { onHover: { enable: true, mode: ['grab', 'repulse'] }, onClick: { enable: true, mode: 'push' } }, modes: { grab: { distance: 190, links: { opacity: 0.7 } }, repulse: { distance: 90 }, push: { quantity: 3 } } } }).then(function (c) { if (my !== token) c.destroy(); else effect = c; }); }); },
       orbital: function () { earth.style.opacity = 0.42; return seq([CDN.three, CDN.globe]).then(function () { if (my !== token || !window.VANTA) return; effect = window.VANTA.GLOBE({ el: host, THREE: window.THREE, mouseControls: true, touchControls: true, gyroControls: false, minHeight: 200, minWidth: 200, scale: 1, scaleMobile: 1, color: 0xf2c15a, color2: 0x6db7ff, backgroundColor: 0x02050d, size: 1.15 }); host.style.background = 'transparent'; }); },

@@ -983,20 +983,20 @@ document.addEventListener('DOMContentLoaded', () => {
    THEME MANAGER — five themes, each drawn from the CV
    ════════════════════════════════════════════════════════════ */
 const THEMES = [
-  { id: 'calm',    name: 'Calm',     meta: '#f6f4ef', sw: ['#f6f4ef', '#0f6e6a', '#2a5c8c', '#1f1d1a'], quiet: true,
-    why: 'Warm paper, solid surfaces and nothing moving behind the text. The default in light mode.' },
-  { id: 'night',   name: 'Night',    meta: '#131416', sw: ['#131416', '#6fc2b8', '#8cb6e8', '#ecebe8'], quiet: true,
+  { id: 'calm',    name: 'Calm',     style: 'Editorial',  meta: '#f6f4ef', sw: ['#f6f4ef', '#0f6e6a', '#2a5c8c', '#1f1d1a'], quiet: true,
+    why: 'Warm paper, serif headings and nothing moving behind the text. The default in light mode.' },
+  { id: 'night',   name: 'Night',    style: 'Editorial',  meta: '#131416', sw: ['#131416', '#6fc2b8', '#8cb6e8', '#ecebe8'], quiet: true,
     why: 'The same quiet layout for dark rooms. The default when your device is in dark mode.' },
-  { id: 'aqua',   name: 'Aqua',     meta: '#03131f', sw: ['#03131f', '#19d3e6', '#8fe3ff', '#7c8cff'],
-    why: 'The water theme. Flowing currents, drifting colour and ripples that follow every touch, a nod to Galaxy S III Nature UX.' },
-  { id: 'neural',  name: 'Neural',   meta: '#09051a', sw: ['#09051a', '#a58bff', '#5af0d8', '#ff7ad9'],
-    why: 'A live particle network you can pull apart. tsParticles (MIT).' },
-  { id: 'orbital', name: 'Orbital',  meta: '#02050d', sw: ['#02050d', '#6db7ff', '#f2c15a', '#a58bff'],
-    why: 'A 3D globe over NASA night-time city lights, for threat intelligence. Vanta.js (MIT), NASA imagery.' },
-  { id: 'reactor', name: 'Reactor',  meta: '#0b0204', sw: ['#0b0204', '#ff5a1f', '#ffb04a', '#ff3d7f'],
-    why: 'Concentric rings in 3D, for the incident-response side. Vanta.js (MIT).' },
-  { id: 'holo',    name: 'Hologram', meta: '#eaf1fc', sw: ['#eaf1fc', '#2b57d8', '#0e8fa6', '#7a3ff0'],
-    why: 'A light theme: a field of points on glass. Vanta.js (MIT).' },
+  { id: 'aqua',    name: 'Aqua',     style: 'Liquid',     meta: '#03131f', sw: ['#03131f', '#19d3e6', '#8fe3ff', '#7c8cff'],
+    why: 'Rounded, flowing shapes over moving water: currents, drifting colour and ripples that follow every touch.' },
+  { id: 'neural',  name: 'Neural',   style: 'Pixel',      meta: '#09051a', sw: ['#09051a', '#a58bff', '#5af0d8', '#ff7ad9'],
+    why: 'Square corners, pixel type and hard shadows over a network of square particles. tsParticles (MIT).' },
+  { id: 'orbital', name: 'Orbital',  style: 'HUD',        meta: '#02050d', sw: ['#02050d', '#6db7ff', '#f2c15a', '#a58bff'],
+    why: 'Mission-control brackets and monospaced labels over a 3D globe and NASA night lights. Vanta.js (MIT).' },
+  { id: 'reactor', name: 'Reactor',  style: 'Industrial', meta: '#0b0204', sw: ['#0b0204', '#ff5a1f', '#ffb04a', '#ff3d7f'],
+    why: 'Condensed uppercase type and hazard-stripe edges over 3D rings, for incident response. Vanta.js (MIT).' },
+  { id: 'holo',    name: 'Hologram', style: 'Iridescent', meta: '#eaf1fc', sw: ['#eaf1fc', '#2b57d8', '#0e8fa6', '#7a3ff0'],
+    why: 'A light theme: pearl cards with a soft rainbow rim over a field of points. Vanta.js (MIT).' },
 ];
 
 function initThemes() {
@@ -1009,7 +1009,7 @@ function initThemes() {
 
   const opt = t => `<button class="theme-opt" role="radio" aria-checked="false" data-theme-id="${t.id}">
        <span class="theme-swatch" aria-hidden="true">${t.sw.map(c => `<i style="background:${c}"></i>`).join('')}</span>
-       <span><span class="theme-opt-name">${t.name}</span><span class="theme-opt-why">${t.why}</span></span>
+       <span><span class="theme-opt-name">${t.name}<em class="theme-opt-style">${t.style}</em></span><span class="theme-opt-why">${t.why}</span></span>
      </button>`;
   menu.innerHTML = '<div class="theme-menu-group">Quiet</div>' + THEMES.filter(t => t.quiet).map(opt).join('') +
     '<div class="theme-menu-group">Expressive</div>' + THEMES.filter(t => !t.quiet).map(opt).join('') +
