@@ -9,7 +9,7 @@
 <style>.card a.go{display:inline-block;margin-top:12px;font-weight:600}.hero{padding:36px 0 8px}.hero h2{font-size:34px;letter-spacing:-1px;text-transform:none;color:var(--text);margin-bottom:8px}.hero p{max-width:680px;color:var(--dim)}.proj{display:flex;flex-direction:column}.proj .tags{margin-top:auto;padding-top:10px}</style>
   <link rel="stylesheet" href="../transitions.css?v=20261027" />
   <script src="../site-fx.js?v=20261027" defer></script>
-<link rel="stylesheet" href="../theme.css?v=20261025"/><link rel="stylesheet" href="../fxpage.css?v=20261025"/>
+<link rel="stylesheet" href="../theme.css?v=20261025"/><link rel="stylesheet" href="../fxpage.css?v=20261028"/>
 <link rel="stylesheet" href="extra.css?v=20261025"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet" />
 </head>
@@ -32,11 +32,23 @@
 /* show each demo's best quick-check score, kept in this browser by learn.js */
 document.querySelectorAll('.card.proj a.go').forEach(function (a) {
   var k = 'sh-quiz-' + a.getAttribute('href').replace('.html', ''), v = null; try { v = localStorage.getItem(k); } catch (e) { /* storage off */ }
-  var t = document.createElement('span'); t.className = 'tag'; t.style.marginLeft = '10px';
+  var t = document.createElement('span'); t.className = 'tag'; t.style.cssText = 'align-self:flex-start;margin-top:8px';
   t.textContent = v ? 'quick check ' + v + '/3' : 'tour · quiz inside'; a.insertAdjacentElement('afterend', t);
 });
 </script>
+<script>
+/* each card carries its demo's accent and style name (see skins.css) */
+(function () {
+  var S = { 'soc-lab': ['#c27424', 'console'], 'ioc-hunter': ['#8a62cf', 'scanner'], 'threatweave': ['#3f78c4', 'intelligence map'], 'secureview': ['#d0545a', 'dashboard'], 'adam-eve-mizan': ['#1f8f87', 'pipeline'], 'supply-chain-risk': ['#a87a26', 'report'] };
+  document.querySelectorAll('.card.proj').forEach(function (c) {
+    var a = c.querySelector('a.go'); if (!a) return; var s = S[a.getAttribute('href').replace('.html', '')]; if (!s) return;
+    c.style.setProperty('border-top', '3px solid ' + s[0], 'important');
+    var e = document.createElement('div'); e.textContent = s[1]; e.style.cssText = 'font:600 11px JetBrains Mono,monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;color:' + s[0];
+    c.insertBefore(e, c.firstChild);
+  });
+})();
+</script>
 <script src="../fx.js?v=20261025"></script>
-<script src="../page-fx.js?v=20261025"></script>
+<script src="../page-fx.js?v=20261028"></script>
 </body>
 </html>

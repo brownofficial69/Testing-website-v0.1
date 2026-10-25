@@ -37,6 +37,8 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 
 `demos/` holds the six project demos linked from the homepage project cards. Each has a "try this" strip and an animated architecture diagram (`demos/extra.js`, `diagrams.js`), plus a guided tour, a three-question quick check with explanations and a glossary (`demos/learn.js`). The supply-chain demo adds a live risk radar with a "biggest single win" hint, and ThreatWeave a correlation graph of networks, indicators and ATT&CK techniques. All of it is plain JavaScript with no libraries.
 
+Each demo also has its own identity (`demos/skins.css`, `demos/signature.js`): an accent colour, a header with its own pattern and icon, a layout style, and one signature visual. SOC Detection Lab is a console with an event timeline; IOC Hunter a scanner with a type breakdown; ThreatWeave an intelligence map with a parallel-fetch chart; SecureView a dashboard with a severity mix; ADAM / EVE / Mizan a pipeline with agent lanes and a verdict stamp; Supply Chain Risk a report with a risk gauge.
+
 ## Project layout
 
 ```

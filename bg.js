@@ -41,7 +41,7 @@ function create(opts) {
 
   if (fxCanvas && window.FX) {
     fx = window.FX.create(fxCanvas, { onDrop: opts.onDrop, onHue: function (h, toRgb, hex) {
-      if (current !== 'aqua') return; var g = toRgb(h, 0.82, 0.56), c = toRgb(h - 0.05, 0.9, 0.78), p = toRgb(h + 0.13, 0.8, 0.74), st = root.style;
+      if (current !== 'aqua' || root.hasAttribute('data-demo')) return; /* demos keep their own accent */ var g = toRgb(h, 0.82, 0.56), c = toRgb(h - 0.05, 0.9, 0.78), p = toRgb(h + 0.13, 0.8, 0.74), st = root.style;
       st.setProperty('--g-rgb', g.join(', ')); st.setProperty('--c-rgb', c.join(', ')); st.setProperty('--p-rgb', p.join(', '));
       st.setProperty('--accent-green', hex(g)); st.setProperty('--accent-cyan', hex(c)); st.setProperty('--accent-purple', hex(p)); } });
     if (!fx) fxCanvas.style.display = 'none';
