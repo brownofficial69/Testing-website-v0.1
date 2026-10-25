@@ -17,7 +17,7 @@
 <div class="top"><h1>Project <span>Demos</span></h1><nav><a href="../versions.html">All portfolio versions</a></nav></div>
 <div class="notice"><b>Interactive demos with sample data.</b> Each one runs entirely in your browser and makes no network requests. They illustrate how each project works; they are not the production tools or their source code.</div>
 <main>
-<div class="hero"><h2>Try the projects</h2><p>Six hands-on demos based on projects from Shadman Hossain's CV. Paste your own indicators, triage alerts, test detection rules, probe an agent-authorization pipeline and score a vendor.</p></div>
+<div class="hero"><h2>Try the projects</h2><p>Six hands-on demos, each with a guided tour, a quick check and a glossary, based on projects from Shadman Hossain's CV. Paste your own indicators, triage alerts, test detection rules, probe an agent-authorization pipeline and score a vendor.</p></div>
 <div class="grid3" style="margin-top:20px">
 <div class="card proj"><h3>ThreatWeave</h3><p class="muted">Concurrent threat-intelligence aggregation. Pull four sample feeds in parallel and correlate IOCs by ASN and MITRE ATT&amp;CK overlap into dossiers.</p><a class="go" href="threatweave.html">Open demo →</a><div class="tags"><span class="tag">Go</span><span class="tag">Claude API</span><span class="tag">5/5 concurrency tests</span></div></div>
 <div class="card proj"><h3>SecureView</h3><p class="muted">SOC triage dashboard. Prioritised alert queue with remediation guidance and status handling.</p><a class="go" href="secureview.html">Open demo →</a><div class="tags"><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">17/17 unit tests</span></div></div>
@@ -28,6 +28,14 @@
 </div>
 </main>
 <footer>© 2026 Shadman Hossain · Demos use fictional sample data and reserved documentation addresses</footer>
+<script>
+/* show each demo's best quick-check score, kept in this browser by learn.js */
+document.querySelectorAll('.card.proj a.go').forEach(function (a) {
+  var k = 'sh-quiz-' + a.getAttribute('href').replace('.html', ''), v = null; try { v = localStorage.getItem(k); } catch (e) { /* storage off */ }
+  var t = document.createElement('span'); t.className = 'tag'; t.style.marginLeft = '10px';
+  t.textContent = v ? 'quick check ' + v + '/3' : 'tour · quiz inside'; a.insertAdjacentElement('afterend', t);
+});
+</script>
 <script src="../fx.js?v=20261025"></script>
 <script src="../page-fx.js?v=20261025"></script>
 </body>

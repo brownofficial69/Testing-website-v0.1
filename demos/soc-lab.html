@@ -6,7 +6,7 @@
 <style>.hit td{background:#2a1a1e}.hit2 td{background:#2a2414}.hit3 td{background:#14222a}.rule{border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:12px}.rule label{font-size:12px;color:var(--dim);display:inline-flex;align-items:center;gap:6px;margin-right:12px}.rule input[type=number]{width:70px;padding:4px 6px}.scroll{max-height:460px;overflow:auto}</style>  <link rel="stylesheet" href="../transitions.css?v=20261025" />
   <script src="../site-fx.js" defer></script>
 <link rel="stylesheet" href="../theme.css?v=20261025"/><link rel="stylesheet" href="../fxpage.css?v=20261025"/>
-<link rel="stylesheet" href="extra.css?v=20261025"/>
+<link rel="stylesheet" href="extra.css?v=20261026"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet" />
 </head>
 <body>
@@ -88,7 +88,8 @@ $('run').onclick=()=>{
  draw();$('sum').textContent=`${F.length} finding(s)`;
  $('find').innerHTML=F.length?F.map(f=>`<div class="rule"><span class="sev ${f.sev}">${f.sev}</span> <span class="tag">${f.r}</span> <b>${esc(f.t)}</b><p class="muted" style="margin-top:6px">${esc(f.d)}</p></div>`).join(''):'No detections. Try loosening the thresholds or windows.';};
 </script><script src="../diagrams.js?v=20261025"></script>
-<script src="extra.js?v=20261025"></script>
+<script src="extra.js?v=20261026"></script>
+<script src="learn.js?v=20261026"></script>
 <script src="../fx.js?v=20261025"></script>
 <script src="../page-fx.js?v=20261025"></script>
 </body></html>

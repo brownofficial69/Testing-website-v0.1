@@ -20,3 +20,60 @@
 .dg-node:hover rect:first-child { fill: rgba(var(--g-rgb), .18); }
 .top h1 span { color: rgb(var(--g-rgb)); }
 @media (prefers-reduced-motion: reduce) { .dg-flow { animation: none; } .dg animateMotion { display: none; } }
+
+/* ───── learn panel: tour, quick check, glossary (learn.js) ───── */
+.learn-panel { margin-bottom: 20px; }
+.lp-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.lp-head h2 { margin-bottom: 4px; }
+.lp-head .row { margin-top: 0; }
+.lp-quiz { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--ln); }
+.lp-q { font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+.lp-q .mono { color: rgb(var(--g-rgb)); margin-right: 6px; font-weight: 500; }
+.lp-opts { display: grid; gap: 8px; }
+.lp-opt { text-align: left; background: var(--sf2) !important; color: var(--tx1) !important; border: 1px solid var(--ln) !important; font-weight: 500; padding: 10px 14px; }
+.lp-opt:hover:not(:disabled) { border-color: rgb(var(--g-rgb)) !important; }
+.lp-opt:disabled { cursor: default; opacity: .75; }
+.lp-opt.right { border-color: #2f9e6e !important; opacity: 1; box-shadow: inset 3px 0 0 #2f9e6e; }
+.lp-opt.wrong { border-color: #d0485a !important; opacity: 1; box-shadow: inset 3px 0 0 #d0485a; }
+.lp-why { margin-top: 12px; font-size: 14px; line-height: 1.6; color: var(--tx2); }
+.lp-why b { color: var(--tx1); }
+.lp-why .btn { margin-left: 8px; }
+.lp-done { margin-bottom: 10px; }
+.lp-gloss { margin-top: 14px; font-size: 14px; }
+.lp-gloss summary { cursor: pointer; color: var(--tx2); font-weight: 500; }
+.lp-gloss dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin-top: 10px; }
+.lp-gloss dt { font-weight: 600; }
+.lp-gloss dd { margin: 0; color: var(--tx2); }
+@media (max-width: 600px) { .lp-gloss dl { grid-template-columns: 1fr; } .lp-gloss dd { margin-bottom: 6px; } }
+
+.tour-spot { position: fixed; z-index: 2000; border-radius: 12px; pointer-events: none; box-shadow: 0 0 0 2px rgb(var(--g-rgb)), 0 0 0 9999px rgba(var(--bg-rgb), .62); transition: left .3s cubic-bezier(.22,1,.36,1), top .3s cubic-bezier(.22,1,.36,1), width .3s cubic-bezier(.22,1,.36,1), height .3s cubic-bezier(.22,1,.36,1); }
+.tour-card { position: fixed; z-index: 2001; background: var(--sf); border: 1px solid var(--ln2); border-radius: 14px; padding: 16px 18px; box-shadow: 0 24px 60px -20px rgba(0,0,0,.45); color: var(--tx1); }
+.tour-card h3 { font-size: 16px; margin: 2px 0 6px; }
+.tour-card p { font-size: 14px; line-height: 1.6; color: var(--tx2); }
+.tour-card .tc-step { font-size: 11px; color: rgb(var(--g-rgb)); }
+.tour-card .row { margin-top: 12px; }
+.tour-card .tc-x { margin-left: auto; }
+@media (prefers-reduced-motion: reduce) { .tour-spot { transition: none; } }
+
+/* ───── supply-chain radar and ThreatWeave graph ───── */
+.radar-card { margin-top: 20px; }
+.radar-card svg { width: 100%; max-width: 440px; display: block; margin: 6px auto; }
+.radar-card .rg { fill: none; stroke: var(--ln); }
+.radar-card .rg.mid { stroke: var(--ln2); stroke-dasharray: 4 4; }
+.radar-card .rs { stroke: var(--ln); }
+.radar-card .rl { font: 600 11px var(--font-mono); fill: var(--tx2); }
+.radar-card .rp { fill: rgba(var(--g-rgb), .18); stroke: rgb(var(--g-rgb)); stroke-width: 2; transition: all .25s; }
+.radar-card circle { fill: rgb(var(--g-rgb)); }
+.radar-card circle.hot { fill: #d0485a; }
+.graph-card { margin-top: 20px; }
+.gwrap { overflow-x: auto; }
+.graph-card svg { width: 100%; min-width: 640px; height: auto; display: block; }
+.graph-card .ge { fill: none; stroke: rgba(var(--g-rgb), .28); stroke-width: 1.4; transition: stroke .2s, opacity .2s; }
+.graph-card svg.focus .ge { opacity: .12; }
+.graph-card svg.focus .ge.on { opacity: 1; stroke: rgb(var(--g-rgb)); stroke-width: 2.4; }
+.graph-card .gn text { font: 500 11px var(--font-mono); fill: var(--tx2); }
+.graph-card .gn.asn circle { fill: rgb(var(--c-rgb)); }
+.graph-card .gn.ioc circle { fill: var(--sf); stroke: rgb(var(--g-rgb)); stroke-width: 2; }
+.graph-card .gn.ioc { cursor: pointer; outline: none; }
+.graph-card .gn.ioc.on circle, .graph-card .gn.ioc:focus circle { fill: rgb(var(--g-rgb)); }
+.graph-card .gn.tech rect { fill: rgb(var(--a-rgb)); }

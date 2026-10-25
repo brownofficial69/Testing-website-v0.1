@@ -5,24 +5,28 @@
      Orbital  - Vanta.js GLOBE (MIT) over NASA's Black Marble night-lights image (public domain, NASA Earth Observatory)
      Reactor  - Vanta.js RINGS (MIT)
      Hologram - Vanta.js DOTS (MIT) on light glass
-   Vanta runs on three.js r134 (MIT). */
+   Vanta runs on three.js r134 (MIT). All are pinned versions published in 2021-2023 and served from vendor/. */
 (function () {
 'use strict';
+/* pinned copies served from this repository (vendor/), checked with Subresource Integrity:
+   no third-party CDN is contacted at runtime */
+var BASE = ((document.currentScript && document.currentScript.src) || '').replace(/bg\.js.*$/, '') + 'vendor/';
 var CDN = {
-  three: 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js',
-  globe: 'https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.globe.min.js',
-  rings: 'https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.rings.min.js',
-  dots: 'https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.dots.min.js',
-  particles: 'https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js',
+  three: ['three-r134/three.min.js', 'sha384-9EQoUIJYrv09/oYhSxnw1VpLcfPw3BM9dE7+D/3wGUPeLLa7F9Z6OAoD+i/M6FK9'],
+  globe: ['vanta-0.5.24/vanta.globe.min.js', 'sha384-HiLexGd74hcQ6g/RxA2NsDBwbmX+PmKsMBVLRsUWFwFJth+ybhAQ6N90hz80HeSD'],
+  rings: ['vanta-0.5.24/vanta.rings.min.js', 'sha384-TVjj/sxw6r6Oa7iM1794GqL9YKqjTHEX/K2EVmAICdaP8EXqVCwzl0YIwqUGwdWf'],
+  dots: ['vanta-0.5.24/vanta.dots.min.js', 'sha384-kQQ7o4yeMrOeO8DpJKvO+tKx/MxnHFOQwuTvmFwh7bNHCnyBRfmIuXwwzHLD8XuM'],
+  particles: ['tsparticles-slim-2.12.0/tsparticles.slim.bundle.min.js', 'sha384-xICYS6rIsARSX3k0YKfjEX+OFPqH6c1BHFyDy/Qu4MKRcQT39ngsWhuBOhoRcQl/'],
 };
 var IDS = ['calm', 'night', 'aqua', 'neural', 'orbital', 'reactor', 'holo'];
 var QUIET = ['calm', 'night']; /* the quiet themes draw no background */
 var HUE_VARS = ['--g-rgb', '--c-rgb', '--p-rgb', '--accent-green', '--accent-cyan', '--accent-purple'];
 var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 var loaded = {};
-function loadScript(url) {
+function loadScript(lib) {
+  var url = BASE + lib[0];
   if (loaded[url]) return loaded[url];
-  loaded[url] = new Promise(function (res, rej) { var s = document.createElement('script'); s.src = url; s.onload = res; s.onerror = function () { delete loaded[url]; rej(new Error('failed ' + url)); }; document.head.appendChild(s); });
+  loaded[url] = new Promise(function (res, rej) { var s = document.createElement('script'); s.src = url; s.integrity = lib[1]; s.onload = res; s.onerror = function () { delete loaded[url]; rej(new Error('failed ' + url)); }; document.head.appendChild(s); });
   return loaded[url];
 }
 function seq(urls) { return urls.reduce(function (p, u) { return p.then(function () { return loadScript(u); }); }, Promise.resolve()); }

@@ -13,7 +13,7 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 - **Command menu**: press Ctrl/⌘ K or / (or the search button) to jump to a section, open a game or demo, copy the email address, download the CV or switch theme.
 - **Pick up where you left off**: on a return visit a small chip offers to take you back to the section you last read. Only the section id is stored, in your own browser.
 - **Expressive themes** (`fx.js`, `bg.js`): **Aqua** is the one water theme, with flowing currents, drifting colour and ripples that follow touch. **Neural** (tsParticles, MIT), **Orbital** (Vanta.js globe, MIT, over NASA Black Marble imagery, public domain), **Reactor** (Vanta.js rings) and **Hologram** (Vanta.js dots, light) are built on free libraries and load only when chosen. Press T on any page to cycle themes.
-- **Showreel** (`showreel.js`): a 37-second cut drawn live on a canvas at native resolution (no video file), with ripple wipes between six scenes.
+- **Showreel** (`showreel.js`): a 37-second cut drawn live on a canvas at native resolution (no video file), with six chapters you can play with: question the agents, drag the threat graph, switch Sigma rules off to see where an intrusion is caught, and tamper with a ledger whose SHA-256 hashes are computed live with the Web Crypto API. A chapter list underneath explains what each one teaches. Keys: Space, arrows, F.
 - **Architecture diagrams** (`diagrams.js`): animated SVG for each project, shown in the project panels.
 - Transitions: sections fade in once with a small rise, a circular wipe between pages (`site-fx.js`) and cross-document view transitions (`transitions.css`). The droplet intro plays only in Aqua.
 - CV download from `assets/cv.pdf`.
@@ -34,7 +34,7 @@ Personal portfolio for Shadman Hossain, a First-Class Ethical Hacking and Cyber 
 | `v45` | Break the Login: a SQL injection sandbox, from a raw query to a weak filter to the parameterised fix |
 | `v44` | Incident Desk: a 75-second service-desk triage shift using the impact and urgency priority matrix |
 
-`demos/` holds the six project demos linked from the homepage project cards. Each has a "try this" strip and an animated architecture diagram (`demos/extra.js`, `diagrams.js`).
+`demos/` holds the six project demos linked from the homepage project cards. Each has a "try this" strip and an animated architecture diagram (`demos/extra.js`, `diagrams.js`), plus a guided tour, a three-question quick check with explanations and a glossary (`demos/learn.js`). The supply-chain demo adds a live risk radar with a "biggest single win" hint, and ThreatWeave a correlation graph of networks, indicators and ATT&CK techniques. All of it is plain JavaScript with no libraries.
 
 ## Project layout
 
@@ -89,3 +89,17 @@ tsParticles, Vanta.js and three.js (MIT); NASA Earth Observatory Black Marble ni
 ## Accessibility
 
 Visible focus rings on every control, 40–44 px targets for icon buttons, colour contrast checked against WCAG 2.2 AA for the quiet themes, a skip link, and `prefers-reduced-motion` respected throughout (hover lifts, the command menu and section reveals all switch off).
+
+## Third-party code
+
+No library is loaded from a CDN at runtime. The few the site uses are pinned copies in `vendor/`, loaded with Subresource Integrity hashes, all versions published between 2021 and 2024, before the 2026 npm supply-chain compromises:
+
+| Library | Version | Used for |
+|---|---|---|
+| GSAP + ScrollTrigger | 3.12.5 | section fade-ins on the homepage |
+| Font Awesome Free | 6.5.0 | icons |
+| three.js | r134 and 0.160.0 | Vanta backgrounds; the 3D pages |
+| Vanta.js | 0.5.24 | Orbital, Reactor and Hologram backgrounds |
+| tsParticles slim | 2.12.0 | Neural background |
+
+Fonts still come from Google Fonts. The new tours, quizzes, charts, graph and showreel interactions use no third-party code.

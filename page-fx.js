@@ -12,7 +12,7 @@
     theme = t; root.setAttribute('data-theme', t);
     if (bg) { bg.set(t); if (announce) bg.drop(innerWidth / 2, innerHeight / 2, 1.6); }
   }
-  var s = document.createElement('script'); s.src = base + 'bg.js?v=20261025';
+  var s = document.createElement('script'); s.src = base + 'bg.js?v=20261026';
   s.onload = function () {
     bg = window.BG.create({ canvas: c, z: -1, earth: base + 'assets/earth-night.jpg', interactive: false });
     window.PAGEFX = bg; bg.set(theme);

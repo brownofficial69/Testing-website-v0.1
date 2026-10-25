@@ -185,6 +185,21 @@ html[data-theme="calm"] .resume .go, html[data-theme="holo"] .resume .go { color
 .calm-toast { position: fixed; left: 50%; bottom: 22px; transform: translate(-50%, 12px); z-index: 1001; padding: 10px 16px; border-radius: 12px; background: var(--text-primary); color: rgb(var(--bg-rgb)); font-size: .88rem; opacity: 0; transition: opacity var(--t-calm) var(--ease), transform var(--t-calm) var(--ease); pointer-events: none; }
 .calm-toast.show { opacity: 1; transform: translate(-50%, 0); }
 
+/* ───── showreel chapters ───── */
+.reel { outline: none; }
+.reel:focus-visible { outline: 2px solid var(--accent-green) !important; outline-offset: 4px !important; }
+.reel-ui .btn { min-height: 34px; }
+.reel-chapters { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.reel-chapters button { width: 100%; height: 100%; display: flex; gap: 12px; text-align: left; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--text-primary); transition: border-color var(--t-quick) ease, background var(--t-quick) ease; }
+.reel-chapters button:hover { border-color: var(--line-strong); }
+.reel-chapters button[aria-current="step"] { border-color: var(--accent-green); background: var(--surface-2); }
+.rc-n { font: 600 .75rem var(--font-mono); color: var(--accent-green); padding-top: 3px; }
+.rc-b { display: grid; gap: 4px; align-content: start; }
+.reel-chapters button { align-items: flex-start; }
+.rc-b b { font-size: .95rem; font-weight: 600; }
+.rc-l { font-size: .84rem; line-height: 1.5; color: var(--text-secondary); }
+.rc-t { font-size: .78rem; color: var(--accent-green); }
+
 /* ───── reduced motion ───── */
 @media (prefers-reduced-motion: reduce) {
   .project-card:hover, .iq:hover, .contact-card:hover, .badge:hover, .cert-card:hover, .stat-card:hover, .timeline-card:hover, .btn:hover { transform: none !important; }
