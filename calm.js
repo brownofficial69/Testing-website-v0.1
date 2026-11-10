@@ -34,6 +34,7 @@
     [['Play: ADAM / EVE / Mizan arena', 'v42/index.html'], ['Play: Prompt Injection Range', 'v43/index.html'], ['Play: Break the Login', 'v45/index.html'],
      ['Play: Incident Desk', 'v44/index.html'], ['Play: Intrusion Replay', 'v37/index.html'], ['Play: Chess', 'v41/index.html'], ['Gallery of everything', 'versions.html'], ['Project demos', 'demos/index.html']]
       .forEach(function (p) { list.push({ g: 'Explore', icon: 'fa-gamepad', label: p[0], run: function () { location.href = p[1]; } }); });
+    if (window.SH_TERMINAL) list.push({ g: 'Actions', icon: 'fa-terminal', label: 'Open terminal', hint: 'or press `', run: window.SH_TERMINAL.open });
     list.push({ g: 'Actions', icon: 'fa-envelope', label: 'Copy email address', hint: EMAIL, run: copyEmail });
     list.push({ g: 'Actions', icon: 'fa-file-arrow-down', label: 'Download CV (PDF)', run: function () { var a = document.createElement('a'); a.href = 'assets/cv.pdf'; a.download = ''; document.body.appendChild(a); a.click(); a.remove(); } });
     list.push({ g: 'Actions', icon: 'fa-brands fa-github', label: 'Open GitHub', run: function () { window.open('https://github.com/shaddiegit', '_blank', 'noopener'); } });
