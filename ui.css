@@ -1,0 +1,105 @@
+/* ui.css: styles for ui.js. Shared by the homepage and the project demos; colours come from the theme tokens. */
+
+/* ───────── cursor halo ───────── */
+.ui-halo {
+  position: fixed; left: 0; top: 0; z-index: 10001; pointer-events: none;
+  width: 0; height: 0; opacity: 0; transition: opacity .25s ease;
+}
+.ui-halo.show { opacity: 1; }
+.ui-halo::before {
+  content: ''; position: absolute; left: -17px; top: -17px; width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid rgba(var(--g-rgb), .85);
+  background: rgba(var(--g-rgb), .10);
+  box-shadow: 0 0 0 1px rgba(var(--bg-rgb), .55), 0 0 18px rgba(var(--g-rgb), .35);
+  transition: transform .22s cubic-bezier(.2, .8, .2, 1), background .2s ease, border-color .2s ease, border-radius .2s ease;
+}
+.ui-halo.on-link::before { transform: scale(1.5); background: rgba(var(--g-rgb), .18); border-color: rgb(var(--g-rgb)); }
+.ui-halo.on-text::before { transform: scale(.45, 1); border-radius: 6px; background: transparent; }
+.ui-halo.down::before { transform: scale(.75); background: rgba(var(--g-rgb), .32); }
+html[data-theme="neural"] .ui-halo::before, html[data-theme="reactor"] .ui-halo::before { border-radius: 0; }
+html[data-theme="orbital"] .ui-halo::before { border-style: dashed; }
+@media (prefers-reduced-motion: reduce), (pointer: coarse) { .ui-halo { display: none; } }
+
+/* press feedback */
+.ui-demos :is(button, .btn):active, .btn:active, .rail-pill:active { transform: scale(.97); }
+
+/* ───────── homepage: hero no longer slides under the nav on short screens ───────── */
+@media (min-width: 761px) {
+  #hero { height: auto; min-height: 100vh; min-height: 100svh; padding: 104px 0 72px; }
+}
+
+/* ───────── homepage: phone menu arrives link by link ───────── */
+.mobile-menu { gap: clamp(1.1rem, 3.2vh, 2.5rem); overflow-y: auto; }
+.mobile-menu .mobile-nav { gap: clamp(.9rem, 2.6vh, 2rem); }
+@media (prefers-reduced-motion: no-preference) {
+  .mobile-menu :is(.mobile-nav-link, .mobile-socials) { opacity: 0; transform: translateY(14px); transition: opacity .2s ease, transform .2s ease, color .15s ease; }
+  .mobile-menu.open :is(.mobile-nav-link, .mobile-socials) {
+    opacity: 1; transform: none;
+    transition: opacity .4s ease calc(var(--i, 0) * 45ms + 80ms), transform .5s cubic-bezier(.2, .8, .2, 1) calc(var(--i, 0) * 45ms + 80ms), color .15s ease;
+  }
+}
+
+/* ───────── demos: switcher bar ───────── */
+.demo-rail {
+  display: flex; align-items: center; gap: 12px; padding: 8px 24px;
+  background: var(--sf, #12151f); border-bottom: 1px solid var(--ln, rgba(255, 255, 255, .12));
+  font: 500 13px/1 'Inter', system-ui, sans-serif;
+}
+.demo-rail a { text-decoration: none !important; }
+.rail-home { color: var(--tx2, #9dc4d8); white-space: nowrap; padding: 8px 4px; transition: color .15s ease; }
+.rail-home:hover { color: rgb(var(--g-rgb)); }
+.rail-list {
+  flex: 1; min-width: 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 2px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+  padding-inline: 14px;
+}
+.rail-list::-webkit-scrollbar { display: none; }
+.rail-pill {
+  --pa: rgb(var(--pd, var(--g-rgb)));
+  display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+  padding: 7px 12px; border-radius: 999px; color: var(--tx2, #9dc4d8);
+  border: 1px solid transparent; transition: color .15s ease, background .15s ease, border-color .15s ease, transform .15s ease;
+}
+html:is([data-theme="calm"], [data-theme="holo"]) .rail-pill { --pa: rgb(var(--pl, var(--g-rgb))); }
+.rail-pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--pa); transition: transform .2s ease, box-shadow .2s ease; }
+.rail-pill:hover { color: var(--tx1, #e8f6ff); background: var(--sf2, rgba(255, 255, 255, .05)); }
+.rail-pill:hover i { transform: scale(1.35); }
+.rail-pill[aria-current] { color: var(--tx1, #e8f6ff); border-color: var(--pa); background: var(--sf2, rgba(255, 255, 255, .05)); font-weight: 600; }
+.rail-pill[aria-current] i { box-shadow: 0 0 0 3px color-mix(in srgb, var(--pa) 28%, transparent); }
+.rail-step { display: flex; align-items: center; gap: 6px; color: var(--tx2, #9dc4d8); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rail-step a {
+  display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; font-size: 18px; line-height: 1;
+  color: var(--tx1, #e8f6ff); border: 1px solid var(--ln2, rgba(255, 255, 255, .22)); transition: border-color .15s ease, color .15s ease, transform .15s ease;
+}
+.rail-step a:hover { border-color: rgb(var(--g-rgb)); color: rgb(var(--g-rgb)); }
+.rail-step a:first-child:hover { transform: translateX(-2px); } .rail-step a:last-child:hover { transform: translateX(2px); }
+.demo-rail a:focus-visible { outline: 2px solid rgb(var(--g-rgb)); outline-offset: 2px; }
+html:is([data-theme="neural"], [data-theme="reactor"]) :is(.rail-pill, .rail-step a) { border-radius: 0; }
+@media (max-width: 640px) {
+  .demo-rail { padding: 6px 12px; gap: 6px; }
+  .rail-home { font-size: 0; padding: 8px; } .rail-home span { font-size: 16px; }
+  .rail-step span { display: none; }
+}
+
+/* ───────── demos: cards rise into view ───────── */
+.ui-rise { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .65s cubic-bezier(.2, .8, .2, 1) !important; }
+.ui-rise.in { opacity: 1; transform: none; }
+
+/* ───────── demos index: cards respond to the pointer ───────── */
+.ui-demos .card.proj { position: relative; cursor: pointer; overflow: hidden; transition: transform .25s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease, border-color .2s ease; }
+.ui-demos .card.proj::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s ease;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--pa, rgb(var(--g-rgb))) 16%, transparent), transparent 65%);
+}
+.ui-demos .card.proj > * { position: relative; z-index: 1; }
+.ui-demos .card.proj a.go { transition: letter-spacing .2s ease; }
+@media (hover: hover) {
+  .ui-demos .card.proj:not(.ui-rise):hover { transform: translateY(-4px); box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--pa, #000) 70%, transparent); }
+  .ui-demos .card.proj:hover::after { opacity: 1; }
+  .ui-demos .card.proj:hover a.go { letter-spacing: .02em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ui-demos .card.proj, .rail-pill, .rail-step a { transition: none; }
+  .ui-demos .card.proj:hover { transform: none !important; }
+}
