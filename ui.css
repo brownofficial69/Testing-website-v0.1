@@ -103,3 +103,8 @@ html:is([data-theme="neural"], [data-theme="reactor"]) :is(.rail-pill, .rail-ste
   .ui-demos .card.proj, .rail-pill, .rail-step a { transition: none; }
   .ui-demos .card.proj:hover { transform: none !important; }
 }
+
+/* ───────── demos: wide tables scroll inside their card instead of widening the page on phones ───────── */
+.ui-demos main :is(.grid2, .grid3, .layout) > * { min-width: 0; }
+.ui-demos main .card:has(> table) { overflow-x: auto; }
+.ui-demos main select { max-width: 100%; }
