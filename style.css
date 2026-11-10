@@ -113,8 +113,7 @@ body.cursor-hover #cursor-ring {
 body.cursor-hidden #cursor-dot,
 body.cursor-hidden #cursor-ring { opacity: 0; }
 
-a, button, [role="button"], .project-card, .contact-card,
-input, textarea, select, label { cursor: none; }
+/* The system cursor is always shown; ui.js adds an accent halo that follows it. */
 
 img { display: block; max-width: 100%; }
 
@@ -1976,9 +1975,7 @@ footer {
 /* ════════════════════════════════════════════════════════════
    CUSTOM CURSOR
    ════════════════════════════════════════════════════════════ */
-@media (pointer: fine) {
-  *, *::before, *::after { cursor: none !important; }
-}
+/* (The old rule that hid the system cursor was removed: the custom cursor it relied on no longer exists.) */
 
 #cursor-dot {
   position: fixed;
